@@ -1,0 +1,1015 @@
+\chapter{Preliminary Concepts: Set theory}
+\section{Foundations of set theory}
+In this section, we will cover the basics of axiomatic set theory and will conclude with the 
+Axiom of Choice. Most proofs will be omitted.
+The axiomatic theory of set is just based two (undefined) notions \textit{class} and the 
+\textit{membership relation} denoted by $\in$. All objects are classes. However there are two kinds
+of classes:
+\begin{itemize}
+    \item Sets
+    \item Proper Classes
+\end{itemize}
+If $x,A$ are classes then the expression $x \in A$ means that $x$ is an element of $A$. This leads
+to our first definition
+\begin{Definition}
+    Let $x$ be a class. If $x$ is belongs to some class $A$ then $x$ is called an element.
+\end{Definition}
+All elements are denoted by lower case letters. Hence whenever we write $x,y,z$ we mean classes that
+belong to some class. Whenever we denote classes by capital letters $A,B,C$ then such a class may be
+an element of some other class or may not be an element at all.
+
+\begin{Definition}
+    Let $A,B$ be classes. We define $A = B$ to mean that every class that has $A$ as its element
+    must have $B$ as an element and vice versa. Logically,
+    \begin{equation*}
+	A = B \, \text{iff} \, (\forall X)\left[ A \in X \implies B \in X \land B \in X \implies A \in X
+	\right].
+    \end{equation*}
+\end{Definition}
+
+The first axiom is called the \textbf{axiom of Extent} and is an equivalent statement of the above
+definition.
+\begin{enumerate}[label=\bfseries Axiom 1:]
+    \item $A = B$ iff $x \in A \iff x \in B$.  
+\end{enumerate}
+
+\begin{Definition}
+    Let $A,B$ be classes; we define $A \subseteq B$ to mean that every element of $A$ is an element of
+    $B$. $A$ is called a subclass of $B$.
+\end{Definition}
+
+The second axiom is called the \textbf{axiom of class construction} and defines way to construct 
+sets from elements. For this we define a \textit{property} as,
+\begin{Definition}
+    A property $P(x)$ is a mathematical statement involving an element $x$ such that it can be
+    expressed entirely in terms of the logical symbols $\in, \land, \lor, \lnot, \exists, \forall$
+    and variables $x,y,z,A,B \dots$. 
+\end{Definition}
+
+\begin{enumerate}[label=\bfseries Axiom 2:]
+    \item If $P(x)$ is a property then there exists a class $C$ whose elements are precisely those
+	that satisfy $P(x)$. Logicall we denote $C$ as,
+	\begin{equation*}
+	    C = \left.\lbrace x : P(x) \rbrace\right..
+	\end{equation*}
+\end{enumerate}
+
+If $A$ and $B$ are classes then the following properties gives very important classes,
+\begin{enumerate}
+    \item $P(x)$ is $x \in A \lor x \in B$.
+    \item $P(x)$ is $x \in A \land x \in B$.
+\end{enumerate}
+
+The class satisfying the first property is called the union of $A,B$ and is denoted by $A \cup B$.
+The class satisfying the second property is called the intersection of $A,B$ and is denoted by 
+$A \cap B$.
+
+\begin{Definition}
+    The universal class $\mathcal{U}$ is the class of all the elements. Thus it contains classes
+    that belong to some class. Thus, 
+    \begin{equation*}
+	\mathcal{U} = \left.\lbrace x : x = x \rbrace\right.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    The empty class $\emptyset$ is the class that has no elements. Thus,
+    \begin{equation*}
+	\emptyset = \left.\lbrace x : x \neq x \rbrace\right.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    If two classes $A,B$ have no elements in common, they are said to be disjoint. Thus, $A,B$ are
+    disjoint if,
+    \begin{equation*}
+	A \cap B = \emptyset.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    The complement of a class $A$, $\comp{A}$ is the class of all elements that do not belong to $A$.
+    Thus,
+    \begin{equation*}
+	\comp{A} =\left.\lbrace x : x \not\in A \rbrace\right.
+    \end{equation*}
+\end{Definition}
+
+Note that for any class $A$, $\emptyset \subseteq A$, $A \subseteq \mathcal{U}$ and $A \cup
+\comp{A} = \mathcal{U}$ and $A \cap \comp{A} = \emptyset$.
+The Demorgan Laws provide a duality about union and intersection,
+\begin{itemize}
+    \item $\comp{(A \cup B)} = \comp{A} \cap \comp{B}$.
+    \item $\comp{(A \cap B)} = \comp{A} \cup \comp{B}$.
+\end{itemize}
+
+It is very important fact that union, intersection and complement describe an algebra of classes
+which is summarized below (easily proven),
+
+\begin{itemize}
+    \item Identity Laws:
+	\begin{itemize}
+	    \item $A \cup A = A$.
+	    \item $A \cap A = A$.
+	\end{itemize}
+    \item Associative Laws:
+	\begin{itemize}
+	    \item $A \cup ( B \cup C) = (A \cup B)\cup C $.
+	    \item $A \cap ( B \cap C) = (A \cap B)\cap C $.
+	\end{itemize}
+    \item Commutative Laws:
+	\begin{itemize}
+	    \item $A \cup B = B \cup A$.
+	    \item $A \cap B = B \cap A$.
+	\end{itemize}
+    \item Distributive Laws:
+	\begin{itemize}
+	    \item $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$.
+	    \item $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$.
+	\end{itemize}
+\end{itemize}
+
+\begin{Definition}
+    The difference of two classes $A,B$, $A - B$ is the class of those elements that are elements of $A$ but
+    not of $B$. Thus,
+    \begin{equation*}
+	A - B = \left.\lbrace x : x \in A \land x \not\in B \rbrace\right.
+    \end{equation*}
+\end{Definition}
+Note that $A - B = A \cap \comp{B}$.
+
+If $a$ is an element then from Axiom $2$ we can construct the class that contains only $a$. Such a
+class is called a \textit{singleton} and is given by:
+\begin{equation*}
+    \lbrace a \rbrace =\lbrace x : x = a \rbrace.
+\end{equation*}
+
+Similarly we can create the \textit{un-ordered} pair $\lbrace a,b \rbrace$ which is,
+\begin{equation*}
+    \lbrace a,b \rbrace = \lbrace x : x = a \lor x = b \rbrace.
+\end{equation*}
+
+It is easy to see that $\lbrace a,b \rbrace = \lbrace c,d \rbrace$ 
+when $(a = c) \lor (b = d)$ or $ (a = d) \lor (b = c)$. Something that is very important is the notion of
+ordered pair which we denote by $(a,b)$. What is important about ordered pairs is that if 
+$(a,b) = (c,d)$ the $a = c$ and $b = d$. Thus the \textit{order} in which they appear in the set is
+important.
+
+\begin{Definition}
+    If $a,b$ are elements, then the ordered pair is the class given by,
+    \begin{equation*}
+	(a,b) = \left.\lbrace \lbrace a \rbrace, \lbrace a,b \rbrace \rbrace\right.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    The Cartesian product of two classes $A$ and $B$ denoted by $A \times B$ 
+    is the class of all ordered pairs $(x,y)$ where $x \in A$ and $y \in B$. Thus,
+    \begin{equation*}
+	A \times B = \left.\lbrace (x,y) : x \in A \land y \in B \right.\rbrace.
+    \end{equation*}
+\end{Definition}
+
+A class of ordered pairs is called a \textit{Graph}. Thus any subclass of $\mathcal{U} \times
+\mathcal{U}$ is a graph. If $G$ is a graph, we denote $G^{-1}$ to be the inverse graph given by,
+\begin{equation*}
+    G^{-1} = \left.\lbrace (y,x) : (x,y) \in G \right.\rbrace.
+\end{equation*}
+
+\begin{Definition}
+    If $G,H$ are graphs, then $G \circ H$ is the graph defined as follows:
+    \begin{equation*}
+	G \circ H = \set{(x,y)}{\exists z \ni (x,z) \in H \, \land \, (z,y) \in G}
+    \end{equation*}
+\end{Definition}
+
+\begin{Theorem}
+    If $G,H,J$ are graphs, then the following hold:
+    \begin{enumerate}
+	\item $(G \circ H)\circ J = G \circ (H \circ J)$.
+	\item ${(G^{-1})}^{-1} = G $.
+	\item ${(G \circ H)}^{-1} = H^{-1} \circ G^{-1}$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    We prove in order,
+    \begin{enumerate}
+	\item let $(x,y) \in (G \circ H)\circ J$. Then there is a $ z \ni (x,z) \in J$ and 
+	    $(z,y) \in (G \circ H) $. Thus there is a $u \ni (z,u) \in H$ and $(u,y) \in G$. Thus $(x,u) \in 
+	    H \circ J$. And so $(x,y) \in G \circ (H \circ J)$. The argument can be reversed and 
+	    so we get the equality of classes. 
+	\item Let $(x,y) \in {(G^{-1})}^{-1}$. Hence $(y,x) \in G^{-1}$. Thus $(x,y) \in G$. The
+	    other direction is similar.
+	\item Let $(x,y) \in {(G \circ H)}^{-1}$. Hence $(y,x) \in (G \circ H)$. Thus there is a 
+	    $z \ni (y,z) \in H$ and $(z,x) \in G$. Thus $(z,y) \in H^{-1}$ and $(x,z) \in G^{-1}$, 
+	    which is just $(x,z) \in G^{-1}$ and $(z,y) \in H^{-1}$. Hence 
+	    $(x,y) \in H^{-1} \circ G^{-1}$.
+    \end{enumerate}
+\end{proof}
+
+\begin{Definition}
+    Let $G$ be a graph. By the domain of $G$ we mean the class
+    \begin{equation*}
+	dom\,G = \set{x}{\exists y \ni (x,y) \in G}.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    Let $G$ be a graph. By the range of $G$ we mean the class
+    \begin{equation*}
+	range\,G = \set{y}{\exists x \ni (x,y) \in G}.
+    \end{equation*}
+\end{Definition}
+
+\begin{Theorem}
+    IF $G,H$ are graphs then
+    \begin{enumerate}
+	\item $dom\,G = range\,G^{-1}$.
+	\item $dom\,G^{-1} = range\,G$.
+	\item $dom\,(G \circ H) \subseteq dom\,H$.
+	\item $range\,(G \circ H) \subseteq range\,G$.
+    \end{enumerate}
+\end{Theorem}
+
+The proof of the third statement is as follows,
+\begin{proof}
+    Let $x \in dom\,(G \circ H)$. Thus there is a $y \ni (x,y) \in G \circ H$. Thus there
+    is a $z \ni (x,z) \in H$ and $(z,y) \in G$. Thus the existence of $z \ni (x,z) \in H$
+    means that $x \in dom\,H$.
+\end{proof}
+
+An important corollary of the above theorem is that if $range\,H = dom\,G$ then $dom\,G\circ H =
+dom\,H$. To prove the equality we just need to show that $dom\, H \subseteq dom\,G\circ H$. Consider
+an element $x \in dom\,H$. Thus there is a $z \ni (x,z) \in H$. Since range of $H$ equal to
+$dom\,G$, this means that $z \in dom\,G$. Hence there is a $y \ni (z,y) \in G$ and so 
+$(x,y) \in G\circ H$. Thus $x \in dom\,G\circ H$.
+
+\begin{Definition}
+    An indexed class is the class denoted by $\lbrace A_i : i \in I \rbrace$ where $I$ is the class
+    whose elements are called indices.
+\end{Definition}
+Formally an indexed class is a graph $G$ and each $A_i = \set{x}{(i,x) \in G}$. Thus if $I =
+\lbrace 1,2\rbrace$ and $A_1 = \lbrace a,b \rbrace $ and $A_2 = \lbrace e , f \rbrace$ then the
+indexed class $\lbrace A_i : i \in I \rbrace$ is the graph $G = \lbrace (1,a) , (1,b) , (2,e), (2,f)
+\rbrace$.
+
+\begin{Definition}
+    Let $\lbrace A_i : i \in I \rbrace$ be an indexed family. Then,
+    \begin{enumerate}
+	\item The union of the classes $A_i$ consists of all those elements $x$ that are contained
+	    in atleast one $A_i$. 
+	    \begin{equation*}
+		\bigcup_{i \in I} A_i = \set{x}{\exists j \ni x \in A_j}.
+	    \end{equation*}
+	\item The intersection of the classes $A_i$ consists of all those elements $x$ that are 
+	    contained in each $A_i$. 
+	    \begin{equation*}
+		\bigcap_{i \in I} A_i = \set{x}{\forall j, x \in A_j}.
+	    \end{equation*}
+    \end{enumerate}
+\end{Definition}
+
+\begin{Theorem}
+    Let $\lbrace A_i : i \in I \rbrace$ be an indexed class and $B$ be any class. Then,
+    \begin{enumerate}
+	\item If $B \subseteq A_i$ for every $i \in I$ then $B \subseteq \bigcap_{i \in I} A_i$.
+	\item If $A_i \subseteq B$ for every $i \in I$ then $\bigcup_{i \in I} A_i \subseteq B$.
+    \end{enumerate}
+\end{Theorem}
+
+The Generalized DeMorgan's Laws and Distributive laws can be restated as:
+\begin{Theorem}[name=DeMorgan's Laws]
+    Let $\lbrace A_i : i \in I \rbrace$ be an indexed class. Then,
+    \begin{enumerate}
+	\item ${\comp{(\bigcup_{i \in I} A_i)}} = \bigcap_{i \in I} \comp{A_{i}}$
+	\item ${\comp{(\bigcap_{i \in I} A_i)}} = \bigcup_{i \in I} \comp{A_{i}}$
+    \end{enumerate}
+\end{Theorem}
+
+\begin{Theorem}[name=Distributive Laws]
+    Let $\lbrace A_i : i \in I \rbrace$ and $\lbrace B_j : j \in J \rbrace$  be indexed classes. 
+    Then,
+    \begin{enumerate}
+	\item ${(\bigcup_{i \in I} A_i) \bigcap (\bigcup_{j \in J} B_j) } = \bigcup_{(i,j) \in I
+	    \times J} A_{i} \cap B_{j}$.
+	\item ${(\bigcap_{i \in I} A_i) \bigcup (\bigcap_{j \in J} B_j) } = \bigcap_{(i,j) \in I
+	    \times J} A_{i} \cup B_{j}$.
+    \end{enumerate}
+\end{Theorem}
+
+\begin{Theorem}
+    Let $\lbrace G_i : i \in I \rbrace$ be a family of graphs. Then,
+    \begin{enumerate}
+	\item $dom\,(\bigcup_{i \in I} G_i) = \bigcup_{i \in I} (dom\,G_i)$.
+	\item $range\,(\bigcup_{i \in I} G_i) = \bigcup_{i \in I} (range\,G_i)$.
+    \end{enumerate}
+\end{Theorem}
+
+In the begining we noted that there were two kinds of classes. We now define the most important kind
+of class called \textit{Set}.
+\begin{Definition}
+    A class $X$ is called a set if there is a class $Y$ such that $X \in Y$.
+\end{Definition}
+If for all class $Y$, $X \not\in Y$ then $X$ is called a proper class. The remaining axioms all
+concern sets. 
+
+\begin{enumerate}[label=\bfseries Axiom 3:]
+    \item Every subclass of a set is itself a set.  
+\end{enumerate}
+Such a subclass is called a \textit{subset}. Note that for any class $B$, if $A$ is a set then
+$A\cap B \subseteq A$. Thus \textit{intersections} are sets. 
+The next axiom gives the existence of sets.
+
+\begin{enumerate}[label=\bfseries Axiom 4:]
+    \item The empty class $\emptyset$ is a set.
+\end{enumerate}
+
+\begin{enumerate}[label=\bfseries Axiom 5:]
+    \item If $a,b$ are sets then the un-ordered pair $\lbrace a , b \rbrace$ is a set. 
+\end{enumerate}
+
+Note that $\emptyset$ is a set and the set containing the emptyset $\lbrace{\emptyset}\rbrace$ is
+also a set i.e we used $b = a$ in the above axiom to construct this set. 
+Thus we can form a new set $\lbrace \emptyset,\lbrace \emptyset \rbrace \rbrace$. We can
+continue this forever.
+
+\begin{Definition}
+    Let $A$ be a set. By the power set of $A$ we mean the class which contains all subsets of $A$.
+    Thus,
+    \begin{equation*}
+	\powSet{A} = \set{X}{X \subseteq A}.
+    \end{equation*}
+\end{Definition}
+
+The next two axioms concerns sets of sets. 
+
+\begin{enumerate}[label=\bfseries Axiom 6:]
+    \item If $\mathcal{A}$ is a set of sets then $\bigcup \mathcal{A}$ is also a set.
+\end{enumerate}
+Note that $\bigcup{\mathcal{A}}$ is the set $\set{x}{\exists A \in \mathcal{A} \ni x \in A}$.
+
+\begin{enumerate}[label=\bfseries Axiom 7:]
+    \item If $A$ is a set then $\powSet{A}$ is also a set.
+\end{enumerate}
+
+The following theorem shows that the cartesian product of two sets is also a set.
+\begin{Theorem}
+    If $A,B$ are sets then $A \times B$ is also a set.
+\end{Theorem}
+\begin{proof}
+    We will show that $A \times B$ is an subset of $\powSet{\powSet{A\cup B}}$
+    and thus by Axiom $3$ is a set.
+    Let $(x,y) \in A \times B$. Note that $(x,y) = \lbrace \lbrace x \rbrace, \lbrace x,y \rbrace
+    \rbrace$. But $\lbrace x \rbrace \in \powSet{A \cup B}$ and $\lbrace y \rbrace \in
+    \powSet{A \cup B}$.
+    Thus $\lbrace \lbrace x \rbrace, \lbrace x,y \rbrace \rbrace$ is a subset of $\powSet{A\cup B}$. 
+    That is $(x,y) \in \powSet{\powSet{A\cup B}}$. Hence $A \times B$ is a subset of 
+    $\powSet{\powSet{A\cup B}}$.
+\end{proof}
+
+Now we will look into the set-theoretic definition of functions.
+A function $f$ is a \emph{triple} $\left(A,B,f\right)$ where $A,B$ are sets and $f \subseteq A
+\times B$ is a graph satisfying the following conditions:
+\begin{enumerate}[label=\bfseries F \arabic*:]
+    \item For every $x \in A$ there is a $y \in B$ such that $(x,y) \in f$.
+    \item For every $x \in A$, if $y_1,y_2 \in B$ such that $(x,y_1) \in f$ and $(x,y_2) \in f$ then
+	$y_1 = y_2$.
+\end{enumerate}
+
+We usually denote $\left(A,B,f\right)$ as $ f : A \to B$ and write $(x,y) \in f$ as $f(x)= y$.
+Thus the above conditions become:
+\begin{enumerate}[label=\bfseries F \arabic*:]
+    \item For every $x \in A$ there is a $y \in B$ such that $f(x) = y$.
+    \item For every $x \in A$, $f(x) = y_1 $ and $f(x) = y_2$ implies $y_1 = y_2$. 
+\end{enumerate}
+
+We note that if $A,B$ are sets then any graph $f \subseteq A \times B$ is a function iff
+\begin{enumerate}
+    \item $dom\,f = A$.
+    \item $range\,f \subseteq B$.
+    \item $F2$ is satisfied.
+\end{enumerate}
+
+Some important functions are:
+\begin{enumerate}
+    \item INJECTIVE, A function $f : A \to B$ is said to be injective iff for $x_1,x_2 \in A$,
+	$f(x_1) = f(x_2)$ implies that $x_1 = x_2$.
+    \item SURJECTIVE, A function $f : A \to B$ is surjective iff for every $y \in B$ there is a $x
+	\in A$ such that $y = f(x)$, i.e range $f$ $ = B$.
+    \item BIJECTIVE, A function $f : A \to B$ is bijective iff it is both surjective and injective.
+\end{enumerate}
+
+Some examples are as follows:
+\begin{enumerate}
+    \item Identity function. The function $i_A : A \to A$ given by $i_A(x) = x$ 
+	for every $ x\in A$ is called the identity function.  
+    \item Inclusion function. Let $A,B$ be sets such that $B \subseteq A$. The function $i_B : B \to
+	A$ is called the inclusion function. Note that $i_B(x) = x$ for every $x \in B$.
+    \item Characteristic function. Let $2$ designate the class of all functions with two elements, say the
+	class $\lbrace 0,1\rbrace$. If $B \subset A$, then the characteristic function of $B$ is
+	given by $\chi_B : B \to 2$ such that whenever $x \in B$ then $\chi_B(x) = 1$, otherwise
+	$\chi_B(x) = 0$. 
+    \item Restriction function. Let $C \subseteq A$ and $f : A \to B$. Then the restriction of $f$
+	to $C$ is the function given by $f_{|_C} : C \to B$ such that $f_{|_C}(x) = f(x)$ for every
+	$x \in C$.
+\end{enumerate}
+
+The next theorem concerns composition.
+\begin{Theorem}
+    If $f : A \to B$ and $g : B \to C$ are functions then $g \circ f : A \to C $ is a function and
+    $(g\circ f)(x) = g(f(x))$ for every $x \in A$.
+\end{Theorem}
+The proof is easy once we notice that since $g$ is a fuction $dom\,g = B$ and so range of $f$ is
+subset of domain of $g$ thus $dom\,g\circ f = A$. Also we observe that $range\, g\circ f \subseteq
+range\,g$ for any graph. That $F2$ is satisfied is easy.
+
+\begin{Definition}
+    A function $f : A \to B$ is invertible if the inverse graph is a function $f^{-1} : B \to A$.
+\end{Definition}
+
+\begin{Theorem}
+    A function is invertible iff it is bijective. Furthermore, if a function is invertible then
+    the inverse is a bijective function.
+\end{Theorem}
+
+A useful characterization of invertible function is the following:
+\begin{Theorem}
+    A function $f : A \to B$ is invertible iff there is a function $g : B \to A$ such that $g \circ
+    f = i_A$ and $f\circ g = i_B$. If such a function $g$ exists then $g = f^{-1}$.
+\end{Theorem}
+
+\begin{Theorem}
+    A function $f : A \to B$ is injective iff there is a function $g : B \to A$ such that $g \circ
+    f = i_A$.
+\end{Theorem}
+\begin{proof}
+    Let a function $g : B \to A$ be such that $g\circ f (x) = x $ for every $x \in A$. Consider
+    $x_1,x_2$ such that $f(x_1) = f(x_2)$. Thus $x_1 = (g \circ f)(x_1) = g(f(x_1)) = g(f(x_2)) = 
+    x_2$. Hence $f$ is injective. Consider an injective function $f$ and fix an element $a \in A$.
+    Construct $g : B \to A$ as follows. If $y \in range\,f$ let $g(y) = f(x)$. If $y \not \in
+    range\,f$ then $g(y) = a$. Easy to see that $g\circ f = i_A$. 
+\end{proof}
+
+\begin{Theorem}
+    Let $f : A \to B$ and $g : B \to C$ be functions. Then we can state the following about the
+    composition $g \circ f$,
+    \begin{enumerate}
+	\item If $f,g$ are injective then so is $g \circ f$.
+	\item If $f,g$ are surjective then so is $g \circ f$.
+	\item If $f,g$ are bijective then so is $g \circ f$.
+    \end{enumerate}
+\end{Theorem}
+
+Now we will define Direct and Inverse images of sets under a function.
+\begin{Definition}
+    Let $f : A \to B$ be a function and consider a set $C \subseteq A$. Then the direct image of $C$
+    under $f$ is the set of all images of elements of $C$,
+    \begin{equation*}
+	f(C) = \set{y \in B}{\exists x \in C \ni f(x) = y}.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    Let $f : A \to B$ be a function and consider a set $D \subseteq B$. Then the inverse image of $D$
+    under $f$ is the set of all elements in $A$ whose images are elements of $D$,
+    \begin{equation*}
+	\invIm{f}{D} = \set{x \in A}{\exists y \in D \ni f(x) = y}.
+    \end{equation*}
+\end{Definition}
+We can alternatively write the inverse image of $D$ as the set 
+\[\invIm{f}{D} = \set{x \in A}{f(x) \in D}.\]
+It is important to see how direct images and inverse images act on generalized unions and
+intersections. The next theorem summarizes there actions.
+\begin{Theorem}
+    Let $f : A \to B$ and let ${\lbrace C_i \rbrace}_{i \in I}$ and 
+    ${\lbrace D_i \rbrace}_{i \in I}$ be sub-families in $A$ and $B$ respectively. Then,
+    \begin{enumerate}
+	\item $\dirIm{f}{\indexUnion{C_i}{i}{I}} = \indexUnion{\dirIm{f}{C_i}}{i}{I}$,
+	\item $\dirIm{f}{\indexIntersection{C_i}{i}{I}} \subseteq \indexIntersection{\dirIm{f}{C_i}}{i}{I}$,
+	\item $\invIm{f}{\indexUnion{D_i}{i}{I}} = \indexUnion{\invIm{f}{D_i}}{i}{I}$,
+	\item $\invIm{f}{\indexIntersection{D_i}{i}{I}} = \indexIntersection{\invIm{f}{D_i}}{i}{I}$,
+    \end{enumerate}
+\end{Theorem}
+Thus, we see that the inverse image is well behaved w.r.t unions and intersections (and
+complements). Note that the inverse and direct image are functions that maps powersets, i.e
+$C(\in \powSet{A}) \mapsto \dirIm{f}{C}(\in \powSet{B})$ and $D (\in \powSet{B}) 
+\mapsto \invIm{f}{D} (\in \powSet{A})$. This is easy to see if we observe that if $C_1 = C_2$ then
+$\dirIm{f}{C_1} = \dirIm{f}{C_2}$. Similarly for inverse images. However, the converse 
+is not true in general.
+
+We have defined the \emph{product} of two classes as $A \times B$ as the class of all the ordered
+pairs in $A$ and $B$. We can extend this idea to the product of finite classes $A_1,A_2,\dots,A_n$
+as the class of all \emph{n-tuple} $(a_1,a_2,\dots,a_n)$ such that $a_i \in A_i$ for all $1\leq i
+\leq n$. However, we have a potential problem if we an arbitrary indexed family, 
+$\set{A_i}{i\in I}$. In such a case we have to redefine what a product of classes mean.
+
+\begin{Definition}
+    Let $\set{A_i}{i\in I}$ be an indexed family of classes; let
+    \[A = \indexUnion{A_i}{i}{I}.\]
+    The product of the classes $A_i$ is defined to be the class
+    \[\indexProduct{A_i}{i}{I} = \set{f}{\map{f}{I}{A}\,\text{and $f(i)\in A_i$}\,\forEv{i\in I}}.\]
+\end{Definition}
+We will adopt the following notational convention: we designate elements of a product
+$\indexProduct{A_i}{i}{I}$ with boldface letters $\vect{a},\vect{b}$ etc. If $\vect{a}$ is an
+element of $\indexProduct{A_i}{i}{I}$, we will denote by $a_j$ as $\vect{a}(j)$. We call $a_j$ as
+the $j^{th}$ co-ordinate of $\vect{a}$.
+Let $A = \indexProduct{A_i}{i}{I}$, corresponding to each index we define a function
+$\map{\Pi_{i}}{A}{A_i}$ by
+$\Pi_i(\vect{a}) = a_i$. We call $\Pi_i$ as the $i^{th}-projection$ of $A$ to $A_i$.
+
+\begin{Definition}
+    If $A,B$ are classes, we denote by $B^A$ as the class of all functions whose domain is $A$ and
+    whose co-domain is $B$.
+\end{Definition}
+In particular if $2 = \lbrace 0,1\rbrace $ 
+denotes the class of two elements, then $2^A$ is the class of all functions 
+from $A$ to $\lbrace 0,1\rbrace$.
+\begin{Theorem}
+    If $A$ is a set, then  $\powSet{A}$ and $2^A$ are in $1-1$ correspondence.
+\end{Theorem}
+\begin{proof}
+We will show that there is a function $\map{f}{\powSet{A}}{2^A}$, such that $f$ is injective.
+For any $B \in \powSet{A}$ define $f(B) = \charFunc{B}$. Easy to see that $f$ is injective. Infact
+there is a bijection. Let $g \in 2^A$. Define $B = \invIm{g}{\lbrace 1 \rbrace }$. 
+Then $g = \charFunc{B}$.
+\end{proof}
+
+Let us list a couple more axioms that will \emph{almost} complete the set construction axiom. 
+
+\begin{enumerate}[label=\bfseries Axiom 9:]
+    \item If $A$ is a non-empty set, there is an element $a \in A$ such that $a\cap {A} =
+	\emptyset$.
+\end{enumerate}
+The above axiom states that a set is disjoint from its elements. Hence if $A$ is a set, the
+singleton $\lbrace A \rbrace \neq A$.
+\begin{enumerate}[label=\bfseries Axiom 10:]
+    \item If $A$ is a set and $\map{f}{A}{B}$ is a surjective function, then $B$ is a set.
+\end{enumerate}
+
+Next we define relations on sets.
+\begin{Definition}
+    Let $A$ be a class, by a relation $R$ in $A$ we mean an arbitrary subclass of $A \times A$.
+\end{Definition}
+Let $R$ be a relation in $A$, then
+\begin{enumerate}
+    \item
+	(Reflexive) $R$ is reflexive if for every $a \in A$, $(a,a) \in R$. 
+    \item
+	(Irreflexive) $R$ is irreflexive if for every $a \in A$, $(a,a) \not \in R$. 
+    \item
+	(Symmetric) $R$ is symmetric if $(a,b) \in R \implies (b,a) \in R$. 
+    \item
+	(Asymmetric) $R$ is asymmetric if $(a,b) \in R \implies (b,a) \not \in R$. 
+    \item
+	(Anti-symmetric) $R$ is anti-symmetric if $(a,b),(b,a) \in R \implies a=b $. 
+    \item
+	(Transitive) $R$ is transitive if $(a,b) ,(b,c) \in R \implies (a,c) \in R$. 
+\end{enumerate}
+\begin{Definition}
+    A relation $R$ in $A$ is called an equivalence relation if it is Reflexive, Transitive and
+    Symmetric.
+\end{Definition}
+\begin{Definition}
+    A relation $R$ in $A$ is called a partial order relation if it is Reflexive, Transitive and
+    Anti-symmetric.
+\end{Definition}
+\begin{Definition}
+    A relation $R$ in $A$ is called a strict order relation if it is Irreflexive, Transitive and
+    Asymmetric.
+\end{Definition}
+
+\section{Countability}
+In this section we will study in some detail finite sets,countable sets and uncountable sets.
+We start with finite sets.
+\begin{Definition}[name=section]
+    Let $n$ be a positive integer. We use $S_n$ to denote the set of positive integers less than $n$ and call
+    it a section of positive integers. Thus $S_n = \setX{1,2,\ldots,n}$.
+\end{Definition}
+\begin{Definition}[name=finite sets]
+    A set $A$ is said to be finite if there is a bijective correspondence of $A$ with some section of the
+    positive integers, i.e.~there exists an $n \in \Zplus$ such that,
+    \[\map{f}{A}{S_n},\]
+    is a bijective function. We say that $A$ has cardinality $n$. If $A$ is empty we say that $A$ has
+    cardinality $0$.
+\end{Definition}
+\begin{Remark}
+    $S_n$ itself has cardinality $n$. We will show that the cardinality of a finite set is uniquely determined
+    by the set.
+\end{Remark}
+\begin{Lemma}
+    Let $n$ be a positive integer. Let $A$ be a set and let $a_0$ be any element of $A$. Then there exists a
+    bijective correspondence $f$ of the set $A$ with $S_{n+1}$ if and only if there exists a bijective
+    function $g$ from the set $\setDiff{A}{\setX{a_0}}$ with $S_{n}$.
+\end{Lemma}
+\begin{proof}
+    First assume that $\map{g}{\setDiff{A}{\setX{a_0}}}{S_n}$ is bijective. Let $\map{f}{A}{S_{n+1}}$ be such
+    that $\restrict{f}{\setDiff{A}{\setX{a_0}}} = g $ and $f(a_0) = n+1$. Then $f$ is bijective.
+
+    Assume $\map{f}{A}{S_{n+1}}$ is bijective. We consider two cases.
+
+    \textbf{CASE I}: $f(a_0) = n+1$. In this case, define $g = \restrict{f}{\setDiff{A}{\setX{a_0}}}$. Then we
+    get the desired bijective map.
+
+    \textbf{CASE II}: $f(a_0) = k$ where $k \neq n+1$. Then there is an $a_1$ in $A$ such that $f(a_1) = n+1$.
+    Define $\map{\sigma}{A}{S_{n+1}}$ such that $\sigma(a_0) = n+1$ and $\sigma(a_1) = k$ and for all other
+    values of $A$, $\sigma = f$. Thus $\sigma$ is a bijective mapping from $A$ onto $S_{n+1}$ such that
+    $\sigma(a_0) = n+1$. Define $g = \restrict{\sigma}{\setDiff{A}{\setX{a_0}}}$. Then we
+    get the desired bijective map.
+\end{proof}
+\begin{Theorem}
+    Let $A$ be a set; suppose there exists a bijection $\map{f}{A}{S_n}$ for some $n \in\Zplus$. Let $B$ be a
+    proper subset of $A$. Then there exists no bijection $\map{g}{A}{S_n}$, but if $B$ is not empty, then
+    there is a bijection $\map{f}{B}{S_m}$ for some $m < n$.
+\end{Theorem}
+\begin{proof}
+    We will prove this by induction on $n$. First note that when $A$ is empty, there is no proper subset of
+    $A$ and so the theorem is trivially true. Let $\map{f}{A}{S_1}$ be a bijection. Then any proper subset $B$
+    of $A$ is empty and so cardinality of $B$ = $0$.
+    Assume the theorem is true for some $n$ in $\Zplus$. Let $\map{f}{A}{S_{n+1}}$ be a bijection and let $B$
+    be a proper subset of $A$. Assume $B$ is not empty. There is an element $a_0$ in $B$ and note that $a_0$
+    is also in $A$. By the previous Lemma, there is a map,
+    \[\map{g}{A-\setX{a_0}}{S_n},\]
+    such that $g$ is bijective. Note that $B - \setX{a_0}$ is a proper subset of $A - \setX{a_0}$. 
+    Now we can use our inductive hypothesis to state that:
+    \begin{enumerate}
+	\item
+	    There is no bijection $\map{h}{B-\setX{a_0}}{S_n}$.
+	\item
+	    Either $B - \setX{a_0}$ is empty or there is an $m < n$ such that,
+	    $\map{k}{B-\setX{a_0}}{S_{m}}$ is bijective.
+    \end{enumerate}
+    Using the Lemma above we can state $(1)$ equivalently by stating that there is not bijection between $B$
+    and $S_{n+1}$. If $B - \setX{a_0}$ is not empty, then we can use the previous lemma to state that there is
+    a bijection from $B$ to $S_{m+1}$ where $m+1 < n+1$ and so we have proved the statement for $n+1$.
+\end{proof}
+\begin{Corollary}
+    If $A$ is finite, there is no bijection of $A$ with a proper subset of itself.
+\end{Corollary}
+\begin{proof}
+    Let $\map{f}{B}{A}$ be bijective. Since $A$ is finite there is a bijective function $\map{g}{A}{S_n}$.
+    Define $h = \fog{g}{f}$. Then $\map{h}{B}{S_n}$ is bijective which contradicts the theorem above.
+\end{proof}
+\begin{Corollary}
+    $\Zplus$ is not finite.
+\end{Corollary}
+\begin{proof}
+    We prove this by the contrapositive of the above corollary i.e.~we construct a bijection between $\Zplus$
+    and a propoer subset $\Zplus-\setX{1}$.
+    Let $\map{f}{\Zplus-\setX{1}}{\Zplus}$ be given by $f(i) = i-1$. Then $f$ is bijective.
+\end{proof}
+\begin{Corollary}
+    The cardinality of a finite set $A$ is uniquely determined by $A$ i.e.~there doesnot exist $S_n,S_m$ with
+    $n \neq m$ such that $A$ is in bijective correspondence with both $S_n,S_m$.
+\end{Corollary}
+\begin{proof}
+    Suppose there exist bijections $f,g$ from $A$ onto $S_n,S_m$ where $n \neq m$. Without loss of generality,
+    assume $n < m$. Let $h = \fog{g}{f^{-1}}$. Then $\map{h}{S_n}{S_m}$ is bijective which gives a
+    contradiction since $S_n$ is a proper subset of $S_m$.
+\end{proof}
+\begin{Corollary}
+    If $B$ is a subset of the finite set $A$, then $B$ is finite. If $B$ is a proper subset of $A$, then the
+    cardinality of $B$ is less than $A$.
+\end{Corollary}
+\begin{Corollary}
+    Let $B$ be a non-empty set. Then the following are equivalent:
+    \begin{enumerate}
+	\item
+	    $B$ is finite.
+	\item
+	    There is a surjective function from a section of the positive integers onto $B$.
+	\item
+	    There is an injective function from $B$ into a section of the positive integers.
+    \end{enumerate}
+\end{Corollary}
+\begin{proof}
+    We will prove $(1)\implies(2)$, $(2)\implies (3)$ and $(3) \implies (1)$.
+
+    $(1)\implies (2)$. Assume $B$ is finite. Then, for some $n\in\Zplus$, there is a bijective map 
+    $\map{f}{B}{S_n}$. Thus $\map{f^{-1}}{S_n}{B}$ is onto.
+
+    $(2) \implies (3)$. Assume there is a map $\map{f}{S_n}{B}$ such that $f$ is onto. Define the function
+    $\map{h}{B}{S_n}$ where for any $b \in B$, $h(b) = \min\invIm{f}{b}$. Since $f$ is onto $\invIm{f}{b}$ is
+    not empty and is a subset of $S_n$ and by the well ordering property of integers, the minimum exists and
+    is unique. Thus $h$ is injective.
+
+    $(3) \implies (1)$. Assume there is an injective map $\map{f}{B}{S_n}$ for some $n \in \Zplus$. Then
+    $\map{f}{B}{\dirIm{f}{B}}$ is bijective. Also, since $\dirIm{f}{B} \subset S_n$, it is finite. Hence $B$ is
+    finite.
+\end{proof}
+\begin{Theorem}
+    Finite Unions and finite cartesian products of finite sets are finite.
+\end{Theorem}
+\begin{proof}
+    Let $\famB = \set{B_i}{1\leq i \leq n}$ be a finite collection of finite sets. We will show that
+    $\finiteUnion{B_i}{i}{n}$ is also finite by induction on $n$.
+    When $n = 1$, the result is trivial. Consider the case when $n = 2$. By hpyothesis, there exists bijective
+    functions $f_1,f_2$ from $B_1,B_2$ onto $S_{n_1},S_{n_2}$ for some $n_1,n_2$ in $\Zplus$. Define
+    $\map{h}{S_{n_1+n_2}}{B_1\cup B_2}$ as follows:
+    $h(i) = f_1(i)$ for $1\leq i \leq n_1$ and $h(n_1+j) = f_2(j)$ for $1 \leq j \leq n_2$. Thus $h$ is a
+    surjection from a section of integers to $B_1\cup B_2$ and hence, $B_1\cup B_2$ is finite. Note that $h$
+    is note necessarily a bijection since $A,B$ may not be disjoint. The result now follows from induction.
+
+    Note that for any $b \in B_1$, $\setX{b}\times B_2$ is finite because the function
+    $\map{f}{\setX{b}\times B_2}{S_{n_2}}$ given by $f((b,c)) = f_2(c)$ for any $c \in B_2$ 
+    is a bijection. Now, $B_1\times B_2$
+    can be written as $\bigcup\limits_{b\in B_1}\setX{b}\times B_1$, which is a finite union of finite sets and
+    so is finite. The result for arbitrary $n$ follows from induction.
+\end{proof}
+Just as sections of integers are the prototypes for finite sets, the set of all positive integers is
+prototype for the simplest infinite set that we call countably infinite or denumerable sets.
+
+\begin{Definition}[name=Infinite and Countably infinite]
+    A set $A$ is said to be infinite if it is not finite. It is said to be countably infinite if there is a
+    bijective correspondence,
+    \[\map{f}{A}{\Zplus}.\]
+\end{Definition}
+From all our observations regarding finite sets we can immediately deduce the following about infinite sets
+\begin{enumerate}
+    \item
+	For any proper subset $B$ of $A$, if $B$ is infinite then $A$ is also infinite.
+    \item
+	If there is a proper subset $B$ of $A$ and if there is a function $\map{f}{B}{A}$ which is bijective,
+	then $A$ is infinite.
+\end{enumerate}
+\begin{Definition}[name=Countable]
+    A set $A$ is said to be countable if it is either finite or if it is countably infinite. A set that is not
+    countable is said to be uncountable.
+\end{Definition}
+We saw that $\Zplus$ was not finite. It is countably infinite by definition and hence $\Zplus$ is countable.
+Is $\Z$ countable?
+\begin{Proposition}
+    $\Z$ is countably infinite.
+\end{Proposition}
+\begin{proof}
+    $\Zplus$ is a proper subset of $\Z$ and is not finite. Hence we must show that there is a function
+    $\map{f}{\Z}{\Zplus}$ that is bijective. Let us define,
+    \begin{align*}
+	f(n) = 
+	\begin{cases}
+	    -2n &\text{if $n < 0$},\\
+	    2n + 1 &\text{if $n \geq 0$}.
+	\end{cases}
+    \end{align*}
+    Easy to see that $f$ is a bijection.
+\end{proof}
+\begin{Proposition}
+    The product $\Zplus \times \Zplus$ is countably infinite.
+\end{Proposition}
+\begin{proof}
+    The proof is the famous diagonal arrangement. If we of $\Zplus \times \Zplus$ as a grid, we can start
+    counting \textbf{diagonally} from right to top. Let $\map{f}{\Zplus}{\Zplus}$ be given by,
+    $f(i,j) = j + \series{k}{k}{1}{i+j-2}$. Thus, for example, $f(1,1) = 1$, $f(2,1) = 2$, $f(1,2) = 3$ and so
+    on. Easy to see that we have a bijection. For example to show it is surjective let $m$ be any positive
+    integer, say $m = 11$. Then think of $11$ as a list $(1),(2,3),(4,5,6),(7,8,9,10),(11,12,13,14,15)$. Thus
+    $11$ is on the $5^{th}$ list which means that $j$ will be such that $1\leq j \leq 5$. Similarly $i$ will
+    be less than $5$. Easy to see that $i = 5$ and $j = 1$ will give $f(i,j) = 11$.
+\end{proof}
+%%%%%%% draw diagrams here : see pink notebook
+There is a very useful criterion for showing that a set is countable.
+\begin{Theorem}
+    Let $B$ be a non-empty set. Then the following are equivalent.
+    \begin{enumerate}
+	\item
+	    $B$ is countable.
+	\item
+	    There is a surjective function $\map{f}{\Zplus}{B}$.
+	\item
+	    There is an injective function $\map{g}{B}{\Zplus}$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    Assume that $B$ is countable. Hence $B$ is either finite or countably infinite. In the later case, there
+    is a surjection $\map{f}{\Zplus}{B}$. If $B$ is finite, then there is a bijection $\map{g}{S_n}{B}$
+    for some $n\in\Zplus$. Define $\map{f}{\Zplus}{B}$ as follows:
+    $f(i) = g(i)$ for $i \leq n$ and $f(i) = g(n)$ for $i > n$. Thus $f$ is a surjection. Hence we have shown
+    $(1)\implies (2)$.
+
+    Assume that there is a surjection $\map{f}{\Zplus}{B}$. This means that for any $b$ in $B$,
+    $\invIm{f}{\setX{b}}\neq\emptyset$. Moreover, for $b_1,b_2 \in B$, if $b_1\neq b_2$, then
+    $\invIm{f}{\setX{b_1}} \neq \invIm{f}{\setX{b_2}}$. Let $g(b) = \min\invIm{f}{\setX{B}}$. Then $g(b)$ is
+    an injective function from $B$ to $\Zplus$. Thus, we have shown that $(2) \implies (3)$.
+
+    Assume there is an injective function $\map{g}{B}{\Zplus}$. To show that $B$ is countable we need to show
+    that either $B$ is finite or $B$ is countably infinite. We can assume $B$ is not finite. 
+    Thus $\dirIm{g}{B} \subset {\Zplus}$ is not finite. IF $\dirIm{g}{B}$ was countably infinite, then $B$
+    would be countably infinite. Hence we need to show that any infinite subset of $\Zplus$ is countably
+    infinite which would mean that $(3)\implies (1)$.
+\end{proof}
+\begin{Remark}
+    The above theorem (part (2)) 
+    states that for a countable set we can list its elements as a \textbf{sequence}. Thus if
+    $A$ is countable, then $A = \setX{a_{1},a_{2},\cdots}$.
+\end{Remark}
+\begin{Proposition}
+    Any infinite subset of $\Zplus$ is countably infinite.
+\end{Proposition}
+\begin{proof}
+    Let $B$ be an infinite subset of $\Zplus$. 
+    There is bijection $\map{f}{\Zplus}{\Zplus}$ that lists the elements of $\Zplus$ in a sequence. 
+    The intuitive idea is to go along the sequence and check if it belongs to $B$. 
+    We want a function $\map{g}{\Zplus}{B}$ that is bijective. 
+    For example as we move along the sequence in $f$, the first occurance of an element in $B$ occured in the
+    index $k$. We set $g(1) = f(k)$. Then we continue traversing along the sequence in $f$ until we find an index
+    $l > k$ such that $f(l) \in B$. We set $g(2) = f(l)$. It is clear that such a function is surjective. 
+    How do we define the function $g$? Let us tweak $g$ a bit. Instead of taking the first occurance
+    of an element listed by $f$, we take the smallest element of $B$ listed by $f$. There must be an index $m$
+    such that $f(m) = \min{B}$. We take $g(1) = f(m)$ and proceed subsequently. 
+
+    Let $g(1)$ be the smallest element that is in
+    $B$. This is possible since $B \subset \Zplus$. Let $g(2)$ be the smallest element other than $g(1)$ that
+    is in $B$. This is called an \textbf{inductive} definition (or recursion). We define a function whose
+    domain is the natural numbers inductively, in this case,
+    \[g(n) = \min\setX{B-\setX{g(1),g(2),\ldots,g(n-1)}}.\]
+    It is clear that $g$ is injective. To see that $g$ is surjective, consider an arbitrary element, say $b$, 
+    of $B$. For any $m \in \Zplus$ there is an $n \in \Zplus$ such that $g(n) > S_m$. Because if not, then $B$
+    would be finite. In particular for $m = b$ there is an $n$ such that $g(n) > b$. Let $C =
+    \set{n\in\Zplus}{g(n)\geq b}$. Then $C \subset \Zplus$ and so a minimum $p \in \Zplus$ exists such that
+    $g(p) \geq b$. This means that $g(1),g(2),\ldots,g(p-1)$ are all less than $b$. By definition of $g$,
+    $g(p)\leq b$. Thus it must be the case that $g(p) = b$.
+\end{proof}
+We have used a key idea here called the principle of recursive definition.
+\begin{Definition}[name=Principle of recursive definition]
+    Let $A$ be any set. Given a formula that defines $g(1)$ as a \textbf{unique} element of $A$ and for all
+    $i > 1$ defines $g(1)$ \textbf{uniquely} as an element of $A$ in terms of the values of $g$ for positive
+    integers less than $i$, this formula determines a \textbf{unique function} $\map{g}{\Zplus}{A}$.
+\end{Definition}
+\begin{Corollary}
+    A subset of a countable set is countable.
+\end{Corollary}
+\begin{proof}
+    Let $A \subset B$ such that $B$ is countable. Thus there exists an injection $\map{f}{B}{\Zplus}$. Hence,
+    $\map{\restrict{f}{A}}{A}{\Zplus}$ is also an injection.
+\end{proof}
+\begin{Corollary}
+    The set $\Zplus\times\Zplus$ is countable.
+\end{Corollary}
+\begin{proof}
+    Let $\map{f}{\Zplus\times\Zplus}{\Zplus}$ be given by $f(i,j) = 2^{i}3^{j}$. Then, $f$ is injective
+    (because $2,3$ are prime).
+\end{proof}
+\begin{Corollary}
+    The set of positive rational numbers is countable.
+\end{Corollary}
+\begin{proof}
+    Let $\map{f}{\Zplus\times\Zplus}{\Q^{+}}$ be defined by $f(i,j) = \frac{i}{j}$. Then $f$ is surjective.
+    We showed that there is a function $\map{g}{\Zplus}{\Zplus\times\Zplus}$ that is surjective. Thus
+    $\map{\fog{f}{g}}{\Zplus}{\Q^{+}}$ is surjective.
+\end{proof}
+\begin{Theorem}
+    A countable union of countable sets is countable.
+\end{Theorem}
+\begin{proof}
+    Let $\famA$ be a collection of countable sets $A_1,A_2,\ldots$. Since each $A_i$ is countable there is a
+    function $\map{f_i}{\Zplus}{A_i}$ that is a surjection. In other words we can list the elements of $A_i$'s,
+    \begin{align*}
+	A_1 &= \setX{a_{11},a_{12},a_{13},\ldots}\\
+	A_2 &= \setX{a_{21},a_{22},a_{23},\ldots}\\
+	&\vdots\\
+	A_j &= \setX{a_{j1},a_{j2},a_{j3},\ldots}\\
+	&\vdots
+    \end{align*}
+    Define $\map{g}{\Zplus\times\Zplus}{\countUnion{A_i}{i}}$ as,
+    $g(i,j) = a_{ij} = f_i(j)$. Thus $g$ is a surjection.
+\end{proof}
+\begin{Theorem}
+    A finite product of countable sets is countable.
+\end{Theorem}
+\begin{proof}
+    We have shown the analogous result for finite sets. Let $\set{A_i}{1\leq i \leq n}$ be a finite collection
+    of countable sets. We prove this by induction on $n$. The case $n= 1$ is trivial. When $n = 2$,
+    $A_1\times A_2 = \bigcup\limits_{a\in A_1}\setX{a}\times A_2$ is a countable unioon of countable sets and
+    is countable by the theorem above. We proceed by induction to prove it for any $n \in \Zplus$.
+\end{proof}
+\begin{Theorem}
+    Let $A$ be any set. There is NO injective map \break{}$\map{f}{\powSet{A}}{A}$ and there is no surjective map
+    $\map{g}{A}{\powSet{A}}$.
+\end{Theorem}
+\begin{proof}
+    We will show that there is no surjective map which maps $A$ onto the powerset of $A$. This will then imply
+    that there is no injective map that maps powerset of $A$ into $A$. This is because of the following:
+    \[\thereIs{\map{f}{B}{C}}\text{$f$ is injective, then}\hspace{0.05in}\thereIs{\map{g}{C}{B}}
+	\text{$g$ is surjective}.\]
+    Taking the contrapositive of this statement we can just show the non-existence of a surjective map. To
+    see why the above statement is true, assume there is an injection $\map{f}{B}{C}$. Thus for any $c \in
+    \dirIm{f}{B}$, there is a unique $b$ such that $f(b) = c$. Define $\map{g}{C}{B}$ as follows, if $c \in C$
+    is in $f(B)$, then $g(c) = b$ such that $f(b) = c$. If $c \in C$ such that $c \not\in f(B)$, then fix a
+    $b_0 \in B$ and let $g(c) = b_0$. Thus $g$ is surjective. Note that $B$ has to be non-empty for all this
+    to make sense.
+
+    Now we will show the non-existence of a surjective map from $A$ onto $\powSet{A}$ by contradiction. 
+    Assume, there is a $\map{g}{A}{\powSet{A}}$ such that $g$ is surjective. Thus for any $X \subset A$, there
+    is a $a \in A$ such that $g(a) = X$. Let $B = \set{a\in A}{a \in g(a)}$. Then $B \subset A$ and hence by
+    our assumption there is an $a_0 \in A$ such that $g(a_0) = B$.
+    There are two possibilities for $a_0$. Either $a_0 \in g(a_0)$ or $a_0 \not\in g(a_0)$. In the first case,
+    $a_0 \not\in B$ and in the second case $a_0 \in B$. Thus $g(a_0)\neq B$. Hence, $g$ cannot be surjective.
+\end{proof}
+\begin{Corollary}
+    There exists an uncountable set.
+\end{Corollary}
+\begin{proof}
+    There is no surjection from $\Zplus$ onto $\powSet{\Zplus}$. Thus, $\powSet{\Zplus}$ is uncountable.
+\end{proof}
+Let us now give a characterization of infinite sets. These sets are either countably infinite or uncountable.
+From our discussion following the definition of infinite sets, we already gathered a few notions of what is
+means to be for a set to be infinite. We elaborate on this now.
+\begin{Theorem}
+    Let $A$ be a set. The following statements about $A$ are equivalent.
+    \begin{enumerate}
+	\item
+	    There is an injective function $\map{f}{\Zplus}{A}$.
+	\item
+	    There exists a bijection of $A$ with a proper subset of itself.
+	\item
+	    $A$ is infinite.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    $(1)\implies(2)$
+    Let $\map{f}{\Zplus}{A}$ be an injective map. Note that $\map{f}{\Zplus}{f(\Zplus)}$ is a bijective map
+    that lists a subset of $A$ as a sequence $(a_1,a_2,\cdots)$. Let $B = A - \setX{a_1}$. Then $B$ is a
+    proper subset of $A$. Note that $A = f(\Zplus)\cup (\setDiff{A}{f(\Zplus)})$. 
+    Define $\map{g}{A}{B}$ as follows:
+    \begin{equation*}
+	g(a) = 
+	\begin{cases}
+	    a_{n+1}&\text{if $a = x_n \in f(\Zplus)$ for some $n$}\\
+	    a &\text{if $a \not\in f(\Zplus)$}
+	\end{cases}
+    \end{equation*}
+
+    $(2)\implies(3)$ This just follows from our discussion following the definition of infinite sets.
+
+    $(3)\implies(1)$
+    First pick \textbf{any} element of $A$ and call it $a_1$. Thus $f(1) = a_1$. Now, pick any element of $A$
+    which is not equal to $a_1$ and call it $a_2$. That is $f(2) \in A - \setX{a_1}$. This process will
+    continue indefinitely since $A$ is infinite. Hence $\map{f}{\Zplus}{A}$ is injective, where $f$ is
+    definied recursively as follows:
+    \[f(n) \in A - \setX{a_1,a_2,\ldots,a_n}.\]
+    However, there is a problem in our recursive definition for $f$. Namely, $f(1)$ is not unique and $f(n)$
+    is certainly not uniquely defined in terms of $\setX{a_1,a_2,\ldots,a_n}$, since we are picking an
+    arbitrary element of $A$. We need an additional axiom from set theory to make this possible.
+\end{proof}
+
+
+\begin{enumerate}[label=\bfseries Axiom 11:]
+    \item (Axiom of choice) Given a collection $\famB$ of non-empty sets, there exists a function 
+	\[\map{c}{\famB}{\bigcup\limits_{B\in\famB}B},\]
+	such that $c(B)\in B$ for any $B \in \famB$.
+\end{enumerate}
+Using the axiom of choice we can fix our recursive definition for $f$. 
+Let $\famB = \powSet{A}-\emptyset$. Then there exists a choice function such that $c(B) \in B$ for any $B \in
+\famB$. Pick $B = A$. Thus $c(A)$ gives an element of $A$ uniquely.
+Let $f(1) = c(A)$.
+Now $A - \setX{f(1)}$ is also in $\famB$. Define $f(2) = c(A - \setX{f(1)})$ which is again uniquely defined.
+Thus, define
+\[f(n) = c(A - \setX{f(1),f(2),\ldots,f(n-1)}).\]
+This is a valid recursive function.
+
+
+There is a equivalence relation which is induced by bijective functions.
+Let us define $A\sim B$ whenever there is a bijective map $\map{f}{A}{B}$. It is easy to see that $\sim$ is an
+equivalence relation. A set $A$ is countably infinite if $A \sim \Zplus$. Note that any two countably infinite
+sets are equivalent since if $A\sim \Zplus$ and $B \sim \Zplus$, then $A \sim B$. 
+
+This is an extremely
+important idea which we will explore now in the subsequent paragraph in the form of Cantor-Schroder-Bernstein
+theorem.
+
+Suppose $A,B$ are sets and $f$ is one-to-one function from $A$ into $B$. Then $A\sim f(A)\subset B$, so it is
+natural to think of $B$ as being at least as large as $A$. This suggests the following notation:
+\begin{Definition}
+    If $A,B$ are sets, then we will say that $B$ \textbf{dominates} $A$, and write $A \preceq B$, if there is
+    an injective function $\map{f}{A}{B}$. If $A\preceq B$ and $A\not\sim B$, then we say $B$ strictly
+    dominates $A$.
+\end{Definition}
+\begin{Theorem}[name=Schroder-Bernstein theorem]
+    If $A \preceq B$ and $B \preceq A$, then $A\sim B$.
+\end{Theorem}
+\begin{proof}
+    Let $\map{f}{A}{B}$ and $\map{g}{B}{C}$ be injective functions. Note that $\map{g}{B}{g(B)}$ is bijective.
+    Let $A_0 = \setDiff{A}{g(B)}$ and let us define recursively $A_n = g(f(A_{n-1}))$.
+    Let $X = \bigcup\limits_{n=0}^{\infty}A_n$. Then $X \subset A$. Define $Y = \setDiff{A}{X}$. Note that, $Y
+    \subset g(B)$. This is because if $a \in Y$ then $a \in A$ and $a \not\in A_0$, that is $a \in g(B)$.
+    Define,
+    \begin{equation*}
+	h(a) = 
+	\begin{cases}
+	    f(a) &\text{if $a\in X$}\\
+	    g^{-1}(a) &\text{if $a\in Y$}
+	\end{cases}
+    \end{equation*}
+    \textbf{Claim:} $h$ is injective. 
+    Assume $h(a_1) = h(a_2)$ for $a_1,a_2$ in $A$. The only cases we have to check are when $a_1\in X$ and
+    $a_2\in Y$ and vice-versa.
+    Suppose $a_1\in X$ and $a_2\in Y$. Then $f(a_1) = g^{-1}(a_2)$. Which means that $g(f(a_1)) = a_2$. Since
+    $a_1\in X$, there is an $n$ such that $a_1 \in A_n$ and hence $a_2 \in g(f(A_n))$ which means that $a_2
+    \in A_{n+1}$ i.e.~$a_2 \in X$ which is a contradiction. The other case is similar.
+
+    \textbf{Claim:} $h$ is surjective. Let $b \in B$. Then $g(b) \in A$. Thus $g(b) \in X$ or $g(b) \in Y$. If
+    $g(b)$ is in $Y$, then $h(g(b)) = g^{-1}(g(b)) = b$. Thus there is an $a = g(b) \in A$ such that $h(a) =
+    b$. If $g(b) \in X$, then there is an $A_n$ such that $g(b)\in A_n$. But $n$ cannot be $0$. Thus there is
+    an $n > 1$ such that $g(b) \in g(f(A_{n-1}))$. This means that there is an $x_1\in f(A_{n-1})$ such that
+    $g(x_1) = g(b)$. Since $g$ is injective, this means that $x_1 = b$ i.e.~there is an $x \in A_{n-1}$ such
+    that $f(x) = x_1 = b$. But this means that $h(x) = b$ for some $x \in A_{n-1}\subset X$.
+\end{proof}
+

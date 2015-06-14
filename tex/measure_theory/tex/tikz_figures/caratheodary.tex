@@ -1,0 +1,47 @@
+\documentclass{article}
+\usepackage{standalone}
+\usepackage{tikz}
+\usetikzlibrary{shapes,backgrounds}
+\begin{document}
+
+\def\firstcircle{(0,0) circle (1.5cm)} %A
+\def\secondcircle{(1.75,1.25) circle (1.5cm)} % E
+\def\thirdcircle{(8,0) circle (1.5cm)} % E
+\def\fourthcircle{(8,0) circle (2.5cm)} % A
+
+% Now we can draw the sets:
+\begin{tikzpicture}
+    \begin{scope}[shift={(3cm,0cm)},fill opacity=0.65]
+	% clip secondcircle and fill the first circle
+	% clip E and then fill the first circle will result in A - E
+	% clip against a rectangle that contains both the circle.
+	\begin{scope}[even odd rule]
+	    \clip \secondcircle (-3,-3) rectangle (3,3);
+	    \fill[red] \firstcircle;
+	\end{scope}
+	% clip A and then fill E but dont use even odd rule. Will hightlight the intersection.
+	\begin{scope}
+	    \clip \firstcircle;
+	    \fill[green] \secondcircle;
+	\end{scope}
+	% Now draw the outline
+	\draw \firstcircle node {$A\cap E^{\mathsf{c}}$};
+	\draw[green] \secondcircle node{$E$}; 
+	\node at (0,-2) {$A$};
+	% A - E
+	\begin{scope}[even odd rule]
+	    \clip \thirdcircle (2,-6) rectangle (12,6);
+	    \fill[red] \fourthcircle;
+	\end{scope}
+	% fill A \cap E
+	\begin{scope}
+	    \clip \thirdcircle;
+	    \fill[green] \fourthcircle;
+	\end{scope}
+	% draw the outline
+	\draw \fourthcircle;
+	\draw \thirdcircle node {$E$};
+	\node at (8,-3) {$A$};
+    \end{scope}
+\end{tikzpicture}
+\end{document}

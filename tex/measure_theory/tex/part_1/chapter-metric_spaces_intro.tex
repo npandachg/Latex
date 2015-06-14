@@ -1,0 +1,674 @@
+\chapter{Metric spaces}
+In this chapter we will start with the description of metric spaces and some topological concepts involved in
+such spaces. Metrics are abstraction of the concept of distance that is familiar to us.
+\section{Basic definitions}
+\begin{Definition}
+    A metric space is a pair $\metricS{X}{d}$ where $X$ is a non-empty set and $d$ is a function
+    \[\map{d}{X\times X}{\interval[open right]{0}{\infty}},\]
+    called a metric, that satisfies the following properties for all $x,y,z$ in $X$:
+    \begin{itemize}
+	\item (positive reflexive)
+	    $d(x,y) = 0$ if and only if $x = y$.
+	\item (symmetric)
+	    $d(x,y) = d(y,x)$.
+	\item (triangle inequality)
+	    $d(x,y) \leq d(x,z) + d(z,y)$.
+    \end{itemize}
+\end{Definition}
+These properties are minimal in order to capture the idea of distance between two points.
+\begin{Example}\label{ex:metric_space}
+    We will show some basic examples of a metric space.
+    \begin{enumerate}
+	\item
+	    Let $X = \R$ and define $d(x,y) = \distR{x}{y}$. This is the standard metric in $\R$.
+	\item
+	    Let $X = \Rn$ and for $\vx,\vy$ in $\Rn$ define 
+	    \[d(\vx,\vy) = (\finiteSum{{(x_j - y_j)}^2}{j}{n})^{\frac{1}{2}}.\] 
+	    The proof that $d$
+	    is a metric relies on the famous \textbf{Cauchy-Schwarz} inequality. This metric is called the
+	    \textbf{Euclidean} metric and in $\R^2$ gives us the standard Pythagorean distance.
+	\item
+	    Let $X = \Rn$ and for $\vx,\vy$ in $\Rn$ define
+	    \[d(\vx,\vy) = \finiteSum{\distR{x_j}{y_j}}{j}{n}.\]
+	    To verify that $\metricS{X}{d}$ is indeed a metric space we need to check if $d$ is a metric. The
+	    hardest one to check is triangle inequality. But this follwows from the triangle inequality of
+	    absolute values in $\R$ i.e.~for any $z_j$ in $\R$, $\distR{x_j}{z_j} \leq \distR{x_j}{y_j} +
+	    \distR{y_j}{z_j}$. 
+	\item
+	    Let $X = \Rn$ and for $\vx,\vy$ in $\Rn$ define,
+	    \[d(\vx,\vy) = \max\set{\distR{x_j}{y_j}}{1\leq j \leq n}.\]
+	\item
+	    Any non-empty set can be made into a metric space. Let $X$ be a non-empty set and for any $x,y \in
+	    X$ define
+	    \begin{equation*}
+		d(x,y) = 
+		\begin{cases}
+		    0 &\,\text{if $x = y$},\\
+		    0 &\, \text{if $x \neq y$}.
+		\end{cases}
+	    \end{equation*}
+	    This is easily verified to be a metric space and $d$ is called the \textbf{discrete} metric.
+	\item
+	    Suppose $\metricS{X}{d}$ is given. If $Y$ is a nonempty subset of $X$, then $\metricS{Y}{d}$ is a
+	    metric space and is referred to as a subspace. As a specific example consider the set $X=\R$ and
+	    the metric space $\metricS{\R}{d}$ where $d$ is any metric. Then $Y = \interval{0}{1}$ defines a 
+	    metric space $\metricS{Y}{d}$.
+    \end{enumerate} 
+\end{Example}
+Now that we have a notion of distance we can define a notion of \textbf{closeness}. This is done through the
+concept of \emph{balls} in a metric space.
+\begin{Definition}[name=Open Ball]
+    Let $\metricS{X}{d}$ be a metric space and let $x$ be an element of $X$ and $r$ be a positive real number.
+    The set
+    \[\ball{r}{x} = \set{y\in X}{d(y,x) < r},\]
+    is called the open ball of radius $r$ around $x$.
+\end{Definition}
+\begin{Definition}[name=Closed Ball]
+    Let $\metricS{X}{d}$ be a metric space and let $x$ be an element of $X$ and $r$ be a positive real number.
+    The set
+    \[\closure{\ball{r}{x}} = \set{y\in X}{d(y,x) \leq r},\]
+    is called the closed ball of radius $r$ around $x$.
+\end{Definition}
+Notice that when $s < r$, $\closure{\ball{s}{x}} \subset \ball{r}{x}$ for any metric.
+It is highly illustrative to figure out unit balls in a metric space. For example, let us take $X = \R^2$ and
+consider two metric spaces $\metricS{X}{d_1}$ and $\metricS{X}{d_2}$ where $d_1$ is the Euclidean metric
+defined as in~\ref{ex:metric_space} (2) and $d_2$ be the metric defined as in~\ref{ex:metric_space} (3).
+How do the open balls of radius $1$ \emph{look} around the point $\vx = \mathbf{0}$ 
+in these two metric spaces?
+
+%%%%% Figure here on open balls %%%%%%%%%%
+The notion of closeness can be made precise with the concept of \emph{open} sets in metric spaces.
+\begin{Definition}[name=Open set]
+    If $\metricS{X}{d}$ is a metric space, then a subset $G$ of $X$ is open if for each $x$ in $G$ there is a
+    radius $r > 0$ such that the ball of radius $r$ around $x$ is contained entirely in $G$. This is denoted
+    logically as,
+    \[\forEv{x\in G}\thereIs{r > 0 \in \R}\suchThat{\ball{r}{x}}{\subset}{G}.\]
+\end{Definition}
+When is a set $G \subset X$ \textbf{NOT} open? If we can find an $x \in G$ such that no matter what $r > 0$ we
+choose, the open ball of radius $r$ around $x$ is not contained in $G$. This is immediately evident by
+negating the logical statement in the definition.
+\begin{Definition}[name=Closed set]
+    If $\metricS{X}{d}$ is a metric space, then a subset $F$ of $X$ is closed if the complement of $F$ in $X$
+    is open i.e.~$\setDiff{X}{F}$ is open. This is denoted logically as,
+    \[\forEv{x\in X}\suchThat{x\not\in F}{\implies}{\thereIs{r > 0\in\R}\ball{r}{x}\cap F = \emptyset}.\]
+\end{Definition}
+The above definition can be made entirely in terms of the set $F$ by taking the contrapositive of the
+implication in the logical statement above i.e.~a set $F$ is closed if for any point $x \in X$ it is
+the case that no matter what radius $r$ we take the ball of radius $r$ around $x$ always intersects $F$, then
+$x$ must be in $F$. Logically,
+\[\forEv{x\in X}\suchThat{\forEv{r > 0 \in \R}\ball{r}{x}\cap F \neq \emptyset}{\implies}{x\in F},\]
+is equivalent to saying $F$ is closed in $X$. This notion gives us a nice way to judge when a set $F$ is
+\textbf{NOT}
+closed in $X$. For that to happen there must be an $x \in X$ such that no matter any radius $r$ we take, the
+ball of radius $r$ about $x$ always intersects $F$ but $x$ does not belong to $F$.
+\begin{Example}\label{ex:open_closed_set}
+    We show a few examples of open and closed sets in a metric space $\metricS{X}{d}$.
+    \begin{enumerate}
+	\item
+	    We observe that $X,\emptyset$ are both open and closed sets. In fact it is clear that $X$ is open
+	    and that $\emptyset$ is open because it has no points. Then taking complements we see that they
+	    both are closed.
+	\item
+	    The open ball is an open set. To see this let $G = \ball{r}{x}$ be an open ball in $X$. To show that
+	    it is an open set we need, for any point $y$ in $G$, to find a radius $\delta > 0$ such that the
+	    ball $\ball{\delta}{y} \subset G$. Let $\delta = r - d(y,x)$. This is greater than $0$ since $y$
+	    belongs to $G$. Now to show that $\ball{\delta}{y} \subset G$ we need to show that for any $z \in
+	    \ball{\delta}{y}$, $z$ must be in $G$ i.e.~$d(z,x) < r$. But this follows from the following
+	    argument,
+	    \begin{align*}
+		d(z,x) &\leq d(z,y) + d(y,x),\\
+		& \leq \delta + r - \delta, \\
+		&\quad = r.
+	    \end{align*}
+	\item
+	    The closed ball is a closed set. To see this let $F = \closure{\ball{r}{x}}$ be a closed ball in
+	    $X$. To show that $F$ is closed we need to show that for any $y\in X$ if $y \not \in F$ then we
+	    must be able to find a radius $\delta > 0$ such that $\ball{\delta}{y}$ doesn't intersect $F$. Let
+	    $y$ be a point in $\setDiff{X}{F}$. Hence $d(y,x) > r$. Let $\delta = d(y,x) - r$. Hence $\delta >
+	    0$. For any $z \in \ball{\delta}{y}$,
+	    \begin{align*}
+		d(x,z) + d(z,y) &\geq d(x,y)\\
+		&\implies d(x,z) \geq d(x,y) - d(z,y), \\
+		&\implies d(x,z) \geq r.
+	    \end{align*}
+	    Hence $\ball{\delta}{y}\cap F = \emptyset$.
+	\item
+	    Any finite subset of $X$ is closed. In fact if $F =\setX{x_1,x_2,x_3,\ldots,x_n}$, then for any
+	    $y\in \setDiff{X}{F}$, let $\delta = \min\set{d(y,x_i)}{1\leq i \leq n}$. Then
+	    $\ball{\frac{\delta}{2}}{y} \cap F = \emptyset$.
+    \end{enumerate}
+\end{Example}
+
+Open sets are closed under arbitrary unions and closed sets are closed under arbitrary intersections. We make
+this precise in the next proposition.
+\begin{Proposition}\label{prop:open_sets_prop}
+    Let $\metricS{X}{d}$ be a metric space and let $\famG$ be the collection of all open sets in $X$. Then,
+    \begin{enumerate}
+	\item $X,\emptyset$ are in $\famG$.
+	\item If $G_1,G_2,\ldots,G_n$ are $n$ open sets in $\famG$, then $\finiteIntersection{G_i}{i}{n}$ is
+	    also in $\famG$.
+	\item If $\set{G_{\alpha}\in \famG}{\alpha \in I}$ is an arbitrary sub collection of open sets in
+	    $\famG$ then $\indexUnion{G_{\alpha}}{\alpha}{I}$ is also in $\famG$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item We showed this in the example.
+	\item Let $x$ be in $\finiteIntersection{G_i}{i}{n}$. Then $x$ is in each $G_i$ and since $G_i$ is open
+	    there is an $r_i > 0$ such that $\ball{r_i}{x} \subset G_i$. Take 
+	    $r = \min\set{r_i}{1\leq i \leq n}$.
+	    Then $r > 0$ and $\ball{\frac{r}{2}}{x} \subset G_i$ for all $i$'s. Hence
+	    \[\ball{\frac{r}{2}}{x} \subset \finiteIntersection{G_i}{i}{n}.\]
+	\item Let $x$ be in $\indexUnion{G_{\alpha}}{\alpha}{I}$. Then there is an $\alpha$ in $I$ such that
+	    $x$ is in $G_{\alpha}$. Since $G_{\alpha}$ is open there is an $r > 0$ such that $\ball{r}{x}
+	    \subset G_{\alpha}$. But $G_{\alpha} \subset \indexUnion{G_{\alpha}}{\alpha}{I}$ and hence 
+	    \[\ball{r}{x} \subset \indexUnion{G_{\alpha}}{\alpha}{I}.\]
+    \end{enumerate}
+\end{proof}
+\begin{Proposition}\label{prop:closed_sets_prop}
+    Let $\metricS{X}{d}$ be a metric space and let $\famF$ be the collection of all closed sets in $X$. Then,
+    \begin{enumerate}
+	\item $X,\emptyset$ are in $\famF$.
+	\item If $F_1,F_2,\ldots,F_n$ are $n$ closed sets in $\famF$, then $\finiteUnion{F_i}{i}{n}$ is
+	    also in $\famF$.
+	\item If $\set{F_{\alpha}\in \famF}{\alpha \in I}$ is an arbitrary sub collection of closed sets in
+	    $\famF$ then $\indexIntersection{F_{\alpha}}{\alpha}{I}$ is also in $\famF$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    De Morgan's law of set complements.
+\end{proof}
+
+One must be very careful about the universe when talking about open and closed sets in a metric space. For
+example if we consider $X = \R^2$ with the euclidean metric and $\R = Y \subset \R^2$ with the same Euclidean
+metric, then an interval $(a,b)$ is open in $Y$ but is \textbf{NOT} open in $X$. To make this precise we will
+define the notion of relative openess (or closedness).
+
+\begin{Definition}[name=Open balls in subspace]
+    Let $\metricS{X}{d}$ be a metric space and consider $Y \subset X$. We define an open ball in
+    $\metricS{Y}{d}$ of radius $r$
+    about a point $y \in Y$ as the set,
+    \[\relBall{r}{y}{Y} = \set{z\in Y}{d(z,y) < r} = \ball{r}{y}\cap Y.\]
+\end{Definition}
+\begin{Example}
+    Let $X = \R$ and let $Y = \interval{0}{1}$ with the metric given by the absolute value. 
+    Then an open ball in $Y$ of radius $\frac{1}{2}$ about $0$ is
+    $\relBall{\frac{1}{2}}{0}{Y} = \interval[open right]{0}{\frac{1}{2}}$ where as the open ball in $X$ is 
+    $(-\frac{1}{2},\frac{1}{2})$.
+\end{Example}
+
+\begin{Proposition}\label{prop:open_relative}
+    Let $\metricS{X}{d}$ be a metric space and let $Y$ be a subset of $X$.
+    \begin{enumerate}
+	\item
+	    A subset $G$ of $Y$ is relatively open in $Y$ if and only if there is an open subset $U$ in $X$
+	    with $G = U \cap Y$.
+	\item
+	    A subset $F$ of $Y$ is relatively closed in $Y$ if and only if there is a closed subset $U$ in $X$
+	    with $F = U \cap Y$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We will show the proof for only $(1)$.
+   
+    Let $G\subset Y$ be relatively open in $Y$. This means that for any
+    $x \in G$ there is radius $r_x$ such that an open ball in $Y$, $\relBall{r_x}{x}{Y} \subset G$.
+    Let $U =
+    \bigcup\limits_{x\in G}\ball{r_x}{x}$. Then by~\ref{prop:open_sets_prop}, $U$ is open in $X$. We will show
+    that $G \subset U \cap Y$ and $U\cap Y \subset G$.
+
+    If $z \in G$ then $z \in \relBall{r_z}{z}{Y} = \ball{r_z}{z}\cap Y
+    \subset U\cap Y$. Thus $G \subset U \cap Y$. If $z \in U\cap Y$. Then there is an
+    $x\in G$ such that $z \in \ball{r_x}{x}$ and $z \in Y$ that is $z \in \relBall{r_x}{x}{Y}$ which is a
+    subset of $G$. Thus $z \in G$ i.e.~$U\cap Y \subset G$. 
+
+    Let $U$ be an open set in $X$ such that $G = U\cap Y$, that is to say,
+    \[G \subset U \cap Y \subset G.\]
+    If $x \in G$ then $x \in U \cap Y$ and since $U$ is open there is a $r > 0$ such that $\ball{r}{x} \subset
+    U$. That means that \[\relBall{r}{x}{Y} = \ball{r}{x}\cap Y \subset U \cap Y \subset G.\] 
+\end{proof}
+
+Open and closed sets enable us to look at points in a metric space with a geometric lens. Given a set, a point
+may either be \emph{inside} it, \emph{outside} it  or on the \emph{edge}. These notions can be made precise.
+\begin{Definition}[name=Interior of a set]
+    Let $\metricS{X}{d}$ be a metric space and let $A$ be a subset of $X$. The interior of a set $A$, denoted
+    by $\interior{A}$ is the
+    set defined by,
+    \[\interior{A} = \bigcup\set{G\subset X}{G\,\text{is open and}\, G \subset A}.\]
+    Thus if $x \in \interior{A}$ then there is an $r > 0$ such that the ball $\ball{r}{x}$ is entirely
+    contained in $A$.
+\end{Definition}
+\begin{Definition}[name=Closure of a set]
+    Let $\metricS{X}{d}$ be a metric space and let $A$ be a subset of $X$. The closure of $A$, denoted by
+    $\cl{A}$, is the set defined by,
+    \[\cl{A} = \bigcap\set{F\subset X}{F\,\text{is closed and}\, F\supset A}.\]
+    Thus if $x\in \cl{A}$ then any closed set $F$ containing $A$ must include the point $x$.
+\end{Definition}
+\begin{Definition}[name=Boundary of a set]
+    Let $\metricS{X}{d}$ be a metric space and let $A$ be a subset of $X$. The boundary of $A$, denoted by
+    $\boundary{A}$, is the set defined by
+    \[\boundary{A} = \cl{A}\cap\cl{(\setDiff{X}{A})}.\]
+\end{Definition}
+\begin{Remark}
+    Since $\emptyset$ is open and is contained in every set, the interior of any set always contains the
+    emptyset. This however, may be all the interior of a set, in other words there could be a $A \subset X$
+    such that $\interior{A} = \emptyset$. Since $X$ is closed and contains any set, it may
+    happen that it is the only closed set containing the set in other words there could be a $A \subset X$
+    such that $\cl{A} = X$.
+
+    It follows from~\ref{prop:open_sets_prop} that $\interior{A}$ is open (being the union of open sets) and
+    from~\ref{prop:closed_sets_prop} that the
+    $\cl{A}$ is closed (being the intersection of closed sets).
+\end{Remark}
+The following Proposition gives a useful characterization of the interior and closure of sets.
+\begin{Proposition}\label{prop:characterization_int_closure}
+    Let $\metricS{X}{d}$ be a metric space and let $A \subset X$. Then,
+    \begin{enumerate}
+	\item
+	    $x \in \interior{A}$ if and only if there is an $r > 0$ such that $\ball{r}{x} \subset A$.
+	\item
+	    $x \in \cl{A}$ if and only if for every $r > 0$ the ball $\ball{r}{x}\cap A \neq \emptyset$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{itemize}
+	\item
+	    If $x \in \interior{A}$ then it follows from the definition that it belongs to an open set $G
+	    \subset X$ and hence there is an $r > 0$ such that $\ball{r}{x} \subset G \subset A$.
+
+	    Assume there is an $r > 0$ such that the $\ball{r}{x} \subset A$. Since an open ball is an open
+	    set, let $G = \ball{r}{x}$. Then $x \in G \subset A$ and hence $x \in \interior{A}$. 
+	\item
+	    Take an $x \in \cl{A}$. Fix an $r > 0$. Assume $\ball{r}{x}\cap A = \emptyset$
+	    i.e.~$\ball{r}{x}\subset(\setDiff{X}{A})$. This means that $(\setDiff{X}{\ball{r}{x}}) \supset A$.
+	    Since $\ball{r}{x}$ is open, $(\setDiff{X}{\ball{r}{x}})$ is a closed set containing $A$ and 
+	    hence must
+	    contain $\cl{A}$. Thus $\ball{r}{x}\cap \cl{A} = \emptyset$. Hence we reach a
+	    contradiction (in assuming $\ball{r}{x}\cap A = \emptyset$) 
+	    since $x \in \cl{A}$ and $\cl{A}$ is closed.
+
+	    To show the other implication we prove the contrapositive. Assume $x\not\in\cl{A}$
+	    i.e.~$x\in\setDiff{X}{\cl{A}}$. Since
+	    $\cl{A}$ is closed, this means that there is an $r > 0$ such that 
+	    $\ball{r}{x}\subset\setDiff{X}{\cl{A}}$. But
+	    $(\setDiff{X}{\cl{A}}) \subset (\setDiff{X}{A})$ since $A \subset \cl{A}$. Hence
+	    $\ball{r}{x}\cap A = \emptyset$.
+    \end{itemize}
+\end{proof}
+\begin{Example}
+    Let $X$ be $\R$ and $A = \Q$. We know from elementary analysis that any interval contains a rational
+    number and any interval with rational endpoints contain a real number. Thus $\cl{\Q} = \R$. Similarly any
+    interval with rational endpoints contain irrational number and so $\interior{\Q} = \emptyset$. Using the
+    same reasoning we see that $\cl{(\setDiff{\R}{\Q})} = \R$ and $\interior{(\setDiff{\R}{\Q})} = \emptyset$.
+    Thus $\boundary{\Q} = \R$.
+\end{Example}
+\begin{Example}
+    We will show that the closed ball is not generally the closure of the open ball. Let $\metricS{X}{d}$ be
+    the discrete metric. Then for any $x \in X$, 
+    $\ball{r}{x} = \setX{x} = \cl{\ball{r}{x}}$. But $\closure{\ball{r}{x}} = X$.
+\end{Example}
+\begin{Proposition}\label{prop:prop_closure_interior}
+    Let $\metricS{X}{d}$ be a metric space and let $A$ be a subset of $X$. Then,
+    \begin{enumerate}
+	\item
+	    $A$ is closed if and only if $A = \cl{A}$.
+	\item
+	    $A$ is open if an only if $A = \interior{A}$.
+	\item
+	    $\cl{A} = \setDiff{X}{\interior{(\setDiff{X}{A})}}$.
+	\item
+	    $\interior{A} = \setDiff{X}{\cl{(\setDiff{X}{A})}}$.
+	\item
+	    $\boundary{A} = \setDiff{\cl{A}}{\interior{A}}$.
+	\item
+	    If $A_1,\ldots,A_n$ are subsets of $X$, then $\cl{(\finiteUnion{A_k}{k}{n})} =
+	    \finiteUnion{\cl{A_k}}{k}{n}$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{itemize}
+	\item
+	    First note that $A \subset \cl{A}$ for any $A \subset X$. If $A$ is closed then since $A \subset
+	    A$ and $\cl{A} \subset F$ for all $F$ closed and containing $A$, $\cl{A} \subset A$. Thus if $A$
+	    is closed then $A = \cl{A}$.
+
+	    Since $\cl{A}$ is closed and $A = \cl{A}$, $A$ is closed.
+	\item
+	    Note that $\interior{A}$ is open and $\interior{A} \subset A$. Let $A$ be open and let $x$ be in
+	    $A$. Hence there is an $r > 0$ such that $\ball{r}{x} \subset A$. But
+	    by~\ref{prop:characterization_int_closure}, $x$ is in $\interior{A}$ and hence $A \subset
+	    \interior{A}$.
+
+	\item
+	    For any set $B \subset X$, let us denote by $\comp{B}$ the set $\setDiff{X}{B}$. With this
+	    terminology, first observe that $\interior{(\comp{A})} \subset \comp{A}$ and hence,
+	    $A \subset \comp{(\interior{(\comp{A})})}$. Since $\comp{(\interior{(\comp{A})})}$ is closed and 
+	    contains
+	    $A$, we must have $\closure{A} \subset \comp{(\interior{(\comp{A})})}$.
+
+	    Let $x$ be an element of $\comp{(\interior{(\comp{A})})}$ and hence 
+	    $x \not\in \interior{(\comp{A})}$, which means that for any $r > 0$
+	    $\ball{r}{x}\not\subset\comp{A}$; which is equivalent to saying that $\ball{r}{x}\cap A \neq
+	    \emptyset$ for any $r > 0$ and hence $x \in \closure{A}$. Thus, we have shown that
+	    $\comp{(\interior{(\comp{A})})} \subset A$.
+
+	\item
+	    Again, using the notation from above, note that $\cl{(\comp{A})} \supset \comp{A}$ and hence
+	    $\comp{(\cl{(\comp{A})})} \subset A$. Since $\comp{(\cl{(\comp{A})})}$ is an open set contained in
+	    $A$, we must have $\comp{(\cl{(\comp{A})})} \subset \interior{A}$.
+
+	    Let $x$ be an element of $\interior{A}$. Then there is an $r > 0$ such that $\ball{r}{x} \subset
+	    A$, which means that $\ball{r}{x} \cap \comp{A} = \emptyset$. But this means that $x \not\in
+	    \cl{(\comp{A})}$, which is equivalent to saying that $x \in \comp{(\cl{(\comp{A})})}$. Hence, we
+	    have shown that $\interior{A} \subset \comp{(\cl{(\comp{A})})}$.
+	\item
+	    Using the notation from above, note that $\boundary{A} = \cl{A}\cap\cl{\comp{A}}$. From $(4)$, we
+	    see that $\cl{\comp{A}} = \comp{(\interior{A})}$ and hence $\boundary{A} =
+	    \cl{A}\cap\comp{(\interior{A})} = \setDiff{\cl{A}}{\interior{A}}$.
+	\item
+	    Let $A = \finiteUnion{A_k}{k}{n}$. Note that $A \supset A_k$ and hence $\cl{A} \supset \cl{A_k}$ for
+	    each $k$. Thus $\cl{A} \supset \finiteUnion{\cl{A_k}}{k}{n}$.
+	    Each $\cl{A_k}$ is closed and since \textbf{finite} union of closed sets are close
+	    $\finiteUnion{\cl{A_k}}{k}{n}$ is a closed set. Moreover since $A_k \subset \cl{A_k}$, we have $A
+	    \subset \finiteUnion{\cl{A_k}}{k}{n}$. Thus we have a closed set containing $A$ and hence $\cl{A}
+	    \subset \finiteUnion{\cl{A_k}}{k}{n}$.
+    \end{itemize}
+\end{proof}
+\begin{Remark}
+    Sometimes when it is obvious from the context that the set difference are being taken w.r.t.~$X$, we
+    usually denote $\setDiff{X}{A}$ as $\comp{A}$. With such a notation $(3),(4)$ in the theorem above can be
+    written as \break{}$\interior{(\comp{A})} = \comp{(\cl{A})}$ and $\cl{\comp{A}} = \comp{(\interior{A})}$.
+\end{Remark}
+A very useful concept involving the closure is the notion of density.
+\begin{Definition}[name=Dense subset]
+    A subset $E$ of a metric space $\metricS{X}{d}$ is dense if $\cl{E} = X$. This means that for any 
+    $x \in X$, $\ball{r}{x}\cap E \neq \emptyset$ for any radius $r$.
+\end{Definition}
+\begin{Definition}[name=Separable]
+    A metric space $\metricS{X}{d}$ is separable if it has a countable dense subset.
+\end{Definition}
+\begin{Example}
+    We show some examples of dense subset.
+    \begin{itemize}
+	\item
+	    The rational numbers are dense in $\R$. This is because any interval around a real number must
+	    contain rational numbers. Thus $\Q^n$ is dense in $\Rn$. This means that $\Rn$ is separable.
+	    This follows from a general fact that if
+	    $A_1,A_2$ are dense subsets of $X_1,X_2$, then $A_1\times A_2$ is dense in $X_1\times X_2$. 
+	    We will show this fact when we define a product metric space. 
+	    
+	\item
+	    If $X$ is an set and $d$ is the discrete metric, then the only dense subset of $X$ is $X$ itself.
+    \end{itemize}
+\end{Example}
+We now look into the important topic of sequences and its convergence in a metric space.
+\section{Sequences and completeness}
+Let $\metricS{X}{d}$ be a metric space.
+\begin{Definition}[name=Sequence]
+    A sequence $\seq{x}{n}$ in $X$ is a function that maps the positive integers to points in the metrics
+    space $X$ i.e.~$n\mapsto x_n$. A subsequence of a sequence is defined by $\seq{x}{n_k}$, is a composition
+    of the sequence function with a subsequence index non-decreasing 
+    function that maps positive integers to positive integers
+    i.e.~$k\mapsto n_k$ and $k_1 \leq k_2$ implies $n_{k_1} \leq n_{k_2}$. 
+    Hence a subsequence is the function that maps positive integers $k$ to  points in $X$
+    i.e.~$k\mapsto x_{n_k}$.
+\end{Definition}
+\begin{Example}
+    Let $\metricS{R}{d}$ be the standard metric space in $\R$. Then $\seq{x}{n}$ given by $1,-1,1,-1,\cdots$
+    is a sequence, while $\seq{x}{n_k}$ given by $1,-1,1,1,1\cdots$ is a subsequence. We can explicitly write
+    the subsequence index function as $1\mapsto 1$, $2\mapsto 2$, $3\mapsto 3$, $4\mapsto 5$, $5\mapsto 7$ and
+    so on.
+\end{Example}
+\begin{Definition}[name=Convergence]
+    A sequence $\seq{x}{n}$ is said to converge in $X$ if for every $\epsilon > 0$ there is an integer $N$
+    such that $d(x,x_n) < \epsilon$, whenever $n \geq N$. We denote it by $\atob{x_n}{x}$ or $x =
+    \limit{x_n}{n}{\infty}$. Logically this means,
+    \[\forEv{\epsilon > 0}\thereIs{N\in\Zplus}\forEv{n\in\Zplus}\suchThat{n\geq N}{\implies}{d(x_n,x) <
+	    \epsilon}.\]
+\end{Definition}
+What does it mean for a sequence to not converge to $x$? From our logical implication, this means that there
+is an $\epsilon > 0$ such that no matter what $N$ we take, we can find a $n$ in the sequence with $n \geq N$
+but $d(x_n,x) \geq \epsilon$.
+\begin{Proposition}
+    If $\atob{x_n}{x}$ then any subsequence $x_{n_k}$ also coverges to $x$.
+\end{Proposition}
+\begin{proof}
+    Let $\epsilon > 0$ be given. Since $\seq{x}{n}$ is convergent, there is an $N$ such that for all $n\geq
+    N$, $d(x_n,x) < \epsilon$. However, when $n \geq N$, then $n_k \geq N$ since for all $k$, $n_k \geq n$
+    (can be shown by induction). Thus $d(x_{n_k},x) < \epsilon$.
+\end{proof}
+
+There is a deep connection between closed sets in metric spaces and convergence of sequences.
+\begin{Proposition}
+    A subset $F\subset X$ is closed if and only if whenever $\seq{x}{n}$ is a sequence in $F$ and
+    $\atob{x_n}{x}$, it follows that $x \in F$.
+\end{Proposition}
+\begin{proof}
+    Let $F$ be closed. Assume there is a sequence $\seq{x}{n}$ in $F$ such that $\atob{x_n}{x}$. If $x \not
+    \in F$, then by the definiton of closed set there is a radius $r > 0$ such that $\ball{r}{x}\cap
+    =\emptyset$. But since $\atob{x_n}{x}$ there is an $N$ such that $d(x_n,x) < r$ for all $n \geq N$. Hence
+    $x$ must belong to $F$.
+
+    Let $x$ be an element of $X$. Assume $\ball{r}{x}\cap F \neq \emptyset$ for any $r > 0$. In particular, 
+    for $ r = 1$, there is an $x_1$
+    such that $d(x_{1},x) < 1$. Going on inductively we have for each $n$ a $x_n$ such that $d(x_{n},x) < 1/n$.
+    This means that we constructed a sequence $\seq{x}{n}$ such that $\atob{x_n}{x}$. By our hypothesis $x$
+    belongs to $F$ and hence $F$ is closed. (See the second logical implication following the definition of
+    closed set.)
+\end{proof}
+\begin{Remark}
+    In the proof above, we uncovered a nice observation about the closure of a set $A$. If $x$ is in the
+    closure of $A$ then for all $r > 0$, $\ball{r}{x}\cap A \neq \emptyset$. We saw, how this leads to a
+    sequence $\seq{x}{n}$ in $A$ such that $\atob{x_n}{x}$. However, this sequence may have only a finite
+    number of distinct terms. In other words we could get a \textbf{constant} sequence $x_1 = x_2 = \cdots =
+    x$.
+\end{Remark}
+\begin{Definition}[name=Limit point]
+    If $A \subset X$, then a point $x \in X$ is called a limit point of $A$ if for every $\epsilon > 0$ there
+    is a point $a$ in $\ball{\epsilon}{x}\cap A$ with $a \neq x$. Logically this means,
+    \[\forEv{\epsilon > 0}\thereIs{a \in A}\suchThat{a\neq x}{\text{and}}{d(a,x) < \epsilon }.\]
+\end{Definition}
+What does it mean for a point $x$ to be \textbf{NOT} a limit point of $A$. If that is the case then there must
+be an $\epsilon$ such that no matter what point $a$ in $A$ we take, if $a \neq x$ then the distance between
+$a$ and $x$ is larger than $\epsilon$.
+\begin{Definition}[name=Isolated point]
+    A point $x \in A$ that is not a limit point of $A$ is called an isolated point. Thus if $x$ is an isloated
+    point of $A$, then there must be an
+    $\epsilon > 0$ such that $\ball{r}{x}\cap (\setDiff{A}{\setX{x}}) = \emptyset$.
+\end{Definition}
+\begin{Example}
+    The following are some examples of limit points/isolated points.
+    \begin{itemize}
+	\item
+	    Let $X = \R$ and let $A = (0,1) \cup {2}$. Note that $2$ is an isolated point of $A$ because the
+	    ball $\ball{\frac{1}{3}}{2}$ doesn't intersect $(0,1)$. Each point in $\interval{0}{1}$ is a limit
+	    point of $A$.
+	\item
+	    If $X = \R$ and $A = \Q$, then every point of $X$ is a limit point of $A$ and $A$ has no isolated
+	    points.
+	\item
+	    If $X = \R$ and $A = \set{\frac{1}{n}}{n \in \Zplus}$, then $0$ is the limit point of $A$, while
+	    all points of $A$ are isolated points of $A$.
+    \end{itemize}
+\end{Example}
+\begin{Proposition}
+    Let $A$ be a subset of $X$. Then,
+    \begin{enumerate}
+	\item
+	    A point $x$ is a limit point of $A$ if and only if there is a sequence of distinct points in $A$
+	    that converges to $x$.
+	\item
+	    $\cl{A} = A \cup \set{x}{x\,\text{is a limit point of $A$}}$.
+	\item
+	    $A$ is closed in $X$ if and only if it contains all its limit points.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    Let $x$ be a limit point of $A$. Then for every $\epsilon > 0$ there is an $a \in A$ such that
+	    $a \neq x$ and $d(a,x) < \epsilon$. We will define a sequence inductively.
+	    First pick $\epsilon_1 = 1$. Then there is an $a_1 \neq x$ such that $d(a_1,x) < \epsilon_1$. Now
+	    take radius to be $\frac{1}{2}$. Is there an $a_2 \neq a_1 \neq x$ such that $d(a_2,x) <
+	    \frac{1}{2}$? It could so happen that the $a_1$ we found actually satisfies $d(a_1,x) <
+	    \frac{1}{2}$. Thus to remedy this let $\epsilon_2 = \min\setX{\frac{1}{2},d(a_1,x)}$. Thus there
+	    exists an $a_2 \neq a_1$ such that $d(a_2,x) < \epsilon_2$. Inductively, we have found for each
+	    $n$ there is an $a_n$ different from $a_1,a_2,\ldots,a_{n-1}$ and $d(a_n,x) < \epsilon_n \leq
+	    \frac{1}{n}$. Taking $n$ large enough we get a sequence of distinct terms $\seq{a}{n}$ such that
+	    $\atob{a_n}{x}$.
+
+	    Let $\seq{a}{n}$ be a sequence of distinct points in $A$ such that $\atob{a_n}{x}$. Note that $x
+	    \neq a_n$ for any $n$. For any
+	    $\epsilon > 0$ there is an $N$ such that $d(a_n,x) < \epsilon$. Thus for any $\epsilon$ there is
+	    an $a_n$ such that $a_n \neq x$ and $d(a_n,x) < \epsilon$. Hence $x$ is a limit point of $A$.
+
+	\item
+	    If $x$ is a point of $A$ then $x$ certainly belongs to $\cl{A}$. Let $x$ be a limit point of $A$.
+	    Then there is a sequence of distinct points $\seq{a}{n}$ in $A$ and hence in $\cl{A}$ such that
+	    $\atob{a_n}{x}$. But since $\cl{A}$ is closed, $x$ must be in $\cl{A}$. Thus,
+	    $A \cup \set{x}{x\,\text{is a limit point of $A$}} \subset \cl{A}$.
+
+	    Let $x$ be a point in $\cl{A}$ and assume $x \not \in A$. Then for any $\epsilon > 0$, the
+	    $\ball{\epsilon}{x}\cap A \neq \emptyset$. Since $x \not\in A$, there must be an $a \neq x$ such
+	    that $a$ is in $A$ and $d(x,a) < \epsilon$. Hence $x$ is a limit point of $A$. Thus, $\cl{A}
+	    \subset A \cup \set{x}{x\,\text{is a limit point of $A$}}$.
+
+	\item
+	    If $A$ is closed then $A = \cl{A}$ and hence from the result above it must contain all its limit
+	    points.
+    \end{enumerate}
+\end{proof}
+The closure of a set can also be characterized in a different way that has a geometric motivation. For this we
+define the distance between a point and a set in a metric space.
+\begin{Definition}[name=Distance]
+    If $A \subset X$ and $x \in X$, then the distance from $x$ to $A$ is the number, denoted as $\dist(x,A)$,
+    given by,
+    \[\dist(x,A) = \inf\set{d(a,x)}{a\in A}.\]
+\end{Definition}
+When $x$ is in $A$, then clearly $\dist(x,A) = 0$. Is it possible for $\dist(x,A) = 0$ when $x\not\in A$?
+\begin{Proposition}
+    If $A \subset X$, then $\cl{A} = \set{x \in X}{\dist(x,A) = 0}$.
+\end{Proposition}
+\begin{proof}
+    Let $x$ be in $\cl{A}$. Then there is a sequence $\seq{x}{n}$ in $A$ such that $\atob{x_n}{x}$. This means
+    that for any $\epsilon$ there is an $N$ such that $d(x_n,x) < \epsilon$ whenever $n \geq N$. Hence
+    $\inf\set{d(a,x)}{a\in A} < \epsilon$. Since $\epsilon$ was arbitrary, $\dist(x,A) = 0$.
+
+    Let $x$ be a point in $X$ such that $\dist(x,A) = 0$. Then, for any $\epsilon > 0$ there is an $a \in A$
+    such that $d(a,x) < \epsilon$. This means that for any $\epsilon > 0$ $\ball{\epsilon}{x} \cap A \neq
+    \emptyset$. Hence $x \in \cl{A}$.
+\end{proof}
+We need to know apriori the limit of a sequence to check if we have convergence. This notion is not very
+helpful as we would like to know if a given sequence convergence without any knowledge of its limit. We can do
+this for certain sequences called the Cauchy sequence.
+\begin{Definition}[name=Cauchy sequence]
+    A sequence $\seq{x}{n}$ in $X$ is a Cauchy sequence if,
+    \[\limit{d(x_n,x_m)}{n,m}{\infty} = 0.\]
+    This means that for any $\epsilon > 0$ there is an $N\in\Zplus$ such that $d(x_n,x_m) < \epsilon$ whenever
+    $n,m \geq N$.
+\end{Definition}
+\begin{Definition}[name=Complete metric space]
+    A metric space $X$ is complete if every Cauchy sequence converges.
+\end{Definition}
+\begin{Remark}
+    A few observations can be made about Cauchy sequences.
+    \begin{itemize}
+	\item
+	    A convergent sequence is Cauchy.
+	\item
+	    A Cauchy sequence with a convergent subsequence is convergent.
+    \end{itemize}
+\end{Remark}
+A useful geometric notion can be given to any set in a metric space.
+\begin{Definition}[name=Diameter]
+    For any set $E \subset X$, we define its diameter as
+    \[\diam{E} = \sup\set{d(x,y)}{x,y\in E}.\]
+\end{Definition}
+\begin{Proposition}
+    For any set $E \subset X$, $\diam{E} = \diam{\cl{E}}$.
+\end{Proposition}
+\begin{proof}
+    For any $p,q$ in $E$, $p,q$ are in $\cl{E}$ and hence $\diam{E} \leq \diam{\cl{E}}$. Let $x,y$ be points
+    in $\cl{E}$ such that $x \neq y$. Then ther are point $p,q$ in $E$ such that $d(p,x) < \frac{\epsilon}{2}$
+    and $d(q,y) \leq \frac{\epsilon}{2}$. By (repeated use of) triangle inequlality,
+    \[d(x,y) < d(x,p) + d(p,q) + d(q,y) < d(p,q) + \epsilon.\]
+    This means that
+    $\diam{\cl{E}} \leq \diam{E} + \epsilon$. Since $\epsilon$ was arbitray we get $\diam{\cl{E}} \leq \diam{E}$.
+\end{proof}
+\begin{Theorem}[name=Cantor Intersection theorem]
+    A metric space is complete if and only if $\seq{F}{n}$ is a sequence of non-empty subsets satisfying,
+    \begin{enumerate}
+	\item
+	    Each $F_n$ is closed,
+	\item
+	    $\decSetSeq{F}$,
+	\item
+	    $\diam{F_n}\to 0$,
+    \end{enumerate}
+    then $\countIntersection{F_n}{n}$ is a single point.
+\end{Theorem}
+\begin{proof}
+    Assume we have a complete metric space $\metricS{X}{d}$ and let $\seq{F}{n}$ be a sequence of arbitrary 
+    closed sets in $X$ such that,
+    \begin{enumerate}
+	\item
+	    Each $F_n$ is closed,
+	\item
+	    $\decSetSeq{F}$,
+	\item
+	    $\diam{F_n}\to 0$,
+    \end{enumerate}
+    Let $\seq{x}{n}$ be a sequence of points in $X$ such that $x_i \in F_i$. 
+
+    \textbf{Claim}: $\seq{x}{n}$ is Cauchy. Fix an $\epsilon > 0$. Since $\diam{F_n}\to 0$, there is an $N$
+    such that $\diam{F_n} < \epsilon$ whenever $n \geq N$. For any $n,m \geq N$, $x_n,x_m \in F_N$ since
+    $F_{N} \supset F_{N+1} \ldots$ and hence $d(x_n,x_m) < \epsilon$. 
+    
+    Since $\metricS{X}{d}$ is complete,
+    there is an $x \in X$ such that $\atob{x_n}{x}$. Note that $\seq{x}{n}$ is in $F_1$ and since $F_1$ is
+    closed $x$ is in $F_1$. But the sequence $\seq{x}{n > 1}$ is in $F_2$ and since $F_2$ is closed $x$ is in
+    $F_2$. Thus continuing this way, since each $F_n$ is closed, $x \in \countIntersection{F_n}{n}$. Hence
+    $\countIntersection{F_n}{n}$ is not empty. If $y$ is in $\countIntersection{F_n}{n}$, then $d(x,y) <
+    \diam{F_n}$ for each $N$ and hence $d(x,y) = 0$ i.e $x = y$.  
+
+    Now assume we have a sequence  $\seq{F}{n}$ of arbitrary closed sets in $X$ such that IF 
+    \begin{enumerate}
+	\item
+	    Each $F_n$ is closed,
+	\item
+	    $\decSetSeq{F}$,
+	\item
+	    $\diam{F_n}\to 0$,
+    \end{enumerate}
+    is true then $\countIntersection{F_n}{n}$ is a single point. Let $\seq{x}{n}$ be a Cauchy sequence in $X$.
+    Let $F_k = \cl{\set{x_n}{n\geq k}}$. Note that $\decSetSeq{F}$ and each $F_n$ is closed.
+
+    \textbf{Claim}: $\diam{F_n}\to 0$. Fix an $\epsilon > 0$. Then there is an $N$ such that $d(x_n,x_m) <
+    \epsilon$ whenever $n \geq N$. This means that $\diam{F_N} \epsilon$. But $F_N \supset F_{N+1} \ldots$ and
+    hence $\diam{F_n} \leq \diam{F_N}$ for every $n \geq N$ i.e $\diam{F_n} < \epsilon$ whenever $n \geq N$.
+    Thus $\diam{F_n}\to 0$.
+
+    Hence $\countIntersection{F_n}{n}$ contains only one point, lets call it $x$. For any $x_n$, $d(x,x_n) <
+    \diam{F_n}$ which goes to $0$ as $n\to \infty$.
+\end{proof}
+\begin{Example}
+    $\R,\Rn$ are complete spaces. The proof is part of an elementary real analysis course.
+\end{Example}
+\begin{Proposition}
+    If $\metricS{X}{d}$ is a complete metric space and $Y \subset X$, then $\metricS{Y}{d}$ is complete if and
+    only if $Y$ is closed in $X$.
+\end{Proposition}
+\begin{proof}
+    Assume $\metricS{Y}{d}$ is complete. Let $\seq{x}{n}$ be a sequence in $Y$ such that $\atob{x_n}{x}$ for
+    some $x$ in $X$. Since a convergent sequence is Cauchy, $\seq{x}{n}$ is Cauchy and since $Y$ is complete
+    there is a $y \in Y$ such that $\atob{x_n}{y}$. But since limits are unique $x = y$ and hence $Y$ is
+    closed.
+
+    Assume $Y$ be closed in $X$. Let $\seq{x}{n}$ be a Cauchy sequence. Since $Y \subset X$, $\seq{x}{n}$ is
+    cauchy in $X$. Since $X$ is complete, there is a $x\in X$ such that $\atob{x_n}{x}$. But since $Y$ is
+    closed $x$ is in $Y$ and hence $\metricS{Y}{d}$ is complete.
+\end{proof}

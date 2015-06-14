@@ -1,0 +1,629 @@
+\chapter{The problem of measure: prescribing volume}
+One of the most fundamental concepts in geometry is that of the generalized \emph{volume} or \textbf{measure}
+of a solid body $E$ in one or more dimensions. In one dimension, this refers to \emph{length} of the body $E$,
+and in two and three dimension we refer to the measure of $E$ as the \emph{area} and \emph{volume}
+respectively. We can think of the measure as a \textbf{set function}, i.e.~we input a solid body and it
+outputs its volume. A solid body can be abstracted as a set in $\Rn$. The Question is, can we prescribe a
+measure to \emph{any} set in $\Rn$?  Classically, to get the volume of any body $E$, one would find a sequence
+of approximations from within $E$ and from outside and thus get some lower and upper bounds on the volume. In
+trying to generalize this to arbitrary sets in $\Rn$ we will follow the same procedure. Let us say the set
+function we are after is denoted by $\mu$. In order for it to give us a reasonable volume we must expect $\mu$
+to behave reasonably. By this, we mean
+\begin{enumerate}
+    \item
+	If $E$ is an interval $\interval{a}{b}$ in $\R$ or a rectangle $\interval{a_1}{b_1} \times
+	\interval{a_2}{b_2}$, then $\measure{E}$ must equal its length $b-a$ in $\R$ or area
+	$(b_1-a_1)\times(b_2-a_2)$ in $\R^2$.
+    \item
+	(Additivity) If $E_1$, $E_2$ are disjoint then $\measure{E_1\cup E_2} = \measure{E_1}+\measure{E_2}$.
+    \item
+	(Translation invariance) If we translate $E$, we must not change its measure, 
+	that is $\measure{E+h} = \measure{E}$ for any $h$.
+\end{enumerate}
+We will see that even such a basic requirement on our set function $\mu$ proves to be troublesome. In other
+words, we will show that there are sets in $\R^n$ that fail to satisfy the above requirements. We do not want to
+give up on any of these requirements. However, we will give up the requirement that all sets be measurable.
+
+We start with measuring sets whose \emph{volume} we already know from elementary geometry.
+\begin{Definition}[name= Intervals and rectangles]
+    An interval $I$ is a subset of $\R$ of the form $\interval{a}{b} = \set{x\in\R}{a\leq x \leq b}$,
+    $\interval[open right]{a}{b} = 
+    \set{x\in\R}{a\leq x < b}$, $\hInt{a}{b} = \set{x\in\R}{a < x \leq b}$ or $(a,b)
+    = \set{x\in\R}{a < x < b}$. We define the volume (length) of an interval $I$ by $\volumeMeasure{I} = b-a$. 
+    We also denote this by $\abs{I}$.
+    A rectangle $R \in \Rn $ is a Cartesian product of $n$ intervals, $R = \finiteProduct{I_i}{i}{n}$. We
+    define the volume of a rectangle $R$ as $\finiteProduct{\volumeMeasure{I_i}}{i}{n}$. 
+\end{Definition}
+For example a closed rectangle given by,
+\[R = \rectRn{a}{b},\]
+has a volume given by,
+\[\volumeMeasure{R} = \volumeMeasure{\rectRn{a}{b}} = \finiteProduct{(b_i-a_i)}{i}{n}.\]
+
+
+\begin{figure}
+    \includestandalone[width=0.40\textwidth]{tex/tikz_figures/cube}
+    \caption{Rectangles in $\R^3,\R^2,\R$.}\label{fig:tikz:rectangle_in_rn}
+\end{figure}
+
+\begin{Definition}[name=Elementary set]
+    An elementary set is any subset of $\Rn$ which is the union of a finite number of disjoint rectangles.
+\end{Definition}
+Note that any rectangle is an elementary set. It is easy to see that if $E,F$ are elementary sets in $\Rn$, then $E\cup F$, $E\cap F$, $\setDiff{E}{F}$ are
+also elementary sets.
+\begin{figure}
+    \includestandalone[width=0.40\textwidth]{tex/tikz_figures/measure_elem_set}
+    \caption{Measure of an elementary set. We show two decomposition of 
+	the elementary set.}\label{fig:tikz:meas_elem_set}
+\end{figure}
+How do we define the volume of an elementary set? Since an elementary set is a collection of finite disjoint
+rectangles, it makes sense that the volume
+of an elementary set is just the sum of the volumes of its component rectangles. Thus,
+\begin{Theorem}[name=Measure of an elementary set]\label{thm:meas_elem_set}
+    Let $E\subset\Rn$ be an elementary set. We define the (volume) measure of $E$ as,
+    \[\measure{E} = \finiteSum{\volumeMeasure{R_i}}{i}{m},\]
+    where $E = \finiteDisjUnion{R_i}{i}{m}$. Moreover, this measure is well defined, i.e.~if $E =
+    \finiteDisjUnion{S_j}{j}{k}$ its measure remains the same.
+\end{Theorem}
+
+\begin{proof}
+    First we will show that for any interval $I$, we can compute its length by the following formula
+    \[\volumeMeasure{I} = \limit{\frac{1}{N}\#(I\cap \frac{1}{N}\Z)}{N}{\infty},\]
+    Where $\frac{1}{N}\Z = \set{\frac{n}{N}}{n\in\Z}$ and $\#$ refers to the cardinality of the finite set
+    $I\cap \frac{1}{N}\Z$. It suffices to prove this for the unit interval $I = \interval{0}{1}$. For any $N$,
+    $I\cap \frac{1}{N}\Z$ is the set $\lbrace \frac{0}{N},\frac{1}{N},\dots,\frac{N}{N}\rbrace$ and thus 
+    $\#I\cap \frac{1}{N}\Z = N+1$. Hence $\limit{\frac{1}{N}\#(I\cap \frac{1}{N}\Z)}{N}{\infty}$ is
+    equal to $\limit{\frac{N+1}{N}}{N}{\infty} = 1 = \volumeMeasure{I}$.
+    See~\ref{fig:tikz:interval_discretization}. Thus for any rectangle $R_i \subset
+    \Rn$, we have
+    \[\volumeMeasure{R_i} = \limit{\frac{1}{N^n}\#(R_i\cap \frac{1}{N}\Zn)}{N}{\infty}.\] 
+    Thus,
+    \[\volumeMeasure{E} = \finiteSum{\volumeMeasure{R_i}}{i}{m} = 
+	\limit{\frac{1}{N^n}\#(E\cap \frac{1}{N}\Zn)}{N}{\infty},\]
+    which remains same no matter what is the decomposition of $E$. 
+\end{proof}
+\begin{figure}
+    \includestandalone[width=0.40\textwidth]{tex/tikz_figures/interval_discretization}
+    \caption{Discretization of the unit interval.}\label{fig:tikz:interval_discretization}
+\end{figure}
+\begin{figure}
+    \includestandalone[width=0.40\textwidth]{tex/tikz_figures/interval_discretization2}
+    \caption{Discretization of the unit square.}\label{fig:tikz:interval_discretization2}
+\end{figure}
+We cannot extend this formula as the measure for any set in $\Rn$ since the limit may fail to exist. However,
+for elementary sets we can observe some important properties.
+\begin{properties}
+\item
+    If $E,F$ are disjoint elementary sets then $\measure{E\cup F} = \measure{E} + \measure{F}$.
+\item
+    If $E = \emptyset$, then $\measure{E} = 0$.
+\item
+    If $E = R$, where $R$ is a rectangle in $\Rn$, then $\measure{E} = \volumeMeasure{R}$.
+\item
+    If $E,F$ are elementary sets such that $E \subset F$ then $\measure{E} \leq \measure{F}$.
+\end{properties}
+\begin{figure}
+    \includestandalone[width=0.40\textwidth]{tex/tikz_figures/in_out_approx}
+    \caption{Approximating from within and without by an elementary set.}\label{fig:tikz:in_out_approx}
+\end{figure}
+How do we extend this notion of measure to arbitrary sets in $\Rn$? 
+We can follow the ideas first expounded by the Greeks i.e by
+approximating an arbitrary set by elementary sets from \textbf{inside} and \textbf{outside}. In other words we
+can define an approximate \textbf{outer} measure as follows:
+\[\outMeas(E) = \inf\limits_{B\supset E, B\, \text{elementary}} \measure{B}.\]
+That is we \emph{cover} $E$ by an elementary set $B$ and then take the infimum over all the measure of such
+$B$. Since $B = \finiteUnion{R_i}{i}{n}$, this is equivalent to saying,
+\[\outMeas(E) = \inf\set{\finiteSum{\volumeMeasure{R_i}}{i}{n}}{\finiteUnion{R_i}{i}{n}\supset E}.\]
+Similary we approximate $E$ from inside by
+\[\mu_{\ast}(E) = \sup\set{\finiteSum{\volumeMeasure{S_j}}{j}{n}}{\finiteUnion{R_j}{j}{n}\subset E}.\]
+Whenever these two coincide we say that $\measure{E} = \mu_{\ast}(E) = \outMeas(E)$.
+See~\ref{fig:tikz:in_out_approx}. This is the construction
+by Jordan and appeals to the classical approximation ideas. However, there is a problem with such a
+construction. In analysis, sets occur as a limit of a sequence of sets and as such taking $\inf,\sup$ over
+finite unions of rectangles might prove to be trouble some. Hence, we tinker with this approximation and allow
+for a countable union of rectangles. To get a motiviation for using countable rectangles we
+show the decomposition theorem for an open set in $\R$.
+\begin{Proposition}[name=Decomposition of an open interval]\label{prop:open_set_countable_interval}
+    Any open subset $G\subset\R$ is a countable union of disjoint open intervals.
+\end{Proposition}
+\begin{proof}
+    Let $G$ be an open set in $\R$. Then for any $x \in G$, there is an interval around $x$ that is entirely
+    contained in $G$. We wish to find the maximal interval containing $x$. To this end, let
+    \[a_x = \inf\set{a < x}{(a,x)\subset G},\]
+    \[b_x = \sup\set{x < b}{(x,b)\subset G},\]
+    with possibly infinite values for $a_x,b_x$. We take $I_x = (a_x,b_x)$. Clearly $x \in I_x$ and for any
+    set $J$ such that $x\in J$, we must have $J \subset I_x$. Then,
+    \[G = \bigcup\limits_{x\in G}I_x.\]
+    Now suppose $I_x \cap I_y \neq \emptyset$. Thus there is an $x$ such that $x \in I_x$ and $x \in I_y$ and
+    thus $x \in I_x \cup I_y$. Since $I_x$ is the maximal interval containing $x$ we must have $I_x \cup I_y
+    \subset I_x$. Similarly $I_x \cup I_y \subset I_y$. This is only possible when $I_x = I_y$. Thus we have
+    a disjoint union. To show that the union is countable, we note that every interval $I_x$ contains a
+    rational number $r_x$. Since $I_x,I_y$ are disjoint, $r_x \neq r_y$. Thus we can index each $I_x$ with the
+    corresponding rational number $r_x$. Note, there are an infinite number of rational numbers in each $I_x$.
+    To pick one, we invoke the Axiom of Choice. Hence, we have the result.
+\end{proof}
+It would make sense to define the measure of an open set $G \subset \R$ to be $\measure{G} =
+\infiniteSum{\volumeMeasure{I_{x_i}}}{i}$. Thus, we need a countable collection of rectangles instead of using
+just a finite collection. Unfortunately this decomposition doesn't quite extend to higher dimension.
+Fortunately, there is a similar decompostion for open sets in $\Rn$ that works for almost disjoint rectangles.
+Let us first define almost disjoint.
+
+\begin{Definition}[name=Almost disjoint rectangles] 
+    We will denote the \emph{interior} of a rectangle $R$ by $\interior{R}$. Two rectangles
+    $R_i,R_j$ are almost disjoint if $\interior{R_i}\cap\interior{R_j} = \emptyset$.
+\end{Definition}
+A cube $Q \subset \Rn$ is a \textbf{special} rectangle whose sides are all equal. It turns out that any open
+set in $\Rn$ can be written as a countable collection of \emph{almost} disjoint cubes. To prove this, we will
+define \emph{dyadic} cubes in $\Rn$.
+
+Note that for any $x \in \R$ and for any $M \in \Zplus$, by the archimedes principle there is
+an integer $k$ such that, $\frac{k}{M} \leq x < \frac{(k+1)}{M}$ i.e $k$ is the greatest integer of $Mx$. If we
+choose $M = 2^N$ for any $N \in \Zplus$ we get a dyadic partition of $\R$ for every $N$. We can
+extend this idea to $\Rn$.
+\begin{Definition}[name=Dyadic cube]\label{def:dyadic_cube}
+    A (closed) dyadic cube $\dyadicCube{k}{N} \in \Rn$ is given by 
+    \[\dyadicCube{k}{N} = \set{\vect{x} \in \R}{\frac{k_i}{2^N} \leq x_i \leq 
+	    \frac{k_i+1}{2^N} \quad 1\leq i \leq n},\] 
+    where $\vect{k} \in \Zn$.
+\end{Definition}
+Let $\family{C}_n$ be the collection of all dyadic cubes. Note that $\family{C}_n \subset
+\family{J}_{n}$, where $\family{J}_n$ is the family of all closed rectangles. For a fixed $N$, each
+side of the cube is of length $\frac{1}{2^N}$. Hence the volume of the cube is 
+${(\frac{1}{2^N})}^n$. Note that for any $\vect{x},\vect{y} \in \dyadicCube{k}{N}$ the distance
+$\distRn{\vect{x}}{\vect{y}} \leq \frac{\sqrt{n}}{2^N}$. For clarity, we will denote $\family{C}_n^N$
+to be the collection of all dyadic cubes of level $N$ in $\Rn$. Two dyadic cubes are almost disjoint
+if they intersect only in the boundary.
+
+\begin{Proposition}\label{prop:count_col_cubes}
+    Every open set in $\Rn$ is a countable union of almost disjoint cubles.
+\end{Proposition}
+\begin{proof}
+    Let $G$ be an open set. First we will show that there is a countable collection of almost
+    disjoint dyadic cubes $\family{Q}=\set{Q_i \in \family{C}_n}{i\in\Zplus}$ such that,
+    \[\countUnion{Q_i}{i} \subset G. \]
+    We start with a collection of dyadic cubes of level $0$. We pick $Q_i \in
+    \family{C}_n^0$ such that $Q_i \subset G$. Next, we identify $Q_k$ such that $Q_k \cap G \neq
+    \emptyset$. Then we find $Q_j \subset Q_k$ such that $Q_j \in \family{C}^1_{n}$. If $Q_j \subset G$
+    we add it to the collection $\family{Q}$ otherwise we repeat by finding $Q_j \in
+    \family{C}^2_{n}$ and so on. Since by construction each $Q_i
+    \subset G$ we get $\countUnion{Q_i}{i} \subset G$. This is illustrated
+    in~\ref{fig:tikz:countable_closed_cubes}.
+
+    Now consider an $\vect{x} \in G$. Since $G$ is open there is an $\epsilon > 0$ such that the
+    open ball $\ball{\epsilon}{\vect{x}} \subset G$. Now, there is a $\dyadicCube{k}{N}$ 
+    such that $\vect{x} \in \dyadicCube{k}{N}$, 
+    however $\dyadicCube{k}{N}$ may or may not be completely in $G$. 
+    But we can successively increase i.e., we find an $M > N$ such that $\dyadicCube{k}{M} \subset
+    \dyadicCube{k}{N}$ and $\dyadicCube{k}{M} \subset G$. Thus it must be in $\family{Q}$ and hence,
+    \[G \subset \countUnion{Q_i}{i}. \] 
+    This is illustrated in~\ref{fig:tikz:countable_closed_cubes2}.
+\end{proof}
+\begin{figure}
+    \includestandalone[width=0.40\textwidth]{tex/tikz_figures/countable_closed_cubes}
+    \caption{Illustration of \emph{paving} of $G\subset \Rn$ by dyadic cubes. The cubes $Q_k$ 
+	filled in red are such that $Q_k \cap G \neq \emptyset$. Thus we increase the level.
+	}\label{fig:tikz:countable_closed_cubes}
+\end{figure}
+\begin{figure}
+    \includestandalone[width=0.40\textwidth]{tex/tikz_figures/countable_closed_cubes2}
+    \caption{Illustration of finding a dyadic cube containing $\vect{x}$ and inside
+	$\ball{\epsilon}{\vect{x}}$.}\label{fig:tikz:countable_closed_cubes2}
+\end{figure}
+
+
+If we want to include countable collection of rectangles, we want to make sure that we are not changing the
+elementary measure of a rectangle i.e if a rectangle is a countable union of almost disjoint rectangles then
+its volume measure must equal the infinite sum of its component rectangles.  We collect 
+all these facts in the following proposition. Note that since a cube is also a rectangle, the following
+results also hold for a cube. To make the ideas clear we will show these facts for
+$\R^2$. The proposition is valid for all $\Rd,d\geq 1$.
+\begin{Proposition}\label{prop:rect_in_rn}
+    Let $R$ be a two dimensional rectangle with sides parallel to the co-ordinate axes. Then,
+    \begin{enumerate}
+	\item
+	    Suppose that $R = I_1 \times I_2$ where each $I_i \subset \interval{a}{b} \subset \R$. 
+	    If each $I_i$ is an almost disjoint union of closed, bounded intervals i.e
+	    \begin{align*}
+		&\set{I_{i,j_i} \subset \interval{a}{b}}{1\leq j_i \leq N_i}, \quad \text{and}\\
+		& I_i = \finiteUnion{I_{i,j_i}}{j_i}{N_i}.
+	    \end{align*}
+	    Define the rectangles,
+	    \[S_{j_1,j_2} = I_{1,j_1}\times I_{2,j_2},\]
+	    then,
+	    \[\volumeMeasure{R} = \sum\limits_{j_1 = 1}^{N_1}\sum\limits_{j_2 =
+		    1}^{N_2}\volumeMeasure{S_{j_1,j_2}}.\]
+	\item
+	   If a rectangle $R$ is an almost disjoint, finite union of rectangles, $\set{R_i}{1\leq i
+	       \leq N}$, then 
+	   \[\volumeMeasure{R} = \finiteSum{\volumeMeasure{R_i}}{i}{N}.\] Note that this is another proof
+	   of~\ref{thm:meas_elem_set}. 
+       \item
+	   If a rectangle $R$ is a subset of another rectangle $S$, then
+	   \[\volumeMeasure{R} \leq \volumeMeasure{S}.\]
+       \item
+	   If a rectangle $R$ is \emph{covered} by finite union of rectangles, $\set{R_i}{1\leq i
+	       \leq N}$, then 
+	   \[\volumeMeasure{R} \leq \finiteSum{\volumeMeasure{R_i}}{i}{N}.\] 
+       \item 
+	   If a rectangle $R$ is the countable union of almost disjoint rectangles,
+	   $\set{R_i}{i\in\Zplus}$, then 
+	   \[\volumeMeasure{R} = \infiniteSum{\volumeMeasure{R_i}}{i}.\] 
+    \end{enumerate}
+\end{Proposition}
+\begin{figure}
+    \includestandalone[width=0.35\textwidth]{tex/tikz_figures/rectangles_rn}
+    \caption{Illustration of proof~\ref{prop:rect_in_rn} (1).}\label{fig:tikz:rectangles_rn}
+\end{figure}
+\begin{figure}
+    \includestandalone[width=0.35\textwidth]{tex/tikz_figures/rectangles_rn2}
+    \caption{Illustration of proof~\ref{prop:rect_in_rn} (2).}\label{fig:tikz:rectangles_rn2}
+\end{figure}
+\begin{figure}
+    \includestandalone[width=0.35\textwidth]{tex/tikz_figures/rectangles_rn3}
+    \caption{Illustration of proof~\ref{prop:rect_in_rn} (3).}\label{fig:tikz:rectangles_rn3}
+\end{figure}
+\begin{figure}
+    \includestandalone[width=0.35\textwidth]{tex/tikz_figures/rectangles_rn5}
+    \caption{Illustration of proof~\ref{prop:rect_in_rn} (5).}\label{fig:tikz:rectangles_rn5}
+\end{figure}
+\begin{proof}
+    We prove in order,
+    \begin{enumerate}
+	\item
+	    Let us denote the length of an interval $I$ by $\lvert I \rvert$, then since $I$ is an elementary
+	    set we can see that, (for example using the formula in~\ref{thm:meas_elem_set})
+	    \[\lvert I_i \rvert = \finiteSum{\lvert I_{i,j_i}\rvert}{j_i}{N_i}.\]
+	    By definition,
+	    \[\volumeMeasure{R} = \lvert I_1\rvert \lvert I_2 \rvert.\]
+	    Thus,
+	    \begin{align*}
+		\volumeMeasure{R} &= \lvert I_1\rvert \lvert I_2 \rvert \\
+		&= \finiteSum{\lvert I_{1,j_1}\rvert}{j_1}{N_1}\finiteSum{\lvert I_{2,j_2}\rvert}{j_2}{N_2}\\
+		&= \sum\limits_{j_1 = 1}^{N_1}\sum\limits_{j_2 = 1}^{N_2}\lvert
+		I_{1,j_1}\rvert\lvert I_{2,j_2}\rvert\\
+		&=\sum\limits_{j_1 = 1}^{N_1}\sum\limits_{j_2 =
+		    1}^{N_2}\volumeMeasure{S_{j_1,j_2}}
+	    \end{align*}
+	    See~\ref{fig:tikz:rectangles_rn}.
+	\item
+	    If $R$ is the almost disjoint union of $R_i$ for $1\leq i \leq N$, then we can extend the
+	    sides of each $R_i$. Each $\volumeMeasure{R_i}$ can then be expressed as a sum in $(1)$.
+	    Also sides of $R$ have been partitioned and its volume measure can be expressed as a 
+	    sum in $(1)$. Easy to
+	    see that $\volumeMeasure{R} = \finiteSum{\volumeMeasure{R_i}}{i}{N}$. 
+	    See~\ref{fig:tikz:rectangles_rn2}.
+	\item
+	    Note that both $R,S$ are elementary sets and we have see that volume measure preserves
+	    monotonicity. Here we will give a different proof. 
+	    If $R\subset S$, then extend the sides of $R$ to intersect the sides of $S$. Then using the result
+	    above $\volumeMeasure{S}$ is the sum of almost disjoint rectangles $\lbrace R_i\rbrace$, 
+	    where one of $R_i$ is equal to $R$. See~\ref{fig:tikz:rectangles_rn3}.
+	    Hence we get the result.
+	\item
+	    If $R \subset \finiteUnion{R_i}{i}{N}$, then we get,
+	    $R = \finiteUnion{(R\cap R_i)}{i}{N}$. However, each $R\cap R_i$ may not be disjoint. Let us
+	    denote by $S_1 = R\cap R_1$ and subsequent $S_j = \setDiff{(R\cap R_j)}{(S_1\cup\dots S_{j-1})}$.
+	    Then $R$ is the almost disjoint finite union of rectangles $S_j$ and by the result in (2)
+	    $\volumeMeasure{R} = \finiteSum{\volumeMeasure{S_j}}{j}{N}$. But each $S_j \subset R_j$ and hence
+	    by (3) above
+	    $\volumeMeasure{S_j} \leq \volumeMeasure{R_j}$. Thus we get the result.
+	\item
+	    Note that $R$ \emph{covers} any finite almost disjoint union $\finiteUnion{R_i}{i}{N}$ i.e,
+	    $\finiteUnion{R_i}{i}{N} \subset R$. Thus from above (roles reversed),
+	    \[\volumeMeasure{\finiteUnion{R_i}{i}{N}} \leq \volumeMeasure{R}.\]
+	    But since we have an almost finite disjoint union, using $(2)$,
+	    \[\finiteSum{\volumeMeasure{R_i}}{i}{N} \leq \volumeMeasure{R}.\]
+	    Taking the limit, we get
+	    \[\volumeMeasure{R} \geq \infiniteSum{\volumeMeasure{R_i}}{i}.\]
+	    To prove the other inequality we have to use a compactness argument.
+
+	    Let us extend each ${R_i}$ to get an open covering of $R$. That is we get an
+	    $S_i$ such that,
+	    \[ \volumeMeasure{S_i} \leq \volumeMeasure{R_i} + \frac{\epsilon}{2^i}.\]
+	    and $\interior{S_i} \supset R_i$.
+	    (Note this means that we cover $R_i$ by $S_i$ which itself can be covered by something
+	    larger than $R_i$ since each $R_i$ is bounded.) See~\ref{fig:tikz:rectangles_rn5}.
+	    Thus we have an open cover of $R$ given by, 
+	    $\family{G} = \set{\interior{S_i}}{i\in\Zplus}$. Since we are in a compact space there
+	    is a finite subcover $\family{G}_{N}$ such that,
+	    $R \subset \finiteUnion{S_i}{i}{N}$. Hence,
+	    $\volumeMeasure{R} \leq \finiteSum{\volumeMeasure{S_i}}{i}{N}$. 
+	    Taking the limit to $\infty$ we get the result.
+    \end{enumerate}
+\end{proof}
+
+Thus we have seen, that to measure open sets we need a countable covering of elementary sets. But not all sets
+are open sets. Since we are describing an abstract set function, we must be willing to accept strange sets.
+The most famous strange set is the \textbf{Cantor} set.
+
+To construct a Cantor set we begin with the unit interval $\interval{0}{1}$ and let $C_1$ denote the set
+obtained from deleting the middle third open interval from $\interval{0}{1}$, that is
+\[ C_1 = \interval{0}{\frac{1}{3}} \cup \interval{\frac{2}{3}}{1}.\]
+To get to the next level, we delelte the middle third open interval from each of the above intervals to get,
+\[ C_2 = \interval{0}{\frac{1}{9}}\cup \interval{\frac{2}{9}}{\frac{1}{3}} \cup
+    \interval{\frac{2}{3}}{\frac{7}{9}} \cup \interval{\frac{8}{9}}{1}.\]
+This procedure yields a sequence of closed sets $\seq{C}{k}$, where each $C_k$ is a finite union of closed
+interval of length $\frac{1}{3^k}$, and $\decSetSeq{C}$.
+\begin{Definition}
+    The Cantor set $C$ is a compact set in $\R$ defined by,
+    \[C = \countIntersection{C_k}{k},\]
+    where $C_k$ is the set obtained by removing $2^k - 1$ middle third open intervals as described above.
+\end{Definition}
+\begin{figure}
+    \includestandalone[width=0.55\textwidth]{tex/tikz_figures/cantor_set}
+    \caption{First three levels of Cantor set in $\R$.}\label{fig:tikz:cantor_set}
+\end{figure}
+\begin{Proposition}\label{prop:cantor_set}
+    Let $C$ be the Cantor set in $\R$. Then,
+    \begin{enumerate}
+	\item
+	    $C$ does not contain any open intervals.
+	\item
+	    Every point of $C$ is a limit point of $C$.
+	\item
+	    $C$ is uncountable.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove $(1),(2)$.
+
+    $(1)$ Let us assume that there is an interval $(a,b)$ such that $(a,b) \subset C$. Then for any $n \in
+    \Zplus$, $(a,b) \subset C_n$. But since $C_n$ contains $2^n$ disjoint closed intervals of length
+    $1/3^n$, $(a,b)$ must be a subset of one of these. But if we take $n$ large enough such that
+    $1/3^n < (b-a)$ we get a contradiction. 
+
+    $(2)$ Fix an $\epsilon > 0$.
+    Since $x \in C$, $x \in C_n$ for every $n \in \Zplus$. But $C_n$ consists of disjoint closed
+    intervals of length $1/3^n$ and hence $x$ belongs to one of these closed interval. If $x$ is the
+    left end of the interval pick $y$ to be the right end of that interval, if $x$ is the right
+    end of the interval pick $y$ to be the left end of that interval and in any other case pick
+    $y$ to be the left end of the interval. Thus for any $n$ we have found a $y \in C$ such 
+    that $\lvert y - x\rvert < 1/3^n$. Pick $n$ large enough such that $1/3^n < \epsilon$, then
+    $\lvert y - x\rvert < \epsilon$. Since $\epsilon$ was arbitrary and $y \neq x$, we have shown
+    that $x$ is a limit point of $C$ and thus there exists a sequence in $C$ that converges to $x$.
+\end{proof}
+
+What is the measure of the Cantor set? Approximating $C$ from \textbf{inside} seems tricky since $C$ doesn't
+contain any open intervals. In what follows, we will approximate from outside by allowing a countable
+collection of rectangles. As a convenience, we take the rectangles to be cubes. Nothing is lost in such a
+construction.
+
+Uptill now, we have a notion of measure for elementary sets in $\Rd$. We now construct a set function that
+approximates \emph{any} set from \textbf{outside}. Such a construction will yield the familiar measure when
+the set is an elementary set. Let us give a precise definition,
+\begin{Definition}[name=Outer (volume) measure]
+    If $E$ is any subset of $\Rd$, the outer measure of $E$ is,
+    \[\outMeasure{E} = \inf\set{\infiniteSum{\volumeMeasure{Q_i}}{i}}{E\subset\countUnion{Q_i}{i}}.\]
+    Hence,
+    $\map{\outMeas}{\powSet{\Rd}}{\extRealsPos}$.
+\end{Definition}
+\begin{Example}
+    What is the outer measure of a point $\vect{x}\in\Rd$? A point $\vect{x}$ is covered by $Q =
+    \finiteProduct{I_i}{i}{d}$,
+    where $I_i = \interval{x_i}{x_i}$, and its volume is equal to $0$.
+\end{Example}
+\begin{Example}
+    What is the outer measure of a cube $Q$? Since $Q \subset Q$, from the definition of outer measure
+    $\outMeasure{Q} \leq \volumeMeasure{Q}$. Now fix an $\epsilon$, by the definition of infimum and outer
+    measure, there is a
+    countable collection of cubes $\lbrace Q_i \rbrace$, such that $Q \subset \countUnion{Q_i}{i}$ and
+    \[\infiniteSum{\volumeMeasure{Q_i}}{i} < \outMeasure{Q} + \epsilon.\]
+    By extending the sides of $Q_j$ we can find a $S_j$ such that $\interior{S_j}\supset Q_j$ and
+    $\volumeMeasure{S_j} \leq \volumeMeasure{Q_j} + \frac{\epsilon}{2^j}$. See~\ref{fig:tikz:rectangles_rn5}.
+    Hence $Q \subset
+    \countUnion{\interior{S_j}}{j}$ and since $Q$ is compact (closed and bounded), there exists a finite
+    subcover such that (after renumbering)
+    \[Q \subset \finiteUnion{\interior{S_j}}{j}{N} \subset \finiteUnion{S_j}{j}{N}.\]
+    From~\ref{prop:rect_in_rn} (3), we have
+    \[\volumeMeasure{Q} \leq \finiteSum{\volumeMeasure{S_j}}{j}{N}.\]
+    Thus,
+    \[\volumeMeasure{Q} \leq \finiteSum{\volumeMeasure{Q_j}+\frac{\epsilon}{2^j}}{j}{N} \leq
+	\infiniteSum{\volumeMeasure{Q_j}}{j}.\]
+    Hence $\volumeMeasure{Q} \leq \outMeasure{Q}$. Therefore we get that $\volumeMeasure{Q} =
+    \outMeasure{Q}$. In fact, we can show that for any rectangle $R$ its volume measure equals the outer
+    measure.
+\end{Example}
+Now we are ready to list some of the properties of outer measure.
+\begin{Proposition}[name=Properties of (volume) outer measure]\label{prop:out_meas_rn_prop}
+    Let $\outMeas$ be the outer measure defined for any subset in $\Rd$. Then,
+    \begin{properties}
+    \item
+	(Monotonicity) If $E_1 \subset E_2$, then 
+	\[\outMeasure{E_1} \leq \outMeasure{E_2}.\] 
+    \item
+	(Countable sub-additivity) If $E = \countUnion{E_j}{j}$, then
+	\[\outMeasure{E} \leq \infiniteSum{\outMeasure{E_j}}{j}.\]
+    \item
+	(Approximation by open sets) If $E \subset \Rd$, then
+	\[\outMeasure{E} = \inf\set{\outMeasure{G}}{E\subset G,\,\text{G open}}.\]
+    \item
+	If $E = E_1\cup E_2$ and $d(E_1,E_2) > 0$, then
+	\[\outMeasure{E} = \outMeasure{E_1} + \outMeasure{E_2}.\]
+    \item
+	If $E$ is the countable union of almost disjoint cubes, i.e~$E = \countUnion{Q_i}{i}$, then
+	\[\outMeasure{E} = \infiniteSum{\volumeMeasure{Q_j}}{j}.\] 
+    \end{properties}
+	
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    The collection of cubes that cover $E_2$ also cover $E_1$. Thus if $\famY_1$ is the collection of
+	    cubes covering $E_1$ and $\famY_2$ is the collection of cubes covering $E_2$, then $\famY_1
+	    \supset \famY_2$. Hence taking infimum of the sums of the volumes in the respective families, 
+	    we get the result.
+	\item
+	    Fix an $\epsilon$. Then for each $j$ there is a collection of cubes $\lbrace Q^{j}_i \rbrace$ such
+	    that $E_j \subset \countUnion{Q^j_i}{i}$ and,
+	    \[\infiniteSum{\volumeMeasure{Q^j_i}}{i} < \outMeasure{E_j} + \frac{\epsilon}{2^j}.\]
+	    We can observe that,
+	    \[E \subset \bigcup\limits_{i,j}Q^{j}_i,\]
+	    and hence,
+	    \begin{align*}
+		\outMeasure{E} &\leq \sum\limits_{i}\sum\limits_{j}\volumeMeasure{Q^j_i} \\
+		&\quad = \sum\limits_{j}(\sum\limits_{i}\volumeMeasure{Q^j_i}) \\
+		&\quad < \sum\limits_{j}(\outMeasure{E_j} + \frac{\epsilon}{2^j})\\
+		&\quad \leq \infiniteSum{\outMeasure{E_j}}{j} + \epsilon
+	    \end{align*}
+	    Since, $\epsilon$ was arbitrary we get the result.
+	\item
+	    If there is a $G$ such that $G \supset E$, then by mononoticity $\outMeasure{G} \geq \outMeasure{E}$ 
+	    and thus $\outMeasure{E}$ is less than or equal to the infimum of the outer measure of all such open 
+	    sets $G$ such that $G \supset E$. For the other direction, fix an $\epsilon > 0$. Hence, there is
+	    a collection of cubes $\lbrace Q_{\epsilon,i}\rbrace$ such that $E \subset
+	    \countUnion{Q_{\epsilon},i}{i}$ and,
+	    \[\infiniteSum{\volumeMeasure{Q_{\epsilon,i}}}{i} < \outMeasure{E} + \epsilon.\]
+	    We can extend each $Q_{\epsilon,i}$ to get $\tilde{Q}_{\epsilon,i}$ such that,
+	    \[\volumeMeasure{\interior{\tilde{Q}}_{\epsilon,i}} < \volumeMeasure{Q_{\epsilon,i}} +
+		\frac{\epsilon}{2^i}.\]
+	    Let $G_{\epsilon} = \countUnion{\interior{\tilde{Q}}_{\epsilon,i}}{i}$. 
+	    Then $G_{\epsilon}$ is open and from
+	    monotonicity,
+	    \[\outMeasure{G_{\epsilon}}\leq \infiniteSum{\outMeasure{\interior{\tilde{Q}}_{\epsilon,i}}}{i} = 
+		\infiniteSum{\volumeMeasure{\interior{\tilde{Q}}_{\epsilon,i}}}{i}.\]
+	    Thus,
+	    \begin{align*}
+		\outMeasure{G_{\epsilon}}&\leq
+		\infiniteSum{\volumeMeasure{\interior{\tilde{Q}}_{\epsilon,i}}}{i} \\
+		&\leq\infiniteSum{(\volumeMeasure{Q_{\epsilon,i}}+\frac{\epsilon}{2^i})}{i} \\
+		& < \outMeasure{E} + 2\epsilon,
+	    \end{align*}
+	    since, $\epsilon$ was arbitrary we get the result.
+	\item
+	    If $E = E_1 \cup E_2$, then from monotonicity $\outMeasure{E} \leq \outMeasure{E_1} +
+	    \outMeasure{E_2}$. Thus we need to show the other inequality.
+
+	    Fix an $\epsilon > 0$. There is a collection of cubes $\famQ = \lbrace Q_i \rbrace$ such that 
+	    $E \subset
+	    \countUnion{Q_i}{i}$ and
+	    \[\infiniteSum{\volumeMeasure{Q_i}}{i} < \outMeasure{E} + \epsilon.\]
+	    Let us construct a countable collection that covers $E$. 
+	    Consider the set $E_1$. If a cube $Q_i$ intersects $E_1$ only
+	    and not $E_2$ we add $i$ to an index set $J_1$. If a cube $Q_i$ intersects both $E_1$ and $E_2$, 
+	    then we
+	    refine the cube until it intersects only $E_1$. This can be done since if a cube intersects both 
+	    $E_1$ and
+	    $E_2$ its diameter must be larger than $d(E_1,E_2)$. Thus refining the cube (by a higher dyadic 
+	    level)
+	    we can get it to intersect only one. Thus we have an index set $J_1$ such that $E_1 \subset
+	    \bigcup\limits_{i\in J_1}{Q_i}$, where each $Q_i, i\in J_1$ is a subset of cubes in $\famQ$. 
+	    Similarly
+	    we can find a $J_2$ such that $E_2 \subset \bigcup\limits_{i\in J_2}{Q_i}$. Thus,
+	    \begin{align*}
+		\outMeasure{E_1} + \outMeasure{E_2} &\leq \sum\limits_{i\in J_1}\outMeasure{Q_i} +
+		\sum\limits_{i\in J_2}\outMeasure{Q_i} \\
+		& \quad = \sum\limits_{i\in J_1}\volumeMeasure{Q_i} +
+		\sum\limits_{i\in J_2}\volumeMeasure{Q_i} \\
+		&\quad \leq \sum\limits_{Q_i\in\famQ}{\volumeMeasure{Q_i}} \\
+		&\quad < \outMeasure{E} + \epsilon.
+	    \end{align*}
+	\item
+	    From countable sub-additivity, $\outMeasure{E} \leq \infiniteSum{\volumeMeasure{Q_i}}{i}$. For the
+	    other direction, we can \textbf{reduce} the sides of each cube $Q_i$ to get a cube $\tilde{Q}_i$
+	    such that $\tilde{Q}_i$ is strictly a subset of $Q_i$ and,
+	    \[\volumeMeasure{Q_i} \leq \volumeMeasure{\tilde{Q}_i} + \frac{\epsilon}{2^i}.\]
+	    For any an finite number $N$ then we have
+	    $d(\tilde{Q}_i,\tilde{Q}_j) > 0$ where $i,j$ range over $N$. Hence, we can use the result above to
+	    deduce that for any $N$,
+	    \[\outMeasure{\finiteUnion{\tilde{Q}_i}{i}{N}} = \finiteSum{\volumeMeasure{\tilde{Q}_i}}{i}{N} \geq
+		\finiteSum{(\volumeMeasure{Q_i}- \frac{\epsilon}{2^j})}{i}{N}.\]
+	    Note that $\epsilon(\frac{1}{2} + \cdots + \frac{1}{2^N}) < \epsilon$ for any $N$ and
+	    $\finiteUnion{\tilde{Q}_i}{i}{N} \subset E$. Thus,
+	    \[\outMeasure{E} \geq \finiteSum{\volumeMeasure{Q_i}}{i}{N} - \epsilon. \]
+	    Since this is true for any $N$, we can take the limit $\atob{N}{\infty}$ to get,
+	    \[\infiniteSum{\volumeMeasure{Q_i}}{i} \leq \outMeasure{E} + \epsilon.\]
+	    Thus we get the result.
+    \end{enumerate}
+\end{proof}
+It is crucial to observe that we do not have additivity for arbitrary disjoint sets. That is if $E_1,E_2$ are
+disjoint then we cannot conclude that $\outMeasure{E_1\cup E_2} = \outMeasure{E_1} + \outMeasure{E_2}$. For
+example take $E_k = \emptyset$ for $k > N$ in~\ref{prop:out_meas_rn_prop} (2) above 
+and note that $\outMeasure{\emptyset} = 0$. This
+is only true when $E_1$ and $E_2$ are \textbf{metrically} disjoint.  Also from the last property, 
+using~\ref{prop:count_col_cubes} the outer measure of an open set written as the union of a countable
+collection of almost disjoint cubes is the infinite sum of the volume of those cubes.
+
+Since additivity is a crucial property we need identify those sets that preserve additivity, more importantly
+countable additivity. The notion of measurability isolates a collection of subsets in $\Rd$ for which the
+exterior measure statisfies all our desired properties including countable additivity. Since open sets satisfy
+countable additivity, we make the following criteria for measurablity.
+\begin{Definition}[name= (Volume) Lebesgue measure in $\Rn$]
+    A subset $E \subset \Rd$ is Lebesgue measurable or simply measurable, if for any $\epsilon > 0$ there is
+    an open set $G$ such that $E\subset G$ and,
+    \[\outMeasure{\setDiff{G}{E}} \leq \epsilon.\]
+    When this is true we denote the measure of $E$ by $\measure{E} = \outMeasure{E}$.
+\end{Definition}
+We will show that the collection of measurable sets behave nicely w.r.t.~set operations like unions,
+intersection, complements. In particular, we will show that a countable union of measurable sets are
+measurable, countable intersection of measurable sets are measurable and the complement of measurable set is
+measurable. Moreover, the measure of elementary set is the usual volume and we preserve (countable) additivity
+of disjoint sets and translation invariance. However we will also show that the class of measurable sets is
+strictly smaller than $\powSet{\Rd}$.
+
+Before we list the properties of measurable sets, we will list a useful lemma.
+\begin{Lemma}
+    If $F \subset \Rd$ is closed and $K \subset \Rd$ is compact and these two sets are disjoint, then
+    $d(F,K) > 0$.
+\end{Lemma}
+\begin{proof}
+    Let $x \in K$. Then $x \not\in F$ and hence there is a $\delta_x > 0$ such that $\ball{\delta_x}{x}\cap
+    F = \emptyset$. Hence for any $y \in F$, $d(x,y) > \delta_x$. By choosing a smaller $\delta_x$ we can make
+    $d(x,F) \geq 2\delta_x$. Now the collection $\set{\ball{\delta_x}{x}}{x\in K}$ is an open cover for $K$
+    and since $K$ is compact there is a finite subcover $\set{\ball{\delta_{x_i}}{x_i}}{1\leq i\leq N}$. Let
+    $\delta = \min\set{\delta_{x_i}}{1\leq i \leq N}$. Then for any $x \in K$, there is a $x_j$ such that
+    $d(x,x_j) < \delta_j$. Pick any $y\in F$, then $d(y,x) \geq d(y,x_j) - d(x,x_j) > \delta$ and hence
+    $d(F,K) > 0$.	
+\end{proof}
+\begin{Theorem}[name=Properties of Lebesgue (volume) measure]\label{thm:prop_leb_meas_rn}
+    Let $\mu$ be the Lebesgue measure and let $\famL$ be the collection of all (Lebesgue) measurable sets. 
+    We observe the following:
+    \begin{properties}
+    \item
+	If $G$ is an open subset of $\Rd$, then $G \in \famL$.
+    \item
+	(Completeness) If $\outMeasure{E} = 0$, then $E \in \famL$. In particular if $F$ is a 
+	subset of a set of exterior measure $0$, then $F \in \famL$.
+    \item
+	If $\lbrace E_i \rbrace$ is a countable collection of measurable sets, then
+	\[\countUnion{E_i}{i} \in \famL.\]
+    \item
+	If $F$ is a closed subset of $\Rd$, then $F \in \famL$.
+    \item
+	If $E \in \famL$, then $\comp{E} \in \famL$. 
+    \item
+	If $\lbrace E_i \rbrace$ is a countable collection of measurable sets, then
+	\[\countIntersection{E_i}{i} \in \famL.\]
+    \item
+	If $\lbrace E_i \rbrace$ is a countable collection of pairwise disjoint measurable sets, then
+	\[\measure{\countUnion{E_i}{i}} = \infiniteSum{\measure{E_i}}{i}.\]
+    \end{properties}
+\end{Theorem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Note that a set $E$ has Lebesgue measure zero if $\measure{E} = 0$. 
+We have a useful characterization of sets of Lebesgue measure zero.
+\begin{Proposition}[name=Lebesgue measure $0$]\label{prop:lebesgue_meas_0}
+    A set $E \subset \Rn$ has Lebesgue measure zero iff for any $\epsilon > 0$ there is a sequence of
+    rectangles $\lbrace R_i \rbrace \subset \Rn$ with their sides parallel to the co-odrdinate axes
+    such that,
+    \[E \subset \countUnion{R_i}{i}\quad\text{and}\quad \infiniteSum{\volumeMeasure{R_i}}{i} <
+	\epsilon\]
+\end{Proposition}
+

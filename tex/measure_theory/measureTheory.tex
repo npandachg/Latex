@@ -1,0 +1,85 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%    Lecture notes on measure theory written in AMS book series: 
+%    Graduate studies in Mathematics.
+%    Separate chapters should be included at the appropriate position.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{gsm-l}
+
+% my preloaded stuff for math books.
+\usepackage{mystylemath1}
+
+% for all my graphics
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10} %compatibility of pgf
+
+% for using tikz as a standalone 
+\usepackage{standalone}
+
+% Put all your preamble for pgfplots,tikz here. These are global settings for pgfplots and tikz
+% settings for pgfplots
+\pgfplotsset{soldot/.style={color=blue,only marks,mark=*}} % solid dot
+\pgfplotsset{holdot/.style={color=blue,fill=white,only marks,mark=*}} % hollow dot
+% settings for tikz
+\usetikzlibrary{matrix,arrows,calc,hobby,intersections}
+% all your non tikz figures(*.jpg,*.png) should be here
+\graphicspath{{~/Documents/Latex/Math/measure_theory/figures/}}
+% all your tikz figures should be in tex/tikz_figures/ relative to the root
+
+\makeindex
+
+\begin{document}
+
+\frontmatter
+
+\title{Foundations of Abstract analysis}
+
+\author{Nishant Panda}
+\address{2451 S. Timberline Rd, Apt 4\textemdash207, Fort Collins, Co 80525}
+\curraddr{}
+\email{nishant.panda@gmail.com}
+\thanks{}
+
+\subjclass[2010]{Primary }
+
+\keywords{measure theory, probability, integration}
+
+\maketitle
+\setcounter{page}{5}
+\tableofcontents
+%\cleardoublepage\phantomsection\listoffigures
+%\listoftheorems[ignore={Definition,Remark,Example,Proposition,Corollary,Lemma},show={Theorem}]
+
+% Include unnumbered chapters (preface, acknowledgments, etc.) here.
+% run nomencl.tex to update the index. 
+% then type: makeindex nomencl.nlo -s nomencl.ist -o nomencl.nls
+%\input{nomencl.nls}
+
+\mainmatter{}
+% Include main chapters here.
+\part{Metric Spaces and Point Set Topology}
+%\input{tex/part_1/chapter-metric_spaces_intro.tex}
+%\part{Measure Theory}
+%\input{tex/part_2/chapter-intro.tex}
+%\input{tex/part_2/chapter-sigma_algebra.tex}
+%\input{tex/part_2/chapter-measurable_functions.tex}
+%\input{tex/part_2/chapter-integration.tex}
+%\part{Elements of Functional Analysis}
+
+\appendix
+% Include appendix chapters here.
+\input{tex/appendix/appendix-prelims.tex}
+
+\backmatter{}
+% Bibliographies can be prepared with BibTeX using amsplain,
+% amsalpha, or (for author-year style) natbib.
+%\bibliographystyle{amsalpha}
+%\bibliography{pandaRefs.bib}
+
+% print index
+\printindex
+
+\end{document}

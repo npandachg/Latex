@@ -1,0 +1,896 @@
+\chapter{Preliminary Concepts: Set theory}
+
+\section{Some basic properties of integers}\label{App:integers}
+In this section we will list some of the basic properties of Integers without including the proofs
+of most of them. We denote the integers by $\Z$ and the positive integers by $\Z^{+}$. 
+\begin{Definition}
+    For any two integers $a,b$, we say that $a$ divides $b$ iff $b$ is a multiple of $a$ i.e 
+    $ a | b \equiv b = ak$ for some $k \in \Z$.
+\end{Definition}
+
+There are times when, for two integers $a,b$, \emph{exact} division is not possible. In that case we
+will appeal to Euclid's division theorem.
+
+\begin{Theorem}[name= Division Theorem]
+    Let $a,b \in \Z$ with $a \in \Z^{+}$. Then there are unique integers $q,r$ such that
+    \begin{equation*}
+	b = a*q + r \quad \text{and } 0\leq r < a.
+    \end{equation*}
+\label{thm:div}
+\end{Theorem}
+
+For two integers $a,b$ we can find all the integers that divide $a$ and all the integers that divide
+$b$. We'll be interested in those integers that divide both $a$ and $b$, particularly the greatest
+integer that divides them both. This integer is called the greatest common divisor and is denoted by
+$\gcd(a,b)$ or $(a,b)$.
+\begin{Definition}{Greatest common divisor}
+    Let $a,b$ be two integers, at least one of which is non-zero. Then the greatest common divisor
+    of $a,b$ is the unique positive integer $d$ such that
+    \begin{itemize}
+	\item $d$ is a common divisor, i.e $ d | a$ and $d | b$.
+	\item $d$ is greater than every other common divisor, i.e if $ c | a$ and $c | b$ then $c
+	    \leq d$.
+    \end{itemize}
+\end{Definition}
+
+To compute the $\gcd(a,b)$ we will use Euclid's recursive algorithm. Two important properties of
+$\gcd$ are:
+\begin{itemize}
+    \item If $ a | b$ then $\gcd(a,b) = a$.
+    \item For two integers $a,b$ if $b = a*q + r$ then $\gcd(a,b) = \gcd(r,a)$.
+\end{itemize}
+As an example of the second property consider the $\gcd(30,72)$. We can write $ 72 = 30*2 + 12 $. So
+$\gcd(30,72) = \gcd(12,30)$. We can continue further by writing $30 = 12*2 + 6$, so $\gcd(12,30) =
+\gcd(6,12) = 6$. The last result came from the first property. 
+
+\begin{Theorem}[name=Euclidean Algorithm]
+    Suppose that $a,b \in \Z^{+}$. The following procedure defines a finite sequence of positive
+    integers $a_0,a_1,\ldots,a_n$ such that $a_n = \gcd(a,b)$. 
+    \begin{enumerate}
+	\item Put $a_0 = b$ and $a_1 = a$.
+	\item At stage $k \geq 1$ suppose $a_0,a_1,\ldots,a_k$ have been defined. Then using the
+	    division theorem we can write
+	    \begin{equation*}
+		a_{k-1} = a_k*q_k + r_k.~\eqref{thm:div}
+	    \end{equation*}
+	\item If $r_k = 0$ then stop, $\gcd(a,b) = a_k$ else continue.
+    \end{enumerate}
+\label{thm:euclid_al}
+\end{Theorem}
+
+The $\gcd(a,b)$ can also be written as an integral combination of $a,b$. Let us define a linear
+combination of two integers $a,b$.
+\begin{Definition}
+    For any two integers $a,b$, any integer of the form $m*a + n*b$ where $m,n \in \Z$ is called a
+    linear combination of $a,b$.
+\end{Definition}
+For example given $-5,2$ then $30 = 2*(-5) + 20*2$ is a linear combination of $-5,2$. Such a linear
+combination is by no means unique. A very important fact (theorem) is that the $\gcd(a,b)$ can be
+written as a linear combination of $a,b$.
+
+\begin{Theorem}[name=gcd as linear combination]
+    For any two integers $a,b$, the $\gcd(a,b)$ is a linear combination of $a$ and $b$.
+\end{Theorem}
+
+Let us see how to get the linear combination. Let $a = 136$ and $b = 232$. From Euclid's
+algorithm~\eqref{thm:euclid_al} we get the following:
+\begin{align*}
+    232 = 136*1 + 96 \\
+    136 = 96*1 + 40 \\
+    96 = 40*2 + 16 \\
+    40 = 16*2 + 8 \\
+    16 = 8*2 + 0
+\end{align*}
+This tells us that $\gcd(136,232) = 8$. To get $8$ as a linear combination of $136,232$ we will
+write each of the numbers towards the left of the equations in the Euclidean Algorithm above as
+linear combination of $136,232$. 
+\begin{align*}
+    232 &= (232)*1 + (136)*0 \\
+    136 &= (232)*0 + (136)*1 
+\end{align*}
+\begin{align*}
+    96 &= 232 - 136*1 \\ 
+       &= (232)*1 + (136)*-1 
+\end{align*}
+Now $40 = 136 - 96*1$. And thus,
+\begin{align*}
+    40 &= 136 - \left[ (232)*1 + (136)*-1  \right] \\
+       &= (232)*-1 + (136)*2 
+\end{align*}
+Similarly $16 = 96 - 40*2$ and so 
+$16 = (232)*3 + (136)*-5 $. Thus we get 
+\begin{equation*}
+    8 = (232)*-7 + (136)*12
+\end{equation*}
+
+\begin{Definition}
+    Two integers $a,b$ are co-prime iff $1$ can be written as linear combination of $a$ and $b$ i.e
+    iff $\gcd(a,b) = 1$.
+\end{Definition}
+
+A very interesting problem known due to \emph{Diophantus} is that given three integers $a,b$
+and $c$, find all possible  linear combinations of $a$ and $b$ that yield $c$ i~.~e~.~find all the
+integers $m,n$ such that $c = m*a + n*b$.
+
+\begin{Theorem}
+    For positive integers $a,b,c$ there exists integers $m,n$ such that $m*a + n*b = c$ iff
+    $\gcd(a,b) | c $
+\label{thm:dioph}
+\end{Theorem}
+
+As an example consider the puzzle made famous in the movie Die Hard 3. Can $4$ gallon be poured
+using on $3,5$ gallon jugs? Note that $\gcd(3,5) = 1$ which divides $4$. Thus we can find $m,n$ such
+that $m*3 + n*5 = 4$. In this case $m = 3, n = -1$.
+
+As another example consider the equation $m*140 + n*63 = 35$. Does this equation have any solution?
+The $\gcd(63,140) = 7$ and we know that $7 | 35$ so the equation does have a solution. How do we
+find it. Note that we can write $7$ as a linear combination of $63,140$ as $ 7 = (63)*9 +
+(140)*-4$ and thus since $35 = 5*7$ we get
+\begin{equation*}
+    35 = 140*(-20) + (63)*45
+\end{equation*}
+
+How do we get all the solutions? Consider the \emph{homogenous} equation as above i.e 
+$m*140 + n*63 = 0$. To find its solution we can observe
+\begin{align*}
+    m*140 + 63*n = 0 \, \Leftrightarrow & m*20 + n*9 = 0 \\
+    \, \Leftrightarrow & 20m = -9n \\
+    \, \Leftrightarrow & 9 \, \text{divides} \, 20m.
+\end{align*}
+Since $\gcd(9,20) = 1$, this means that $9$ divides $m$ and so $m = 9*q$ for some $q \in \Z$. Thus
+plugging it in the equation we get $n = -20*q$. And so we get the solution pair $(m,n) =
+(9*q,-20*q)$. The following proposition sums up what we did.
+
+\begin{Proposition}
+    Suppose $a,b$ are co-prime non-zero integers, then for $(m,n) \in \Z^2$,
+    \begin{equation*}
+	a*m + b*n = 0 \Leftrightarrow (m,n) = (b*q,-a*q) \quad \text{for some $q \in \Z$}.
+    \end{equation*}
+\label{prop:ch1DioH}
+\end{Proposition}
+
+To find all the solutions for a linear Diophantine equation we will appeal to the following
+propostion,
+\begin{Proposition}
+    Suppose that $(m_0,n_0) \in \Z^2$ is a solution to the Diophantine equation $a*m + b*n = c$.
+    Then, for $(m,n) \in \Z^2$, 
+    \begin{equation*}
+	a*m + b*n = c \, \Leftrightarrow \, a*(m - m_0) + b*(n - n_0) = 0.
+    \end{equation*}
+\label{prop:ch1Dio}
+\end{Proposition}
+It can be easily proven by using $c = a*m_0 + b*n_0$. And using~\ref{prop:ch1DioH} we can find the
+solution of $a*(m - m_0) + b*(n - n_0) = 0$ given by $(m-m_0,n-n_0) = (b*q,-a*q)$ and so we can find
+$(m,n) = (m_0 + b*q, n_0 - a*q)$.
+
+As an example consider again the equation $140*m + 63*n = 35$. We found a particular solution given
+by $(m_0,n_0) = (-20,45)$ and so the solution set by~\ref{prop:ch1Dio} is given by
+$(m,n) = (-20 + 9*q, 45 - 20*q)$. Note that we divide by $7$ to get the homogenous case to be
+co-prime numbers. Thus we get $9*q$ and $20*q$ instead of $63*q$ and $140*q$.
+
+
+
+\subsection{Congruence class}
+Another very useful characterization of integers is done by the congruence or modulo construction.
+\begin{Definition}
+    Let $m \in \Z^{+}$. Two integers $a,b$ are congruent modulo $m$ whenever $a-b$ is divisible by
+    $m$. Equivalently $a$ and $b$ are congruent modulo $m$ whenver the remainders when $a,b$ is
+    divided by $m$ are equal. We denote this by
+    \begin{equation*}
+	a \equiv b \pmod m.
+    \end{equation*}
+\end{Definition}
+For example $20 = 34 \pmod 7$.
+
+The congruence modulo exhibit the following important properties.
+\begin{Proposition}
+    Let $m \in \Z^{+}$. Then
+    \begin{itemize}
+	\item For all $a \in \Z \, a \equiv a \pmod m$.
+	\item If $a,b \in \Z$ such that $a \equiv b \pmod m$ then $b \equiv a \pmod m$.
+	\item If $a,b,c \in \Z$ such that $a \equiv b \pmod m$ and $ b \equiv c \pmod m$ then $a
+	    \equiv c \pmod m$.
+    \end{itemize}
+\end{Proposition}
+
+\begin{Proposition}
+    Cancellation. Let $m \in \Z^{+}$ and let $a*b_1 \equiv a*b_2 \pmod m$. Then,
+    \begin{itemize}
+	\item $b_1 \equiv b_2 \pmod m \text{ whenever } \gcd(a,m) = 1$. 
+	\item $b_1 \equiv b_2 \pmod {m/a} \text{ whenever } a | m $. 
+    \end{itemize}
+\end{Proposition}
+
+\begin{Proposition}
+    Arithmetic. Let $m \in \Z^{+}$ and let $a_1,a_2,b_1,b_2 \in \Z$ such that $a_1 \equiv a_2 \pmod
+    m$ and $b_1 \equiv b_2 \pmod m$. Then
+    \begin{itemize}
+	\item $a_1 \pm b_1 \equiv a_2 \pm b_2 \pmod m$. 
+	\item $a_1*b_1 \equiv a_2*b_2 \pmod m$.
+    \end{itemize}
+\end{Proposition}
+
+An important question is to determine if $a*x \equiv b \pmod m$ exists for certain values of $x$? 
+The following theorem tells us that there is a bijective correspondence between solving the 
+linear Diophantine equation and the congruence equation i.e,
+\begin{Theorem}
+    For integers $a,b$ and positive integer $m \in \Z^{+}$, there is a bijection
+    \begin{equation*}
+	f: \lbrace (x,y) \in \Z^2 \lvert a*x + m*y = b \rbrace \to \lbrace x \in \Z \lvert a*x \equiv b
+	\pmod m \rbrace 
+    \end{equation*}
+\end{Theorem}
+
+Thus to get the solution for $a*x \equiv b \pmod m$ we must have
+\begin{itemize}
+    \item $\gcd(a,m) | b$. 
+    \item $x$ is such that $(x,y)$ must be solutions to the linear Diophantine equation $a*x + m*y =
+	b$.
+\end{itemize}
+
+Since arithmetic is allowed in the modulo framework we can define two inverse operations of addition
+and multiplication. 
+We say that $-a$ is the additive inverse of $a$ modulo $m$ whenever $a + (-a) = 0 \pmod m$.
+Similarly $a^{-1}$ is the multiplicative inverse of $a$ modulo $m$ whenever $a*a^{-1} = 1 \pmod m$.
+Note that for a multiplicative inverse to exist we must have that $\gcd(a,m) | 1$. This is only
+possible when $a$ and $m$ are co-prime and $a$ is non-zero.
+
+\begin{Definition}
+    Given $m \geq 2 \in \Z^{+}$ and an integer $a$, the congruence class of $a$ modulo $m$ is the
+    set of all integers which are congruent to $a$ modulo $m$. We denote this congruence class by
+    ${\left[a\right]}_{m}$. Thus,
+    \begin{equation*}
+	{\left[a\right]}_{m} = \lbrace x \in \Z \, \lvert \, x \equiv a \pmod m \rbrace
+    \end{equation*}
+\end{Definition}
+Since $x \equiv a \pmod m$ is the same as $a \equiv x \pmod m$, the equivalence class
+${\left[a\right]}_m$ can be thought of as the set of all integers that give a remainder $a$ when
+divided by $m$.
+
+As an example consider $m = 2$. There are only two remainders possible $0$ and $1$ and hence there
+are two equivalent classes ${\left[0\right]}_2$ and ${\left[1\right]}_2$. Similarly when $m = 6$ we
+get ${\left[0\right]}_6$,${\left[1\right]}_6$,${\left[2\right]}_6$,${\left[3\right]}_6$,
+${\left[4\right]}_6$ and ${\left[5\right]}_6$.
+
+\begin{Definition}
+    Given $m \geq 2 \in \Z^{+}$. The set of congruence class ${\left[0\right]}_m$,
+    ${\left[1\right]}_m$, $\dots {\left[m-1\right]}_{m}$ is denoted by $\Z_{m}$ i.e 
+    \begin{equation*}
+	\Z_{m} = \lbrace {\left[0\right]}_m,{\left[1\right]}_m, \ldots, {\left[m-1\right]}_m \rbrace
+    \end{equation*}
+\end{Definition}
+
+Note that $\Z_{m}$ is a finite set. We can define arithmetic in $\Z_{m}$ as follows:
+$ {\left[a\right]}_m + {\left[b\right]}_m = {\left[a + b\right]}_m $ and 
+$ {\left[a\right]}_m * {\left[b\right]}_m = {\left[a * b\right]}_m $.
+
+For example consider $\Z_{3}$. Then 
+\begin{itemize}
+    \item $ {\left[1\right]}_3 +  {\left[2 \right]}_3  =  {\left[3\right]}_3 = 
+	{\left[0\right]}_3 $.
+    \item $ {\left[2 \right]}_3 * {\left[2 \right]}_3  = {\left[4 \right]}_3 = 
+	{\left[1 \right]}_3 $.
+\end{itemize}
+
+Since arithmetic has been defined for $\Z_{m}$ we can consider the additive inverse and
+multiplicative inverse of ${\left[a\right]}_m \in \Z_{m}$. Thus,
+\begin{itemize}
+    \item ${\left[b\right]}_m \in \Z_{m}$ is the additive inverse of ${\left[a\right]}_m$ whenever
+	${\left[a\right]}_m + {\left[b\right]}_m = {\left[0\right]}_m$.
+    \item ${\left[b\right]}_m \in \Z_{m}$ is the multiplicative inverse of ${\left[a\right]}_m$ whenever
+	${\left[a\right]}_m * {\left[b\right]}_m = {\left[1\right]}_m$.
+\end{itemize}
+
+Again note that for multiplicative inverse of ${\left[a\right]}_m$ to exist it would mean that $a$
+and $m$ are co-prime and $a$ is non-zero. As an example in $\Z_{10}$ only ${\left[1\right]}_m$, 
+${\left[3\right]}_m$, ${\left[7\right]}_m$ and ${\left[9\right]}_m$ will have multiplicative
+inverses.
+
+\subsection{Prime factorization}
+\begin{Definition}
+    A positive integer $p$ is said to be prime iff the only positive divisors of $p$ are $p$ and
+    $1$. If a number is not prime then it is composite.
+\end{Definition}
+Thus if a number $q > 1$ is composite then $q = a*b$ for $ 1 < a < q $ and $ 1 < b < q$.  
+
+We state two important propositions without proof. 
+\begin{Proposition}
+    \begin{itemize}
+	\item Every integer greater than $1$ can be written as a product of primes.
+	\item Suppose that $p$ is prime and $p | a*b$, then $p | a$ or $p | b$.
+    \end{itemize}
+\end{Proposition}
+
+A very important theorem about prime numbers is that every positive integer can be uniquely factored
+as a product of primes.
+\begin{Theorem}[name=Fundamental theorem of Arithmetic]
+    Every positive integer greater than $1$ can be uniquely written as a product of prime numbers
+    with the prime factors in the product written in non-decreasing order.
+\end{Theorem}
+
+For example $72 = 2^3 * 3^2$.
+
+Note that if $m = p \geq 2 \in \Z^{+}$ is prime then every non-zero element of $\Z_{p}$ will have an
+multiplicative inverse.
+
+This completes an introduction to the integers. We will revisit them in the context of Group theory.
+\section{Foundations of set theory}\label{App:set_theory}
+In this section, we will cover the basics of axiomatic set theory and will conclude with the 
+Axiom of Choice. Most proofs will be omitted.
+The axiomatic theory of set is just based two (undefined) notions \textit{class} and the 
+\textit{membership relation} denoted by $\in$. All objects are classes. However there are two kinds
+of classes:
+\begin{itemize}
+    \item Sets
+    \item Proper Classes
+\end{itemize}
+If $x,A$ are classes then the expression $x \in A$ means that $x$ is an element of $A$. This leads
+to our first definition
+\begin{Definition}
+    Let $x$ be a class. If $x$ is belongs to some class $A$ then $x$ is called an element.
+\end{Definition}
+All elements are denoted by lower case letters. Hence whenever we write $x,y,z$ we mean classes that
+belong to some class. Whenever we denote classes by capital letters $A,B,C$ then such a class may be
+an element of some other class or may not be an element at all.
+
+\begin{Definition}
+    Let $A,B$ be classes. We define $A = B$ to mean that every class that has $A$ as its element
+    must have $B$ as an element and vice versa. Logically,
+    \begin{equation*}
+	A = B \, \text{iff} \, (\forall X)\left[ A \in X \implies B \in X \land B \in X \implies A \in X
+	\right].
+    \end{equation*}
+\end{Definition}
+
+The first axiom is called the \textbf{axiom of Extent} and is an equivalent statement of the above
+definition.
+\begin{enumerate}[label=\bfseries Axiom 1:]
+    \item $A = B$ iff $x \in A \iff x \in B$.  
+\end{enumerate}
+
+\begin{Definition}
+    Let $A,B$ be classes; we define $A \subseteq B$ to mean that every element of $A$ is an element of
+    $B$. $A$ is called a subclass of $B$.
+\end{Definition}
+
+The second axiom is called the \textbf{axiom of class construction} and defines way to construct 
+sets from elements. For this we define a \textit{property} as,
+\begin{Definition}
+    A property $P(x)$ is a mathematical statement involving an element $x$ such that it can be
+    expressed entirely in terms of the logical symbols $\in, \land, \lor, \lnot, \exists, \forall$
+    and variables $x,y,z,A,B \dots$. 
+\end{Definition}
+
+\begin{enumerate}[label=\bfseries Axiom 2:]
+    \item If $P(x)$ is a property then there exists a class $C$ whose elements are precisely those
+	that satisfy $P(x)$. Logicall we denote $C$ as,
+	\begin{equation*}
+	    C = \left.\lbrace x : P(x) \rbrace\right..
+	\end{equation*}
+\end{enumerate}
+
+If $A$ and $B$ are classes then the following properties gives very important classes,
+\begin{enumerate}
+    \item $P(x)$ is $x \in A \lor x \in B$.
+    \item $P(x)$ is $x \in A \land x \in B$.
+\end{enumerate}
+
+The class satisfying the first property is called the union of $A,B$ and is denoted by $A \cup B$.
+The class satisfying the second property is called the intersection of $A,B$ and is denoted by 
+$A \cap B$.
+
+\begin{Definition}
+    The universal class $\mathcal{U}$ is the class of all the elements. Thus it contains classes
+    that belong to some class. Thus, 
+    \begin{equation*}
+	\mathcal{U} = \left.\lbrace x : x = x \rbrace\right.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    The empty class $\emptyset$ is the class that has no elements. Thus,
+    \begin{equation*}
+	\emptyset = \left.\lbrace x : x \neq x \rbrace\right.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    If two classes $A,B$ have no elements in common, they are said to be disjoint. Thus, $A,B$ are
+    disjoint if,
+    \begin{equation*}
+	A \cap B = \emptyset.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    The complement of a class $A$, $\comp{A}$ is the class of all elements that do not belong to $A$.
+    Thus,
+    \begin{equation*}
+	\comp{A} =\left.\lbrace x : x \not\in A \rbrace\right.
+    \end{equation*}
+\end{Definition}
+
+Note that for any class $A$, $\emptyset \subseteq A$, $A \subseteq \mathcal{U}$ and $A \cup
+\comp{A} = \mathcal{U}$ and $A \cap \comp{A} = \emptyset$.
+The Demorgan Laws provide a duality about union and intersection,
+\begin{itemize}
+    \item $\comp{(A \cup B)} = \comp{A} \cap \comp{B}$.
+    \item $\comp{(A \cap B)} = \comp{A} \cup \comp{B}$.
+\end{itemize}
+
+It is very important fact that union, intersection and complement describe an algebra of classes
+which is summarized below (easily proven),
+
+\begin{itemize}
+    \item Identity Laws:
+	\begin{itemize}
+	    \item $A \cup A = A$.
+	    \item $A \cap A = A$.
+	\end{itemize}
+    \item Associative Laws:
+	\begin{itemize}
+	    \item $A \cup ( B \cup C) = (A \cup B)\cup C $.
+	    \item $A \cap ( B \cap C) = (A \cap B)\cap C $.
+	\end{itemize}
+    \item Commutative Laws:
+	\begin{itemize}
+	    \item $A \cup B = B \cup A$.
+	    \item $A \cap B = B \cap A$.
+	\end{itemize}
+    \item Distributive Laws:
+	\begin{itemize}
+	    \item $A \cup (B \cap C) = (A \cup B) \cap (A \cup C)$.
+	    \item $A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$.
+	\end{itemize}
+\end{itemize}
+
+\begin{Definition}
+    The difference of two classes $A,B$, $A - B$ is the class of those elements that are elements of $A$ but
+    not of $B$. Thus,
+    \begin{equation*}
+	A - B = \left.\lbrace x : x \in A \land x \not\in B \rbrace\right.
+    \end{equation*}
+\end{Definition}
+Note that $A - B = A \cap \comp{B}$.
+
+If $a$ is an element then from Axiom $2$ we can construct the class that contains only $a$. Such a
+class is called a \textit{singleton} and is given by:
+\begin{equation*}
+    \lbrace a \rbrace =\lbrace x : x = a \rbrace.
+\end{equation*}
+
+Similarly we can create the \textit{un-ordered} pair $\lbrace a,b \rbrace$ which is,
+\begin{equation*}
+    \lbrace a,b \rbrace = \lbrace x : x = a \lor x = b \rbrace.
+\end{equation*}
+
+It is easy to see that $\lbrace a,b \rbrace = \lbrace c,d \rbrace$ 
+when $(a = c) \lor (b = d)$ or $ (a = d) \lor (b = c)$. Something that is very important is the notion of
+ordered pair which we denote by $(a,b)$. What is important about ordered pairs is that if 
+$(a,b) = (c,d)$ the $a = c$ and $b = d$. Thus the \textit{order} in which they appear in the set is
+important.
+
+\begin{Definition}
+    If $a,b$ are elements, then the ordered pair is the class given by,
+    \begin{equation*}
+	(a,b) = \left.\lbrace \lbrace a \rbrace, \lbrace a,b \rbrace \rbrace\right.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    The Cartesian product of two classes $A$ and $B$ denoted by $A \times B$ 
+    is the class of all ordered pairs $(x,y)$ where $x \in A$ and $y \in B$. Thus,
+    \begin{equation*}
+	A \times B = \left.\lbrace (x,y) : x \in A \land y \in B \right.\rbrace.
+    \end{equation*}
+\end{Definition}
+
+A class of ordered pairs is called a \textit{Graph}. Thus any subclass of $\mathcal{U} \times
+\mathcal{U}$ is a graph. If $G$ is a graph, we denote $G^{-1}$ to be the inverse graph given by,
+\begin{equation*}
+    G^{-1} = \left.\lbrace (y,x) : (x,y) \in G \right.\rbrace.
+\end{equation*}
+
+\begin{Definition}
+    If $G,H$ are graphs, then $G \circ H$ is the graph defined as follows:
+    \begin{equation*}
+	G \circ H = \set{(x,y)}{\exists z \ni (x,z) \in H \, \land \, (z,y) \in G}
+    \end{equation*}
+\end{Definition}
+
+\begin{Theorem}
+    If $G,H,J$ are graphs, then the following hold:
+    \begin{enumerate}
+	\item $(G \circ H)\circ J = G \circ (H \circ J)$.
+	\item ${(G^{-1})}^{-1} = G $.
+	\item ${(G \circ H)}^{-1} = H^{-1} \circ G^{-1}$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    We prove in order,
+    \begin{enumerate}
+	\item let $(x,y) \in (G \circ H)\circ J$. Then there is a $ z \ni (x,z) \in J$ and 
+	    $(z,y) \in (G \circ H) $. Thus there is a $u \ni (z,u) \in H$ and $(u,y) \in G$. Thus $(x,u) \in 
+	    H \circ J$. And so $(x,y) \in G \circ (H \circ J)$. The argument can be reversed and 
+	    so we get the equality of classes. 
+	\item Let $(x,y) \in {(G^{-1})}^{-1}$. Hence $(y,x) \in G^{-1}$. Thus $(x,y) \in G$. The
+	    other direction is similar.
+	\item Let $(x,y) \in {(G \circ H)}^{-1}$. Hence $(y,x) \in (G \circ H)$. Thus there is a 
+	    $z \ni (y,z) \in H$ and $(z,x) \in G$. Thus $(z,y) \in H^{-1}$ and $(x,z) \in G^{-1}$, 
+	    which is just $(x,z) \in G^{-1}$ and $(z,y) \in H^{-1}$. Hence 
+	    $(x,y) \in H^{-1} \circ G^{-1}$.
+    \end{enumerate}
+\end{proof}
+
+\begin{Definition}
+    Let $G$ be a graph. By the domain of $G$ we mean the class
+    \begin{equation*}
+	dom\,G = \set{x}{\exists y \ni (x,y) \in G}.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    Let $G$ be a graph. By the range of $G$ we mean the class
+    \begin{equation*}
+	range\,G = \set{y}{\exists x \ni (x,y) \in G}.
+    \end{equation*}
+\end{Definition}
+
+\begin{Theorem}
+    IF $G,H$ are graphs then
+    \begin{enumerate}
+	\item $dom\,G = range\,G^{-1}$.
+	\item $dom\,G^{-1} = range\,G$.
+	\item $dom\,(G \circ H) \subseteq dom\,H$.
+	\item $range\,(G \circ H) \subseteq range\,G$.
+    \end{enumerate}
+\end{Theorem}
+
+The proof of the third statement is as follows,
+\begin{proof}
+    Let $x \in dom\,(G \circ H)$. Thus there is a $y \ni (x,y) \in G \circ H$. Thus there
+    is a $z \ni (x,z) \in H$ and $(z,y) \in G$. Thus the existence of $z \ni (x,z) \in H$
+    means that $x \in dom\,H$.
+\end{proof}
+
+An important corollary of the above theorem is that if $range\,H = dom\,G$ then $dom\,G\circ H =
+dom\,H$. To prove the equality we just need to show that $dom\, H \subseteq dom\,G\circ H$. Consider
+an element $x \in dom\,H$. Thus there is a $z \ni (x,z) \in H$. Since range of $H$ equal to
+$dom\,G$, this means that $z \in dom\,G$. Hence there is a $y \ni (z,y) \in G$ and so 
+$(x,y) \in G\circ H$. Thus $x \in dom\,G\circ H$.
+
+\begin{Definition}
+    An indexed class is the class denoted by $\lbrace A_i : i \in I \rbrace$ where $I$ is the class
+    whose elements are called indices.
+\end{Definition}
+Formally an indexed class is a graph $G$ and each $A_i = \set{x}{(i,x) \in G}$. Thus if $I =
+\lbrace 1,2\rbrace$ and $A_1 = \lbrace a,b \rbrace $ and $A_2 = \lbrace e , f \rbrace$ then the
+indexed class $\lbrace A_i : i \in I \rbrace$ is the graph $G = \lbrace (1,a) , (1,b) , (2,e), (2,f)
+\rbrace$.
+
+\begin{Definition}
+    Let $\lbrace A_i : i \in I \rbrace$ be an indexed family. Then,
+    \begin{enumerate}
+	\item The union of the classes $A_i$ consists of all those elements $x$ that are contained
+	    in atleast one $A_i$. 
+	    \begin{equation*}
+		\bigcup_{i \in I} A_i = \set{x}{\exists j \ni x \in A_j}.
+	    \end{equation*}
+	\item The intersection of the classes $A_i$ consists of all those elements $x$ that are 
+	    contained in each $A_i$. 
+	    \begin{equation*}
+		\bigcap_{i \in I} A_i = \set{x}{\forall j, x \in A_j}.
+	    \end{equation*}
+    \end{enumerate}
+\end{Definition}
+
+\begin{Theorem}
+    Let $\lbrace A_i : i \in I \rbrace$ be an indexed class and $B$ be any class. Then,
+    \begin{enumerate}
+	\item If $B \subseteq A_i$ for every $i \in I$ then $B \subseteq \bigcap_{i \in I} A_i$.
+	\item If $A_i \subseteq B$ for every $i \in I$ then $\bigcup_{i \in I} A_i \subseteq B$.
+    \end{enumerate}
+\end{Theorem}
+
+The Generalized DeMorgan's Laws and Distributive laws can be restated as:
+\begin{Theorem}[name=DeMorgan's Laws]
+    Let $\lbrace A_i : i \in I \rbrace$ be an indexed class. Then,
+    \begin{enumerate}
+	\item ${\comp{(\bigcup_{i \in I} A_i)}} = \bigcap_{i \in I} \comp{A_{i}}$
+	\item ${\comp{(\bigcap_{i \in I} A_i)}} = \bigcup_{i \in I} \comp{A_{i}}$
+    \end{enumerate}
+\end{Theorem}
+
+\begin{Theorem}[name=Distributive Laws]
+    Let $\lbrace A_i : i \in I \rbrace$ and $\lbrace B_j : j \in J \rbrace$  be indexed classes. 
+    Then,
+    \begin{enumerate}
+	\item ${(\bigcup_{i \in I} A_i) \bigcap (\bigcup_{j \in J} B_j) } = \bigcup_{(i,j) \in I
+	    \times J} A_{i} \cap B_{j}$.
+	\item ${(\bigcap_{i \in I} A_i) \bigcup (\bigcap_{j \in J} B_j) } = \bigcap_{(i,j) \in I
+	    \times J} A_{i} \cup B_{j}$.
+    \end{enumerate}
+\end{Theorem}
+
+\begin{Theorem}
+    Let $\lbrace G_i : i \in I \rbrace$ be a family of graphs. Then,
+    \begin{enumerate}
+	\item $dom\,(\bigcup_{i \in I} G_i) = \bigcup_{i \in I} (dom\,G_i)$.
+	\item $range\,(\bigcup_{i \in I} G_i) = \bigcup_{i \in I} (range\,G_i)$.
+    \end{enumerate}
+\end{Theorem}
+
+In the begining we noted that there were two kinds of classes. We now define the most important kind
+of class called \textit{Set}.
+\begin{Definition}
+    A class $X$ is called a set if there is a class $Y$ such that $X \in Y$.
+\end{Definition}
+If for all class $Y$, $X \not\in Y$ then $X$ is called a proper class. The remaining axioms all
+concern sets. 
+
+\begin{enumerate}[label=\bfseries Axiom 3:]
+    \item Every subclass of a set is itself a set.  
+\end{enumerate}
+Such a subclass is called a \textit{subset}. Note that for any class $B$, if $A$ is a set then
+$A\cap B \subseteq A$. Thus \textit{intersections} are sets. 
+The next axiom gives the existence of sets.
+
+\begin{enumerate}[label=\bfseries Axiom 4:]
+    \item The empty class $\emptyset$ is a set.
+\end{enumerate}
+
+\begin{enumerate}[label=\bfseries Axiom 5:]
+    \item If $a,b$ are sets then the un-ordered pair $\lbrace a , b \rbrace$ is a set. 
+\end{enumerate}
+
+Note that $\emptyset$ is a set and the set containing the emptyset $\lbrace{\emptyset}\rbrace$ is
+also a set i.e we used $b = a$ in the above axiom to construct this set. 
+Thus we can form a new set $\lbrace \emptyset,\lbrace \emptyset \rbrace \rbrace$. We can
+continue this forever.
+
+\begin{Definition}
+    Let $A$ be a set. By the power set of $A$ we mean the class which contains all subsets of $A$.
+    Thus,
+    \begin{equation*}
+	\powSet{A} = \set{X}{X \subseteq A}.
+    \end{equation*}
+\end{Definition}
+
+The next two axioms concerns sets of sets. 
+
+\begin{enumerate}[label=\bfseries Axiom 6:]
+    \item If $\mathcal{A}$ is a set of sets then $\bigcup \mathcal{A}$ is also a set.
+\end{enumerate}
+Note that $\bigcup{\mathcal{A}}$ is the set $\set{x}{\exists A \in \mathcal{A} \ni x \in A}$.
+
+\begin{enumerate}[label=\bfseries Axiom 7:]
+    \item If $A$ is a set then $\powSet{A}$ is also a set.
+\end{enumerate}
+
+The following theorem shows that the cartesian product of two sets is also a set.
+\begin{Theorem}
+    If $A,B$ are sets then $A \times B$ is also a set.
+\end{Theorem}
+\begin{proof}
+    We will show that $A \times B$ is an subset of $\powSet{\powSet{A\cup B}}$
+    and thus by Axiom $3$ is a set.
+    Let $(x,y) \in A \times B$. Note that $(x,y) = \lbrace \lbrace x \rbrace, \lbrace x,y \rbrace
+    \rbrace$. But $\lbrace x \rbrace \in \powSet{A \cup B}$ and $\lbrace y \rbrace \in
+    \powSet{A \cup B}$.
+    Thus $\lbrace \lbrace x \rbrace, \lbrace x,y \rbrace \rbrace$ is a subset of $\powSet{A\cup B}$. 
+    That is $(x,y) \in \powSet{\powSet{A\cup B}}$. Hence $A \times B$ is a subset of 
+    $\powSet{\powSet{A\cup B}}$.
+\end{proof}
+
+Now we will look into the set-theoretic definition of functions.
+A function $f$ is a \emph{triple} $\left(A,B,f\right)$ where $A,B$ are sets and $f \subseteq A
+\times B$ is a graph satisfying the following conditions:
+\begin{enumerate}[label=\bfseries F \arabic*:]
+    \item For every $x \in A$ there is a $y \in B$ such that $(x,y) \in f$.
+    \item For every $x \in A$, if $y_1,y_2 \in B$ such that $(x,y_1) \in f$ and $(x,y_2) \in f$ then
+	$y_1 = y_2$.
+\end{enumerate}
+
+We usually denote $\left(A,B,f\right)$ as $ f : A \to B$ and write $(x,y) \in f$ as $f(x)= y$.
+Thus the above conditions become:
+\begin{enumerate}[label=\bfseries F \arabic*:]
+    \item For every $x \in A$ there is a $y \in B$ such that $f(x) = y$.
+    \item For every $x \in A$, $f(x) = y_1 $ and $f(x) = y_2$ implies $y_1 = y_2$. 
+\end{enumerate}
+
+We note that if $A,B$ are sets then any graph $f \subseteq A \times B$ is a function iff
+\begin{enumerate}
+    \item $dom\,f = A$.
+    \item $range\,f \subseteq B$.
+    \item $F2$ is satisfied.
+\end{enumerate}
+
+Some important functions are:
+\begin{enumerate}
+    \item INJECTIVE, A function $f : A \to B$ is said to be injective iff for $x_1,x_2 \in A$,
+	$f(x_1) = f(x_2)$ implies that $x_1 = x_2$.
+    \item SURJECTIVE, A function $f : A \to B$ is surjective iff for every $y \in B$ there is a $x
+	\in A$ such that $y = f(x)$, i.e range $f$ $ = B$.
+    \item BIJECTIVE, A function $f : A \to B$ is bijective iff it is both surjective and injective.
+\end{enumerate}
+
+Some examples are as follows:
+\begin{enumerate}
+    \item Identity function. The function $i_A : A \to A$ given by $i_A(x) = x$ 
+	for every $ x\in A$ is called the identity function.  
+    \item Inclusion function. Let $A,B$ be sets such that $B \subseteq A$. The function $i_B : B \to
+	A$ is called the inclusion function. Note that $i_B(x) = x$ for every $x \in B$.
+    \item Characteristic function. Let $2$ designate the class of all functions with two elements, say the
+	class $\lbrace 0,1\rbrace$. If $B \subset A$, then the characteristic function of $B$ is
+	given by $\chi_B : B \to 2$ such that whenever $x \in B$ then $\chi_B(x) = 1$, otherwise
+	$\chi_B(x) = 0$. 
+    \item Restriction function. Let $C \subseteq A$ and $f : A \to B$. Then the restriction of $f$
+	to $C$ is the function given by $f_{|_C} : C \to B$ such that $f_{|_C}(x) = f(x)$ for every
+	$x \in C$.
+\end{enumerate}
+
+The next theorem concerns composition.
+\begin{Theorem}
+    If $f : A \to B$ and $g : B \to C$ are functions then $g \circ f : A \to C $ is a function and
+    $(g\circ f)(x) = g(f(x))$ for every $x \in A$.
+\end{Theorem}
+The proof is easy once we notice that since $g$ is a fuction $dom\,g = B$ and so range of $f$ is
+subset of domain of $g$ thus $dom\,g\circ f = A$. Also we observe that $range\, g\circ f \subseteq
+range\,g$ for any graph. That $F2$ is satisfied is easy.
+
+\begin{Definition}
+    A function $f : A \to B$ is invertible if the inverse graph is a function $f^{-1} : B \to A$.
+\end{Definition}
+
+\begin{Theorem}
+    A function is invertible iff it is bijective. Furthermore, if a function is invertible then
+    the inverse is a bijective function.
+\end{Theorem}
+
+A useful characterization of invertible function is the following:
+\begin{Theorem}
+    A function $f : A \to B$ is invertible iff there is a function $g : B \to A$ such that $g \circ
+    f = i_A$ and $f\circ g = i_B$. If such a function $g$ exists then $g = f^{-1}$.
+\end{Theorem}
+
+\begin{Theorem}
+    A function $f : A \to B$ is injective iff there is a function $g : B \to A$ such that $g \circ
+    f = i_A$.
+\end{Theorem}
+\begin{proof}
+    Let a function $g : B \to A$ be such that $g\circ f (x) = x $ for every $x \in A$. Consider
+    $x_1,x_2$ such that $f(x_1) = f(x_2)$. Thus $x_1 = (g \circ f)(x_1) = g(f(x_1)) = g(f(x_2)) = 
+    x_2$. Hence $f$ is injective. Consider an injective function $f$ and fix an element $a \in A$.
+    Construct $g : B \to A$ as follows. If $y \in range\,f$ let $g(y) = f(x)$. If $y \not \in
+    range\,f$ then $g(y) = a$. Easy to see that $g\circ f = i_A$. 
+\end{proof}
+
+\begin{Theorem}
+    Let $f : A \to B$ and $g : B \to C$ be functions. Then we can state the following about the
+    composition $g \circ f$,
+    \begin{enumerate}
+	\item If $f,g$ are injective then so is $g \circ f$.
+	\item If $f,g$ are surjective then so is $g \circ f$.
+	\item If $f,g$ are bijective then so is $g \circ f$.
+    \end{enumerate}
+\end{Theorem}
+
+Now we will define Direct and Inverse images of sets under a function.
+\begin{Definition}
+    Let $f : A \to B$ be a function and consider a set $C \subseteq A$. Then the direct image of $C$
+    under $f$ is the set of all images of elements of $C$,
+    \begin{equation*}
+	f(C) = \set{y \in B}{\exists x \in C \ni f(x) = y}.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    Let $f : A \to B$ be a function and consider a set $D \subseteq B$. Then the inverse image of $D$
+    under $f$ is the set of all elements in $A$ whose images are elements of $D$,
+    \begin{equation*}
+	\invIm{f}{D} = \set{x \in A}{\exists y \in D \ni f(x) = y}.
+    \end{equation*}
+\end{Definition}
+We can alternatively write the inverse image of $D$ as the set 
+\[\invIm{f}{D} = \set{x \in A}{f(x) \in D}.\]
+It is important to see how direct images and inverse images act on generalized unions and
+intersections. The next theorem summarizes there actions.
+\begin{Theorem}
+    Let $f : A \to B$ and let ${\lbrace C_i \rbrace}_{i \in I}$ and 
+    ${\lbrace D_i \rbrace}_{i \in I}$ be sub-families in $A$ and $B$ respectively. Then,
+    \begin{enumerate}
+	\item $\dirIm{f}{\indexUnion{C_i}{i}{I}} = \indexUnion{\dirIm{f}{C_i}}{i}{I}$,
+	\item $\dirIm{f}{\indexIntersection{C_i}{i}{I}} \subseteq \indexIntersection{\dirIm{f}{C_i}}{i}{I}$,
+	\item $\invIm{f}{\indexUnion{D_i}{i}{I}} = \indexUnion{\invIm{f}{D_i}}{i}{I}$,
+	\item $\invIm{f}{\indexIntersection{D_i}{i}{I}} = \indexIntersection{\invIm{f}{D_i}}{i}{I}$,
+    \end{enumerate}
+\end{Theorem}
+Thus, we see that the inverse image is well behaved w.r.t unions and intersections (and
+complements). Note that the inverse and direct image are functions that maps powersets, i.e
+$C(\in \powSet{A}) \mapsto \dirIm{f}{C}(\in \powSet{B})$ and $D (\in \powSet{B}) 
+\mapsto \invIm{f}{D} (\in \powSet{A})$. This is easy to see if we observe that if $C_1 = C_2$ then
+$\dirIm{f}{C_1} = \dirIm{f}{C_2}$. Similarly for inverse images. However, the converse 
+is not true in general.
+
+We have defined the \emph{product} of two classes as $A \times B$ as the class of all the ordered
+pairs in $A$ and $B$. We can extend this idea to the product of finite classes $A_1,A_2,\dots,A_n$
+as the class of all \emph{n-tuple} $(a_1,a_2,\dots,a_n)$ such that $a_i \in A_i$ for all $1\leq i
+\leq n$. However, we have a potential problem if we an arbitrary indexed family, 
+$\set{A_i}{i\in I}$. In such a case we have to redefine what a product of classes mean.
+
+\begin{Definition}
+    Let $\set{A_i}{i\in I}$ be an indexed family of classes; let
+    \[A = \indexUnion{A_i}{i}{I}.\]
+    The product of the classes $A_i$ is defined to be the class
+    \[\indexProduct{A_i}{i}{I} = \set{f}{\map{f}{I}{A}\,\text{and $f(i)\in A_i$}\,\forEv{i\in I}}.\]
+\end{Definition}
+We will adopt the following notational convention: we designate elements of a product
+$\indexProduct{A_i}{i}{I}$ with boldface letters $\vect{a},\vect{b}$ etc. If $\vect{a}$ is an
+element of $\indexProduct{A_i}{i}{I}$, we will denote by $a_j$ as $\vect{a}(j)$. We call $a_j$ as
+the $j^{th}$ co-ordinate of $\vect{a}$.
+Let $A = \indexProduct{A_i}{i}{I}$, corresponding to each index we define a function
+$\map{\Pi_{i}}{A}{A_i}$ by
+$\Pi_i(\vect{a}) = a_i$. We call $\Pi_i$ as the $i^{th}-projection$ of $A$ to $A_i$.
+
+\begin{Definition}
+    If $A,B$ are classes, we denote by $B^A$ as the class of all functions whose domain is $A$ and
+    whose co-domain is $B$.
+\end{Definition}
+In particular if $2 = \lbrace 0,1\rbrace $ 
+denotes the class of two elements, then $2^A$ is the class of all functions 
+from $A$ to $\lbrace 0,1\rbrace$.
+\begin{Theorem}
+    If $A$ is a set, then  $\powSet{A}$ and $2^A$ are in $1-1$ correspondence.
+\end{Theorem}
+\begin{proof}
+We will show that there is a function $\map{f}{\powSet{A}}{2^A}$, such that $f$ is injective.
+For any $B \in \powSet{A}$ define $f(B) = \charFunc{B}$. Easy to see that $f$ is injective. Infact
+there is a bijection. Let $g \in 2^A$. Define $B = \invIm{g}{\lbrace 1 \rbrace }$. 
+Then $g = \charFunc{B}$.
+\end{proof}
+
+Let us list a couple more axioms that will \emph{almost} complete the set construction axiom. 
+
+\begin{enumerate}[label=\bfseries Axiom 9:]
+    \item If $A$ is a non-empty set, there is an element $a \in A$ such that $a\cap {A} =
+	\emptyset$.
+\end{enumerate}
+The above axiom states that a set is disjoint from its elements. Hence if $A$ is a set, the
+singleton $\lbrace A \rbrace \neq A$.
+\begin{enumerate}[label=\bfseries Axiom 10:]
+    \item If $A$ is a set and $\map{f}{A}{B}$ is a surjective function, then $B$ is a set.
+\end{enumerate}
+
+Next we define relations on sets.
+\begin{Definition}
+    Let $A$ be a class, by a relation $R$ in $A$ we mean an arbitrary subclass of $A \times A$.
+\end{Definition}
+Let $R$ be a relation in $A$, then
+\begin{enumerate}
+    \item
+	(Reflexive) $R$ is reflexive if for every $a \in A$, $(a,a) \in R$. 
+    \item
+	(Irreflexive) $R$ is irreflexive if for every $a \in A$, $(a,a) \not \in R$. 
+    \item
+	(Symmetric) $R$ is symmetric if $(a,b) \in R \implies (b,a) \in R$. 
+    \item
+	(Asymmetric) $R$ is asymmetric if $(a,b) \in R \implies (b,a) \not \in R$. 
+    \item
+	(Anti-symmetric) $R$ is anti-symmetric if $(a,b),(b,a) \in R \implies a=b $. 
+    \item
+	(Transitive) $R$ is transitive if $(a,b) ,(b,c) \in R \implies (a,c) \in R$. 
+\end{enumerate}
+\begin{Definition}
+    A relation $R$ in $A$ is called an equivalence relation if it is Reflexive, Transitive and
+    Symmetric.
+\end{Definition}
+\begin{Definition}
+    A relation $R$ in $A$ is called a partial order relation if it is Reflexive, Transitive and
+    Anti-symmetric.
+\end{Definition}
+\begin{Definition}
+    A relation $R$ in $A$ is called a strict order relation if it is Irreflexive, Transitive and
+    Asymmetric.
+\end{Definition}
+
+\section{Countability}

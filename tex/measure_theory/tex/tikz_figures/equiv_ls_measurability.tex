@@ -1,0 +1,21 @@
+\documentclass{article}
+\usepackage{standalone}
+\usepackage{tikz}
+\usetikzlibrary{hobby}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+    \begin{scope}[closed hobby]
+	\draw[ultra thick,dotted,blue] plot coordinates 
+	{( 0,2.5 )(2.5,0)(1.0,-2.5) (0,-3.15)(-2.0,-1.5)(-2.75,0)(-2.0,1.75)} ;
+	\draw[thick,green] (0,0) circle (2cm);
+	\draw[thick,red] (3,-3) circle (2.8cm);
+	\node at (2.35,2.5) {\Large$G_{\epsilon}$};
+	\node at (0,0) {\Large$A$};
+	\node at (3,-3) {\Large$E$};
+    \end{scope}
+\end{tikzpicture}
+
+\end{document}

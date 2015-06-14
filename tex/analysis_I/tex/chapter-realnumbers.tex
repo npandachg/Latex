@@ -1,0 +1,355 @@
+\chapter{Real Numbers}
+
+
+\begin{Theorem}[name=Existence of irrational numbers]
+	$\sqrt{2}$ is irrational.
+\end{Theorem}
+\begin{proof}
+    
+    Assume $\sqrt{2} \in \mathbb{Q}$. Then, there exists $p$, $q$ $\in
+    \mathbb{Z}$ such that $ \frac{p^2}{q^2} = 2 $ and $q \neq 0$. 
+    Without loss of generality, assume $p,q$ are relatively prime.
+    Hence, $p^2 = 2q^2$. Therefore, $p^2$ and hence $p$ is even.
+    Let $p = 2r$ for some $r \in \mathbb{Z}$. Hence, $2q^2 = 4r^2$ which
+    implies $q$ is even i.e $q = 2k$ for some $k \in \mathbb{Z}$. But, this
+    means that $p,q$ have $2$ in common and contradicts our assumption of
+    them being relatively prime. Hence, $\sqrt{2}$ is irrational.
+\end{proof}
+
+Hence, we are faced with two important questions.
+\begin{enumerate}
+	\item How do we fill holes?
+	\item How do we know we have filled all the holes?
+\end{enumerate}
+The answers to these is the construction of the \textbf{real} numbers set
+$\mathbb{R}$. We give an axiomatic definition of the real numbers as an ordered field having a completeness
+property. In the Appendix, we construct the real numbers first from the rational numbers and also as a limit
+of cauchy sequences and show that both these constructions are isomorphic.
+
+First, we define what a field means.
+
+\begin{Definition}[name=Field]
+	A field is a set F together with an ordered pair of functions 
+	$ + , * : F \times F \rightarrow F$ such that 
+\begin{enumerate}
+    \item $ + , *$ are Commutative 
+    \item $ + , *$ are Associative
+    \item $ * $ is Distributive over $ + $
+    \item There are distinct elements $0_F$ and $1_F$ s.t $\forall$ 
+	$a \in F$, $ a + 0_F = a$ and $ a * 1_F = a$
+    \item There exists Additive and multiplicative inverse $ \forall a \in
+	F$ denoted by $-a$ and $a^{-1}$ respectively such that 
+	$ a + (-a) = 0_F $ and $ a * a^{-1} = 1_F $.
+    \item $1_{F} \neq 0_{F}$.
+\end{enumerate}
+\end{Definition}
+What happens in a ring when we multiply element in $G$ with $0$ and with additive inverses i.e.~negatives.
+\begin{Proposition}
+    Let $\F$ be a field and let
+    $a,b$ be any element in $F$. Then,
+    \begin{enumerate}
+	\item
+	    $a0 = 0a = 0$,
+	\item
+	    $a(-b) = -(ab) = -(a)b$, 
+	\item
+	    $(-a)(-b) = ab$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    First, observe that
+	    \[0 + a0 = a0 = a(0 + 0) = a0 + a0.\]
+	    Thus, from cancellation law in $0 + a0 = a0 + a0$
+	    \[0 = a0.\]
+	\item
+	    This follows from,
+	    \[a(-b) + ab = a(-b + b) = a0 = 0.\]
+
+	\item
+	    Using the above twice,
+	    \[(-a)(-b) = -(a)\left[-b\right] = -\left[-(ab)\right].\]
+	    Since $(-(-a)) = a$ we get the result.
+    \end{enumerate}
+\end{proof}
+Next are the order axioms. 
+\begin{Definition}
+	A field $F$ is ordered  
+	(total order) if there exists a set $F_{+} 
+	\subset F$ s.t 
+	\begin{enumerate}
+		\item if $a,b$ $\in F_{+}$ then $a + b \in F_{+}$ and $a*b \in
+			F_{+}$.
+		\item for any $a \in F$, one and only one of the following 
+		statements is true $ a \in F_{+} $ or $ a = 0_F $ or $ -a \in
+		F_{+}$. 	
+	\end{enumerate}
+\end{Definition}
+With these we can define $ > $ and $ < $ that mean greater than and less than
+respectively. For example, if $a,b \in \F$ then $ a > b$ means that $a - b \in \F_{+}$. 
+Thus $a \in \F_{+}$ if and only if $a > 0$.
+Some consequences of the order property.
+\begin{Corollary}[name=Trichotomy] 
+	\begin{displaymath}
+		\forall a,b \ \in F \ \text{exactly one is true } :
+	       a > b \ or \ a < b \ or \ a = b.	
+	\end{displaymath}
+\end{Corollary}
+\begin{proof}
+	Note that $a > b$ means $ a - b \in F_{+}$. Similarly, $a < b$ means
+	$b - a \in F_{+}$ whereas, $a = b$ means $a-b = 0_F$. Let, $c = a - b$.
+	Clearly $c \in F$. Now, since $F$ is ordered we know from prop 2 of the
+	order axioms that either $c \in F_{+}$ or $c = 0_F$ or $ -c \in F_{+}$.
+	Hence, this proves the trichotomy corollary.
+\end{proof}
+\begin{Corollary}[name = Transitivity]
+	if $ a > b$ and $ b > c $ then $ a > c$ $\forall a,b,c$ $\in F$
+\end{Corollary}
+\begin{Corollary}
+	if $ a > b$ and $ c \geq d$ then $ a + c > b + d$. Additionally,
+	if $b,d \in F_{+}$ then $ a*c > b*d$.
+\end{Corollary}
+\begin{Corollary}
+    $\forall$ $a \in F$ if $a \neq 0_{\F}$ then $a^2 \in F_{+}$. 
+\end{Corollary}
+\begin{Corollary}
+    $1_{F} > 0_{F}$.
+\end{Corollary}
+\begin{proof}
+    We need to show that $1_{\F} \in \F_{+}$. Since $1_{\F}\neq 0$, let us suppose that $-1\F \in \F_{+}$.
+    Then $(-1_{\F})(-1_{\F}) = 1_{\F} \in \F_{+}$. This is a contradiction. Thus, $1_{\F}$ is in $\F_{+}$.
+\end{proof}
+An ordered field comes equipped with an \emph{absolute} value function.
+\begin{Definition}
+    Let $\F$ be an ordered field. For any $a\in\F$ we define,
+    \begin{equation*}
+	\abs{a} = 
+	\begin{cases}
+	    a &\text{if $a \geq 0$}\\
+	    -a &\text{if $a \leq 0$}
+	\end{cases}
+    \end{equation*}
+    as the absolute value of $a$.
+\end{Definition}
+\begin{Proposition}
+    We gather some important properties of the absolute value function.
+    \begin{enumerate}
+	\item
+	    Let $\epsilon > 0$. Then $\abs{a} \leq \epsilon$ if and only if $-\epsilon \leq a \leq \epsilon$.
+	\item
+	    For any $a\in \F$, $a \leq \abs{a}$.
+	\item
+	    For any $a,b \in \F$, $\abs{ab} = \abs{a}\abs{b}$.
+	\item
+	    For any $a,b \in \F$, $\abs{a + b} \leq \abs{a} + \abs{b}$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    Let $\abs{a} < \epsilon$. If $a > 0$, then $a < \epsilon$. Note that $-\epsilon < a$. If $a < 0$,
+	    then $-a < \epsilon$ and thus $a > -\epsilon$. Note that $a < \epsilon$. If $a = 0$ then $0 <
+	    \epsilon$. Thus, $-\epsilon < a < \epsilon$. If $\abs{a} = \epsilon$, then either $a = \epsilon$
+	    or $-a = \epsilon$. 
+
+	    If $-\epsilon < a < \epsilon$, then $a < \epsilon$ and $ -a < \epsilon$. Thus, $ \abs{a} <
+	    \epsilon$.
+	\item
+	    If $a > 0$, then $ a = a = \abs{a}$. If $a < 0$, then $a < -a = \abs{a}$. If $a = 0$, then
+	    $\abs{a} = 0$.
+	\item
+	    There are four cases to consider. $a < 0, b < 0$, $a < 0 , b \geq 0$, $a \geq 0,b < 0$ and 
+	    $a \geq 0, b\geq 0$. In each case we can check that $\abs{ab} = \abs{a}\abs{b}$.
+	\item
+	    If $a + b > 0$, then $\abs{a + b} = a + b$. But $a \leq \abs{a}$ and $b\leq \abs{b}$. Thus $a + b
+	    \leq \abs{a} + \abs{b}$. Similarly, for the other case.
+    \end{enumerate}
+\end{proof}
+An ordered field cannot contain finite elements.
+To prove this we'll use the following Theorem:
+\begin{Theorem}[name=Ordered fields contain Integers]\label{th:orf_1to1}
+    For any ordered field F there exists a unique function $\varphi : \mathbb{Z} \rightarrow F$
+    such that: 
+\begin{enumerate}
+	\item $\varphi$ is injective.
+	\item $\varphi(m+n) = \varphi(m) \ + \ \varphi(n)$ and
+	    $\varphi(m*n) = \varphi(m) * \varphi(n)$ $\forall m,n \in \mathbb{Z}$ 
+\end{enumerate}
+\end{Theorem}
+\begin{proof}
+     
+    Let $\varphi : \mathbb{Z} \rightarrow F$ be such that:
+\begin{displaymath}
+    \begin{aligned}
+	&\varphi(0) = 0_F. \\
+	&\forall n > 0 \ \varphi(n) = 1_F + \cdots + 1_F \ (n \ times) \text{and} \\
+	&\varphi(-n) = -\varphi(n).
+    \end{aligned}
+\end{displaymath}
+By way of construction $\varphi$ 
+satisfies the 2 \textit{homomorphic} properties and hence we only need to show 
+its injectiveness. Consider, $m,n \in \mathbb{Z}$. WLOG, let $m > n$. Then $m-n > 0$ and from our 
+formula $\varphi(m-n) = 1_F + \cdots + 1_F \ (m-n) \text{times} $. Thus $\varphi(m-n) \in F_{+}$. 
+But, $\varphi(m-n) = \varphi(m) + -\varphi(n)$. Hence, $\varphi(m) - \varphi(n) \in F_{+}$. Thus for
+$m \neq n$ we have $\varphi(m) \neq \varphi(n)$. 
+\end{proof}
+
+\begin{Theorem}[name=Finite fields cannot be ordered]
+    No finite field can be ordered.
+\end{Theorem}
+\begin{proof}
+    Using the earlier Theorem we can see that a finite field cannot be ordered (no injective function
+    from $\mathbb{Z}$ to a finite field $F$ can exist).  
+\end{proof}
+
+This shows that there can be lots of ordered fields. To completely characterize the real numbers $\mathbb{R}$,
+i.e, to completely fill all the holes in $\mathbb{Q}$ we need an additional property. This property is
+called the \textit{Least Upper Bound} or L.U.B property. 
+
+\begin{Definition}
+    In an ordered field $\F$ an element $a \in \F$ is an upper bound of a subset $S \subset F$ if
+    $ \forall s \in S$ $ a \geq s$.
+\end{Definition}
+\begin{Definition}
+    $a$ is the \textit{least upper bound} called l.u.b $S$ or sup $S$ if $\forall b \in F$ such that
+    $b$ is an upper bound of $S$ then $ a \leq b$.  
+\end{Definition}
+In a similar way we have lower bounds and the greatest lower bound g.l.b $S$ or inf $S$. 
+For a given subset $S \subset F$, the sup $S$ (or inf $S$) may or may not be in S. It 
+also may or may not belong to F. For example let us take $ F = \mathbb{Q} $. 
+\begin{itemize}
+    \item $ S = \mathbb{Z} $. No sup $S$ exist since $\Z$ is not bounded from above.
+    \item $ S = \left \lbrace q \in \mathbb{Q} : q < 0 \right \rbrace$. $\sup{S} = 0$.
+    \item $ S = \mathbb{Q} - \mathbb{Q}_+ $. $\sup{S}  = 0$.
+    \item $ S = \left \lbrace q \in \mathbb{Q} : q^2 < 2 \right \rbrace $. What is $\sup{S}$? We will 
+	show that $\sup{S}$ does not exist in $\F$. 
+\end{itemize}
+Next, we'll look at the L.U.B property. 
+\begin{Definition}
+    An ordered field $F$ has the L.U.B property if every subset $ S \subset F$ that is bounded
+    from above (i.e has an upper bound) has the least upper bound.  
+\end{Definition}
+
+From the above examples, it is easy to observe that $\mathbb{Q}$ doesn't have the L.U.B property.
+We now have the axioms to construct a Field that will fill all the \textit{holes} in $\mathbb{Q}$.
+Our goal is to show an existence of a unique ordered field with the L.U.B property. 
+\begin{Theorem}[name=Existence of $\mathbb{R}$]
+    There is a unique ordered field with the L.U.B property called the real numbers, denoted by $\R$, and
+    containing the rational numbers $\Q$.
+\end{Theorem} 
+We will not prove this theorem here. Instead we assume its existence. Thus, the real numbers $\R$ is an
+ordered field having the L.U.B property.
+
+\begin{Corollary}
+    If $S \subset \R$ has a least upper bound then it is unique. 
+\end{Corollary}
+\begin{proof}
+    Suppose $a,b$ are the least upper bounds of $S$. Then $b$ is an upper bound of $S$.
+    Since, $a$ is sup $S$, it means that $ a \leq b$. Similary $a$ is an upper bound of $S$.
+    Because $b$ is also the sup $S$ we get $ b \leq a $. Therefore, $a = b$.
+\end{proof}
+
+\begin{Corollary}
+    $\R$ has the G.L.B property, i.e.~for any nonempty subset $S$ of $\R$ that is bounded from below, the
+    greatest lower bound of $S$.	
+\end{Corollary}
+
+\begin{proof}
+    Let $L = \set{x \in \R}{\forEv{s\in S} x \leq s}$. Thus $L$ is the set of all lower bounds for $S$. Since,
+    $S$ is bounded from below, $L$ is not empty. Moreover, $L \subset \R$ and hence by the L.U.B property,
+    $\sup{S}$ exists in $\R$. Let $b = \sup{L}$. We will show that $b$ is also $\inf{S}$. For any $l \in L$,
+    $l \leq b$. If there was an $s \in S$ such that $s < b$, then $s+\frac{b-s}{2} < b$ will be any upper
+    bound for $L$ which is not possible. Hence, $b$ is a lower bound for $S$. If $x$ is any other lower bound
+    for $S$, then $x \in L$ and hence $x \leq \sup{L} = b$. Thus, $b$ is $\inf{S}$. 
+\end{proof}
+The L.U.B property has some very important consequences.
+\begin{Proposition}
+    Let $\F$ be an ordered field satisfying the L.U.B property. Then,
+    \begin{enumerate}
+	\item
+	    For any $x$ in $\F$, there is an integer $n$ such that $x < n$. This is called the Archemedian
+	    property.
+	\item
+	    For any $\epsilon > 0$ in $\F$ no matter how small, there is a positive integer $n$ such 
+	    that $\frac{1}{n} < \epsilon$.
+	\item
+	    For any $x\in \F$, there is an integer $n$ such that $n\leq x < n+1$. Such an integer $n$ is
+	    called the greatest integer of $x$.
+	\item
+	    For any $x \in \F$ and any positive integer $N$, there is an integer $n$ such that 
+	    \[\frac{n}{N} \leq x < \frac{n+1}{N}.\]
+	\item
+	    For any $x \in \F$ and any $\epsilon > 0 \in \F$, there is a rational number $p$ such that
+	    \[0 \leq x - p < \epsilon.\]
+	\item
+	    For any $x,y \in \F$, there is a rational number \textbf{in between} $x$ and $y$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order. 
+    \begin{enumerate}
+	\item
+	    Assume no such $n$ exists. Thus for any integer $n$ we must have that $n \leq x$. Thus $x$ is an
+	    upper bound for the set of integers $\Z$. Since, we saw that $\Z$ is contained in an ordered
+	    field, $\F$ satisfies the L.U.B property, there is a $b \in \F$ such that $b = \sup{S}$. For any
+	    $n \in \Z$, $n+1$ is also in $\Z$, this means that $b \geq n+1$ and so $b - 1 \geq n$. Hence,
+	    $b-1$ is also an upper bound for $\Z$. But $b -1 < b$ and so this gives us a contradiction.
+	\item
+	    By the Archemedian property, for $x = \frac{1}{\epsilon}$, there is an integer $n$ such that $x <
+	    n$. Thus $\frac{1}{n} < \epsilon$.
+	\item
+	    There is an integer $m$ such that $\abs{x} < m$, which means that $-m < x < m$. Pick an integer
+	    $n$ such that $n \leq x$. Thus $x < n+1 \leq m$. 
+	\item
+	    Using the above result on $Nx$ we get an integer $n$ such that $n\leq Nx < n+1$. Hence, dividing
+	    by $N$, we get the result.
+	\item
+	    Using the above result, there is an $n$ such that $ \frac{n}{N} \leq x < \frac{n+1}{N}$ for any
+	    positive integer $N$. Thus, $0 \leq x - \frac{n}{N} < \frac{1}{N}$. Pick $N$ such that
+	    $\frac{1}{N} < \epsilon$. Since $n,N$ are in $\Z$, $\frac{n}{N} = p \in \Q$. Thus we found a
+	    rational number $p$ such that,
+	    \[0 \leq x - p < \epsilon.\]
+	\item
+	    For any positive integer,
+	    \[\frac{n}{N} \leq x < \frac{n+1}{N}.\]
+	    Thus,
+	    \[\frac{n}{N} \leq x < \frac{n}{N} + \frac{1}{N} \leq x + \frac{1}{N}.\]
+	    Assume $y > x$. Thus $y-x > 0$. Pick $N$ such that $\frac{1}{N} < y-x$. Hence,
+	    \[x < \frac{n+1}{N} < x + y-x = y.\]
+	    Take $p = \frac{n+1}{N}$. Hence, there is a $p \in \Q$ such that $x < p < y$.
+    \end{enumerate}
+\end{proof}
+We can now show that L.U.B property is not shared by the set of rational numbers.
+Consider the set  $S = \set{q \in \mathbb{Q}}{q^2 < 2}$. Note that $S \subset \Q \subset \R$. We will show
+that no matter what $q$ we take in $S$ we will find a $p > q$ such that $p \in S$. $S$ is not empty and is
+bounded above by $2$ which is a rational number. Similarly, we will show that if we take a  $q \in \Q - S$, we
+can find a $p < q$ such that $p \in \Q - S$. Thus, the rational numbers don't have the L.U.B property. 
+
+First let us pick a rational number $q \in S$. Let $n$ be an integer such that,
+\[\frac{1}{n} < \max{(\frac{2-q^2}{1+2q},1)}.\]
+Let $p = q + \frac{1}{n}$. Then, $q < p$ and,
+\begin{align*}
+    p^2 &= {(q + \frac{1}{n})}^2 \\
+    & = q^2 + \frac{1}{n^2} + \frac{2q}{n}\\
+    & < q^2 + \frac{1}{n} + \frac{2q}{n} \\
+    &\quad = q^2 + \frac{1}{n}(1 + 2q)\\ 
+    &\quad < q^2 + 2 - q^2\\
+    &\quad\quad = 2.
+\end{align*}
+We will now show that $\sup{S} = 2$, when we regard $S \subset \R$. Infact we will show a much general
+statement. We will show the existence of $n^{th}$ roots of non-negative real numbers. The idea is that the
+$n^{th}$ root a non-negative real number $a$ is the supremum of all such real numbers $b$ such that 
+$b^n \leq a$.
+\begin{Theorem}
+    If $a$ is a non-negative real number and $n$ is any positive integer, then there exists a number $b \geq
+    0$ such that $b^n = a$.
+\end{Theorem}
+
+
+Now that we have filled all the holes in $\mathbb{Q}$, an appropriate question to ask would be
+\emph{how many holes did we fill}. Are there more holes than the $\mathbb{Q}$? We'll explore this
+when we define what is means to count infinite sets.
+

@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage{standalone}
+\usepackage{tikz}
+\usetikzlibrary{shapes,backgrounds}
+\begin{document}
+
+\def\firstcircle{(0,0) circle (1.5cm)}
+\def\secondcircle{(0:2cm) circle (1.5cm)}
+
+% Now we can draw the sets:
+\begin{tikzpicture}
+    \begin{scope}[shift={(6cm,0cm)},fill opacity=0.65]
+        \begin{scope}[even odd rule]% first circle without the second
+            \clip \secondcircle (-3,-3) rectangle (3,3);
+        \fill[red] \firstcircle;
+        \end{scope}
+        \draw \firstcircle node {$B\cap A^{\mathsf{c}}$};
+        \draw \secondcircle node {$A$};
+	\fill[green] \secondcircle;
+    \end{scope}
+\end{tikzpicture}
+\end{document}

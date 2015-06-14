@@ -1,0 +1,663 @@
+\chapter{Continuous functions}
+We talked about function in the previous chapter as what we have seen in basic calculus courses
+which assume a function to be rule. However, it will prove fruitful to redifine functions in the
+language of set theory.
+
+\begin{Definition}[name=Functions]
+    If $E,E'$ are sets, then a function $f : E \to E'$ is subset $f \subset E \times E'$ such that
+    $\forall p \in E$, there is a unique $q \in E'$ denoted by $q = f(p)$ such that $(p,q) \in f$.
+\end{Definition}
+The set $(p,f(p))$ is called \emph{graph} of the function f. If $f : X \to Y$ and $g : Y \to Z$ are
+functions then the \emph{compositon} function $g \circ f : X \to Z$ is given by $(g \circ f)(x) =
+g(f(x))$, $\forall x \in X$. A function $f : X \to Y$ is an \emph{injective} or $1-1$ function whenever
+$f(x_1) = f(x_2)$ then $x_1 = x_2$. $f$ is \emph{surjective} or onto function if $\forall y \in Y$, there
+is a $x \in X$ such that $f(x) = y$. If $f$ is $1-1$ and $onto$ then to each $y \in Y$ there is a
+unique $x \in X$ such that $y = f(x)$. We can then define a function $f^{-1} : Y \to X$ given by
+$f^{-1}(y) = x$ if $x = f(y)$. Then $f^{-1}$ is called the \emph{inverse} function. Sometimes is
+very useful to define the action of a function on sets. 
+
+\begin{Definition}[name=Direct Image]
+    If $f : E \to E'$ is a function and $A \subset E$, then the direct image of $A$ under $f$ is the
+    subset of $E'$ given by $f(A) = \left.\lbrace f(p) : p \in A \rbrace\right.$.
+\end{Definition}
+Note that implicit in the definition is the existence of a $p \in A$ i.e $f(A) = \left.\lbrace q \in
+E' : \exists p \in A; \ q = f(p) \rbrace\right.$ .That this is a set can be seen from the following
+equation : \[ f\left(\lbrace p \rbrace \right) = \lbrace f(p) \rbrace\] $\forall p \in A$. In a
+similar fashion we define the inverse image. 
+
+\begin{Definition}[name=Inverse Image]
+    If $f : E \to E'$ is a function then the inverse image of a subset $D \subset E'$ is the subset of
+    $E$ given by $f^{-1}(D) = \left.\lbrace p \in E : f(p) \in D \rbrace\right.$.
+\end{Definition}
+Note that for a $D \subset E'$, the inverse image $f^{-1}(D)$ is just a set of all those points that
+get mapped to $D$. It is not to be confused with $f^{-1}$ which is the inverse function. Only when
+$f$ is injective and surjective we obtain an inverse function and then the inverse image of $D$ is
+the direct image of $f^{-1}$ given by the equation : 
+\[ \lbrace f^{-1}(q) \rbrace = f^{-1}\left(\lbrace q \rbrace\right) \] $\forall q \in D$. 
+
+The following observations can be made for direct and inverse images.
+\begin{Proposition}[name=Direct and iverse image under $f$]
+    Let $f : E \to E'$ be a function and let $A,B \subset E$ and $C,D \subset E'$. Then,
+    \begin{enumerate}
+	\item $f\left(A \cup B \right) = f(A) \cup f(B)$.
+	\item $f\left(A \cap B \right) \subset f(A) \cap f(B)$.
+	\item $f^{-1}\left(C \cup D \right) =  f^{-1}(C) \cup f^{-1}(D)$.
+	\item $f^{-1}\left(C \cap D \right) =  f^{-1}(C) \cap f^{-1}(D)$.
+	\item $f^{-1}\left(f(A)\right) \supset  A$.
+	\item $f\left(f^{-1}(C)\right) \subset  C$.
+    \end{enumerate}
+
+
+\end{Proposition}
+
+With these definitions, let us define what it means for a function to be continuous at a point in a
+metric space.
+\begin{Definition}[name=Continuous function at a point]
+    For metric space $(E,d)$ and $(E',d')$, let $f : E \to E'$. $f$ is continuous at $p_0 \in E$ iff
+    $\forall \epsilon > 0 \in \mathbb{R}$, there is a $\delta(\epsilon) > 0 \in \mathbb{R}$ such that 
+    whenever $d(p,p_0) < \delta$ then $d'(f(p),f(p_0)) < \epsilon$.
+
+\end{Definition}
+It will be useful to recast this information in terms of open balls around $f(p_0)$ and $p_0$. In
+fact the following are equivalent :
+\begin{Proposition}[name=Continuous functions and mappings of open balls]
+    For metric space $(E,d)$ and $(E',d')$, let $f : E \to E'$. $f$ is continuous at $p_0 \in E$ then
+    the following statements are equivalent :
+    \begin{enumerate}
+	\item $\forall \epsilon > 0$ $\exists \delta > 0$ such that $d(p,p_0) < \delta$ $\implies$
+	    $d'(f(p),f(p_0)) < \epsilon$.
+	\item $\forall \epsilon > 0$ $\exists \delta > 0$ such that $f\left(\mathcal{B}_{\delta}(p_0)\right)
+	    \subset \mathcal{B}'_{\epsilon}(f(p_0))$.
+	\item  $\forall$ neighborhood $\mathcal{N}\left[f(p)\right]$ $\exists$ $\mathcal{N}\left[p\right]$
+	    such that $f\left(\mathcal{N}\left[p\right]\right) \subset \mathcal{N}\left[f(p)\right]$
+    \end{enumerate}
+\end{Proposition}
+
+\begin{Definition}[name=Continuous function]
+    For metric space $(E,d)$ and $(E',d')$, let $f : E \to E'$. If $\forall p \in E$, $f$ is continuous
+    at $p$, then we say that $f$ is continuous.
+\end{Definition}
+
+We'll look into some examples that illustrate continuity of a function. Some of these will also show
+that $\delta$ is in general depends on $\epsilon$ and hence $\delta(\epsilon)$ in the definition.
+\begin{itemize}
+    \item $f : E \to E'$ $\exists q \in E'$ such that $\forall p \in E$, $f(p) = q$. This is a
+	\emph{costant} function. A constant function is continuous. To see this take any $\delta$, for
+	example $\delta = 1$. Given any $\epsilon > 0$, $d(f(p),f(p_0)) = 0 < \epsilon$. Thus $\delta$ here
+	is immaterial.
+    \item Suppose $E \subset E'$. Consider the \emph{inclusion} map $i : E \to E'$ given by $i(p) = p$
+	$\forall p \in E$. Then $\epsilon > 0$ be given, choose $\delta = \epsilon$. Thus $d'(f(p), f(p_0))
+	= d'(p,p_0) = d(p,p_0)$ since $E \subset E'$. But $d(p,p_0) < \delta = \epsilon$. Thus $
+	d'(f(p), f(p_0)) < \epsilon$. Hence, the inclusion map is continuous. If $E = E'$ then we have the
+	identity map.
+    \item $f : E^1 \to E^1$ where 
+	\[ f(x) = \left\{ 
+	    \begin{array}{l l}
+		1 & \quad \text{if $x > 0$ }\\
+		0 & \quad \text{if $x \leq 0$ }
+	\end{array} \right.\]
+	This function is not continuous at $0$. To see this take $\epsilon = 1$. For any $\delta > 0$, there
+	are points lets call it $x$ in the ball $\mathcal{B}_{\delta}(0)$ such that $f(x) \not \in
+	\mathcal{B}_1(f(0))$. For example $x = \frac{1}{2}\delta$, then $f(x) = 1 \not \in 
+	\mathcal{B}_1(f(0)) = \mathcal{B}_1(0) $.
+    \item $f : E^1 \to E^1$ such that $f(x) = x$ $\forall x \in E$. This is continuous since $f$ is the
+	identity map in $E^1$.
+    \item $f : E^1 \to E^1$ such that $f(x) = x^2$. To see that this is a continuous function lets
+	observe that $d(f(x),f(x_0)) = \lvert x^2 - x_0^2 \rvert$. Thus $d(f(x),f(x_0)) = \lvert (x+x_0)
+	\rvert \lvert (x-x_0) \rvert$. If we choose $\lvert x - x_0 \rvert < 1$, then we have to make $\lvert
+	x+x_0 \rvert < \epsilon$. But $\lvert x+x_0 \rvert \leq \lvert x-x_0 \rvert + 2*\lvert x_0 \rvert$.
+	Factoring out $\lvert x-x_0 \rvert$ and noting that we chose $\lvert x-x_0 \rvert < 1$, we need to
+	make $\lvert x-x_0 \rvert ( 1 + 2*\lvert x_0\rvert) < \epsilon$. Thus if $\delta = \lvert x - x_0
+	\rvert$ is chosen to be less that $min(1 , \frac{\epsilon}{1 + 2*\lvert x_0\rvert})$, then 
+	$d(f(x),f(x_0)) < \epsilon$.
+    \item $f : E^1 \to E^1$ where
+	\[ f(x) = \left\{ 
+	    \begin{array}{l l}
+		1 & \quad \text{if $x \in \mathbb{Q}$ }\\
+		0 & \quad \text{if $x \not \in \mathbb{Q}$ }
+	\end{array} \right.\]
+	This function is discontinuous everywhere. To see this take $\epsilon = 1$. Take any $p_0 \in E^1$.
+	If $p_0 \in \mathbb{Q}$ then $f(p_0) = 1$. But a ball of radius $\delta$ given by
+	$\mathcal{B}_{\delta}(p_0)$ contains both rational and irrational points. The rational points get
+	mapped inside $\mathcal{B}_{1}(1)$, but the irrational points $p \in \mathcal{B}_{\delta}(p_0) $ 
+	have $f(p) = 0 \not \in \mathcal{B}_{1}(1)$. We get a similar result when $p_0 \not \in \mathbb{Q}$.
+
+    \item $f : E^1 \to E^1$ where
+	\[ f(x) = \left\{ 
+	    \begin{array}{l l}
+		x & \quad \text{if $x \in \mathbb{Q}$ }\\
+		0 & \quad \text{if $x \not \in \mathbb{Q}$ }
+	\end{array} \right.\]
+	This function is only continuous at $0$. To see this take $\delta = \epsilon$.
+
+    \item Given $(E,d)$ and $q \in E$, $f : E \to \mathbb{R}$ such that $f(p) = d(p,q)$. Then $f$ is
+	continuous.
+\end{itemize}
+We would like a characterization of continuity that is a little simpler than checking continuity at
+every point in the domain. The next Theorem is sometimes called the global continuity Theorem. 
+\begin{Theorem}[name=Global Continuity Theorem]
+    $f : E \to E'$ is continuous iff for every open subset $\mathcal{U} \subset E'$ its inverse
+    image $f^{-1}(\mathcal{U})$ is open in $E$.
+\end{Theorem}
+\begin{proof}
+    $\Rightarrow$ Suppose $f$ is continuous and let $\mathcal{U} \subset E'$ be open in $E'$. For
+    any $p \in f^{-1}(\mathcal{U})$, $f(p) \in \mathcal{U}$. But $\mathcal{U}$ is open and hence there
+    is an $\epsilon > 0$ such that $\mathcal{B}'_{\epsilon}(f(p)) \subset \mathcal{U}$. Since $f$ is
+    continuous there is a $\delta > 0$ such that $f(\mathcal{B}_{\delta}(p)) \subset \mathcal{B}'_
+    {\epsilon}(f(p))$. Hence, $f(\mathcal{B}_{\delta}(p)) \subset \mathcal{U}$. Thus ,
+    $f^{-1}\left( f(\mathcal{B}_{\delta}(p))\right) \subset f^{-1}(\mathcal{U})$. But we know that 
+    $f^{-1}\left( f(\mathcal{B}_{\delta}(p))\right) \supset \mathcal{B}_{\delta}(p)$. Hence
+    $\mathcal{B}_{\delta}(p) \subset f^{-1}(\mathcal{U})$. Since $p$ was arbitrary,
+    $f^{-1}(\mathcal{U})$ is open.  
+
+    $\Leftarrow$ Given any open set $\mathcal{U} \subset E'$ such that $f^{-1}(\mathcal{U})$ is open in
+    $E$. Let $p_0 \in E$. Given any $\epsilon > 0$, $\mathcal{B}'_{\epsilon}(f(p_0))$ is open and by
+    our hypothesis so is $f^{-1}\left( \mathcal{B}'_{\epsilon}(f(p_0))\right)$ and contains $p_0$.
+    Thus since the inverse image is open, $p_0$ is an interior point, that is, 
+    there is a $\delta > 0$ such that $\mathcal{B}_{\delta}(p_0) \subset 
+    f^{-1}\left( \mathcal{B}'_{\epsilon}(f(p_0))\right)$. Hence, 
+    $f\left(\mathcal{B}_{\delta}(p_0)\right) \subset f\left(f^{-1}\left( \mathcal{B}'_{\epsilon}
+    (f(p_0))\right) \right)$. But $f\left(f^{-1}\left(\mathcal{B}'_{\epsilon}(f(p_0))\right)
+    \right) \subset \mathcal{B}'_{\epsilon}(f(p_0))$. Hence, $f\left(\mathcal{B}_{\delta}(p_0)\right) 
+    \subset \mathcal{B}'_{\epsilon}(f(p_0))$. Thus $f$ is continuous.
+\end{proof}
+\begin{Corollary}
+    Suppose $ E \stackrel{f}{\longrightarrow} E' \stackrel{g}{\longrightarrow} E"$. If $f,g$ are
+    continuous then so is $E \stackrel{g \circ f}{\longrightarrow} E"$.
+\end{Corollary}
+\begin{proof}
+    Given any open set $\mathcal{U} \subset E"$. Since $g$ is continuous $g^{-1}(\mathcal{U})$ is
+    open in $E'$. Since $f$ is continuos $f^{-1}(g^{-1}(\mathcal{U}))$ is open in $E$. But $(g\circ
+    f)^{-1}(\mathcal{U}) = f^{-1}(g^{-1}(\mathcal{U}))$. Hence, $g \circ f : E \to E"$ is
+    contiuous.
+\end{proof}
+A stronger form of the above corollary is particularly useful when the function is continuous at
+certain points. 
+\begin{Proposition}
+    If $f$ is continuous at $p_0 \in E$ and $g$ is continuous at $f(p_0) \in E'$, then $g \circ f$
+    is continuous at $p_0$.
+\end{Proposition}
+\begin{proof}
+    $g$ is continuous at $f(p_0)$ then, given any $\epsilon > 0$ there is a $\gamma > 0$ such that
+    $d'(q,f(p_0)) < \gamma \implies d"(g(q),g(f(p_0))) < \epsilon$. On the other hand since $f$ is
+    continuous at $p_0$ there is a $\delta > 0$ such that $d(p,p_0) < \delta \implies
+    d'(f(p),f(p_0)) < \gamma$. For $q = f(p)$ then we have shown that given any $\epsilon > 0$ there
+    is a $\delta > 0$ such that $d(p,p_0) < \delta \implies d"(g(f(p)),g(f(p_0))) < \epsilon$. Thus,
+    $g \circ f$ is continuous at $p$.
+\end{proof}
+Lets look at two function concepts that can be very useful. 
+\begin{Definition}
+    Let $f : E \to E'$ and $E' \subset E"$. Then the function $g : E \to E"$ given by $g(p) = f(p)
+    \quad \forall p \in E$ is called the \emph{extension} of $f$.
+\end{Definition}
+
+\begin{Definition}
+    Let $f : E \to E'$ and $E" \subset E$. Then the function $g : E" \to E'$ given by $g(p) = f(p)
+    \quad \forall p \in E"$ is called the \emph{restriction} of $f$ denoted by $f|_{E"}$.
+\end{Definition}
+With these definitions we get an useful corollary that says that restrictions of continuous
+functions are also continuous.
+\begin{Corollary}
+    Suppose $f : E \to E'$ is continuous at $p_0 \in S \subset E$. Then $f|_{S}$ is also continuous
+    at $p_0$.
+\end{Corollary}
+\begin{proof}
+    Let $i : S \to E$ be the inclusion map which was shown to be continuous. Then $f|_{S} = f \circ
+    i$. Since $f$ is continuous at $p_0$ from the above proposition we get that $f|_{S}$ is
+    continuous at $p_0$.
+\end{proof}
+
+Now that we have defined continuity and looked at its properties in a topological context as given
+by the global continuity Theorem, its a good time to ask how we defined continuity in sophomore
+calculus course. If we recall, continuity was defined in terms of a limiting function i.e a function
+$f$ is continuous at $x_0$ if the the limit \[ \lim_{x \to x_0} f(x) = f(x_0)\]. Even though we
+could have done a similar thing by defining limits of functions and then continuity, it is useful to
+first understand continuity since it is a more general concept than limits. With this in mind we'll
+define a limit of a function. If we have a function $f : E \to E'$ and we want to find out the limit
+of the function at $p_0 \in E$ there are two thing to consider :
+\begin{itemize}
+    \item We don't care about $f(p_0)$ which may or may not exit. The limit is definied nonethless. 
+    \item Any $p_0 \in E$ that is \textbf{not} a cluster point of $E$ is then called an \emph{isolated}
+	point. Hence there is a $\delta > 0$ such that $\mathcal{B}_{\delta}(p_0) \cap E = \lbrace
+	p_0 \rbrace$. Thus no matter what $\epsilon > 0$, $f(\mathcal{B}_{\delta}(p_0)) \subset
+	\mathcal{B}_{\epsilon}(f(p_0))$. Hence when $p_0$ is an isolated point, any function is always
+	contiuous at $p_0$. 
+\end{itemize}
+With this in mind we'll outline the following characterization of limit of a function at a point.
+The first one is based on continuity while the second entirely on $\epsilon-\delta$.
+\begin{Definition}
+    Suppose $E,E'$ are metric spaces and $p_0 \in E$ is a cluster point of $E$. Let $f : E
+    - \lbrace p_0 \rbrace \to E'$. Then the following equivalent characterization of  $q$ as a limit 
+    of $f$ as $p \to p_0$ are : $q$ is a limit if,
+    \begin{enumerate}
+	\item The function, \[ g(p) = \left\{ 
+		\begin{array}{l l}
+		    f(p) & \quad \text{if $p \neq p_0$ }\\
+		    q & \quad \text{if $p = p_0$ }
+	    \end{array} \right.\] is continuous at $p_0$.
+	\item $\forall \epsilon > 0$ $\exists \delta > 0$ such that whenever 
+	    $ 0 \neq d(p,p_0) < \delta$, $d'(f(p),q) < \epsilon$.
+
+    \end{enumerate}
+\end{Definition}
+\begin{Proposition}
+    If $f$ has a limit at $p_0$ then it is unique.
+\end{Proposition}
+\begin{proof}
+    Suppose both $q,q'$ are the limits of $f(p)$ as $p \to p_0$. Given any $\epsilon > 0$ $\exists
+    \delta = min(\delta_1,\delta_2) > 0 $ such that $d(p,p_0) \implies d'(f(p),q) <
+    \frac{\epsilon}{2}$ and $d'(f(p),q') < \frac{\epsilon}{2}$. Thus $d'(q,q') < \epsilon$. Since
+    $\epsilon$ is arbitrary $d'(q,q') = 0$ and so $q = q'$.
+\end{proof}
+Hence we can talk about \emph{the} limit of a function. Thus to summarize we have 
+\begin{Theorem}[name=Limit and continuity]
+    Let $f : E \to E$, then $f$ is continuous at $p_0 \in E$ iff whenever $p_0$ is a cluster point
+    of E then, \[\lim_{p \to p_0} f(p) = f(p_0) .\]
+\end{Theorem}
+We defined limit of a function based on continuity which we remarked is a much more general notion
+than limits. In a similar fashion limit of a general sequence can be defined in terms of limit of
+a function. Thus in topology one generally starts with notion of open sets and continuity. Closed
+sets, converging sequences and limits of functions can then be derived from these definitions.
+\begin{Proposition}
+    Given a sequence $\left(q_n\right) \in E'$. Let $f: S \to E$ where $S = \left.\lbrace 1/n : n \in
+    \mathbb{Z}_+\rbrace\right.$ such that $f(1/n) = q_n$. Then $q_n \to q \in E'$ 
+    iff $f(x) \to q$ as $ x \to 0$.
+\end{Proposition}
+The next Theorem shows the equivalence of continuous fucntion at a point and the limit of
+sequence of the function. 
+\begin{Theorem}[name=Continuity and sequences]
+    The function $f : E \to E'$ is continuous at $p_0 \in E$ iff for any sequence $\left(p_n\right)
+    \in E$ such that $p_n \to p_0$, $f(p_n) \to f(p_0) \in E'$.
+\end{Theorem}
+\begin{proof}
+    $\Rightarrow$ $f$ is continuous at $p_0 \in E$. Thus for any $\epsilon > 0$ there is a $\delta >
+    0$ such that whenever $d(p,p_0) < \delta$ then $d'(f(p),f(p_0)) < \epsilon$. Let $\left(p_n\right)
+    \in E$ be a sequence such that $p_n \to p_0$. Then for any \emph{positive} number there is a $N$ such
+    that whenever $n \geq N$, $d(p_n ,p_0)$ is less than the prescibed positive number. Hence for
+    $\delta$ there is a $N_{\delta}$ such that whenever $n \geq N_{\delta}$, $d(p_n,p_0) < \delta$. But
+    this means that $d'(f(p_n),f(p_0)) < \epsilon$. Hence $f(p_n) \to f(p_0)$.
+    \\
+    $\Leftarrow$ We'll show the contrapositive. That is given $f$ is not contiuous at $p_0 \in E$, 
+    we'll show that there is a sequence $\left(p_n\right) \in E$ such that $p_n \to p_0$ but $f(p_n)
+    \not \to f(p_0)$. Since $f$ is not continuous at $p_0 \in E$ there is a $\epsilon > 0$ such that
+    for any $\delta > 0$, $d(p,p_0) < \delta$ but $d'(f(p),f(p_0)) \geq \epsilon$. Thus for
+    $\delta = 1$ there is a $p_1 \in E$  such that $d(p_1,p) < 1$ but $d'(f(p_1),f(p_0)) \geq 
+    \epsilon$. Conitnuing this for all integeral $\delta$ we find that for any $n \in \mathbb{Z}_+$, 
+    $d(p_n,p_0) < 1/n$ but $d'(f(p_n),f(p_0)) \geq \epsilon$. Hence we have constructed a sequence
+    $\left(p_n\right)$ such that $p_n \to p_0$ but $f(p_n) \not \to f(p_0)$.
+\end{proof}
+This characterization will be very useful to prove that all the usual algebraic operations on 
+continuous functions in $E^1$ yield a continuous functions. We proved this for sequences in $E^1$
+and the use of the Theorem above yields the following corollary :
+\begin{Corollary}
+    Suppose $f,g : E^1 \to E^1$ are continuous at $p_0 \in E^1$. Then the following are also
+    continuous at $p_0$ : 
+    \begin{enumerate}
+	\item $f \pm g$. 
+	\item $f * g$.
+	\item $f / g $ whenever $g$ is a nonzero function in $E^1$.
+    \end{enumerate}
+\end{Corollary}
+The proof of this follows from the above Theorem and our results from sequences in $E^1$. Since
+$f,g$ are continuous functions for any sequence $p_n \to p_0$, $f(p_n) \to f(p_0)$ and $g(p_n) \to
+g(p_0)$. But $\left(f(p_n)\right)$ and $\left(g(p_n)\right)$ are convergent sequences in $E^1$. Thus
+the usual algebraic rules hold that was proven earlier for convergent sequences in $E^1$. Using this
+corrollary it is easy to obeserve that such algebraic operations hold for limits of sequences ie 
+\begin{Corollary}
+    Let $p_0$ be a cluster point of $E^1$ and $f,g : E^1 - \lbrace p_0 \rbrace \to E^1$. Suppose,
+    \begin{displaymath}
+	\begin{aligned}
+	    \lim_{p \to p_0} f(p), \\
+	    \lim_{p \to p_0} g(p) \\
+	\end{aligned}
+    \end{displaymath}
+    exist. Then the following are true : 
+    \begin{displaymath}
+	\begin{aligned}
+	    \lim_{p \to p_0} (f(p) \pm g(p))  =  \lim_{p \to p_0} f(p) \pm \lim_{p \to p_0} g(p)), \\
+	    \lim_{p \to p_0} (f(p) * g(p)) = \lim_{p \to p_0} f(p) * \lim_{p \to p_0} g(p)), \\
+	    \lim_{p \to p_0} (f(p) / g(p)) = \lim_{p \to p_0} f(p) / \lim_{p \to p_0} g(p)).\\
+	\end{aligned}
+    \end{displaymath}
+    The last one being true when the limit $\lim_{p \to p_0} g(p) \neq 0 $.
+\end{Corollary}
+Lets look at an important proposition for functions that are mapped to $E^n$.
+\begin{Proposition}
+    $f : E \to E^n$, where $f = \left(f_1,f_2,\dots,f_n\right)$ such that $f_i : E \to \mathbb{R}$.
+    $f$ is continuous at $p_0 \in E$ iff each $f_i$ is continuous at $p_0$. The $f_i$ are called the
+    component function of $f$.
+\end{Proposition}
+\begin{proof}
+    $\Rightarrow$ Given any $\epsilon > 0$ there is a $\delta > 0$ such that whenever $d(p,p_0) <
+    \delta$, $\lvert \lvert \mathbf{f(p)} - \mathbf{f(p_0)} \rvert \rvert < \epsilon$. But we know that
+    $\lvert f_i(p) - f_i(p_0) \rvert < \lvert \lvert \mathbf{f(p)} - \mathbf{f(p_0)} \rvert \rvert $ for
+    all $i = 1 \dots n$. Thus each component function is continuous. 
+
+    $\Leftarrow$ Given any $\epsilon > 0$ let $\delta = \text{ min}(\delta_1,\delta_2, \dots, \delta_n)$
+    such that whenever $d(p,p_0) < \delta$, $\lvert f_i(p) - f_i(p_0) \rvert <
+    \frac{\epsilon}{\sqrt{n}}$. Thus $\lvert \lvert \mathbf{f(p)} - \mathbf{f(p_0)} \rvert \rvert <
+    \sqrt{n\epsilon ^2/n}$. Hence $\lvert \lvert \mathbf{f(p)} - \mathbf{f(p_0)} \rvert \rvert <
+    \epsilon$. Thus $f$ is continuous at $p_0$.
+\end{proof}
+
+Note that with the above proposition we can talk about the continuity of many functions like
+$f : \mathbb{R}^4 \to \mathbb{R}^2$ given by $f(w,x,y,z) = \left( \frac{x^3y - z^7}{x^2+y^2+1},
+\frac{wxyz + 7w^2}{x^4+z^8+2}\right)$. Now we know that $(w,x,y,z) = id(w,x,y,z)$ is the
+identity function on $\mathbb{R}^4$ which we have shown to be continuous. Thus $w$ is the the first
+component function of the identity fucntion. Similarly $x,y,z$ are component functions of the
+identity function and from the above proposition are continuous. Thus any rational operations like 
+$\frac{x^3y - z^7}{x^2+y^2+1}$ will be contiuous. Thus we see that $f$ is continuous.
+
+Next we'll look at the two big Theorems involving continuous functions.
+
+\begin{Theorem}[name=Continuous function in compact sets]
+    If $f : E \to E'$ is continuous and $E$ is compact then $f(E)$ is compact. 
+\end{Theorem}
+\begin{proof}
+    Suppose $\left\lbrace \mathcal{U}_{\alpha} : \alpha \in I\rbrace\right.$ be an open cover of 
+    $f(E)$ i.e $f(E) \subset \bigcup_{\alpha} \mathcal{U}_{\alpha} $. Then we can see that 
+    \begin{displaymath}
+	\begin{aligned}
+	    f^{-1}(f(E)) \subset f^{-1}\left(\bigcup_{\alpha} \mathcal{U}_{\alpha}\right) \\
+	    \Leftrightarrow E \subset \bigcup_{\alpha} f^{-1}\left(\mathcal{U}_{\alpha}\right)
+	\end{aligned}
+    \end{displaymath}	    
+    Since $f$ is continuous each $f^{-1}\left(\mathcal{U}_{\alpha}\right)$ is open in $E$. Since
+    E is compact there exist a finite subcover that is $E \subset \bigcup_{\alpha} 
+    f^{-1}\left(\mathcal{U}_{\alpha}\right)$ where $\alpha \in I_N$ such that $I_N$ is a finite
+    subset of $I$. Thus $f(E) \subset \bigcup_{\alpha \in I_N}
+    f(f^{-1}\left(\mathcal{U}_{\alpha }\right)) \subset 
+    \bigcup_{\alpha \in I_N}\left(\mathcal{U}_{\alpha}
+    \right)$. Hence $f(E)$ is compact.
+\end{proof}
+\begin{Corollary}
+    If $f : E \to E'$ is continuous and $E$ is compact then $f(E)$ is closed and bounded.
+\end{Corollary}
+\begin{proof}
+    This follows from the above Theorem and the fact that compact sets are closed and bounded.
+\end{proof}
+\begin{Corollary}[name=Extreme Value Theorem]
+    If $f : E \to E^1$ is continuous and $E \neq \emptyset$ is compact then $f$ has a maximum and 
+    minimum value. 
+\end{Corollary}
+\begin{proof}
+    $E$ is compact an $f$ is continuous and hence $f(E) \subset \mathbb{R}$ is compact and so is
+    closed and bounded. Since a closed and bounded non-empty subset of $\mathbb{R}$ contains its 
+    maximum and minimum value , lets call it $a$ and $b$ we have some $p,q \in E$ such that $f(p) =
+    a$ and $f(q) = b$. Thus $f$ attains its maximum and minimum values.
+\end{proof}
+
+\begin{Theorem}[name=Continuous functions in connected sets]
+    Let $f : E \to E'$ be a continuous function. Then if $E$ is connected so is $f(E)$.
+\end{Theorem}
+\begin{proof}
+    WLOG let us take $f$ to be $f : E \to f(E)$. Hence $f$ is onto. Assume $f(E)$ is not connected.
+    Then there are open disjoin sets $\mathcal{U},\mathcal{V}$ such that $f(E) = \mathcal{U} \cup
+    \mathcal{V}$. Since $f$ is onto any point $p$ must be mapped either to $\mathcal{U}$ or to
+    $\mathcal{V}$ but not both since they are disjoint. Thus $E = f^{-1}(\mathcal{U}) \cup
+    f^{-1}(\mathcal{V})$. Since $f$ is continuous the inverse images of open sets are open. Thus $E$
+    is a union of two open, non-empty and disjoint sets and so is not connected. This gives us a
+    contradiction.
+\end{proof}
+\begin{Corollary}[name= Intermediate value Theorem]
+    Let $f : \left[a,b\right] \to \mathbb{R}$ be a continuous function and $\gamma \in \mathbb{R}$ is
+    between $f(a),f(b)$. Then there is a $c \in \left[a,b\right]$ such that $f(c) = \gamma$.
+     
+\end{Corollary}
+\begin{proof}
+    $\left[a,b\right]$ is connected hence $f(\left[a,b\right])$ is connected. Thus if $\gamma$ is
+    between $f(a),f(b)$ then $\gamma \in f(\left[a,b\right])$. 
+\end{proof}
+Next we'll show two examples where the intermediate value Theorem and the extreme value Theorem fail
+when the domain/co-domain of a continuous function is changed from the $\mathbb{R}$ to the set
+$\mathbb{Q}$. 
+\begin{itemize}
+    \item $f(x) = \frac{1}{x^2-2}.$ This function is continuous on $\mathbb{R} - \lbrace \pm
+	\sqrt{2} \rbrace$. But it is continuous everywhere on $\mathbb{Q}$. Now take an interval
+	$\left[0,2\right]$. $f(0) = -1/2$ and $f(2) = 1/2$ but $0$ isn't contained in
+	$f(\left[0,2\right])$. Similarly, there are no extrema in the inverval $\left[-2,\right]$.
+
+    \item The function doesn't have to be pathological for the intermediate value Theorem to fail
+	when the sets are $\mathbb{Q}$. For example consider $f(x) =x^2$. $f(0) = 0$ and $f(2) = 4$
+	belong to $f$ but $2 \not \in f$.
+\end{itemize}
+Note that now we can show $E^n$ to be connected. We'll need a definition first.
+\begin{Definition}
+    A subset $S \subset E^n$ is star convex at $x \in S$ if for all $y \in S$ the set $\left.\lbrace
+    ty + (1-t)x : 0 \leq t \leq 1 \rbrace \right. \subset S$.  
+\end{Definition}
+\begin{Corollary}
+    $E^n$ is connected. In fact all star convex sets are connected.
+\end{Corollary}
+\begin{proof}
+    Given any $y \in S$ define $f_y : \left[0,1\right] \to S$ by $f_y = ty + (1-t)x$. Since $f_y$ is
+    continuous and $\left[0,1\right]$ is connected so is the set $\left.\lbrace	ty + (1-t)x : 0 
+    \leq t \leq 1 \rbrace \right.$. But $S = \bigcup_{y \in S}f_y$ and each intersect at $x$. We
+    showed that such a set is also connected. Thus $S$ is connected. Take $\mathbf{x} = \mathbf{0}$
+    and then $S = E^n$ shows that $E^n$ is connected.
+\end{proof}
+
+Now we'll define a stronger version of continuity called uniform continuity. We'll see that
+functions that are uniformly continuous possess some additional properties that are very useful
+especially when dealing with sequences of functions.
+Let us write down explicitly what is means for a function to be continuous.
+A function $f : E \to E'$ is continuous iff
+\begin{itemize}
+    \item
+	$\forall p_0 \in E$ $\forall \epsilon > 0$ $\exists \delta(\epsilon,p_0) > 0$ such that
+	$\forall p \in E$ whenever $d(p,p_0) < \delta $ then $d'(f(p),f(p_0)) < \epsilon$.
+\end{itemize}
+Hence we see that $delta$ in general depends on both $\epsilon$ and $p_0$. But what if we move the
+$p_0$ beyond the existential quantifier. This will mean that for a given $\epsilon$ only one
+$\delta$ will work for all the $p_0 \in E$. 
+\begin{itemize}
+    \item
+	$\forall \epsilon > 0$ $\exists \delta(\epsilon) > 0$ such that
+	$\forall p_0 \in E$ $\forall p \in E$ whenever $d(p,p_0) < \delta $ then $d'(f(p),f(p_0)) <
+	\epsilon$.
+\end{itemize}
+In this case our nomenclature of $p_0$ is not needed. This stronger version of continuity is called
+uniform continuity.
+\begin{Definition}
+    $f : E \to E'$ is uniformly continuous in $E$ if for any $\epsilon > 0$ there is a $\delta > 0$
+    such that for any $p,q \in E$ whenever $d(p,q) < \delta$ then $d'(f(p),f(q)) < \epsilon$.
+\end{Definition} 
+Note that for $f : \mathbb{R} \to \mathbb{R}$ given by $f = x^2$ we showed that $\delta =
+\delta(\epsilon,p_0)$. Hence such a function is not uniformly continuous. The farther out we go in
+$x$ the smaller $\delta$ we'll need to map into a given $\epsilon$ ball. Now what if we consider a
+bounded function $f : \left(0,1\right] \to E^1$ given by $f(x) = sin(1/x)$. This function is not
+uniformly continuous even though it is bounded. The next Theorem says when these two notions of
+continuity are equivalent. 
+
+\begin{Theorem}[name=Uniform continuity and continuity]
+    $f : E \to E'$ with $E$ compact. Then $f$ is continuous iff $f$ is uniformly continuous.
+\end{Theorem}
+\begin{proof}
+    $\Leftarrow$ from definition of uniform continuity.
+    $\Rightarrow$ $f$ is continuous in $E$. Thus for any $p \in E$, given any $\epsilon > 0$ there
+    is a $\delta_ p > 0$ such that $f\left(\mathcal{B}_{\delta _p}(p)\right) \subset
+    \mathcal{B}_{\frac{\epsilon}{2}}\left(f(p)\right)$. We need to find a single $\delta$ that will work
+    for every $p \in E$. We can take the infimum of all the $\delta _p$ but that infimum could be $0$.
+    Note that $\left.\lbrace\mathcal{B}_{\frac{\delta _{p}}{2}}(p) : p \in E\rbrace\right.$ is an 
+    open cover for $E$.
+    However since we know $E$ is compact we know that $E$ is subset of finite such $p \in E$ i.e 
+    $E \subset \bigcup_{i= 1}^n
+    \mathcal{B}_{\frac{\delta_{p_i}}{2}}(p_i)$. Let $\delta = \text{ min }1/2(\delta _{p_1},\dots,
+    \delta _{p_n})$. Let $p,q \in E$. Thus there is an $i \in 1 \dots n$ such that such that $p \in  \mathcal{B}_{\delta _{p_i}}
+    (p_i)$. Since $d(q,p_i) \leq d(q,p) + d(p,p_i)$ we have $d(q,p_i) < \delta _{p_i}$. Thus for 
+    any $p,q \in E$ such that $d(p,q) < \delta$ there is a $i \in 1 \dots n$ such that 
+    $p,q \in \mathcal{B}_{\delta _{p_i}}(p_i)$. Since $f$ is continuous $f(p),f(q) \in 
+    \mathcal{B}_{\frac{\epsilon}{2}}\left(f(p_i)\right)$. Since $d(f(p),f(q)) \leq d(f(p),f(p_i)) +
+    d(f(q),f(p_i))$, we can see that  $d(f(p),f(q)) < \epsilon$. Hence $f$ is uniformly continuous 
+    since our choice of $\delta$ was independent of $p,q \in E$.
+\end{proof}
+
+\section{Sequences of Function}
+\begin{Definition} A sequence $\left(f_n\right)$ of functions $f_n : E \to E'$ \emph{converges} to
+    a function $f$ at $p \in E$ if \[ f(p) = \lim_{n \to \infty} f_n(p). \] The sequence 
+    $\left(f_n\right)$ converges \emph{pointwise} if it converges for all $p \in E$.
+\end{Definition}
+Example :
+\begin{itemize}
+    \item Let $f_n : \left[0 , 1 \right] \to \mathbb{R}$ be given by $f_n(x) = x^n$. Then at $p =
+	1$, $f_1(1) = f_2(1) = \dots = 1$. Thus at $1$, $f_n \to 1$. But for any $p < 1$ since $x^n
+	\to 0$ we have $f_n(p) \to 0$. Thus the limiting function $f$ is discontinuous at $1$. Hence
+	we see that pointwise convergence doesn't preserve continiuity in the limit.
+\end{itemize}
+Just as we saw a stronger notion of continuity which we called uniform continuity we'll see that a
+stronger notion of convergence will presevere continuity in the limit. Let us reiterate the definition
+of pointwise convergence of a sequence of functions $\left(f_n\right)$. 
+
+\begin{itemize}
+    \item $\left(f_n\right)$ converges pointwise to $f$ iff $\forall p \in E$ $\forall \epsilon > 0$
+	$\exists N(p,\epsilon) \in \mathbb{Z}_+$ such that whenever $n \geq N$, $d'(f_n(p),f(p)) < 
+	\epsilon$.
+\end{itemize}
+If we move the universal quantifier in $p$ past the existential quantifier we'll see that $N$ won't
+depend on our choice of $p$. Thus given an $\epsilon$ we will be able to find one $N$ such that
+any $n \geq N$ will force $f_n$ closer to $f$ for all $p \in E$. This notion of convergence is 
+called uniform convergence.
+\begin{Definition}
+    A sequence $\left(f_n\right)$ of functions $f_n : E \to E'$ \emph{converges uniformly } to
+    a function $f$ at $p \in E$ if for any $\epsilon > 0$ there is a $N \in \mathbb{Z}_+$ such that 
+    whenver $n \geq N$, $d'(f_n(p) ,f(p)) < \epsilon$ for all $p \in E$ . 
+\end{Definition}
+\begin{Theorem}[name=Uniform convergence and continuity]
+    If $\left(f_n\right)$ converges uniformly to $f$ and each $f_n$ is continuous at $p_0 \in E$ 
+    then $f$ is also continuous at $p_0$
+\end{Theorem}
+\begin{proof}
+    Since $f_n \to f$ uniformly, given an $\epsilon > 0$, there is a $N \in \mathbb{Z}_+$ such that
+    whenever $n \geq N$, $d'(f_n(p),f(p)) < \frac{\epsilon}{3}$ for all $p \in E$. Also since 
+    each $f_n$ is continuous at
+    $p_0 \in E$ there is a $\delta > 0$ such that whenever $d(p,p_0) < \delta$, we have 
+    $d'(f_n(p),f(p_0)) < \frac{\epsilon}{3}$ for all
+    $n$. 
+    But note that $d'(f(p),f(p_0)) \leq d'(f(p),f_N(p)) + d'(f_N(p),f_N(p_0)) +
+    d'(f_N(p_0),f(p_0))$. When $n \geq N$, uniform convergence guarantees that the first and last
+    terms are less than $\frac{\epsilon}{3}$. Also since each $f_n$ is continuous at $p_0$ the
+    second term is less than $\frac{\epsilon}{3}$. Thus whenever $d(p,p_0) < \delta$, we have 
+    $d'(f(p),f(p_0)) < \epsilon$. Hence $f$ is continuous.
+\end{proof}
+In a similar fashion one can define \emph{uniformly Cauchy} sequences.
+\begin{Definition}
+    $\left(f_n\right)$ is uniformly cauchy iff for any $\epsilon > 0$ there is a $N \in
+    \mathbb{Z}_+$ such that whenever $m,n \geq N$ then $d'(f_m(p),f_n(p)) < \epsilon$ for all $p \in
+    E$.
+\end{Definition}
+\begin{Theorem}[name=Completeness of sequence of functions]
+    For sequence of functions $f_n : E \to E'$ with $E'$ complete $\left(f_n\right)$ converges
+    uniformly to $f$ iff $\left(f_n\right)$ is uniformly cauchy. 
+\end{Theorem}
+\begin{proof}
+    $\Rightarrow$ Since $\left(f_n\right)$ converges uniformly to $f$, given any $\epsilon > 0$
+    there is a $N \in \mathbb{Z}_+$ such that whenever $n \geq N$, $d'(f_n(p),f(p)) <
+    \frac{\epsilon}{2}$ for all $p \in E$. Hence $m,n \geq N$ the triangle inequality gives
+    $d'(f_m(p),f_n(p)) \leq d'(f_m(p),f(p)) + d'(f(p),f_n(p)) < \epsilon$. Thus $\left(f_n\right)$ is
+    uniformly cauchy. 
+
+    $\Leftarrow$. For a given $p \in E$ the sequence $f_1(p), f_2(p), \dots , $ is uniformly cauchy in
+    $E'$. Since $E'$ is complete $f_n(p) \to $ some point in $E'$. Since this is true for all $p \in E$ let
+    $f(p) = \lim_{n \to \infty}f_n(p)$ i.e $\left(f_n\right)$ converges pointwise at any $p \in E$.
+    Now for any $\epsilon > 0$ there is a $N \in \mathbb{Z}_+$ such that whenver 
+    $m,n \geq N$ , $d'(f_m(p),f_n(p)) < \frac{\epsilon}{2}$ for all $p \in E$. Thus for a fix $n$
+    and $p$ we have $d'(f_m(p),. ) \leq \frac{\epsilon}{2}$ for all $m \geq N$. Since 
+    $f_m(p) \to f(p)$ and for all $m \geq N$, $f_m(p) \in \overline{\mathcal{B}_{\epsilon /2}}(f_n(p))$,
+    $f(p) \in \overline{\mathcal{B}_{\epsilon /2}}(f_n(p))$ . Thus $d'(f(p),f_n(p)) \leq \frac{\epsilon}{2} <
+    \epsilon$. Hence we have shown that given any $\epsilon > 0$ there is a $N$ such that
+    $d'(f_n(p),f(p)) < \epsilon$ for all $p \in E$. Therefore $\left(f_n\right)$ converges uniformly
+    to $f$.  
+\end{proof}
+
+\section{Abstract metric space of continuous functions}
+We defined metric space as a set with a metric defined in it. So far the metric spaces we have seen,
+have been elements of $\mathbb{R},E^n$ although we have bee very careful in talking about general
+spaces. We'll now look into an abstract metric space whose \emph{points} are \textit{continuous}
+functions from one metric space to another. Before we elaborate on this any further we'll first have
+to talk about how to measure \emph{distances} between functions.
+
+Consider the following : \\
+Let $f,g : E \to E'$ and let us take the max $\left.\lbrace d'(f(p),g(p)) : p \in E
+\rbrace\right.$. The maximum may or may not exists but it gives us a way to define some sort of
+distance between two functions. We'll see under what conditions we get a metric. The following Lemma
+will be useful 
+\begin{Lemma}
+    Let $ h = d'(f(p),g(p))$ for all $p \in E$ be a function from $E \to \mathbb{R}$ .
+    If $f,g$ are continuous then so is $h$.
+\end{Lemma}
+\begin{proof}
+    Fix a $p_0 \in E$. Given any $\epsilon > 0$. Note that $d(h(p) - h(p_0)) = \lvert h(p) - h(p_0)
+    \rvert$. Adding and subtracting $d'(f(p),g(p_0))$ and using triangle inequality we get $\lvert
+    h(p) - h(p_0) \rvert \leq \lvert d'(f(p),g(p) - d'(f(p) , g(p_0)) \rvert + \lvert d'(f(p),g(p_0))
+    - d'(f(p_0),g(p_0)) \rvert$. Using the \emph{inside out} version of triangle inequality which we
+    proved earlier in metric space the first term is less than $\lvert d'(g(p),g(p_0)) \rvert$ and
+    the second term is less than $\lvert d'(f(p),f(p_0)) \rvert.$ Since $f,g$ are continuous at
+    $p_0$ given any $\epsilon > 0$ there is a $\delta > 0$ such that whenever $d(p,p_0) < \delta$ 
+    each of two terms are less than $\epsilon / 2$ and thus $d(h(p) - h(p_0)) < \epsilon $. Hence
+    $h$ is continuous at $p_0$ and since $p_0$ was arbitrary $h$ is continuous in $E$.
+\end{proof}
+Let $\mathcal{C}\left(E,E'\right) = \left.\lbrace f : E \to E' | f \ continuous \rbrace \right.$ and
+E be compact. Let $D(f,g) = max\left.\lbrace h(p) : p \in E\rbrace\right.$ where $h$ is as defined
+above. Since $E$ is compact and $h : E \to \mathbb{R}$ is continuous its maximum is defined and is
+in $E$ thus $D(f,g)$ is well defined. 
+\begin{Theorem}[name=The space of continuous functions $\mathcal{C}$]
+    $\mathcal{C}\left(E,E'\right)$ with $D : \mathcal{C}\left(E,E'\right) \to \mathbb{R}$ is a
+    metric space.
+\end{Theorem}
+\begin{proof}
+    Let $f,g,k \in \mathcal{C}\left(E,E'\right)$. Easy to check that $D(f,f) = 0$ and $D(f,g) > 0$ 
+    when $f \neq g$. Also $D(f,g) = D(g,f)$. Now choose a point $p_0 \in E$ at which the function
+    $h(p) = d'(f(p),k(p))$ is maximum. As noted earlier, such a maximum exist. Then $D(f,k) =
+    h(p_0) = d'(f(p_0),k(p_0))$. From the triangle inequality, 
+    \begin{displaymath}
+	\begin{aligned}
+	    d'(f(p_0),k(p_0)) & \leq d'(f(p_0),g(p_0)) + d'(g(p_0),k(p_0)) \\
+	    & \leq max\left.\lbrace d'(f(p),g(p) : p \in E \rbrace\right. + 
+	    max\left.\lbrace d'(g(p),k(p) : p \in E \rbrace\right.
+	\end{aligned}
+    \end{displaymath}
+    The last two terms are precisely $D(f,g)$ and $D(g,k)$. Thus $D$ satisfies the triangle
+    inequality.
+\end{proof}
+When $E' = \mathbb{R}$ we omit $E'$ and we call it the space of real valued continuous functions
+defined in $E$. 
+It is easy to observe that a sequence of points that converges in $\mathcal{C}\left(E,E'\right)$
+must converge uniformly and a sequence of points that is cauchy in $\mathcal{C}\left(E,E'\right)$
+must be uniformly cauchy. As noted earlier points in $\mathcal{C}\left(E,E'\right)$ are continuous
+functions from the compact set $E$ to $E'$. These observations are elaborated below.
+\begin{itemize}
+    \item A sequence $\left(f_n\right)$ of points in $\mathcal{C}\left(E,E'\right)$ converges to $f
+	\in \mathcal{C}\left(E,E'\right)$, then by the definition of convergence in any metric space
+	we must have for any $\epsilon > 0$ there is a $N \in \mathbb{Z}_+$ such that whenever $n
+	\geq N$ then $D(f_n,f) < \epsilon$. This means that $max_{p \in E}
+	\left.\lbrace d'(f_n(p),f(p) : \rbrace\right. < \epsilon$. Hence $d'(f_n(p),f(p)) < \epsilon$
+	for all $p \in E$. This is precisely the definition of uniform convergence of 
+	$\left(f_n\right)$. 
+    \item Similarly if $\left(f_n\right)$ in $\mathcal{C}\left(E,E'\right)$ is Cauchy then it is
+	uniformly cauchy.
+\end{itemize}
+The space $\mathcal{C}\left(E,E'\right)$ is a very important space dealt in mathematical analysis.
+The next Theorem shows that $\mathcal{C}\left(E,E'\right)$ is complete when $E'$ is complete. Thus
+for real valued functions $\mathcal{C}\left(E\right)$ is always complete.
+\begin{Theorem}[name=Completeness of the space of continuous functions $\mathcal{C}$]
+    For $E$ compact and $E'$ complete the metric space $\mathcal{C}\left(E,E'\right)$ is complete
+    (with the metric $D$ defined above).
+\end{Theorem}
+\begin{proof}
+    Let $\left(f_n\right)$ be a cauchy sequence in $\mathcal{C}\left(E,E'\right)$. Thus 
+    $\left(f_n\right)$ is uniformly cauchy in $E'$. Since, $E'$ complete there is a $f : E \to E'$
+    such that $f_n \to f \in E'$. But $\left( f_n \right)$ is a sequence in 
+    $\mathcal{C}\left(E,E'\right)$ and so convergence implies uniform convergence. Since uniform
+    convergence of continuous functions yield a continuous function, $f : E \to E'$ is continuous.
+    Thus $f \in \mathcal{C}\left(E,E'\right)$. Hence we showed that a cauchy sequence in the metric
+    space converges to \emph{point} in the same metric space. Thus $\mathcal{C}\left(E,E'\right)$ is
+    complete.
+\end{proof}
+Note that $\mathcal{C}\left(E\right)$ is also a vector space since the sum of two real valued contiuous
+function is also a real valued continuous function and a scalar multiple of a real valued
+continuous function also is a real valued continuous function. We can define a \emph{norm} as
+follows :
+\[ \lvert\lvert p \rvert\rvert _{\mathcal{C}\left(E\right)} = \text{ max
+}\left.\lbrace \lvert p \rvert, p \in E \rbrace\right. .\]
+Then we have a complete vector space w.r.t to the norm above. A complete normed vector space is
+called a $\textbf{Banach}$ space.

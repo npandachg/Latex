@@ -1,0 +1,23 @@
+\documentclass{article}
+\usepackage{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+
+\pgfplotsset{soldot/.style={color=blue,only marks,mark=*}} % solid dot
+\pgfplotsset{holdot/.style={color=blue,fill=white,only marks,mark=*}} % hollow dot
+
+\begin{document}
+
+\begin{tikzpicture}
+\begin{axis}[hide x axis,hide y axis]
+\addplot[domain=0:4,blue,very thick] {0.5*x*x};
+\addplot[domain=4:6,blue,very thick] {10 + x};
+\addplot[domain=6:10,blue,very thick] {20};
+\addplot[domain=10:15,blue,very thick,dotted] {15+x};
+\addplot[holdot] coordinates{(4,8)(6,16)(10,20)};
+\addplot[soldot] coordinates{(0,0)(4,14)(6,20)(10,25)};
+\end{axis}
+\end{tikzpicture}
+
+\end{document}

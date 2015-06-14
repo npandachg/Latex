@@ -1,0 +1,768 @@
+\chapter{Elements of measure theory: measurable functions}
+In this chapter we will look at mappings from one measurable space to another. This chapter, along with the 
+preceding one, contains the basic elements of measure theory. 
+This will then enable us to study calculus on a general setting.
+\section{Measurable functions}
+In topology, a continuous function is one for which the inverse image of open sets are open sets. In similar
+vein, we will define measurable functions between two measure spaces. The definition is motivated by the
+construction used by Lebesgue to extend Riemann integration. Integration will be dealt in the next chapter.
+\begin{Definition}[name=Measurable functions]
+    Let $\metricS{X}{\algebra{M}}$, $\metricS{Y}{\algebra{N}}$ be two measure spaces. A function,
+    \[\map{f}{X}{Y}\]
+    is $\measMap{\algebra{M}}{\algebra{N}}$ if,
+    \[\invIm{f}{A} \in \algebra{M}\quad\text{for every}\,{A\in\algebra{N}}.\]
+\end{Definition}
+Consider the collection $\invIm{f}{\algebra{N}} = \set{\invIm{f}{A}}{A\in\algebra{N}}$. This is a sigma algebra
+by~\ref{thm:pre_img_sigma}. We call this the induced sigma algebra on $X$. Thus, we see that if $f$ is
+$\measMap{\algebra{M}}{\algebra{N}}$ then $\invIm{f}{\algebra{N}} \subset \algebra{M}$. Note that the inverse
+image in general is a function $\map{f^{-1}}{\powSet{Y}}{\powSet{X}}$. The definition above states that, if
+$f$ is measurable then the
+restriction of the inverse image, $\restrict{f^{-1}}{\algebra{N}}$, 
+is a function that maps $\algebra{N}$ to $\algebra{M}$.
+
+Since, measurable sets are generally \emph{huge}, the above condition is not very useful in figuring which
+functions are measurable. The following theorem is hence very useful.
+\begin{Theorem}[name=Criteria for measurable functions]\label{thm:crit_meas_func}
+    Let $\metricS{X}{\algebra{M}}$, $\metricS{Y}{\algebra{N}}$ be two measure spaces and let $\algebra{N} =
+    \sigmaGen{\family{E}}$. A function,
+    \[\map{f}{X}{Y}\]
+    is $\measMap{\algebra{M}}{\algebra{N}}$ if and only if,
+    \[\invIm{f}{A} \in \algebra{M}\quad\text{for every}\,{A\in\family{E}}.\]
+\end{Theorem}
+\begin{proof}
+    \emph{only if} part is immediate since, if $f$ is measurable, the statement is true for all $A \in
+    \algebra{N}$ and hence certainly true for $A \in \family{E}$. 
+
+    For the \emph{if} part, consider the set
+    \[F = \set{A \subset Y}{\invIm{f}{A}} \in \algebra{M}.\]
+    This set is not empty by our assumption i.e $\algebra{F} \supset \algebra{E}$. 
+    Easy to see that it is a $\sigmaAlgebra$. See~\ref{thm:prop_sigmaA}. 
+    Hence, $F \supset \sigmaGen{\family{E}} = \algebra{N}$.
+\end{proof}
+\begin{Corollary}\label{thm:continuous_func_meas}
+    If $X,Y$ are metric spaces (or topological spaces), every continuous function $\map{f}{X}{Y}$ is
+    $\measMap{\borelS{X}}{\borelS{Y}}$.
+\end{Corollary}
+\begin{proof}
+    Let $\family{G}_{Y}$,$\family{G}_{X}$ be the class of open sets in $Y,X$ respectively. 
+    We know that $\borelS{Y} = \sigmaGen{\family{G}_{Y}}$. Since $f$ is continuous, 
+    for any open set $G \in \family{G}_Y$,
+    $\invIm{f}{G}$ is open in $\family{G}_X \subset \borelS{X}$. Hence, by~\ref{thm:crit_meas_func}
+    $f$ is $\measMap{\borelS{X}}{\borelS{Y}}$.
+\end{proof}
+\begin{Definition}[name=Real or Complex valued measurable functions]
+    If $\metricS{X}{\algebra{M}}$ is a measurable space, a real or complexed valued function is called
+    $\algebra{M}$ measurable (or just measurable if $\algebra{M}$ is understood from the context) if it is
+    $\measMap{\algebra{M}}{\borelS{\R}}$ or $\measMap{\algebra{M}}{\borelS{\C}}$ respectively. 
+    Thus the co-domain $\sigmaAlgebra$ is always the Borel sigma algebra for real or complex valued functions.
+\end{Definition}
+\begin{Definition}[name=Lebesgue measurable functions]
+    A real (or complex) valued function,
+    \[\map{f}{\Rn}{\R}\,(\text{or}\,\map{f}{\Rn}{\C}),\]
+    is Lebesgue measurable if it $\measMap{\family{L}}{\borelS{R}}$ (or $\measMap{\family{L}}{\borelS{C}}$
+    resp.).
+\end{Definition}
+
+We often want to discuss measurability relative to a subset of a measure space.
+\begin{Definition}[name=Restriction of measurable functions]
+    Let $\metricS{X}{\algebra{M}}$ and $\metricS{Y}{\algebra{N}}$ 
+    be measurable spaces and $E \in \algebra{M}$ be any measurable set and $f$ be a
+    function defined on $X$ given by $\map{f}{X}{Y}$. We say that $f$ is measurable on $E$ if 
+    $\invIm{f}{A}\cap E \in \algebra{M}$ for any $A \in \algebra{N}$. We say that $\restrict{f}{E}$ is
+    $\measMap{\algebra{M}_{E}}{N}$, where $\algebra{M}_{E}$ is the restricted sigma algebra on $E$ as
+    described in~\ref{ex:type_of_sigma_alg} (5).
+\end{Definition}
+
+\begin{Proposition}\label{prop:real_val_meas_funct}
+    Let $\metricS{X}{\algebra{M}}$ be a measurable space and let $\map{f}{X}{R}$ be a real valued function.
+    Then, the following are equivalent:
+    \begin{enumerate}
+	\item
+	    $f$ is $\algebra{M}$ measurable.
+	\item
+	    $\invIm{f}{(a,\infty)} \in \algebra{M}$ for all $a\in\R$.
+	\item
+	    $\invIm{f}{\interval[open right]{a}{\infty}} \in \algebra{M}$ for all $a\in\R$.
+	\item
+	    $\invIm{f}{(-\infty,a)} \in \algebra{M}$ for all $a\in\R$.
+	\item
+	    $\invIm{f}{\interval[open left]{-\infty}{a}} \in \algebra{M}$ for all $a\in\R$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We will show $(1)\iff(2)$ using~\ref{thm:crit_meas_func} and~\ref{thm:gen_borel_R}. The rest are similar.
+    Consider the family of open rays $\family{E}_5$ as described in~\ref{thm:gen_borel_R}. Since
+    $\sigmaGen{\family{E}_5} = \borelS{\R}$, by~\ref{thm:crit_meas_func} we get the result.
+\end{proof}
+\begin{Remark}\label{rmk:extended_reals_meas_func}
+    Sometimes, it will be convenient to consider functions with values in the extended reals 
+    $\closure{\R} = \extReals$. In that case we can define the Borel sets in $\closure{\R}$ by,
+    \[\borelS{\closure{\R}} = \set{E\subset\closure{\R}}{E\cap\R \in \borelS{\R}}.\] Then,
+    \[\borelS{\closure{\R}} = \sigmaGen{\lbrace\hInt{a}{\infty}\rbrace} = 
+	\sigmaGen{\lbrace \interval[open right]{-\infty}{a}\rbrace}.\]
+    Thus in the proposition above, a function $\map{f}{X}{\closure{\R}}$ is measurable if we include
+    $-\infty,\infty$, where it is understood that we take $\borelS{\closure{\R}}$ as the co-domain sigma algebra.
+\end{Remark}
+For functions that take values in the extended reals, note that the set 
+$\invIm{f}{\interval[open right]{-\infty}{a}} = \set{x \in X}{f(x) < a}$. It is a common
+practice to denote this set as $\lbrace f < a \rbrace$. Thus from~\ref{prop:real_val_meas_funct} 
+and~\ref{rmk:extended_reals_meas_func}, a real valued function is measurable iff $\lbrace f < a \rbrace$,
+$\lbrace f \leq a \rbrace$, $\lbrace f > a \rbrace$ and $\lbrace f \geq a \rbrace$ are measurable. This
+notation is used in probability and is also preferrable if we do not want to show explicitly a real valued
+function or a function that takes values on the extended reals. 
+
+\begin{Example}\label{ex:measurable_func}
+    We give a few examples of real valued measurable functions.
+    \begin{enumerate}
+	\item
+	    Consider the counting measure on $\R$,
+	    \begin{equation*}
+		\measure{E} = 
+		\begin{cases}
+		    \text{number of elements in E}\, &\text{if $E$ is finite}\\
+		    \infty\, &\text{if $E$ is infinite}
+		\end{cases}
+	    \end{equation*}
+	    Then each set is measurable and hence any function is measurable.
+	\item
+	    Define an outer measure $\outMeas$ on $\R$ by 
+	    \begin{equation*}
+		\outMeasure{E} = 
+		\begin{cases}
+		    0\, &\text{if $E = \emptyset$ }\\
+		    1\, &\text{otherwise}
+		\end{cases}
+	    \end{equation*}
+	    Then only $\emptyset$ and $\R$ are measurable. Indeed for any $E\subset \R$ where $E \neq \R,E\neq
+	    \emptyset$ the $\carathCrit$, 
+	    \begin{align*}
+		\carathGeq{\R}{E}
+	    \end{align*}
+	    is NOT satisfied. Consider the set $f(x) = x$. Since $\fCompA{f}{>}{0}$ is not measurable, $f$ is
+	    not measurable. 
+	\item
+	    Consider a measurable space $\metricS{X}{\algebra{M}}$. Let $\map{f}{X}{\R}$ be the
+	    function given by $f(x) = k > 0$ whenever $x \in E$ for some $E\subset X$, else $f(x) = 0$. Hence the
+	    range of $f$ is just $\lbrace 0,k\rbrace$ Then,
+	    \begin{equation*}
+		\fCompA{f}{>}{c} = 
+		\begin{cases}
+		    \emptyset &\text{if $c \geq k$}\\
+		    E &\text{if $0\leq c < k$ }\\
+		    X &\text{if $c < 0$}
+		\end{cases}
+	    \end{equation*}
+	    Hence, $f$ is measurable iff $E$ is measurable.
+	\item
+	    Consider the Lebesgue measure space on $\R$, i.e the measurable space $\metricS{\R}{\family{L}}$ 
+	    and the following function $f$
+	    \begin{equation*}
+		f(x) = 
+		\begin{cases}
+		    x^2, & x \leq 1 \\
+		    2, & x = 1 \\
+		    -2-x, & x > 1
+		\end{cases}
+	    \end{equation*}
+	    Then,
+	    \begin{equation*}
+		\fCompA{f}{>}{c} = 
+		\begin{cases}
+		    (-\infty,-2-c) & c \leq -3 \\
+		    \interval[open left]{-\infty}{1} & -3 < c < 0  \\
+		    (-\infty,-\sqrt{c})\cup\hInt{\sqrt{c}}{1} & 0 \leq c < 1  \\
+		    (-\infty,-\sqrt{c}) \cup \lbrace 1 \rbrace & 1\leq  c < 2 \\
+		    (-\infty,-\sqrt{c}) & c \geq 2.
+		\end{cases}
+	    \end{equation*}
+	    Hence, $f$ is measurable.
+    \end{enumerate}
+\end{Example}
+Appropriate measurable functions agree with compostion. This is proved in the following Proposition.
+\begin{Proposition}[name=Composing measurable functions]\label{prop:composition_meas_func}
+    If $\metricS{X}{\algebra{M}}$, $\metricS{Y}{\algebra{N}}$ and $\metricS{Z}{\algebra{O}}$ are 
+    measurable spaces and $\map{f}{X}{Y}$ is
+    $\measMap{\algebra{M}}{\algebra{N}}$, $\map{g}{Y}{Z}$ is $\measMap{\algebra{N}}{\algebra{O}}$, then the
+    compositon map $\map{g\circ f}{X}{Z}$ is $\measMap{\algebra{M}}{\algebra{O}}$.
+\end{Proposition}
+\begin{proof}
+    Consider an arbitrary set $C \in \algebra{O}$. Then $B = \invIm{g}{C} \in \algebra{N}$ and so 
+    $\invIm{f}{B} \in \algebra{M}$. Thus $\invIm{\fog{g}{f}}{C} = \invIm{f}{\invIm{g}{C}} \in \algebra{M}$.
+\end{proof}
+\begin{Remark}
+    Note,~\ref{prop:composition_meas_func} does not imply that two Lebesgue measurable functions are measurable. 
+    If $f$ is
+    $\measMap{\algebra{L}}{\borelS{\R}}$ and $g$ is $\measMap{\algebra{L}}{\borelS{\R}}$, then the theorem
+    above doesn't gurantee the Lebesgue measurability of $\fog{g}{f}$ or $\fog{f}{g}$, since there is no
+    guarantee that for a set $C \in \borelS{\R}$, $\invIm{g}{C} \in {\algebra{L}}$. If $g$ is Borel measurable
+    then the issue is resolved. See~\ref{fig:tikz:measurable_maps_comp}.
+\end{Remark}
+\begin{figure}
+  \includestandalone[width=0.5\textwidth]{tex/tikz_figures/commutative_diag}
+  \caption{Composition of measurable functions}\label{fig:tikz:measurable_maps_comp}
+\end{figure}
+A measurable function also induces a measure in the co-domain which in some regards is the \emph{natural}
+measure. To make this idea concrete, we provide the next proposition.
+\begin{Proposition}[name=Induced measure]\label{prop:induced_meas}
+    Let $f$ be $\measMap{\algebra{M}}{\algebra{N}}$ function that maps from a measure space
+    $\measureS{X}{\algebra{M}}{\mu}$ in to a measure space $\metricS{Y}{\algebra{N}}$. For any $B\in
+    \algebra{N}$, set
+    \[\mu_{f}(B) = \mu(\invIm{f}{B}).\]
+    Then $\measureS{Y}{\algebra{N}}{\mu_f}$ is a measure space.
+\end{Proposition}
+\begin{proof}
+    Since $\invIm{f}{\emptyset} = \emptyset$, $\mu_f(\emptyset) = 0$. Let $\lbrace B_i \rbrace \subset
+    \algebra{N}$ be a sequence of pairwise disjoint sets. Then,
+    \begin{align*}
+	\mu_f(\countDisjUnion{B_i}{i}) &= \measure{\invIm{f}{\countDisjUnion{B_i}{i}}},\\ 
+	&= \measure{\countDisjUnion{\invIm{f}{B_i}}{i}}, \\
+	&= \infiniteSum{\measure{\invIm{f}{B_i}}}{i}, \\
+	&= \infiniteSum{\mu_f(B_i)}{i}.
+    \end{align*}
+    Hence, $\measureS{Y}{\algebra{N}}{\mu_f}$ is a measure space. 
+\end{proof}
+
+\begin{figure}
+  \includestandalone[width=0.5\textwidth]{tex/tikz_figures/induced_meas}
+  \caption{Induced measure. Since $f$ is measurable, the inverse image when restricted to $\algebra{N}$ is a
+      function that maps to $\algebra{M}$. 
+      It is also called the \textbf{pull back} measure.}\label{fig:tikz:induced_measure}
+\end{figure}
+Even though we have included complex valued functions, we haven't defined yet the borel sigma algebra
+$\borelS{\C}$. Note that $\borelS{\C} = \borelS{\R^{2}}$. Since we deal with a complex valued function by
+dealing with its real and imaginary parts, it will be useful to describe a product sigma
+algebra.
+
+\begin{Remark}
+    If we have a set $\metricS{X}{\algebra{M}}$ and a collection of measurable spaces 
+    ${\lbrace\metricS{Y_{\alpha}}{\algebra{N}_{\alpha}} \rbrace }_{\alpha \in A}$, what is the smallest
+    $\sigmaAlgebra$ $\algebra{M}$ on $X$ with respect to which each map $\map{f_{\alpha}}{X}{Y_{\alpha}}$ is
+    $\measMap{\algebra{M}}{\algebra{N}_{\alpha}}$? 
+    Note that $\invIm{f_{\alpha}}{\algebra{N}_{\alpha}}$ is a sigma algebra on $X$. Let 
+    \[\family{E} = \indexUnion{\invIm{f_{\alpha}}{\algebra{N}_{\alpha}}}{\alpha}{A}.\]
+    The unions of $\sigmaAlgebra$ is not necessarily a $\sigmaAlgebra$. The smallest sigma algebra containing a
+    family is the one generated by it. Hence, $\algebra{M} = \sigmaGen{\algebra{E}}$ is the smallest sigma algebra
+    on $X$ on which all $f_{\alpha}$ are measurable. In particular, if $X = \indexProduct{Y_{\alpha}}{\alpha}{A}$,
+    then the co-ordinate maps $\map{\projFunc{\alpha}}{X}{Y_{\alpha}}$ will be
+    $\measMap{\algebra{M}}{\algebra{N}_{\alpha}}$ for suitably defined $\algebra{N}_{\alpha}$. This leads us to
+    the definition of a product $\sigmaAlgebra$.
+\end{Remark}
+
+\begin{Definition}[name=Product sigma algebra]
+    Let $\set{X_{\alpha}}{\alpha \in A}$ be an indexed collection of non-empty sets. Set,
+    \[X = \indexProduct{X_{\alpha}}{\alpha}{A},\quad\text{and}\quad\map{\projFunc{\alpha}}{X}{X_{\alpha}},\]
+    as the co-ordinate map. If $\algebra{M}_{\alpha}$ is a $\sigmaAlgebra$ on $X_{\alpha}$ for each $\alpha
+    \in A$, then we define the product sigma algebra on $X$ as the $\sigmaAlgebra$ generated by
+    \[\family{E} = \set{\invIm{\projFunc{\alpha}}{E_{\alpha}}}{E_{\alpha}\in\algebra{M}_{\alpha},\alpha\in A}.\]
+    We denote this $\sigmaAlgebra$ by $\iProdSigma{\algebra{M}_{\alpha}}{\alpha}{A}$.
+\end{Definition}
+Again, as with measurable functions we want to only check for sets in the family that generates
+$\algebra{M}_{\alpha}$. This leads to the next proposition.
+\begin{Proposition}\label{prop:prod_sigma_gen}
+    Suppose that $\algebra{M}_{\alpha}$ is generated by $\family{E}_{\alpha}$. Then
+    $\iProdSigma{\algebra{M}_{\alpha}}{\alpha}{A}$ is generated by,
+    \[\family{F}_{1} = 
+	\set{\invIm{\projFunc{\alpha}}{E_{\alpha}}}{E_{\alpha} \in \family{E}_{\alpha}\,\alpha\in A}.\]
+\end{Proposition}
+\begin{proof}
+    Clearly $\family{F}_{1} \subset \family{E}$, hence $\sigmaGen{\family{F}_{1}} \subset \sigmaGen{\family{E}}$. We
+    will use~\ref{rmk:prin_good_sets} to prove the other inclusion. Consider the set,
+    \[\set{E\subset X_{\alpha}}{\invIm{\projFunc{\alpha}}{E}\in\sigmaGen{\family{F}_{1}}}.\]
+    Clearly, the set is a $\sigmaAlgebra$ containing $\family{E}$ and hence contains $\sigmaGen{\family{E}}$.
+\end{proof}
+The next theorem enables us to use product sets if we have a countable collection. See Appendix for properties
+of coordinate maps.
+\begin{Proposition}\label{prop:prod_sigma_gen_countable}
+    If $A$ is a countable collection of index sets, then $\iProdSigma{\algebra{M}_{\alpha}}{\alpha}{A}$ is the
+    sigma algebra generated by.
+    \[\family{F}_{2} = \set{\indexProduct{E_{\alpha}}{\alpha}{A}}{E_{\alpha} \in \family{E}_{\alpha}},\]
+    where $\algebra{M}_{\alpha} = \sigmaGen{\family{E}_{\alpha}}$.
+\end{Proposition}
+\begin{proof}
+    First we will show that $\iProdSigma{\algebra{M}_{\alpha}}{\alpha}{A}$ is generated by,
+    \[\family{F} = \set{\indexProduct{E_{\alpha}}{\alpha}{A}}{E_{\alpha} \in \family{M}_{\alpha}},\]
+    and then use~\ref{prop:prod_sigma_gen} to complete the proof.
+    Note that for any $x \in \family{E}$, there is an $E_{\alpha} \in \algebra{M}_{\alpha}$ such that $x =
+    \invIm{\projFunc{\alpha}}{E_{\alpha}}$. Now,
+    \[\invIm{\projFunc{\alpha}}{E_{\alpha}} = \indexProduct{Y_{\beta}}{\beta}{A},\]
+    where $Y_{\beta} = X_{\beta}$ whenever $\beta \neq \alpha$, and $Y_{\beta} = E_{\alpha}$ whenever 
+    $\beta = \alpha$. Thus $x \in \family{F}$ i.e, $\family{E} \subset \family{F}$ and hence
+    $\sigmaGen{\family{E}}\subset \sigmaGen{\family{F}}$. To show the other inclusion, let $x \in
+    \family{F}$,
+    then $x = \indexProduct{E_{\alpha}}{\alpha}{A}$, where $E_{\alpha} \in \algebra{M}_{\alpha}$. Now,
+    \[\indexProduct{E_{\alpha}}{\alpha}{A} =
+	\indexIntersection{\invIm{\projFunc{\alpha}}{E_{\alpha}}}{\alpha}{A} \in \sigmaGen{\family{E}}.\]
+    Thus, $\sigmaGen{\family{F}} \subset \sigmaGen{\family{E}}$. Now using~\ref{prop:prod_sigma_gen}, we get
+    the result since $\sigmaGen{\family{F}_1} = \sigmaGen{\family{E}} = \sigmaGen{\family{F}}$.
+\end{proof}
+\begin{Theorem}[name=Sigma Algebra in product metric space]
+    Let $X_1,\ldots,X_n$ be metric spaces and let $X = \finiteProduct{X_j}{j}{n}$,equipped with the product
+    metric. Then $\fProdSigma{\borelS{X_j}}{j}{n} \subset \borelS{X}$. If $X_j$'s are \textbf{separable}, then
+    $\fProdSigma{\borelS{X_j}}{j}{n} = \borelS{X}$.
+\end{Theorem}
+\begin{proof}
+\end{proof}
+\begin{Corollary}\label{thm:prod_sigma_algeb_Rn}
+    $\borelS{\Rn} = \fProdSigma{\borelS{\R}}{j}{n}$.
+\end{Corollary}
+The following propositon is useful in considering the measurability of vector valued functions.
+\begin{Theorem}\label{thm:meas_component_func}
+    Let $\metricS{X}{\algebra{M}}$ and $\metricS{{Y}_{\alpha}}{\algebra{N}_{\alpha}}$ ($\alpha \in A$)
+    be measurable spaces and let $Y = \indexProduct{Y_{\alpha}}{\alpha}{A}$. Define $\family{N}$ to be the product
+    sigma algebra in $Y$ and $\projFunc{\alpha}$ to be the $\alpha^{th}$ co-ordinate map. Then,
+    \begin{align*}
+	&\map{f}{X}{Y}\quad\text{is}\measMap{\algebra{M}}{\algebra{N}}\quad\text{iff} \\
+	&\quad 
+	f_{\alpha} = \fog{\projFunc{\alpha}}{f}\quad \text{is} \quad \measMap{\algebra{M}}{\algebra{N}_{\alpha}} 
+	\,\text{for all $\alpha$}.
+    \end{align*}
+\end{Theorem}
+\begin{proof}
+    By definition, each $\projFunc{\alpha}$ is $\measMap{\algebra{N}}{\algebra{N}_{\alpha}}$. If $f$ 
+    is $\measMap{\algebra{M}}{\algebra{N}}$ then by~\ref{prop:composition_meas_func}, $f_{\alpha}$ is 
+    $\measMap{\algebra{M}}{\algebra{N}_{\alpha}}$.
+
+    To show that $f$ is measurable given that each $f_{\alpha}$ is measurable we need to show that for each
+    $E\in \family{E}$, $\invIm{f}{E}\in \algebra{M}$ where $\family{E}$ is the generating set $\algebra{N}$.
+    Let $E$ be an arbitrary element of $\family{E}$. Then $E = \invIm{\projFunc{\alpha}}{E_{\alpha}}$ for some
+    $\alpha \in A$ and $E_{\alpha} \in \algebra{N}_{\alpha}$. Thus,
+    \[\invIm{f}{\invIm{\projFunc{\alpha}}{E_{\alpha}}} = {(\fog{\projFunc{\alpha}}{f})}^{-1}(E_{\alpha}) =
+	\invIm{f_{\alpha}}{E_{\alpha}} \in \algebra{M}\]
+    since $f_{\alpha}$ is $\measMap{\algebra{M}}{\algebra{N}_{\alpha}}$.
+\end{proof}
+\begin{Corollary}
+    Let $\metricS{X}{\algebra{M}}$ be a measurable space. A function $\map{f}{X}{\Rm}$ is 
+    $\algebra{M}$-measurable 
+    iff each co-ordinate function $\map{f_{i}}{X}{\R}$, for $1\leq i \leq m$, is $\algebra{M}$-measurable.
+\end{Corollary}
+\begin{proof}
+     The function $\map{f}{X}{\Rm}$ is $\algebra{M}$-measurable whenever it is
+    $\measMap{\algebra{M}}{\borelS{\Rm}}$. By~\ref{thm:prod_sigma_algeb_Rn}, $\borelS{\Rm} =
+    \fProdSigma{\borelS{\R}}{i}{m}$, hence by~\ref{thm:meas_component_func}, $f$ is $\algebra{M}$-measurable iff
+    $\map{f_{i}}{X}{\R}$, for $1\leq i \leq m$, is $\algebra{M}$-measurable.
+\end{proof}
+\begin{Corollary}
+    Let $\metricS{X}{\algebra{M}}$ be a measurable space. A function $\map{f}{X}{\C}$ is
+    $\algebra{M}$-measurable iff $\Rea f$ and $\Ima f$ are $\algebra{M}$-measurable.
+\end{Corollary}
+\begin{proof}
+    By~\ref{thm:meas_component_func} and the fact that $\borelS{\C} = \borelS{\R}\bigotimes\borelS{\R}$.
+\end{proof}
+Intuition suggests measurability should not be affected by behavior on sets of measure $0$. This is indeed
+true for complete measures.
+\begin{Proposition}\label{prop:ae_equality_meas_func}
+    Let $\metricS{X}{\algebra{M}}$, $\metricS{Y}{\algebra{N}}$ be measure spaces. Let $\metricS{X}{\algebra{M}}$
+    be a complete measure space. If $f$ is $\measMap{\algebra{M}}{\algebra{N}}$ and $f=g$ a.e., then $g$ is
+    also $\measMap{\algebra{M}}{\algebra{N}}$.
+\end{Proposition}
+\begin{proof}
+    Let $A = \set{x \in X}{f(x)\neq g(x)}$. By our assumption, measure of $A$ is $0$. Fix any $E \subset
+    \algebra{N}$ and consider the set
+    $\invIm{g}{E} = \set{x\in X}{g(x) \in E}$. Then we can write this set a union of disjoint sets as follows,
+    \begin{align*}
+	\set{x}{g(x) \in E} &= \set{x}{g(x) \in E}\cap A \disjU \set{x}{g(x) \in E}\cap
+	\comp{A} \\
+	&\set{x}{g(x) \in E}\cap A \disjU \set{x}{f(x) \in E}, 
+    \end{align*}
+    where the second set after the equality is due to the fact that $f=g$ in $\setDiff{X}{A}$. The first set
+    after the equality is a subset of $A$ which has measure $0$, since $\algebra{M}$ is complete and thus is
+    in $\algebra{M}$. The second set is in $\algebra{M}$ by our assumption. Thus, $\invIm{g}{E}$ is the union
+    of two measurable sets in $\algebra{M}$ and hence, $g$ is $\measMap{\algebra{M}}{\algebra{N}}$.
+\end{proof}
+Before we observe some important properties of measurable functions, let us define the characteristic function
+of a set. Such a function is the building block for approximating any measurable functions. 
+\begin{Definition}[name=Characteristic function]
+    Let $\metricS{X}{\algebra{M}}$ be a measure space and let $E \subset X$ be any set. The characteristic
+    function $\charFunc{E}$ is given by,
+    \begin{equation}\label{eq:char_func}
+	\charFunc{E}(x) = 
+	\begin{cases}
+	    1 &\text{if $x\in E$}\\
+	    0 &\text{if $x\in \comp{E}$}\\
+	\end{cases}
+    \end{equation}
+    The characteristic function of a set $E$ is also called the \textbf{indicator} function of the set $E$ and
+    is denoted by $\boldsymbol{I}_{E}$ or $\boldsymbol{1}_{E}$.
+\end{Definition}
+It is easy to see (~\ref{ex:measurable_func} (3)) that $\charFunc{E}$ is measurable if and only if $E \in
+\algebra{M}$. 
+\begin{Remark}
+    Note that if $A,B$ are disjoint sets then $\charFunc{A\cup B} = \charFunc{A} + \charFunc{B}$. This means
+    that $\charFunc{A} + \charFunc{\comp{A}} = 1$. For any
+    $A,B$ we can observe that $\charFunc{A}\charFunc{B} = \charFunc{A\cap B}$. These observations are very
+    useful.
+\end{Remark}
+\section{Properties of measurable functions}
+Let $\metricS{X}{\algebra{M}}$ be a measure space.
+
+\begin{Proposition}\label{prop:prop0_mfunc_composition_cont}
+    If $\map{f}{X}{\C}$ is $\algebra{M}$-measurable and $\map{\Phi}{X}{C}$ is continuous then,
+    \begin{properties}[series=mfunc]
+    \item 
+	$\fog{\Phi}{f}$ is $\algebra{M}$-measurable.
+    \end{properties}
+\end{Proposition}
+\begin{Proposition}\label{prop:prop1_mfunc_additivity}
+    If $\map{f,g}{X}{\C}$ are $\algebra{M}$-measurable then,
+    \begin{properties}[resume*=mfunc]
+    \item 
+	$f+g$ and $fg$ are $\algebra{M}$-measurable.
+    \end{properties}
+\end{Proposition}
+\begin{proof}
+    Define $\map{F}{X}{\C \times \C}$ by $F(x) = (f(x),g(x))$. Then, since $\borelS{\C\times\C} =
+    \borelS{\C}\bigotimes\borelS{\C}$, $F$ is measurable by~\ref{thm:meas_component_func}. Now, consider the
+    following functions,
+    \begin{itemize}
+	\item $\map{\phi}{\C\times\C}{\C}$ given by, $\phi(z,w) = z + w$,
+	\item $\map{\psi}{\C\times\C}{\C}$ given by, $\psi(z,w) = zw$.
+    \end{itemize}
+    Both $\phi,\psi$ are $\measMap{\borelS{\C\times\C}}{\borelS{\C}}$, since they are continuous
+    (see~\ref{thm:continuous_func_meas}). Hence, $f + g = \fog{\phi}{F}$ and 
+    $fg = \fog{\psi}{F}$ are $\mMeas$.
+\end{proof}
+By taking $g = c$ a constant we see that $cf$ is also $\mMeas$. If $g$ is function that is not $0$, then by
+using $1/g$ above we see $f/g$ is also $\mMeas$. Hence, we preserve measurability by doing arithmetic
+operations.
+\begin{Proposition}\label{prop:prop2_mfunc_limits}
+    If $\seq{f}{j}$ is a sequence of $\closure{\R}$ valued $\mMeas$ functions then the functions,
+    \begin{properties}[resume*=mfunc]
+    \item
+	$\sup\limits_{j}f_j,\inf\limits_{j}f_j,\limsup f_j, \liminf f_j$ are $\mMeas$. If
+	$f = \limit{f_j}{n}{\infty}$ exists for all $x\in X$, then $f$ is $\mMeas$.
+    \end{properties}
+\end{Proposition}
+\begin{proof}
+    Let $g_1 = \sup\limits_{j}f_j$. For each $j$, $f_j(x) \leq g_1(x)$ for all $x \in X$. Let $g > g_1$.
+    Hence, $\fCompA{f_j}{\geq}{a} \subset \fCompA{g}{\geq}{a}$. Thus for each $j$,
+    \[\fCompA{f_j}{\geq}{a} \subset \countUnion{\fCompA{f_j}{\geq}{a}}{j}\subset \fCompA{g}{\geq}{a}.\]
+    Hence,
+    \[\fCompA{g_1}{\geq}{a} = \countUnion{\fCompA{f_j}{\geq}{a}}{j}.\]
+    Thus $g_1$ is $\mMeas$ since it is a countable union of $\mMeas$ sets.
+    Let $g_2 = \inf\limits_j f_j$. A similar argument yields,
+    \[\fCompA{g_2}{\leq}{a} = \countUnion{\fCompA{f_j}{\leq}{a}}{j}.\]
+    Now, $\liminf f_j = \sup\limits_{k}\inf\set{f_j}{j\geq k}$ and $\limsup f_j =
+    \inf\limits_{k}\sup\set{f_j}{j\geq k}$ are $\mMeas$ since $\inf,\sup$ are $\mMeas$.
+    Finally, if $f = \limit{f_j}{j}{\infty}$ exists for all $x$ then $f = \limsup f_j$ and hence $f$ is
+    $\mMeas$.
+\end{proof}
+\begin{Definition}[name=Decomposition of real valued functions]
+    Let $\map{f}{X}{\closure{R}}$. 
+    Consider the sets, \[A^{+} = \fCompA{f}{>}{0} \quad \text{and} \quad A^{-} = \fCompA{f}{<}{0}.\]
+    Then $f$ can be \textbf{decomposed} into is positive and negative parts, 
+    \[f = \fPlus{f} - \fMinus{f},\]
+    where $\fPlus{f} = f\charFunc{A^{+}} = \max(f,0)$ and 
+    $\fMinus{f} = -f\charFunc{A^{-}} = \max(-f,0)$.
+\end{Definition}
+Note that each $\fPlus{f}$ and $\fMinus{f}$ is non-negative.
+\begin{figure}
+  \includestandalone[width=0.35\textwidth]{tex/tikz_figures/f_decomposition}
+  \caption{Decomposition of a real valued function. Here $\fPlus{f}$ is drawn in blue,
+  while $\fMinus{f}$ is drawn in red.}\label{fig:tikz:decomposition_f}
+\end{figure}
+\begin{Proposition}\label{prop:prop3_mfunc_decomposition}
+    Let $\map{f}{X}{\closure{R}}$.
+    \begin{properties}[resume*=mfunc]
+    \item
+	$f$ is $\mMeas$ iff $\fPlus{f},\fMinus{f}$ are $\mMeas$.
+    \end{properties}
+\end{Proposition}
+\begin{proof}
+    If $f$ is $\mMeas$ then $A^{+},A^{-}$ are measurable (sets in $\algebra{M}$) and hence
+    $\fPlus{f},\fMinus{f}$ are $\mMeas$. 
+    If $\fPlus{f},\fMinus{f}$ are $\mMeas$ then $f$ is the sum of two
+    $\mMeas$ functions and so is $\mMeas$. 
+\end{proof}
+Note that $\abs{f} = \fPlus{f} + \fMinus{f}$. Hence, if $f$ is $\mMeas$ then $\abs{f}$ is also $\mMeas$. 
+\begin{Proposition}\label{prop:prop4_mfunc_ae_limit}
+    Let $\seq{f}{j}$ be a sequence of $\closure{R}$ valued $\mMeas$ functions. Let $g_1$ be a $\mMeas$
+    function. Let $\algebra{M}$ be a complete
+    measure space. 
+    \begin{properties}[resume*=mfunc]
+    \item
+	If $g_1 = g_2$ a.e., then $g_2$ is $\mMeas$.
+    \item
+	If $\limit{f_j}{j}{\infty} = f$ a.e., then $f$ is $\mMeas$.
+    \end{properties}
+\end{Proposition}
+\begin{proof}
+    By~\ref{prop:ae_equality_meas_func}, with $f=g_1$ and $g=g_2$ we get the result.
+
+    Let $g = \limsup f_j$. Then by~\ref{prop:prop2_mfunc_limits}, $g$ is $\mMeas$. Also $g=f$ a.e., hence
+    using the result from above $f$ is $\mMeas$.
+\end{proof}
+\section{Approximation by simple functions}
+In this section, we will see that any $\mMeas$ function $\map{f}{X}{\C}$ can be approximated by simpler
+functions named appropriately as \textbf{simple function}. 
+\begin{Definition}
+    A simple function $\map{s}{X}{\C}$ is a finite sum,
+    \[s = \finiteSum{a_k\charFunc{E_k}}{k}{N},\]
+    where each $E_k$ is a measurable set in $\algebra{M}$ of finite measure and $a_k \in \C$ are constants. We
+    require that $E_k$'s be disjoint and $X = \finiteDisjUnion{E_k}{k}{N}$.
+\end{Definition}
+Since the characteristics functions are measurable, a simple function is measurable
+by~\ref{prop:prop1_mfunc_additivity}. Note that simple functions do not have unique representation as seen in
+the following example.
+\begin{Example}
+    Let $X = \interval{0}{3}$ and define 
+    \begin{equation*}
+	s(x) = 
+	\begin{cases}
+	    -1, &0\leq x \leq 1 \\
+	    2, & 1< x \leq 2 \\
+	    0, & 2< x \leq 3 \\
+	\end{cases}
+    \end{equation*}
+    Let $E_1 = \interval{0}{1}, E_2 = \hInt{1}{2} , E_3 = \hInt{2}{3}$. Then,
+    \[s = -1\charFunc{E_1} + 2\charFunc{E_2} + 0\charFunc{E_3}.\]
+    However, if we define $D_1 = \interval[open right]{0}{1/2}, D_2 = \interval{1/2}{1}, D_3 =\hInt{1}{2},
+    D_4=\hInt{2}{3}$, then
+    \[s = -1\charFunc{D_1} - 1\charFunc{D_2} + 2\charFunc{D_3} + 0\charFunc{D_4}.\]
+\end{Example}
+A key result in measure theory is that any function can be approximated by a sequence of monotonic increasing
+simple functions. We give an alternate characterization for simple functions,
+\begin{Proposition}\label{prop:characterization_simple_func}
+    Let $\metricS{X}{\algebra{M}}$ be a measurable space. A function \break$\map{s}{X}{\C}$ is a simple 
+    function if and only if $s$ is measurable and the range of $s$ is a finite set of points in $\C$. 
+\end{Proposition}
+\begin{proof}
+    If $s$ is measurable function, then by definition its range is finite. For the other implication, assume
+    range of $s = \set{z_i}{1\leq i\leq n}$. Let $E_i = \invIm{s}{\lbrace z_i\rbrace}$. For any $x \in X$, if
+    $x\in E_i$, then $s(x) = z_i$. Thus,
+    \[s = \finiteSum{z_i\charFunc{E_i}}{i}{n},\]
+    is a simple function. Note that $\finiteUnion{E_i}{i}{n} = X$ and $E_i$'s are pairwise disjoint.
+\end{proof}
+In the proof above we used the \textbf{standard} representation of $s$. It exhibits $s$ as a linear 
+combination, with distinct coefficient, of characteristic functions of disjoint measurable sets whose union 
+is $X$. A key observation is that the standard representation of a simple function is unique. The proposition
+that follows shows that the space of simple functions defined on a measure space is a Vector space.
+\begin{Proposition}\label{prop:prop_simple_func}
+    Let $\metricS{X}{\algebra{M}}$ be a measure space. 
+    \begin{properties}
+    \item
+	If $s$ is a simple function defined on $X$ then $cs$ is also a simple function.
+    \item
+	If $s_1,s_2$ are  simple functions defined on $X$ then $s_1 + s_2$ is also a simple function.
+    \end{properties}
+\end{Proposition}
+\begin{proof}
+    We will show $(2)$. Let $s_1 = \finiteSum{a_k\charFunc{E_k}}{k}{N}$ and $s_2 =
+    \finiteSum{b_j\charFunc{F_j}}{j}{M}$ be two simple functions in standard representation. 
+    First assume $M=1$. Note that $E_k$'s and $F_1$ all partition $X$ and hence $F_1 = X$. Let $G_i = E_i\cap
+    F_1$ for all $1\leq i \leq N$. Then, $\finiteDisjUnion{G_i}{i}{N} = X$ and 
+    \[s_1 + s_2 = \finiteSum{c_l\charFunc{G_l}}{l}{N},\]
+    where $c_l = a_l + b_1$ for $1\leq l \leq N$. This idea can be extended to all $M \geq 1$ by the using the
+    collection,
+    \[\set{E_k\cap F_j}{1\leq k \leq N,\, 1\leq j \leq M},\]
+    and using the sum $a_k + b_j$ in the corresponding set. See~\ref{fig:tikz:simple_func_add}. Thus we see
+    that,
+    \[s_1 + s_2 = \series{(a_k + b_j)\charFunc{E_k\cap F_j}}{i,j}{1}{}.\]
+\end{proof}
+
+\begin{figure}
+  \includestandalone[width=0.5\textwidth]{tex/tikz_figures/simple_func_add}
+  \caption{Addition of two simple functions.}\label{fig:tikz:simple_func_add}
+\end{figure}
+We now come to the most important result in this chapter.
+\begin{Theorem}[name=Approximation by simple functions]\label{thm:approx_by_simple_func}
+    Let $\metricS{X}{\algebra{M}}$ be a measure space.
+    \begin{enumerate}
+	\item
+	    If $\map{f}{X}{\extRealsPos}$ is measurable, there is a sequence $\seq{s}{n}$ of simple functions
+	    such that,
+	    \[0\leq s_1 \leq s_2 \leq s_3 \cdots \leq f\quad\text{and}\quad\atob{s_n}{f},\]
+	    pointwise. The convergence is uniform on any set on which $f$ is bounded.
+	\item
+	    If $\map{f}{X}{\C}$ is measurable, there is a sequence $\seq{s}{n}$ of simple functions such that,
+	    \[0\leq \abs{s_1} \leq \abs{s_2} \leq \abs{s_3} \cdots \leq \abs{f} 
+		\quad\text{and}\quad\atob{s_n}{f},\]
+	    pointwise. The convergence is uniform on any set on which $f$ is bounded.
+
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    We prove in order. See~\ref{fig:tikz:approx_simple_func}. 
+    \begin{enumerate}
+	\item
+	    The key idea will be to \emph{partition the range} of $f$. For each $n$, we partition the
+	    co-domain of $f$ by two sets,
+	    $\interval{0}{n}$ and $\hInt{n}{\infty}$. We partition $\interval{0}{n}$ further and then treat
+	    the other set as a \emph{remainder}. In order to get an approximation from below, we need the
+	    partition of $\interval{0}{n}$ to increase with $n$ which can be done by decreasing the 
+	    partition length. 
+	    Thus for each $n$, 
+	    we fix a uniform partition length of $\Delta_n = \frac{1}{2^n}$, hence as $\atob{n}{\infty}$,
+	    $\atob{\Delta_n}{0}$. Let us index the partition as follows,
+	    \[I_k^n = \interval[open right]{k\Delta_n}{(k+1)\Delta_n}\quad,0\leq k < \frac{n}{\Delta_n}.\]
+	    Thus,
+	    \begin{align*}\invIm{f}{\interval{0}{\infty}} &= \invIm{f}{\interval{0}{n}} 
+		\bigcup \invIm{f}{\hInt{n}{\infty}} \\
+		& = \bigcup\limits_{k=0}^{\frac{n}{\Delta_n}-1}(\invIm{f}{I_k^n}) \bigcup 
+		\invIm{f}{\hInt{n}{\infty}}. \\ 
+	    \end{align*}
+	    Let us set,
+	    \begin{align*}
+		& E_k^n = \invIm{f}{I_k^n},\quad 0\leq k < \frac{n}{\Delta_n} = n2^n\\
+		& F_n = \invIm{f}{\hInt{n}{\infty}}
+	    \end{align*}
+	    We define the simple function $s_n$ as,
+	    \[s_n = \series{k2^{-n}\charFunc{E_k^n}}{k}{0}{n2^n-1} + n\charFunc{F_n}.\]
+	    Each $I_k^n$ splits into $2$ intervals at the level $n+1$ and hence when $x \in E_k^n$, $s_n(x)
+	    \leq s_{n+1}(x)$. When $x \in \hInt{n}{n+1}$, then $s_n(x) = n$ whereas, $s_{n+1}(x) \geq n$. When
+	    $x\in \hInt{n+1}{\infty}$, then $s_n(x) = n$ while $s_{n+1}(x) = n+1$ and thus $s_n \leq s_{n+1}$
+	    for all $x$,$n$. Also, whenever $f(x) \leq N$, then $f(x) \in I_k^n$ for some $k \in
+	    1,\dots,n2^n$. Thus $f(x) - s_n(x) \leq \frac{k+1}{2^n} - \frac{k}{2^n} = \frac{1}{2^n}$, which
+	    goes to $0$ as $\atob{n}{\infty}$. 
+
+	    If $f$ is bounded in some set, then there is a $N$ such that $f(x) < N$ for
+	    all $x$ in the set. 
+	    But, for any $x$, $f(x) - s_N(x) < \frac{1}{2^N}$ and taking $N$ larger and using the
+	    fact that $s_n \geq s_N$ for $n\geq N$ we can make $f(x) - s_n(x) < \epsilon$ for any $\epsilon$.
+	    Thus, convergence is uniform.
+	\item
+	    We can decompose $\Rea f$, $\Ima f$ as $\fPlus{f},\fMinus{f}$ and use the preceeding theorem.
+    \end{enumerate}
+\end{proof}
+
+\begin{figure}
+  \includestandalone[width=0.75\textwidth]{tex/tikz_figures/approx_by_simple_func}
+  \caption{Approximation by simple functions}\label{fig:tikz:approx_simple_func}
+\end{figure}
+\break{}
+%\section{\texorpdfstring{$\ast$}{}Random Variables}
+\section{{$\ast$} Random Variables}
+Let $\probS$ be a probability space and let $\metricS{\mbbY}{\algebra{N}}$ be a measure space. A
+$\measMap{\family{F}}{\algebra{N}}$ function $X$ is called a $\mbbY$ valued random variable.
+In particular for $\mbbY = \R$ or $\mbbY = \Rn$ we have the following definition,
+\begin{Definition}[name=Random variable]
+    A random variable (r.v) $X$ is a real valued 
+    $\measMap{\algebra{F}}{\borelS{\R}}$ measurable function that maps from $\probS$ into
+    $\metricS{\R}{\borelS{\R}}$. A random vector $X$ is a vector valued $\measMap{\family{F}}{\borelS{\Rn}}$
+    function that maps from $\probS$ into $\metricS{\Rn}{\borelS{\Rn}}$.
+\end{Definition}
+As always, we wish to discard the importance of behavior of sets of measure zero.
+\begin{Definition}[name=Almost surely]
+    Suppose $X,Y$ are two random variables on the same probability space. Then $X = Y$ a.s.~or $X = Y$ almost
+    surely, means that,
+    $\probMeasure{\set{\omega\in\Omega}{X(\omega) \neq Y(\omega)} }= 0$.
+\end{Definition}
+Note, almost surely is precisely what is meant by almost everywhere that was defined for a general measure
+space.
+\begin{Example}
+    Consider the space $\mcalB$ of Bernoulli sequence and the corresponding measure space $\Omega = \hInt{0}{1}$
+    with the Lebesgue measure $\mu$. Any Rademacher function $R_n$ which maps from
+    $\measureS{\hInt{0}{1}}{\family{L}}{\mu}$ into $\metricS{\R}{\borelS{\R}}$ 
+    is a random variable because for any $E\in\borelS{\R}$, 
+    $\invImIndx{R}{n}{E} = \set{\omega\in\hInt{0}{1}}{R_n(\omega)\in E}$ is a finite union of
+    intervals. Similarly $W_N$ is a random variable.
+\end{Example}
+\begin{Example}
+    Consider the space $\mcalB$ of Bernoulli sequence and let $X$ be a function from
+    $\setDiff{\mcalB}{\mcalB_{\text{neg}}}$ in to $\hInt{0}{1}$ defined by,
+    \[X(b_1,b_2,b_3,\dots) = 0.\omega_1\omega_2\dots,\]
+    where $\omega_i = 1$ if $b_i$ is a head $H$, $\omega_i = 0$ if $b_i$ is a tails $T$. Then $X$ is a random
+    variable. Thus a random variable \emph{transforms} a probabilistic process to a measure space.
+\end{Example}
+\begin{Proposition}
+    Let $X$ be a r.v.~from a probability space $\probS$ to a measure space $\metricS{\mbbY}{\algebra{N}}$.
+    Let $\indMeas{\probMeas}{X}$ be the induced measure in $\metricS{\mbbY}{\algebra{N}}$. Then, 
+    $\measureS{\mbbY}{\algebra{N}}{\indMeas{\probMeas}{X}}$ is a probability space.  
+\end{Proposition}
+\begin{proof}
+    By~\ref{prop:induced_meas}, we know that $\measureS{\mbbY}{\algebra{N}}{\indMeas{\probMeas}{X}}$ is a
+    measure space. Hence, we only need to check if $\indMeasure{\probMeas}{X}{\mbbY} = 1$. Indeed
+    $\invIm{X}{\mbbY} = \Omega$ and $\probMeasure{\Omega} =1$, and thus we see that
+    $\measureS{\mbbY}{\algebra{N}}{\indMeas{\probMeas}{X}}$ is a probability space.
+\end{proof}
+\begin{Definition}[name=Distribution]
+    The probability measure $\indMeas{\probMeas}{X}$ on $\metricS{\mbbY}{\algebra{N}}$ is called the
+    distribution of the r.v.~X and is said to be induced by $X$. 
+\end{Definition}
+\begin{Theorem}\label{thm:rv_equal_ae_distribution}
+    Suppose $X,Y$ are two r.v.~mapping a (complete) probability space $\probS$ to a measurable space
+    $\metricS{\mbbY}{\famN}$, 
+    such that $X=Y$ a.s.~Then $X,Y$ have the same distribution.
+\end{Theorem}
+\begin{proof}
+    Let $N = \set{\omega\in\Omega}{X(\omega) \neq Y(\omega)}$. Then, by our assumption, $\probMeasure{N} = 0$.
+    Let $B \in \famN$ be arbitrary. Then \[\invIm{X}{B} = (\invIm{X}{B}\cap N) \disjU
+    (\invIm{X}{B}\cap\comp{N}).\]
+    Thus,
+    \begin{align*}
+	\indMeasure{\probMeas}{X}{B} &= \probMeasure{\invIm{X}{B}} \\  
+	& = \probMeasure{\invIm{X}{B}\cap N} + \probMeasure{\invIm{X}{B}\cap\comp{N}} \\
+	& \leq 0 + \probMeasure{\invIm{Y}{B}}\\
+	&\quad = \indMeasure{\probMeas}{Y}{B}
+    \end{align*}
+    Similarly, $\indMeasure{\probMeas}{Y}{B} \leq \indMeasure{\probMeas}{X}{B}$.
+\end{proof}
+Even when we don't have a complete probability space, we can easily complete it by~\ref{thm:comp_of_meas}.
+Thus we can easily forget if the probability space is complete or not. Note that the converse is not true.
+Given a r.v.~induces probability measure on its co-domain, we can define new r.v on the range. We have the
+following relationship,
+\begin{Proposition}
+    Let $X$ be $\mbbY$ valued r.v.~from a probability space $\probS$ to a 
+    measurable space $\metricS{\mbbY}{\famN}$. Let $Y$ be a $\measMap{\famN}{\famO}$ 
+    function from $\metricS{\mbbY}{\famN}$ in to $\metricS{\mbbW}{\famO}$. Let $\indMeas{\probMeas}{X}$ be the
+    distribution on $\metricS{\mbbY}{\famN}$. Then $Y$ is a $\mbbW$ valued r.v.~on
+    $\measureS{\mbbY}{\famN}{\indMeas{\mbbP}{X}}$ with the same distribution as the $\mbbW$ valued
+    r.v.~$\fog{Y}{X}$ on $\probS$.
+\end{Proposition}
+\begin{proof}
+    It follows the same ideas as in~\ref{prop:composition_meas_func}.
+\end{proof}
+Since a r.v.~is a measurable function, all the
+properties in~\ref{prop:prop0_mfunc_composition_cont}-\ref{prop:prop4_mfunc_ae_limit} apply to a r.v.
+We now specialize to the case of random variables mapping into $\metricS{\R}{\borelS{\R}}$. Let us (re) define
+a distribution function for the case of a probability space.
+\begin{Definition}[name=Distribution function]
+    A real valued function $F$ defined on $\R$ is a distribution function if it is monotone increasing, right
+    continuous, and 
+    \[\limit{F(x)}{x}{-\infty} = 0,\quad \limit{F(x)}{x}{\infty} = 1.\]
+\end{Definition}
+Given a probability measure $\probMeas$ on $\R$, we can always define a distribution function
+$\map{F}{\R}{\interval{0}{1}}$ as $F(x) = \probMeasure{\hInt{-\infty}{x}}$ and vice versa
+by~\ref{thm:borel_measure_R}. Thus if we have a probability space $\probS$ and a r.v.~on it, we get an induced
+probability measure (distribution) $\indMeas{\probMeas}{X}$ on $\metricS{\R}{\borelS{\R}}$,
+which then corresponds to a distribution function $\map{F_X}{\R}{\interval{0}{1}}$ and is 
+given by $F_X(x) = \indMeasure{\probMeas}{X}{\interval{-\infty}{x}}$.
+Thus,
+\[X \leadsto F_X.\]
+Is the converse true, i.e.
+\[F \leadsto X_F?\]
+The following theorem answers this question.
+\begin{Theorem}\label{thm:distribution_func_to_rv}
+    If a function $\map{F}{\R}{\interval{0}{1}}$ is a distribution function, then there exists a
+    r.v.~$\map{X}{\interval{0}{1}}{\R}$ defined
+    on the probability space $\measureS{\interval{0}{1}}{\famL_{\interval{0}{1}}}{\mu}$ such that $F = F_X$,
+    where $\famL_{\interval{0}{1}}$ is the family of Lebesgue measurable sets on $\interval{0}{1}$ and $\mu$
+    is the corresponding Lebesgue measure.
+\end{Theorem}
+\begin{proof}
+    Let us define $\map{X}{\interval{0}{1}}{\R}$ by,
+    \[X(\omega) = \inf\set{x\in\R}{F(x)\geq \omega},\quad 0\leq\omega\leq 1.\]
+    First, we will show that $X$ is a $\measMap{\famL_{\interval{0}{1}}}{\borelS{\R}}$ function and hence a 
+    r.v. Fix an $a \in \R$ and consider the set $\fCompA{X}{\leq}{a}$. Since $F$ is increasing this set is
+    just an interval $\interval{0}{c}$ where $c$ is the $\sup\set{\omega}{X(\omega)\leq a}$. Hence $X$ is a r.v.
+
+    To show that $F = F_X$ we need to show that for any $y\in \R$,
+    \begin{align*}
+	F(y) = F_X(y) &= \indMeasure{\mu}{X}{\hInt{-\infty}{y}},\\
+	& = \measure{\invIm{X}{\hInt{-\infty}{y}}},\\
+	& = \measure{\set{\omega\in\Omega}{X(\omega)\leq y}}.
+    \end{align*}
+    Let $A = \set{\omega}{X(\omega)\leq y}$. Then $A = \interval{0}{c}$ where 
+    $c = \sup\set{\omega}{X(\omega)\leq y}$. Hence $\measure{A} = c$. Thus we need
+    to show that $F(y) = c = \sup\set{\omega}{X(\omega)\leq y}$.
+    First note that if $\omega = F(y)$ then $X(\omega) = y$ because $F$ is increasing. Thus $F(y) \in A$. If
+    we show that $F(y)$ is an upper bound for $A$, then we are done. If $\omega \in A$, then $X(\omega) \leq
+    y$. Thus $F(X(\omega)) \leq F(y)$. Since $F$ is right continuous at $X(\omega)$, for any $\epsilon$ there
+    is a $\delta$ such that $F(X(\omega) + \delta) - F(X(\omega)) < \epsilon$. Now $X(\omega)$ is the infimum
+    of all those $x \in \R$ such that $F(x) \geq \omega$. Hence by definition of infimum, 
+    there is an $x_0 \in\R$ such that $x_0 <
+    X(\omega) + \delta$ and $F(x_0) \geq \omega$. Thus, because $F$ is increasing,
+    \[F(X(\omega)+\delta) \geq F(x_0) \geq \omega.\]
+    Hence $\omega < \epsilon + F(X(\omega))$. Since $\epsilon$ was arbitrary we get $\omega \leq
+    F(X(\omega))$. Hence $F(y)$ is an upper bound for $A$.
+\end{proof}
+\section{Littlewood's three principles}

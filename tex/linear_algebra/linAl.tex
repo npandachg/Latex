@@ -1,0 +1,97 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%    Lecture notes on linear algebra written in AMS book series.
+%    AMS book series Pure and Applied
+%    Undergraduate Texts, for use with AMS-LaTeX 2.0.
+%    Separate chapters should be included at the appropriate position.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass{amstext-l}
+
+% my preloaded stuff for math books.
+\usepackage{mystylemath1}
+
+% for all my graphics
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10} %compatibility of pgf
+% for using tikz as a standalone 
+\usepackage{standalone}
+
+% Put all your preamble for pgfplots,tikz here. These are global settings for pgfplots and tikz
+% settings for pgfplots
+\usetikzlibrary{matrix,arrows,calc,hobby,intersections,shapes,positioning}
+\tdplotsetmaincoords{70}{120}
+% all your non tikz figures(*.jpg,*.png) should be here
+\graphicspath{{~/Documents/Latex/Math/measure_theory/figures/}}
+% all your tikz figures should be in tex/tikz_figures/ relative to the root
+
+% for column vectors
+\newcount\colveccount
+\newcommand*\colvec[1]{
+        \global\colveccount#1
+        \begin{pmatrix}
+        \colvecnext
+}
+\def\colvecnext#1{
+        #1
+        \global\advance\colveccount-1
+        \ifnum\colveccount>0
+                \\
+                \expandafter\colvecnext
+        \else
+                \end{pmatrix}
+        \fi
+}
+\makeindex
+
+
+\begin{document}
+
+\frontmatter
+
+\title{Linear Algebra}
+
+\author{Nishant Panda}
+\address{7205 Hart Lane, Apt 2026, Austin Tx}
+\curraddr{}
+\email{nishant.panda@gmail.com}
+\thanks{}
+
+\subjclass[2010]{Primary }
+
+\keywords{vector spaces, duality, linear transformation, bi-linear}
+
+\maketitle
+
+\setcounter{page}{5}
+\tableofcontents
+
+%    Include unnumbered chapters (preface, acknowledgments, etc.) here.
+
+% run nomencl.tex to update the index. 
+% then type: makeindex nomencl.nlo -s nomencl.ist -o nomencl.nls
+\input{nomencl.nls}
+
+\mainmatter{}
+%    Include main chapters here.
+\input{tex/chapter-group_theory.tex}
+\input{tex/chapter-basic_linear_algebra.tex}
+
+\appendix
+%    Include appendix "chapters" here.
+\input{tex/appendix-prelims.tex}
+
+\backmatter{}
+%    Bibliographies can be prepared with BibTeX using amsplain,
+%    amsalpha, or (for author-year style) natbib.
+\bibliographystyle{amsalpha}
+%\bibliography{pandaRefs.bib}
+
+%    See note above about multiple indexes.
+\printindex
+
+\end{document}
+

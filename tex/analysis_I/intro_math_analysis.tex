@@ -1,0 +1,62 @@
+%
+%
+%    Lecture notes on measure theory written in AMS book series: 
+%    Undergraduate Mathematics.
+%    Separate chapters should be included at the appropriate position.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% premable
+\documentclass{amstext-l}
+
+% my preloaded stuff for math books.
+\usepackage{mystylemath1}
+
+% for all my graphics
+\usepackage[inline]{asymptote}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10} %compatibility of pgf
+
+% for using tikz as a standalone 
+\usepackage{standalone}
+
+\graphicspath{{~/Documents/Latex/Math/analysis_I/figures/}}
+% all your tikz figures should be in tex/tikz_figures/ relative to the root
+
+\makeindex
+
+\begin{document}
+
+\frontmatter
+
+
+\title{Introduction to mathematical Analysis}
+
+\author{Nishant Panda}
+\address{2451 S. Timberline Rd, Apt 4\textemdash207, Fort Collins, Co 80525}
+\curraddr{}
+\email{nishant.panda@gmail.com}
+\thanks{}
+
+\subjclass[2010]{Primary }
+
+\keywords{metric spaces, continuity, differentiation, integration}
+
+\maketitle
+\setcounter{page}{5}
+\tableofcontents
+
+\mainmatter{}
+% chapters
+\input{tex/chapter-realnumbers}
+\input{tex/chapter-countability}
+\input{tex/chapter-metricspaces}
+\input{tex/chapter-continuousfunctions}
+\input{tex/chapter-differentiation}
+\input{tex/chapter-integration}
+
+\appendix
+
+\backmatter{}
+
+\end{document}

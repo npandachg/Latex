@@ -1,0 +1,596 @@
+\chapter{Integration theory}
+\section{Class of Riemann integrable functions}
+\section{Extending Riemann integration}
+\section{Abstract integration in measure space}
+We have seen that Riemann integration doesn't behave nicely when interchanging limit order. To remedy this, we
+will define the (Lebesgue) integral in a general measure space. In order to achieve this nice property we will
+expand the functions that can be integrated. As we saw in the previous section, the basic idea of Riemann
+Integration of a bounded function is to partition the domain. In this section we will partition the range of
+the function. The theory will proceed in $3$ stages:
+\begin{enumerate}
+    \item
+	Define integration for simple functions.
+    \item
+	Define integration for non-negative measurable functions.
+    \item
+	Define integration for general measurable functions.
+\end{enumerate}
+In each stage we will show that our integration satisfies the $3$ most important property of an integral:
+\begin{properties}
+\item
+    Linearity
+\item
+    Additivity
+\item
+    Monotonicity
+\end{properties}
+
+We let $\measureS{X}{\famM}{\mu}$ be a measure space.
+\begin{Definition}
+    If $s$ is a simple function $s = \finiteSum{a_k\charFunc{E_k}}{k}{N}$,
+    we define the ($\mu$-) integeral of $s$ by,
+    \begin{equation}\label{eq:int_simple_func}
+	\lInt{s}{\mu}{X} = \finiteSum{a_k\measure{E_k}}{k}{N}.
+    \end{equation}
+    For any $A \in \famM$, integral over $A$ is given by,
+    \begin{equation}
+	\lInt{s}{\mu}{A} := \lInt{s\charFunc{A}}{\mu}{X} = \finiteSum{a_k\measure{E_k\cap A}}{k}{N}
+    \end{equation}
+\end{Definition}
+We have seen that a simple functions don't have unique representation and thus we need to check 
+that the above definition is well defined.
+\begin{Proposition}
+    Integration of simple function as described by~\ref{eq:int_simple_func} is well defined.
+\end{Proposition}
+\begin{proof}
+    Suppose $s = \finiteSum{a_k\measure{E_k}}{k}{N}$ is a simple function where $a_k$'s are not distinct. Note
+    that $E_k$'s are disjoint and their union is $X$. Let $i = 1$ and $j_i$ be the smallest index of the set 
+    $J_1 = \set{k}{a_k = a_1}$ and let $E_{j_1} = \bigcup\limits_{k\in J_1}E_k$ and $a_{j_1} = a_1$. If $a_2$
+    is in $J_1$ we leave it alone and proceed until we find an $i \leq N$ such that $a_i \not \in J_1$. Thus,
+    the sets $E_{j_i}$ are disjoint and their union is $X$. Let $N_j$ be the number of such $j_i$.  
+    Then,
+    $s = \series{a_{j_i}\charFunc{E_{j_i}}}{j_i}{j_1}{N_j}$ and hence,
+    \[\lInt{s}{\mu}{X} = \series{a_{j_i}\measure{E_{j_i}}}{j_i}{j_1}{N_j} = 
+	\finiteSum{a_{k}\measure{E_k}}{k}{N}, \]
+    where the last equality is due to the additivity property of measure.
+\end{proof}
+Thus we don't have to worry about the representation of the simple function.
+\begin{Proposition}[name=Properites of integral of simple functions]\label{prop:prop_int_simp_func}
+    Let $A \in \famM$. 
+    The integral of simple functions defined in~\ref{eq:int_simple_func} satisfies the following properties:
+    \begin{properties}
+    \item
+	(Linearity) If $s_1,s_2$ are simple functions and $a,b \in \R$ then
+	\[\lInt{(as_1 + bs_2)}{\mu}{A} = a\lInt{s_1}{\mu}{A} + b\lInt{s_2}{\mu}{A}.\]
+    \item
+	(Additivity) Let $s_1$ be a simple function. If $A,B$ are disjoint subsets of $\famM$ then,
+	\[\lInt{s_1}{\mu}{A\cup B} = \lInt{s_1}{\mu}{A} + \lInt{s_1}{\mu}{B}.\]
+    \item
+	(Monotonicity) Let $s_1,s_2$ be two simple functions such that $s_1\leq s_2$. Then,
+	\[\lInt{s_1}{\mu}{A} \leq \lInt{s_2}{\mu}{A}.\]
+    \item
+	(Triangle Inequality) Let $s_1$ be a simple function, then,
+	\[\abs{\lInt{s_1}{\mu}{A}} \leq \lInt{\abs{s_1}}{\mu}{A}.\]
+    \end{properties}
+\end{Proposition}
+\begin{proof}
+    We prove in order. 
+    \begin{itemize}
+	\item
+	    Assume $a,b = 1$. Let $s_1 = \finiteSum{a_i\charFunc{E_i}}{i}{N_1}$ and 
+	    $s_2 = \finiteSum{b_j\charFunc{F_j}}{j}{N_2}$
+	    We know that by~\ref{prop:prop_simple_func},
+	    \[s_1 + s_2 = \series{(a_i + b_j)\charFunc{E_i\cap F_j}}{i,j}{1}{}.\]
+	    Hence,
+	    \begin{align*}
+		\lInt{(s_1 + s_2)}{\mu}{A} &= 
+		\series{(a_i + b_j)\measure{{E_i\cap F_j\cap A}}}{i,j}{1}{}\\  
+		& = \series{a_i\measure{{E_i\cap F_j\cap A}}}{i,j}{1}{} + 
+		\series{b_j\measure{{E_i\cap F_j\cap A}}}{i,j}{1}{} \\
+		& = \sum\limits_{i}a_{i}\sum\limits_{j}\meas(E_i\cap F_j\cap A)  +
+		\sum\limits_{j}b_{j}\sum\limits_{i}\meas(E_i\cap F_j\cap A)\\
+		& = \sum\limits_{i}a_{i}\measure{E_i\cap A} + 
+		\sum\limits_{j}b_{j}\measure{F_j\cap A}\\
+		& = \lInt{s_1}{\mu}{A} + \lInt{s_2}{\mu}{A}.
+	    \end{align*}
+	    The equality in the $4^{th}$ line is due to the fact that $E_i$'s and $F_j$'s \emph{partition}
+	    $X$ and hence $\lbrace E_i\cap A \rbrace$ and $\lbrace F_j\cap A \rbrace$ are partitions of $A$,
+	    so we use the additivity of measure. It is easy to observe for any $a,b$ different than $1$.
+	\item
+	    Noting that measure is additive for disjoint sets we can observe,
+	    \begin{align*}
+		\lInt{s_1}{\mu}{A\cup B} &= \finiteSum{a_i\measure{E_i\cap (A\cup B)}}{i}{N}\\
+		&= \finiteSum{a_i\measure{(E_i\cap A)\cup (E_i\cup B)}}{i}{N}\\
+		&= \finiteSum{(a_i\measure{E_i\cap A}) + (a_i\measure{E_i\cup B})}{i}{N}\\
+		&= \finiteSum{(a_i\measure{E_i\cap A})}{i}{N} + \finiteSum{(a_i\measure{E_i\cup B})}{i}{N}\\
+		&= \lInt{s_1}{\mu}{A} + \lInt{s_1}{\mu}{B}
+	    \end{align*}
+	\item
+	    If $s \geq 0$ is a simple function, then all its coefficient are greater than equal to $0$ and so
+	    $\lInt{s}{\mu}{X} \geq 0$. Thus if $s = s_2 - s_2$, then $s \geq 0$ and we get the result.
+	\item
+	    Let $s_1 = \finiteSum{a_i\charFunc{E_i}}{i}{N_1}$. We get the result by observing that,
+	    \[\abs{\finiteSum{a_i\measure{E_i}}{i}{N}} \leq \finiteSum{\abs{a_i}\measure{E_i}}{i}{N}.\]
+    \end{itemize}
+\end{proof}
+Monotonicity shows that the Integral is a \textbf{positive operator} on the space of simple functions i.e.~it
+maps positive simple functions to non-negative real numbers. 
+\begin{Remark}\label{rmk:simple_func_meas_0}
+    Note that if $s_1,s_2$ are simple functions such that $s_1 = s_2$ a.e.~then $\lInt{s_1}{\mu}{X} =
+    \lInt{s_2}{\mu}{X}$ since the difference is $0$ except on a set of measure zero, 
+    the integral of the difference is
+    $0$ and hence we can use linearity to reach to the conclusion.
+
+    If $A$ is any set of measure $0$, then $\lInt{s}{\mu}{A}$ must be $0$ provided we have a complete measure
+    space. To see this, note that $\lInt{s}{\mu}{A} = \finiteSum{a_k\measure{E_k\cap A}}{k}{N}$. Since $A$ is
+    a measure $0$, and $E_k \cap A \subset A$, we can see that if we have a complete measure space
+    $\measure{E_k\cap A} = 0$ and hence $\lInt{s}{\mu}{A} = 0$. Since any measure space can be completed we
+    are not too concerned about completeness.
+\end{Remark}
+We now embark on stage $2$; defining integral of non-negative measurable functions.
+\begin{Definition}
+    Let $\map{f}{X}{\extRealsPos}$ be a non-negative measurable function. Then, we define,
+    \begin{equation}\label{eq:int_non_neg_meas_func}
+	\lInt{f}{\mu}{X} = \sup\set{\lInt{s}{\mu}{X}}{0\leq s \leq f,\,\text{$s$ is simple}}.
+    \end{equation}
+    Note that the integral can be infinite. 
+    We say that $f$ is ($\mu$-) integrable if $\lInt{f}{\mu}{X} < \infty$.
+\end{Definition}
+Note that because of~\ref{thm:approx_by_simple_func} (1), the above definition makes sense. We can always
+approximate any measurable function by a sequence of simple functions from below and hence $f$ will be given
+by the limit of such a sequence (which will be the sup).
+For any $A \subset \famM$, we define\break{} 
+$\lInt{f}{\mu}{A} := \lInt{f\charFunc{A}}{\mu}{X}$. 
+\begin{Proposition}[name=Properties of the integral of non-negative measurable function]
+    Let $A \in \famM$. Let $f,g$ be a non-negative extended real valued function defined on $X$ 
+    such that its integral is given
+    by~\ref{eq:int_non_neg_meas_func}. Then, it satifies the following properties:
+    \begin{properties}
+    \item
+	(Linearity) For any $a,b \in \R$, 
+	\[\lInt{(af + bg)}{\mu}{A} = a\lInt{f}{\mu}{A} + b\lInt{g}{\mu}{A}.\]
+    \item
+	(Additivity) If $A,B$ are disjoint subsets of $\famM$ then,
+	\[\lInt{f}{\mu}{A\cup B} = \lInt{f}{\mu}{A} + \lInt{f}{\mu}{B}.\]
+    \item
+	(Monotonicity) Let $f\leq g$. Then,
+	\[\lInt{f}{\mu}{A} \leq \lInt{g}{\mu}{A}.\]
+    \end{properties}
+\end{Proposition}
+At this point only monotonicity is immediately observable from the definition.
+\begin{proof}
+    \textbf{(Monotonicity)}
+    First let us consider the case when $A = X$. If $f = g$ the result is obvious. Assume $f < g$. 
+    Approximate $f,g$ from below by sequence of non-negative simple functions. Then there will be a simple
+    function $s$ such that $f < s \leq g$. Thus the collection of simple functions approximating $g$ contains
+    the collection of simple functions approximating $f$. Hence taking the supremum of the integrals we get,
+    \[\lInt{f}{\mu}{X} \leq \lInt{g}{\mu}{X}.\]
+    For any $A \in \famM$, $f\leq g$ implies $f\charFunc{A}\leq g\charFunc{A}$ and hence we get
+    the result by using the result on $A = X$ above.
+\end{proof}
+\begin{Remark}
+    Linearity and additivity are not so obvious. We will need some additional results to be able to prove it. One
+    such result is very useful and is called the Monotone Convergence theorem (MCT). Note that one direction
+    of linearity is obvious. If we have simple functions $s_f,s_g$ approximating $f,g$, then the sequence of 
+    $s_f + s_g$ will approximate $f+g$. Since $f,g$ are non-negative, the collection of $s_f + s_g$ will
+    contain $s_f$ and $s_g$ and so by monotonicity $\lInt{(f+g)}{\mu}{X} \geq \lInt{f}{\mu}{X} +
+    \lInt{g}{\mu}{X}$. The other inequality isn't apparent. Note that for any $a \in \R$, $\lInt{af}{\mu}{X}$
+    is equal to $a\lInt{f}{\mu}{X}$. This is obvious from the definition.
+\end{Remark}
+\begin{Theorem}[name=Monotone convergence theorem (MCT)]\label{thm:monotone_conv_thm}
+    If $\seq{f}{n}$ is a sequence of monotone increasing non-negative extended real valued measurable 
+    functions,
+    \[0\leq f_1 \leq f_2 \ldots f_n \leq f_{n+1} \leq \ldots f, \]
+    and 
+    \[\limit{f_n}{n}{\infty} = f, \]
+    then,
+    \[\limit{\lInt{f_n}{\mu}{X}}{n}{\infty} = \lInt{f}{\mu}{X}.\]
+\end{Theorem}
+\begin{proof}
+    Let $I_n = \lInt{f_n}{\mu}{X}$ and $I = \lInt{f}{\mu}{X}$. We will show that,
+    \[\limit{I_n}{n}{\infty} \leq I,\]
+    and
+    \[\limit{I_n}{n}{\infty} \geq I.\]
+    By monotonicity, for any $n$ we have,
+    \[I_n \leq I_{n+1} \leq I.\]
+    Thus the sequence $\seq{I}{n}$ is monotone increasing and is bounded by $I$. Hence,
+    $\limit{I_n}{n}{\infty}$ exists and is equal to $\sup\set{I_n}{n\in\Zplus}$ which is less than or equal to
+    $I$. Thus,
+    \[\limit{I_n}{n}{\infty}\leq I.\]
+    To prove the other inequality let $s$ be a simple function such that $0\leq s \leq f$. This is possible
+    due to~\ref{thm:approx_by_simple_func}. Consider the set,
+    \[A_n = \set{x\in X}{f_n(x) \geq ts(x)},\]
+    where $t \in (0,1)$ is a real number.
+    Note that $\seq{A}{n}$ is an \emph{increasing} sequence of sets that increase to $X$
+    i.e.~\[\atobUp{A_n}{X}.\]
+    To see why this is true, all we need to check that if $x \in X$ is an arbitrary element of $X$, then it
+    must be in atleast one of the sets $A_n$. If $f(x) = 0$ then each $f_n = 0 $ and so $x$ is in all $A_n$.
+    If $f(x) > 0$, then there must be $n$ far out such that $x \in A_n$. This is because
+    \[0 < ts(x) < s(x) \leq f(x),\]
+    hence there must be a $f_n$ such that 
+    \[0 < ts(x) < f_n(x) \leq f(x), \]
+    because $\atob{f_n}{f}$ for any $x \in X$. This is the reason for taking a $t \in (0,1)$.
+    Now because $f \geq f\charFunc{A_n}$, by monotonicity, 
+    \[\lInt{f_n}{\mu}{X} \geq \lInt{f_n}{\mu}{A_n} \geq \lInt{ts}{\mu}{A_n} = t\lInt{s}{\mu}{A_n}.\]
+    Let us write $s$ in standard representation,
+    \[s = \finiteSum{a_k\charFunc{E_k}}{k}{N},\]
+    for $E_k \in \famM$.
+    Then,
+    \begin{align*}
+	\limit{\lInt{s}{\mu}{A_n}}{n}{\infty} &= \limit{\finiteSum{a_k\measure{E_k\cap
+		    A_n}}{k}{N}}{n}{\infty}\\
+	& = \finiteSum{a_k\limit{\measure{E_k\cap A_n}}{n}{\infty}}{k}{N}\\
+	& = \finiteSum{a_k\measure{E_k\cap X}}{k}{N}\\
+	& = \lInt{s}{\mu}{X}
+    \end{align*}
+    We used the fact that $\atob{\measure{A_n}}{\measure{X}}$ because $\atobUp{A_n}{X}$.
+    Hence,
+    \[\limit{\lInt{f_n}{\mu}{X}}{n}{\infty} \geq t\lInt{s}{\mu}{X}.\]
+    Since $t\in (0,1)$ was arbitrary we must have,
+    \[\limit{\lInt{f_n}{\mu}{X}}{n}{\infty} \geq \lInt{s}{\mu}{X}.\]
+    This means that $\limit{I_n}{n}{\infty}$ is an upper bound for the set,
+    \[\set{\lInt{s}{\mu}{X}}{0\leq s \leq f,\,\text{$s$ is simple}},\]
+    and hence is greater than equal to the supremum of the set which is by definition equal to 
+    $\lInt{f}{\mu}{X} = I$. Hence,
+    \[\limit{I_n}{n}{\infty}\geq I.\]
+
+\end{proof}
+The monotone convergence theorem (MCT) is a very useful theorem. Immediately we can see that in the case where
+we have a monotone increasing non-negative real valued function, we can \emph{bring} the limit \textbf{inside}
+the integral. We will explore some important convergence theorem later. Now, we will use MCT to show 
+linearity.
+\begin{proof}
+    \textbf{(Linearity)}. Let $\seq{s}{n}$, $\seq{t}{n}$ be non-negative simple functions such that
+    $\atobUp{s_n}{f}$ and $\atobUp{t_n}{g}$. Hence $\atobUp{as_n + bt_n}{af + bg}$. Thus,
+    \begin{align*}
+	\lInt{(af+bg)}{\mu}{X} &= \limit{\lInt{(as_n + bt_n)}{\mu}{X}}{n}{\infty}\\
+	&= \limit{\left(\lInt{as_n}{\mu}{X} + \lInt{bt_n}{\mu}{X}\right)}{n}{\infty}\\
+	&= \limit{\lInt{as_n}{\mu}{X}}{n}{\infty} + \limit{\lInt{bt_n}{\mu}{X}}{n}{\infty} \\
+	&= \lInt{af}{\mu}{X} + \lInt{bg}{\mu}{X},
+    \end{align*}
+    where the first and last equality is from~\ref{thm:monotone_conv_thm} (MCT), and the second inequality is
+    due to linearity of the integral w.r.t simple functions. If $A$ is any set in $\famM$, then
+    $\atobUp{s_n\charFunc{A}}{f\charFunc{A}}$ and $\atobUp{t_n\charFunc{A}}{g\charFunc{A}}$. 
+    Hence $\atobUp{(as_n + bt_n)\charFunc{A}}{(af + bg)\charFunc{A}}$. Thus we can use the above result.
+\end{proof}
+Although additivity can now follow from what we have proved, we will prove additivity by showing 
+that a non-negative measurable function induces a measure. First, a useful
+lemma
+\begin{Lemma}\label{lemma:int_induces_meas}
+    Assume $f_1,f_2,\ldots$ are non-negative measurable functions defined on $X$. Then,
+    \[\lInt{\infiniteSum{f_k}{k}}{\mu}{X} = \infiniteSum{\lInt{f_k}{\mu}{X}}{k}.\]
+\end{Lemma}
+\begin{proof}
+    Let $F_n = \finiteSum{f_k}{k}{n}$ and let $F = \infiniteSum{f_k}{k}$. Then, since $f_k$'s are non-negative
+    we have
+    \[0 \leq F_1 \leq F_2 \leq \ldots F.\]
+    Each $F_n$ is measurable and $\atobUp{F_n}{F}$ and hence $F$ is measurable. Thus we can use MCT to see
+    that
+    \begin{align*}
+	\lInt{F}{\mu}{X} &= \limit{\lInt{F_n}{\mu}{X}}{n}{\infty}\\
+	&= \limit{\finiteSum{\lInt{f_k}{\mu}{X}}{k}{n}}{n}{\infty}\\
+	&= \infiniteSum{\lInt{f_k}{\mu}{X}}{k},
+    \end{align*}
+    where the second equality is due to linearity of the integral.
+\end{proof}
+\begin{Lemma}\label{lemma:int_set_meas_0}
+    If $f$ is a non-negative extended real valued measurable function and $E\in \famM$ be a set such that
+    $\measure{E} = 0$, then
+    \[\lInt{f}{\mu}{E}= 0.\]
+\end{Lemma}
+\begin{proof}
+    Note that $\lInt{f}{\mu}{E} = \lInt{f\charFunc{E}}{\mu}{X}$. If $\seq{s}{n}$ is a sequence of non-negative
+    simple functions such that $\atobUp{s_n}{f}$, then $\atobUp{s_n\charFunc{E}}{f\charFunc{E}}$. But we have
+    seen that (see~\ref{rmk:simple_func_meas_0}) $\lInt{s_n\charFunc{E}}{\mu}{X} = \lInt{s_n}{\mu}{E} = 0$ 
+    and hence we get the result. 
+\end{proof}
+Next we come to an important statement.
+\begin{Theorem}\label{thm:int_induces_meas}
+    Let $f$ be a non-negative extended real valued function. Then,
+    \[\mu_f(E) := \lInt{f}{\mu}{E},\]
+    for each $E \in \famM$ defines a measure on $\metricS{X}{\famM}$.
+\end{Theorem}
+\begin{proof}
+    From the Lemma above it is evident that $\mu_f(\emptyset) = 0$. Now let $E = \countUnion{E_k}{k}$ where
+    the $E_k$'s are pairwise disjoint sets in $\famM$. Note that $\charFunc{E} =
+    \infiniteSum{\charFunc{E_k}}{k}$ since the $E_k$'s are disjoint.
+    Then,
+    \begin{align*}
+	\mu_f(E) &= \lInt{f}{\mu}{E}\\
+	&= \lInt{f\charFunc{E}}{\mu}{X}\\
+	&=\lInt{\infiniteSum{f\charFunc{E_k}}{k}}{\mu}{X}\\
+	&=\infiniteSum{\lInt{f\charFunc{E_k}}{\mu}{X}}{k}\\
+	&=\infiniteSum{\lInt{f}{\mu}{E_k}}{k}\\
+	&=\infiniteSum{\mu_f(E_k)}{k},\\
+    \end{align*}
+    where the $4^{th}$ inequality is from the Lemma following the monotone convergence theorem. Hence $\mu_f$
+    is a measure on $\metricS{X}{\famM}$.
+\end{proof}
+\begin{Corollary}[name=Additivity]
+    Additivity of the integral.
+\end{Corollary}
+\begin{proof}
+    \textbf{(Additivity)} If $A,B$ are disjoint sets in $\famM$, then $\mu_f(A\cup B) = \mu_f(A)
+    +\mu_f(B)$ i.e.~$\lInt{f}{\mu}{A\cup B} = \lInt{f}{\mu}{A} + \lInt{f}{\mu}{B}$.
+\end{proof}
+\begin{Corollary}
+    If $A \subset B$, then $\lInt{f}{\mu}{A} \leq \lInt{f}{\mu}{B}$.
+\end{Corollary}
+\begin{proof}
+    This follows from the monotononcity of $\mu_f$ that $\mu_f(A) \leq \mu_f(B)$. 
+\end{proof}
+
+Now we embark on the final stage ($3$) of our construction. If $f$ is an extended real valued measurable
+function, we have seen that we can decompose $f$ in two non-negative parts,
+\[f = \fPlus{f} - \fMinus{f}.\]
+We have already seen how to define the integral for $\fPlus{f},\fMinus{f}$. However, our definition allows
+these integrals to be infinite and hence we must be careful about things like $\infty - \infty$. Note that
+$\abs{f} = \fPlus{f} +\fMinus{f}$. 
+\begin{Definition}
+    If $\map{f}{X}{\extReals}$ is a measurable function, then
+    \begin{equation}\label{eq:int_meas_func}
+	\lInt{f}{\mu}{X} = \lInt{\fPlus{f}}{\mu}{X} - \lInt{\fMinus{f}}{\mu}{X},
+    \end{equation}
+    provided atleast one of the integral on the right hand side is not infinite. We say that $f$ is integrable
+    if both $\lInt{\fPlus{f}}{\mu}{X}$ and $\lInt{\fMinus{f}}{\mu}{X}$ are finite. 
+    Note that, this is equivalent to saying $\lInt{\abs{f}}{\mu}{X} < \infty$.
+\end{Definition}
+If $A \in \famM$ and $\lInt{f}{\mu}{X}$ is defined then,
+\[\lInt{f}{\mu}{A} := \lInt{f\charFunc{A}}{\mu}{X}.\]
+
+\begin{Proposition}[name=Properties of the integral of non-negative measurable function]
+    Let $A \in \famM$. Let $f,g$ be extended real valued functions defined on $X$ 
+    such that their integral is given
+    by~\ref{eq:int_meas_func}. Then, it satifies the following properties:
+    \begin{properties}
+    \item
+	(Linearity) For any $a,b \in \R$, 
+	\[\lInt{(af + bg)}{\mu}{A} = a\lInt{f}{\mu}{A} + b\lInt{g}{\mu}{A}.\]
+    \item
+	(Additivity) If $A,B$ are disjoint sets in $\famM$ then,
+	\[\lInt{f}{\mu}{A\cup B} = \lInt{f}{\mu}{A} + \lInt{f}{\mu}{B}.\]
+    \item
+	(Monotonicity) Let $f\leq g$. Then,
+	\[\lInt{f}{\mu}{A} \leq \lInt{g}{\mu}{A}.\]
+    \item
+	(Triangle Inequality)
+	\[\abs{\lInt{f}{\mu}{A}} \leq \lInt{\abs{f}}{\mu}{A}\]
+    \end{properties}
+\end{Proposition}
+\begin{proof}
+    We prove in order. 
+    \begin{itemize}
+	\item
+	    We prove for $A = X$. The result for any $A \in \famM$ can then be
+	    proved by using $f\charFunc{A}$ and $g\charFunc{A}$ instead of $f,g$.
+	    We will
+	    prove the results for integrable function i.e.~we assume the integrals of both 
+	    $\fPlus{f},\fMinus{f}$ and $\fPlus{g},\fMinus{g}$ are 
+	    finite. The general proof can then be completed by taking all the different cases.
+
+	    We will show that 
+	    $\lInt{af}{\mu}{X} = a\lInt{f}{\mu}{X}$ and \\ $\lInt{(f+g)}{\mu}{X} =
+	    \lInt{f}{\mu}{X} + \lInt{g}{\mu}{X}$.
+
+	    If $a > 0$, then $\fPlus{(af)} = a\fPlus{f}$ and $\fMinus{(af)} = a\fMinus{f}$. 
+	    $\lInt{af}{\mu}{X}$ is $\lInt{\fPlus{(af)}}{\mu}{X} - \lInt{\fMinus{(af)}}{\mu}{X}$ and thus,
+	    \[\lInt{af}{\mu}{X} = a\lInt{\fPlus{f}}{\mu}{X} - a\lInt{\fMinus{f}}{\mu}{X} = a\lInt{f}{\mu}{X}.\]
+	    If $a < 0$ then $\fPlus{(af)} = -a\fMinus{f}$ and $\fMinus{(af)} = -a\fPlus{f}$ and the result
+	    follows analogously.
+
+	    Let $h = f+g$. Then $\fPlus{h} - \fMinus{h} = \fPlus{f} - \fMinus{f} + \fPlus{g} - \fMinus{g}$.
+	    Hence,
+	    \[\fPlus{h} + \fMinus{f} + \fMinus{g} = \fMinus{h} + \fPlus{f} + \fPlus{g}. \]
+	    Thus, using the linearity of non-negative functions we get,
+	    \[\lInt{\fPlus{h}}{\mu}{X} + \lInt{\fMinus{f}}{\mu}{X} + \lInt{\fMinus{g}}{\mu}{X} = 
+		\lInt{\fMinus{h}}{\mu}{X} + \lInt{\fPlus{f}}{\mu}{X} + \lInt{\fPlus{g}}{\mu}{X}.\]
+	    Since we have assumed each of them are finite, we get
+	    \[\lInt{\fPlus{h}}{\mu}{X} - \lInt{\fMinus{h}}{\mu}{X} =  
+		\lInt{\fPlus{f}}{\mu}{X} - \lInt{\fMinus{f}}{\mu}{X} + 
+		\lInt{\fPlus{g}}{\mu}{X}- \lInt{\fMinus{g}}{\mu}{X}.\]
+	    Hence we get the result.
+	\item
+	    For any set $E \in \famM$, $\fPlus{(f\charFunc{E})} = \fPlus{f}\charFunc{E}$ and
+	    $\fMinus{(f\charFunc{E})} = \fMinus{f}\charFunc{E}$. Thus using $E = A\cup B$,
+	    \[\lInt{f}{\mu}{A\cup B} = \lInt{f\charFunc{A\cup B}}{\mu}{X} = 
+		\lInt{\fPlus{f}\charFunc{A\cup B}}{\mu}{X} - \lInt{\fMinus{f}\charFunc{A\cup B}}{\mu}{X}.\]
+	    Now from additvity of non-negative functions,
+	    \[\lInt{\fPlus{f}\charFunc{A\cup B}}{\mu}{X} = \lInt{\fPlus{f}\charFunc{A}}{\mu}{X} +  
+		\lInt{\fPlus{f}\charFunc{B}}{\mu}{X},\]
+	    and
+	    \[\lInt{\fMinus{f}\charFunc{A\cup B}}{\mu}{X} = \lInt{\fMinus{f}\charFunc{A}}{\mu}{X} +  
+		\lInt{\fMinus{f}\charFunc{B}}{\mu}{X}.\]
+	    Hence, we get the result.
+	\item
+	    Assume $f$ is integrable. Since $f \leq g$, $0 \leq g - f$ and thus using linearity of integrals of 
+	    non-negative functions we get the result. To complete the proof we just need to check all the
+	    cases on the decompositons of $f,g$.
+	\item
+	    This follows from the fact that $-\abs{f} \leq f \leq \abs{f}$ and monotonicity above.
+    \end{itemize}
+\end{proof}
+An integral of a measurable function can tell us something about the function. More precisely if an integral
+is finite it must be the case that the function is finite. As with any case in measure theory, we should make
+a deduction about properties a.e.~rather than pointwise.
+\begin{Proposition}\label{prop:integrable_func_finite_ae}
+    If $\map{f}{X}{\extReals}$ is an integrable function then $f$ is finite a.e.~on $X$.
+\end{Proposition}
+\begin{proof}
+    Let $E = \set{x\in X}{\abs{f(x)} = \infty}$. Take any $t > 0$ and consider the function $t\charFunc{E}$. By
+    definition $\abs{f} > t\charFunc{E}$ and hence from monotonicity $\lInt{\abs{f}}{\mu}{X} \geq
+    \lInt{t\charFunc{E}}{\mu}{X} = t\measure{E}$. If $\measure{E}$ is finite, this would mean the
+    $\lInt{\abs{f}}{\mu}{X} > t$ for any $t$ which would contradict the hypothesis that $f$ is integrable.
+    Hence $\measure{E} = 0$ which means that both $\fPlus{f},\fMinus{f}$ are finite a.e.~on $X$ and hence $f$
+    is finite a.e.~on $X$
+\end{proof}
+\begin{Proposition}
+    Suppose that $\map{f}{X}{\extReals}$ is a measurable function. Then,
+    \[\lInt{\abs{f}}{\mu}{X} = 0 \,\iff\, f=0\quad\text{a.e.}\]
+\end{Proposition}
+\begin{proof}
+    Note that if $f=0$ a.e.~then $\abs{f} = 0$ a.e.~and vice versa. Hence, we can just replace $f$ by
+    $\abs{f}$ in the Proposition above without changing anything. This just amounts to assuming that $f$ is
+    positive.
+
+    If $f$ is a simple function $f = \finiteSum{a_k\charFunc{E_k}}{k}{N}$ such that $f = 0$ a.e.~then it 
+    means that either all its coefficient $a_k$'s are
+    zero or the measure of its component sets $E_k$'s is zero and hence $\lInt{f}{\mu}{X} = 0$. If $f$ is not
+    a simple function, then for any simple function $0\leq s\leq f$ implies $s = 0$ a.e.~and hence
+    $\lInt{f}{\mu}{X} = 0$ by definition of the integral of an non-negative measurable function. 
+
+    Now let $\lInt{\abs{f}}{\mu}{X} = 0$. Let $E$ be the set where $f$ is not equal to $0$. Since $f$ is
+    assumed positive, this means that $E$ is the set $\fCompA{f}{>}{0}$. Let us define the following set,
+    \[E_n = \set{x\in X}{f(x) \geq \frac{1}{n}}.\]
+    Fix any $\epsilon > 0$. There is an $n \in \Zplus$ such that $1/n < \epsilon$ and hence if $f(x) >
+    \epsilon$ then $f(x) > 1/n$. This means that,
+    \[E \subset \countUnion{E_n}{n},\]
+   
+    Note that $0\leq \frac{1}{n}\charFunc{E_n}\leq f$ for all $n$ by construction and hence,
+    \[\frac{1}{n}\measure{E_n} = \lInt{\frac{1}{n}\charFunc{E_n}}{\mu}{X} \leq \lInt{f}{\mu}{X} = 0.\]
+    Thus,
+    \[\measure{E} \leq \infiniteSum{\measure{E_n}}{n} \leq 0.\]
+    Thus $E$ has $0$ measure.
+\end{proof}
+Intuitively, integrable functions should in some sense vanish at infinity since their integrals are finite. We
+make precise this notion in the following theorem.
+\begin{Theorem}[name=Absolute continuity]\label{thm:abs_cont_integral}
+    Suppose $f$ is integrable extended real valued function on $X$. Then for any $\epsilon > 0$
+    \begin{enumerate}
+	\item
+	    There is a set of finite measure $E\in\famM$ such that $\lInt{\abs{f}}{\mu}{\comp{E}} < \epsilon$.
+	\item
+	    There is a $\delta > 0$ such that for any $E \in \famM$,
+	    \[\lInt{\abs{f}}{\mu}{E} < \epsilon,\]
+	    whenever $\measure{E} < \delta$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    We prove in order. By replacing $f$ with $\abs{f}$, we don't change anything. Hence we can assume $f$ to
+    be non-negative.
+    \begin{enumerate}
+	\item
+	    Let $E_n = \set{x\in X}{0\leq f(x) \leq n}$. Then $E_1 \subset E_2 \subset \ldots$. Let 
+	    $f_n = f\charFunc{E_n}$. Then $\atobUp{f_n}{f}$. Hence we can use MCT to state that
+	    \[\limit{\lInt{f_n}{\mu}{X}}{n}{\infty} = \lInt{f}{\mu}{X}.\]
+	    Thus there is an $N$ such that,
+	    \[\abs{\lInt{f_n}{\mu}{X} - \lInt{f}{\mu}{X}} < \epsilon,\]
+	    whenever $n \geq N$. Since $f \geq f_n$ for all $n$, we have
+	    \[\lInt{f}{\mu}{X} - \lInt{f_N}{\mu}{X} < \epsilon,\]
+	    which from linearity can be written as,
+	    \[\lInt{(f - f\charFunc{E_N})}{\mu}{X} < \epsilon.\]
+	    Since $1-\charFunc{E_N} = \charFunc{\indxComp{E}{N}}$ we get,
+	    \[\epsilon > \lInt{f\charFunc{\indxComp{E}{N}}}{\mu}{X} =
+		\lInt{f}{\mu}{\indxComp{E}{N}}.\]
+	    $E_N$ is of finite measure by~\ref{prop:integrable_func_finite_ae}.
+	    Hence, we get the result.
+	\item
+	    With the same definition for $f_n$ as above we can observe that,
+	    \begin{align*}
+		\lInt{f}{\mu}{E} &= \lInt{(f-f_n)}{\mu}{E} + \lInt{f_n}{\mu}{E} \\
+		& \leq \lInt{(f-f_n)}{\mu}{X} + n\measure{E},
+	    \end{align*}
+	    for any $n\in\Zplus$ and $E \in \famM$.
+	    The first term in the second line can be made smaller than $\frac{\epsilon}{2}$ by MCT for some
+	    $N\in\Zplus$. Pick $\delta = \frac{\epsilon}{2N}$. Hence when $\measure{E} < \delta$,
+	    \[\lInt{f}{\mu}{E} \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon.\]
+	    Thus, we get the result.
+    \end{enumerate}
+\end{proof}
+\section{Limit theorems}
+One of the basic questions in analysis is when can we interchange limit operations? Note that integration is a
+limit operation (the supremum of simple functions is the limit of the simple functions that approximate a
+given non-negative measurable function). If $\atob{f_n}{f}$ pointwise, when can one say that
+\[\atob{\lInt{f_n}{\mu}{X}}{\lInt{f}{\mu}{X}}?\]
+The monotone convergence theorem says that the above is true if $f_n$ increases to $f$ for non-negative
+measurable functions. In a general case we may not have monontone sequences. The simplest case in which we can
+guarantee the convergence of the integral is when $\atob{f_n}{f}$ \textbf{uniformly}. To see this, note that
+\[\lInt{f_n}{\mu}{X} - \lInt{f}{\mu}{X} \leq \lInt{\abs{f_n-f}}{\mu}{X}\leq \measure{X}\epsilon,\]
+for $n$ greater than some $N$. An important caveat is that here we have adopted the convenction that
+\[\infty\cdot 0 = 0\cdot\infty = 0.\]
+This certainly works for Riemann integral, however uniform convergence is too strong a demand. One of the
+advantages of the construction of lebesgue integral is that we can (almost) acheive the convergence of
+integrals when we have pointwise convergence of functions. A few cautionary examples follow,
+\begin{Example}
+    Let $\measureS{\R}{\famL}{\mu}$ be the space of lebesgue measure. 
+    Let \\$\map{f_n}{\R}{\R}$ be given by,
+    \begin{equation*}
+	f_n(x) = 
+	\begin{cases}
+	    n &\,\text{if $0 < x < \frac{1}{n}$} \\
+	    0 &\, \text{otherwise.}
+	\end{cases}
+    \end{equation*}
+    Then $\atob{f_n}{0}$ pointwise but $\lInt{f_n}{\mu}{\R} = 1$. (Note that $f_n$ is a simple function and
+    hence we were able to calculate it easily.)
+\end{Example}
+
+\begin{Example}
+    Let $\measureS{\R}{\famL}{\mu}$ be the space of lebesgue measure. 
+    Let \\$\map{f_n}{\R}{\R}$ be given by,
+    \begin{equation*}
+	f_n(x) = 
+	\begin{cases}
+	    n^2 &\,\text{if $0 < x < \frac{1}{n}$} \\
+	    0 &\, \text{otherwise.}
+	\end{cases}
+    \end{equation*}
+    Then $\atob{f_n}{0}$ pointwise but $\lInt{f_n}{\mu}{\R} = n$ and hence
+    $\atob{\lInt{f_n}{\mu}{\R}}{\infty}$ (Note that $f_n$ is a simple function and
+    hence we were able to calculate it easily.)
+\end{Example}
+Thus we need some extra assumptions to deduce convergence of integrals. The first important theorem
+generalizes the monotonce convergence theorem for non-negative functions.
+\begin{Theorem}[name=Fatou's Lemma]\label{thm:Fatous_lemma}
+    Suppose that $\seq{f}{n}$ is a sequence of positive measurable functions $\map{f_n}{X}{\extRealsPos}$.
+    Then
+    \begin{equation}
+	\lInt{\liminf\limits_{n} f_n}{\mu}{X} \leq \liminf\limits_{n}\lInt{f_n}{\mu}{X}.
+    \end{equation}
+\end{Theorem}
+\begin{proof}
+    Let $g_n = \linf{f_k}{k}{n}$. Then $\atobUp{g_n}{\liminf\limits_n f_n}$.
+    Hence we can use MCT to deduce that,
+    \[\limit{\lInt{g_n}{\mu}{X}}{n}{\infty} = \lInt{\liminf\limits_n f_n}{\mu}{X}.\]
+    Now each $g_n \leq f_k$ for $k \geq n$ and hence,
+    \[\lInt{g_n}{\mu}{X} \leq \lInt{f_k}{\mu}{X},\]
+    for $k \geq n$. Hence,
+    \[\lInt{g_n}{\mu}{X} \leq \inf\limits_{k\geq n}\lInt{f_k}{\mu}{X},\]
+    and taking $n\to \infty$ we see that,
+    \[\limit{\lInt{g_n}{\mu}{X}}{n}{\infty} \leq \liminf\limits_{n}\lInt{f_n}{\mu}{X}.\]
+    Hence, we get the result. For any set $E \in\famM$, multiplying $f_n,f$ by $\charFunc{E}$ we can get the
+    result for the integral over $E$.
+\end{proof}
+Now we come to the most important result in this chapter which gives us the conditions when to expect the
+convergence of the integral of the functions given pointwise convergence of the functions.
+\begin{Theorem}[name=Dominated Convergence theorem]\label{thm:dominated_conv_thm}
+    Let $E\in\famM$ be any measurable set and let $\seq{f}{n}$ be a sequence of measurable functions such that
+    for each $n$, $\abs{f_n} \leq g$ a.e.~on $E$ where $g$ is an integrable function over $E$. If
+    $\atob{f_n}{f}$ a.e.~on $E$ then $f$ is integrable over $E$ and,
+    \[\limit{\lInt{f_n}{\mu}{E}}{n}{\infty} = \lInt{f}{\mu}{E}.\]
+\end{Theorem}
+\begin{proof}
+    Since $-g < f_n < g$ we have $g + f_n > g - g = 0$ and hence $g + f_n$ is a non-negative function such
+    that $\atob{g+f_n}{f}$. Note that $\liminf\limits_n f_n = f$. Using
+    Fatou's lemma on $g + f_n$ we get
+    \begin{align*}
+	\lInt{g}{\mu}{E} + \lInt{f}{\mu}{E} &= \lInt{(g+f)}{\mu}{E} \\
+	&= \lInt{\liminf\limits_{n}(g+f_n)}{\mu}{E} \\
+	&\leq \liminf\limits_{n}\lInt{(g+f_n)}{\mu}{E},\\
+	&\quad = \lInt{g}{\mu}{E} + \liminf\limits_n\lInt{f_n}{\mu}{E}.
+    \end{align*}
+    Subtracting $\lInt{g}{\mu}{E}$ since $g$ is integrable we get,
+    \[\lInt{f}{\mu}{E} \leq \liminf\limits_n\lInt{f_n}{\mu}{E}.\]
+    If we show 
+    \[\lInt{f}{\mu}{E} \geq \limsup\limits_n\lInt{f_n}{\mu}{E},\]
+    we are done. Note that $(g-f_n) > 0$ and thus using the same argument we get,
+    \[\lInt{g}{\mu}{E} - \lInt{f}{\mu}{E} \leq \lInt{g}{\mu}{E} + \liminf\limits_{n}(-\lInt{f_n}{\mu}{E}).\] 
+    Since $\liminf\limits_{n}(-a_n) = -\limsup\limits_{n}a_n$ we get
+    \[\lInt{f}{\mu}{E} \geq \limsup\limits_{n}\lInt{f_n}{\mu}{E}.\]
+    Hence, we get the result.
+\end{proof}
+
+
+\section{Relation with Riemann Integral}
+%\section{\texorpdfstring{$\ast$}{}Expectation of random variables}
+\section{{$\ast$} Expectation of random variables}
+

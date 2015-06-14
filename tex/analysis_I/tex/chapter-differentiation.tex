@@ -1,0 +1,240 @@
+\chapter{Differentiation in \texorpdfstring{$\R$}{}}
+\begin{Definition}[name=differentiable functions]
+    $f : \mathcal{U} \subset \mathbb{R} \to \mathbb{R}$ such that $\mathcal{U}$ is open. Let $x_0
+    \in \mathcal{U}$. We say that $f$ is differentiable at $x_0$ if
+    \begin{equation*}
+	\lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0},
+    \end{equation*}	
+    exists. If it exists, it is unique and is called the derivative of $f$ at $x_0$ denoted by
+    $f'(x_0)$.  $f$ is differentiable if it is differentiable at every point in $\mathcal{U}$ and
+    its derivative is the function denoted by $\frac{df}{dx}$.
+\end{Definition}
+Note that the limit is to be understood in the way defined in the previous chapter.
+\begin{Proposition}
+    $f$ is differentiable at $x_0$ iff $f$ can be closely approximated near $x_0$ by a linear
+    function which is the best linear approximation.
+\end{Proposition}
+\begin{proof}
+    $\Rightarrow$ $f$ is differentiable at $x_0$. Using the limit definition, for any 
+$\epsilon > 0$, there is a $\delta > 0$ such that whenever $0 \neq \lvert x - x_0 \rvert < \delta$, 
+\[\lvert f(x) - f(x_0) - f'(x_0)*(x - x_0) \rvert < \epsilon\lvert x - x_0 \rvert. \] Let $\phi :
+\mathbb{R} \to \mathbb{R}$ be the linear function given by $\phi(x) = f(x_0) + f'(x_0)*(x-x_0)$.
+Then, \[\lvert f(x) - \phi(x) \rvert < \epsilon\lvert x - x_0 \rvert. \] Thus $\phi(x)$ is the
+best linear approximation to $f$ at $x_0$.
+\\
+$\Leftarrow$. working backwards as above will prove the implication .
+\end{proof}
+\begin{Proposition}
+    Let $\mathcal{U}$ be a open subset of $\mathbb{R}$, $f : \mathcal{U} \to \mathbb{R}$. If $f$ is
+    differentiable at $x_0$ then $f$ is continuous at $x_0$.
+\end{Proposition}
+\begin{proof}
+    \[ f(x) = \frac{f(x) - f(x_0)}{x - x_0} *(x - x_0) + f(x_0) . \] 
+    Therefore $\lim_{x \to x_0}f(x) = f'(x_0)* \lim_{x \to x_0}(x - x_0) + \lim_{x \to x_0}f(x_0)$.
+    The first term on the right hand side becomes $0$ while the second term is $f(x_0)$. Thus,
+    $\lim_{x \to x_0}f(x) = f(x_0)$. Hence $f$ is continuous at $x_0$. 
+\end{proof}
+That continuous functions are not necessarily differentiable can be checked by the function $\lvert
+x \rvert : \left(-1,1\right) \to \mathbb{R}$ which is not differentiable at $0$. It is easy to see
+that $df/dx = 0$ for the constant function $f = c$ and $df/dx = 1$ for the identity function $f =
+x$. For any rational functions, the following proposition gives the rule to calculate the
+derivatives.
+\begin{Proposition}
+    Let $f,g$ be real valued functions on an open subset $\mathcal{U} \subset \mathbb{R}$. If $f,g$
+    are differentiable at $x_0 \in \mathcal{U}$, then so are $f \pm g, f*g$ and, if $g(x_0) \neq 0$
+    then $f/g$. Their derivatives at $x_0$ are given by  
+    \begin{enumerate}
+	\item $\left(f \pm g \right)'(x_0) = f'(x_0) \pm g'(x_0)$,
+	\item $\left(f*g\right)'(x_0) = f(x_0)*g'(x_0) + g(x_0)*f'(x_0)$,
+	\item $\left(\frac{f}{g}\right)' = \frac{g(x_0)*f'(x_0) - f(x_0)*g'(x_0)}{g(x_0)^2}$.
+    \end{enumerate}
+\end{Proposition}
+For the last equality, because of the continuity of $g$ at $x_0$, since $g(x_0) \neq 0$, there is a
+ball centered at $x_0$ such that whenever $x$ is in that ball $g(x) \neq 0$. We'll only give the
+proof of the second one.
+\begin{proof}
+    $(2)$. 
+    \begin{displaymath}
+	\begin{aligned}
+	    (fg)'(x_0) & = \lim_{x \to x_0}\frac{f(x)g(x) - f(x_0)g(x_0)}{x - x_0} \\
+	    & = \lim_{x \to x_0}f(x)\frac{g(x) - g(x_0)}{x - x_0} + \lim_{x \to x_0}g(x_0)\frac{f(x)
+	    - f(x_0)}{x - x_0} \\
+	    & = f(x_0)g'(x_0) + g(x_0)f'(x_0).
+	\end{aligned}
+    \end{displaymath}
+\end{proof}
+The next proposition is called the chain rule.
+\begin{Proposition}
+    Let $\mathcal{U},\mathcal{V}$ be open subets of $\mathbb{R}$ and let $f:\mathcal{U} \to
+    \mathcal{V}, g: \mathcal{V} \to \mathbb{R}$ be functions such that $f'(x_0)$ and $g'(f(x_0))$
+    exist for some $x_0 \in \mathcal{U}$. Then $(g\circ f)'(x_0)$ exists and is given by
+    $g'(f(x_0))*f'(x_0)$.
+\end{Proposition}
+\begin{proof}
+    If we write \[ \frac{(g \circ f)(x) - (g \circ f)(x_0)} { x - x_0}  = \frac{g(f(x)) - 
+	    g(f(x_0))}{f(x) - f(x_0)} * \frac{f(x) - f(x_0)}{x - x_0}, \] and take the limit as $x
+    \to x_0$, we get into trouble since even though $x \neq x_0$, we can have $f(x) = f(x_0)$. To
+    remove this problem let us define the following function $A : \mathcal{V} \to \mathbb{R}$,
+    \[ A(y) = \left\{ 
+  \begin{array}{l l}
+      \frac{g(y) - f(x_0)}{y - f(x_0)} & \quad \text{if } y \neq f(x_0)\\
+    g'(f(x_0)) & \quad \text{if } y = f(x_0) 
+  \end{array} \right. .\]
+   Since $g'(f(x_0))$ exists, $A(y)$ is continuous at $f(x_0)$ from the above definition as noticed
+   by taking the limit $y \to f(x_0)$. Since $f$ is continuous at $x_0$ and $A$ is continuous at
+   $f(x_0)$, $A \circ f$ is continuous at $x_0$ and is given by $ g'(f(x_0))$ i.e $ \lim_{x \to
+       x_0} A(f(x)) = A(f(x_0)) = g'(f(x_0))$ from the definition. Now, for all $ y \in
+   \mathcal{V}$, $g(y) - g(f(x_0)) = A(y)*(y - f(x_0))$. Put $ y = f(x)$ for some $x \in
+   \mathcal{U}$. Then $(g \circ f)(x) - (g \circ f)(x_0) = (A \circ f)(x) * (f(x) - f(x_0))$.
+   Dividing by $x -x_0$ and taking the limit we get the desired result. 
+\end{proof}
+\begin{Proposition}
+    Let $f$ be a real valued function on an open subset $\mathcal{U}$ of $\mathbb{R}$ that attains a
+    maximum or a minimum at the point $x_0 \in \mathcal{U}$. Then if $f$ is differentiable at $x_0$,
+    $f'(x_0) = 0$.
+\end{Proposition}
+\begin{proof}
+    Suppose $f$ is differentiable at $x_0$ and assume $f'(x_0) \neq 0$. Let $\epsilon =
+    \frac{1}{2}\lvert f'(x_0) \rvert$ which is a positive number. Since $f$ is differentiable at
+    $x_0$ there is a $\delta > 0$ such that whenver $\lvert x - x_0 \rvert < \delta$,
+    \[ \lvert \frac{f(x) - f(x_0)}{x - x_0} - f'(x_0) \rvert <  \frac{1}{2}\lvert f'(x_0)\rvert.\] 
+    Thus \[ f'(x_0) -  \frac{1}{2}\lvert f'(x_0) \rvert < \frac{f(x) - f(x_0)}{x - x_0} < f'(x_0) + 
+	\frac{1}{2}\lvert f'(x_0) \rvert .\] WLOG $f'(x_0) > 0$. Then $\frac{f(x) - f(x_0)}{x - x_0}$ 
+    is always $ > 0$ whenever $ \lvert x - x_0 \rvert < \delta$. If we choose a $x$ such that 
+    $\lvert x - x_0 \rvert < \delta$ but $ x > x_0$ then $f(x) > f(x_0)$ since the ratio is
+    positive. But this contradicts the fact that $f$ attains a maxima at $x_0$ and thus $f(x_0) >
+    f(x)$ for all $x \in \mathcal{U}$. Hence $f'(x_0) = 0$. (similar strategy works when we assume
+    $f'(x_0) < 0 $ to get a contradiction)
+\end{proof}
+This proposition will be useful in proving the mean value Theorem. The following Lemma is called the
+Rolle's Theorem.
+\begin{Lemma}
+    Let $a,b \in \mathbb{R}$, $a < b$ and let $f$ be a continuous real valued function on
+    $\left[a,b\right]$ that is differentiable on $(a,b)$ and such that $f(a) = f(b) = 0$. Then there
+    exists a number $c \in (a,b)$ such that $f'(c) = 0$.
+\end{Lemma}
+\begin{proof}
+    Since $\left[a,b\right] \subset \mathbb{R}$ is compact, and $f$ is continuous $f$ must attain a
+    maxima or minima. If either are in $(a,b)$ then from the above proposition $f'$ is zero. If the
+    maxima and minima are at $a$ or $b$, then since $f(a) = f(b) = 0$, $f(x) = 0$ for all $x \in 
+    \left[a,b\right] $ and the assertion holds.
+\end{proof}
+The existence of maxima,minima is guarenteed since $\left[a,b\right]$ is a compact subset. Failure
+of this criteria will lead to the failure of the above Lemma. Now we'll prove the Mean Value Theorem
+which gives us the derivative at a point involving only the function values at the endpoints. 
+\begin{Theorem}[name=Mean Value Theorem]
+    Let $a,b \in \mathbb{R}$, $a < b$ and let $f$ be a continuous real valued function on $\left[
+	a,b\right]$ that is differentiable on $(a,b)$. Then there exists a number $c \in (a,b)$ such
+    that $f(b) - f(a) = (b-a)*f'(c)$.
+\end{Theorem}
+\begin{proof}
+    The equation of the secant line passing through the endpoints $f(a),f(b)$ is given by 
+    \[L(x) = f(a) + \frac{f(b) - f(a)}{b - a}*(x - a).\]
+    The function $F(x) = f(x) - L(x)$, which represents the vertical distance between the function
+    and the secant line, is continuous on $\left[a,b\right]$ and differentiable on $(a,b)$. Also
+    $F(a) = F(b) = 0$ and hence by the Lemma proved earlier there is a $ c \in (a,b)$ such that
+    $F'(c) = 0$. Hence $f'(c)*(b-a) = f(b) - f(a)$.
+\end{proof}
+\begin{Definition}
+    A real valued function on a subset $\mathcal{U}$ of $\mathbb{R}$ is called 
+    \begin{enumerate}
+	\item increasing if whenever $a,b \in \mathcal{U}$ and $a < b$ then $f(a) \leq f(b)$.
+	\item strictly increasing if whenever $a,b \in \mathcal{U}$ and $a < b$ then $f(a) < f(b)$.
+	\item decreasing if whenever $a,b \in \mathcal{U}$ and $a < b$ then $f(a) \geq f(b)$.
+	\item strictly decreasing if whenever $a,b \in \mathcal{U}$ and $a < b$ then $f(a) > f(b)$.
+    \end{enumerate}
+\end{Definition}
+Following are some of the important corollaries of the mean value Theorem.
+\begin{Corollary}
+    If a real valued function on an open interval in $R$ has derivative $0$ at each point, then $f$
+    is constant.
+\end{Corollary}
+\begin{proof}
+    Let $a,b$ be any two points in the open interval. WLOG $a < b$. $f$ is continuous on
+    $\left[a,b\right]$ and differentiable on $(a,b)$. Hence by the Theorem above there is a $c \in
+    (a,b)$ such that $f(b) - f(a) = (b-a)f'(c)$ . But $f'(c) = 0$, hence $f(b) = f(a)$. Since $a,b$
+    were arbitrary, this is true everywhere. Hence $f$ is a constant.
+\end{proof}
+\begin{Corollary}
+    If $f,g$ are real valued functions on an open interval in $\mathbb{R}$ which have the same
+    derivative at each point, the $f,g$ differ only by a constant.
+\end{Corollary}
+\begin{proof}
+    $f' = g'$, therfore $f' - g' = 0$. But $f' - g' = (f - g)'$. Using the corollary above $(f- g)$
+    is a constant.
+\end{proof}
+\begin{Corollary}
+    If $f$ is a real valued function on an open interval in $\mathbb{R}$ that has a positive
+    (negative) derivative at each point, then $f$ is strictly increasing (strictly decreasing).
+\end{Corollary}
+\begin{proof}
+    If $a < b$ then by the mean value Theorem $f(b) - f(a) = (b - a)f'(c)$. Since $b-a > 0$ $f(b) -
+    f(a)$ has the same sign as $f'(c)$.
+\end{proof}
+\begin{Definition}
+    Let $\mathcal{U}$ be an open subset of $\mathbb{R}$, $f : \mathcal{U} \to \mathbb{R}$ be a
+    differentiable function. If the function $f' : \mathcal{U} \to \mathbb{R}$ is differentiable, we
+    say that $f$ is \emph{twice} differentiable and call $f"$, or $f^{(2)}$ the second derivative of
+    $f$. In general for any integer $n > 1$ and any $x_0 \in \mathcal{U}$, we say that $f$ is
+    \emph{n times differentiable} at $x_0$ if there is an open ball $\mathcal{B}(x_0)$ such that $f$
+    restricted to the open ball is $n - 1$ times differentiable and $(f^{(n-1)})'(x_0)$ exist. $f$
+    is n-times differentiable iff it is n-times differentiable at each point in $\mathcal{U}$. 
+\end{Definition}
+\begin{Definition}
+    Let $\mathcal{U}$ be an open interval in $\mathbb{R}$ an let the function $f: \mathcal{U} \to
+    \mathbb{R}$ be $n + 1$ times differentiable. For any $a,b \in \mathcal{U}$ the \emph{Taylor}
+    reminder $R_n(b,a) \in \mathcal{R}$ is given by the equation
+    \[ f(b) = f(a) + \frac{f'(a)(b-a)}{1!} + \frac{f"(a)(b-a)^2}{2!} + \dots +
+	\frac{f^{(n)}(a)(b-a)^n}{n!} + R_n(b,a).\]
+\end{Definition}
+When we fix $a \in \mathcal{U}$ let $b = x \in \mathcal{U}$ we get the Taylor Polynomial. This is
+useful in approximating differentiable functions by polynomials. Hence we usually need to understand
+if or when the Taylor reminder $R_n$ becomes small. The following Lemma is very useful to understand
+what $R_n$ looks like.
+\begin{Lemma}
+    $R_n(b,x)$ is differentiable and is given by 
+    \[ \frac{d}{dx}R_n(b,x) = -\frac{f^{(n+1)}(x)(b-x)^n}{n!} .\]
+\end{Lemma}
+\begin{proof}
+    If we replace $a$ by $x \in \mathcal{U}$ then $R_n(b,x)$ is given by the equation
+    \[ f(b) = f(x) + \frac{f'(a)(b-x)}{1!} + \frac{f"(a)(b-x)^2}{2!} + \dots +
+	\frac{f^{(n)}(a)(b-x)^n}{n!} + R_n(b,x).\]. Since $f$ is $n+1$ times differentiable and
+    polynomials are infinitely differentiable, the derivative of $R_n(b,x)$ exists. 
+    Taking the derivative we get,
+    \begin{displaymath}
+	\begin{aligned}
+	    0 = & f'(x) + (-\frac{f'(x)}{1!} + \frac{f"(x)(b-x)}{1!}) + (-\frac{(b-x)f"(x)}{1} + 
+	    \frac{f^{(-3)}(x)(b-x)^2}{2!} + \dots \\ 
+	    & + (- ... + \frac{f^{(n+1)}(b-x)^n}{n!}) + \frac{d}{dx}R_n(b,x)
+	\end{aligned}
+    \end{displaymath}
+    Hence only the last two terms remain after cancellation.
+\end{proof}
+\begin{Theorem}[name=Taylor's Theorem]
+   Let $\mathcal{U}$ be an open interval in $\mathbb{R}$ an let the function $f: \mathcal{U} \to
+    \mathbb{R}$ be $n + 1$ times differentiable. For any $a,b \in \mathcal{U}$ we have
+    \begin{displaymath}
+	\begin{aligned}
+	    f(b) = & f(a) + \frac{f'(a)(b-a)}{1!} + \frac{f"(a)(b-a)^2}{2!} + \dots +  \\
+	    & \frac{f^{(n)}(a)(b-a)^n}{n!} + \frac{f^{(n+1)}(c)(b-a)^{n+1}}{(n+1)!},
+	\end{aligned}
+    \end{displaymath}
+    for some c in between $a,b$.
+\end{Theorem}
+\begin{proof}
+    We need to show that $R_n(b,a) = \frac{f^{(n+1)}(c)(b-a)^{n+1}}{(n+1)!}$. When $a = b$, $R_n =
+    0$. So WLOG, $a < b$. Let $R_n = K*(b-a)^{n+1}$. Let us define a function $\phi : \mathcal{U}
+    \to \mathbb{R}$ given by  $\phi(x) = R_n(b,x) - K*(b-x)^{n+1}$. Since $R_n(b,x)$ is
+    differentiable $\phi(x)$ is differentiable. Furthermore, $\phi(a) = \phi(b) = 0$. Thus $\phi$
+    restricted to $\left[a,b\right]$ satisfies the conditions for Rolle's Theorem. Hence there is a
+    $c \in \left[a,b\right]$ such that $\phi'(c) = 0$. From the Lemma above we get, $\phi'(x) = 
+    -\frac{f^{(n+1)}(b-x)^n}{n!} + K(n+1)(b-x)^{n}$. Solving for $K$ we get 
+    \begin{displaymath}
+	R_n(b,a) = \frac{f^{(n+1)}(c)(b-a)^{n+1}}{(n+1)!}.
+    \end{displaymath}
+\end{proof}
+When $n = 0$, Taylor's Theorem is essentially the Mean Value Theorem with a little more generality
+since $a < b$ is not assumed. However, the requirement of a differentiable function on an open
+interval containing $a,b$ is more stringent when $f$ was differentiable on the open interval
+$(a,b)$. Taylor's Theorem can be seen as a generalization of the mean value Theorem for higher
+derivatives.

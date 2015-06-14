@@ -1,0 +1,480 @@
+\chapter{Countability}
+In this section we will study in some detail finite sets,countable sets and uncountable sets.
+
+We start with finite sets.
+We know how to \emph{count} finite sets. We say a set has $n$ elements if we counted n distinct
+elements of that set. What are we doing when we count a finite set? 
+We are putting all the elements of the set in $1-1$ correspondence with a finite set of Integers.
+ 
+\begin{Definition}[name=section]
+    Let $n$ be a positive integer. We use $S_n$ to denote the set of positive integers less than $n$ and call
+    it a section of positive integers. Thus $S_n = \setX{1,2,\ldots,n}$.
+\end{Definition}
+\begin{Definition}[name=finite sets]
+    A set $A$ is said to be finite if there is a bijective correspondence of $A$ with some section of the
+    positive integers, i.e.~there exists an $n \in \Zplus$ such that,
+    \[\map{f}{A}{S_n},\]
+    is a bijective function. We say that $A$ has cardinality $n$. If $A$ is empty we say that $A$ has
+    cardinality $0$.
+\end{Definition}
+\begin{Remark}
+    $S_n$ itself has cardinality $n$. We will show that the cardinality of a finite set is uniquely determined
+    by the set.
+\end{Remark}
+\begin{Lemma}
+    Let $n$ be a positive integer. Let $A$ be a set and let $a_0$ be any element of $A$. Then there exists a
+    bijective correspondence $f$ of the set $A$ with $S_{n+1}$ if and only if there exists a bijective
+    function $g$ from the set $\setDiff{A}{\setX{a_0}}$ with $S_{n}$.
+\end{Lemma}
+\begin{proof}
+    First assume that $\map{g}{\setDiff{A}{\setX{a_0}}}{S_n}$ is bijective. Let $\map{f}{A}{S_{n+1}}$ be such
+    that $\restrict{f}{\setDiff{A}{\setX{a_0}}} = g $ and $f(a_0) = n+1$. Then $f$ is bijective.
+
+    Assume $\map{f}{A}{S_{n+1}}$ is bijective. We consider two cases.
+
+    \textbf{CASE I}: $f(a_0) = n+1$. In this case, define $g = \restrict{f}{\setDiff{A}{\setX{a_0}}}$. Then we
+    get the desired bijective map.
+
+    \textbf{CASE II}: $f(a_0) = k$ where $k \neq n+1$. Then there is an $a_1$ in $A$ such that $f(a_1) = n+1$.
+    Define $\map{\sigma}{A}{S_{n+1}}$ such that $\sigma(a_0) = n+1$ and $\sigma(a_1) = k$ and for all other
+    values of $A$, $\sigma = f$. Thus $\sigma$ is a bijective mapping from $A$ onto $S_{n+1}$ such that
+    $\sigma(a_0) = n+1$. Define $g = \restrict{\sigma}{\setDiff{A}{\setX{a_0}}}$. Then we
+    get the desired bijective map.
+\end{proof}
+\begin{Theorem}
+    Let $A$ be a set; suppose there exists a bijection $\map{f}{A}{S_n}$ for some $n \in\Zplus$. Let $B$ be a
+    proper subset of $A$. Then there exists no bijection $\map{g}{A}{S_n}$, but if $B$ is not empty, then
+    there is a bijection $\map{f}{B}{S_m}$ for some $m < n$.
+\end{Theorem}
+\begin{proof}
+    We will prove this by induction on $n$. First note that when $A$ is empty, there is no proper subset of
+    $A$ and so the theorem is trivially true. Let $\map{f}{A}{S_1}$ be a bijection. Then any proper subset $B$
+    of $A$ is empty and so cardinality of $B$ = $0$.
+    Assume the theorem is true for some $n$ in $\Zplus$. Let $\map{f}{A}{S_{n+1}}$ be a bijection and let $B$
+    be a proper subset of $A$. Assume $B$ is not empty. There is an element $a_0$ in $B$ and note that $a_0$
+    is also in $A$. By the previous Lemma, there is a map,
+    \[\map{g}{A-\setX{a_0}}{S_n},\]
+    such that $g$ is bijective. Note that $B - \setX{a_0}$ is a proper subset of $A - \setX{a_0}$. 
+    Now we can use our inductive hypothesis to state that:
+    \begin{enumerate}
+	\item
+	    There is no bijection $\map{h}{B-\setX{a_0}}{S_n}$.
+	\item
+	    Either $B - \setX{a_0}$ is empty or there is an $m < n$ such that,
+	    $\map{k}{B-\setX{a_0}}{S_{m}}$ is bijective.
+    \end{enumerate}
+    Using the Lemma above we can state $(1)$ equivalently by stating that there is not bijection between $B$
+    and $S_{n+1}$. If $B - \setX{a_0}$ is not empty, then we can use the previous lemma to state that there is
+    a bijection from $B$ to $S_{m+1}$ where $m+1 < n+1$ and so we have proved the statement for $n+1$.
+\end{proof}
+\begin{Corollary}
+    If $A$ is finite, there is no bijection of $A$ with a proper subset of itself.
+\end{Corollary}
+\begin{proof}
+    Let $\map{f}{B}{A}$ be bijective. Since $A$ is finite there is a bijective function $\map{g}{A}{S_n}$.
+    Define $h = \fog{g}{f}$. Then $\map{h}{B}{S_n}$ is bijective which contradicts the theorem above.
+\end{proof}
+\begin{Corollary}
+    $\Zplus$ is not finite.
+\end{Corollary}
+\begin{proof}
+    We prove this by the contrapositive of the above corollary i.e.~we construct a bijection between $\Zplus$
+    and a propoer subset $\Zplus-\setX{1}$.
+    Let $\map{f}{\Zplus-\setX{1}}{\Zplus}$ be given by $f(i) = i-1$. Then $f$ is bijective.
+\end{proof}
+\begin{Corollary}
+    The cardinality of a finite set $A$ is uniquely determined by $A$ i.e.~there doesnot exist $S_n,S_m$ with
+    $n \neq m$ such that $A$ is in bijective correspondence with both $S_n,S_m$.
+\end{Corollary}
+\begin{proof}
+    Suppose there exist bijections $f,g$ from $A$ onto $S_n,S_m$ where $n \neq m$. Without loss of generality,
+    assume $n < m$. Let $h = \fog{g}{f^{-1}}$. Then $\map{h}{S_n}{S_m}$ is bijective which gives a
+    contradiction since $S_n$ is a proper subset of $S_m$.
+\end{proof}
+\begin{Corollary}
+    If $B$ is a subset of the finite set $A$, then $B$ is finite. If $B$ is a proper subset of $A$, then the
+    cardinality of $B$ is less than $A$.
+\end{Corollary}
+\begin{Corollary}
+    Let $B$ be a non-empty set. Then the following are equivalent:
+    \begin{enumerate}
+	\item
+	    $B$ is finite.
+	\item
+	    There is a surjective function from a section of the positive integers onto $B$.
+	\item
+	    There is an injective function from $B$ into a section of the positive integers.
+    \end{enumerate}
+\end{Corollary}
+\begin{proof}
+    We will prove $(1)\implies(2)$, $(2)\implies (3)$ and $(3) \implies (1)$.
+
+    $(1)\implies (2)$. Assume $B$ is finite. Then, for some $n\in\Zplus$, there is a bijective map 
+    $\map{f}{B}{S_n}$. Thus $\map{f^{-1}}{S_n}{B}$ is onto.
+
+    $(2) \implies (3)$. Assume there is a map $\map{f}{S_n}{B}$ such that $f$ is onto. Define the function
+    $\map{h}{B}{S_n}$ where for any $b \in B$, $h(b) = \min\invIm{f}{b}$. Since $f$ is onto $\invIm{f}{b}$ is
+    not empty and is a subset of $S_n$ and by the well ordering property of integers, the minimum exists and
+    is unique. Thus $h$ is injective.
+
+    $(3) \implies (1)$. Assume there is an injective map $\map{f}{B}{S_n}$ for some $n \in \Zplus$. Then
+    $\map{f}{B}{\dirIm{f}{B}}$ is bijective. Also, since $\dirIm{f}{B} \subset S_n$, it is finite. Hence $B$ is
+    finite.
+\end{proof}
+\begin{Theorem}
+    Finite Unions and finite cartesian products of finite sets are finite.
+\end{Theorem}
+\begin{proof}
+    Let $\famB = \set{B_i}{1\leq i \leq n}$ be a finite collection of finite sets. We will show that
+    $\finiteUnion{B_i}{i}{n}$ is also finite by induction on $n$.
+    When $n = 1$, the result is trivial. Consider the case when $n = 2$. By hpyothesis, there exists bijective
+    functions $f_1,f_2$ from $B_1,B_2$ onto $S_{n_1},S_{n_2}$ for some $n_1,n_2$ in $\Zplus$. Define
+    $\map{h}{S_{n_1+n_2}}{B_1\cup B_2}$ as follows:
+    $h(i) = f_1(i)$ for $1\leq i \leq n_1$ and $h(n_1+j) = f_2(j)$ for $1 \leq j \leq n_2$. Thus $h$ is a
+    surjection from a section of integers to $B_1\cup B_2$ and hence, $B_1\cup B_2$ is finite. Note that $h$
+    is note necessarily a bijection since $A,B$ may not be disjoint. The result now follows from induction.
+
+    Note that for any $b \in B_1$, $\setX{b}\times B_2$ is finite because the function
+    $\map{f}{\setX{b}\times B_2}{S_{n_2}}$ given by $f((b,c)) = f_2(c)$ for any $c \in B_2$ 
+    is a bijection. Now, $B_1\times B_2$
+    can be written as $\bigcup\limits_{b\in B_1}\setX{b}\times B_1$, which is a finite union of finite sets and
+    so is finite. The result for arbitrary $n$ follows from induction.
+\end{proof}
+Just as sections of integers are the prototypes for finite sets, the set of all positive integers is
+prototype for the simplest infinite set that we call countably infinite or denumerable sets.
+
+\begin{Definition}[name=Infinite and Countably infinite]
+    A set $A$ is said to be infinite if it is not finite. It is said to be countably infinite if there is a
+    bijective correspondence,
+    \[\map{f}{A}{\Zplus}.\]
+\end{Definition}
+From all our observations regarding finite sets we can immediately deduce the following about infinite sets
+\begin{enumerate}
+    \item
+	For any proper subset $B$ of $A$, if $B$ is infinite then $A$ is also infinite.
+    \item
+	If there is a proper subset $B$ of $A$ and if there is a function $\map{f}{B}{A}$ which is bijective,
+	then $A$ is infinite.
+\end{enumerate}
+\begin{Definition}[name=Countable]
+    A set $A$ is said to be countable if it is either finite or if it is countably infinite. A set that is not
+    countable is said to be uncountable.
+\end{Definition}
+We saw that $\Zplus$ was not finite. It is countably infinite by definition and hence $\Zplus$ is countable.
+Is $\Z$ countable?
+\begin{Proposition}
+    $\Z$ is countably infinite.
+\end{Proposition}
+\begin{proof}
+    $\Zplus$ is a proper subset of $\Z$ and is not finite. Hence we must show that there is a function
+    $\map{f}{\Z}{\Zplus}$ that is bijective. Let us define,
+    \begin{align*}
+	f(n) = 
+	\begin{cases}
+	    -2n &\text{if $n < 0$},\\
+	    2n + 1 &\text{if $n \geq 0$}.
+	\end{cases}
+    \end{align*}
+    Easy to see that $f$ is a bijection.
+\end{proof}
+\begin{Proposition}
+    The product $\Zplus \times \Zplus$ is countably infinite.
+\end{Proposition}
+\begin{proof}
+    The proof is the famous diagonal arrangement. If we of $\Zplus \times \Zplus$ as a grid, we can start
+    counting \textbf{diagonally} from right to top. Let $\map{f}{\Zplus}{\Zplus}$ be given by,
+    $f(i,j) = j + \series{k}{k}{1}{i+j-2}$. Thus, for example, $f(1,1) = 1$, $f(2,1) = 2$, $f(1,2) = 3$ and so
+    on. Easy to see that we have a bijection. For example to show it is surjective let $m$ be any positive
+    integer, say $m = 11$. Then think of $11$ as a list $(1),(2,3),(4,5,6),(7,8,9,10),(11,12,13,14,15)$. Thus
+    $11$ is on the $5^{th}$ list which means that $j$ will be such that $1\leq j \leq 5$. Similarly $i$ will
+    be less than $5$. Easy to see that $i = 5$ and $j = 1$ will give $f(i,j) = 11$.
+\end{proof}
+%%%%%%% draw diagrams here : see pink notebook
+There is a very useful criterion for showing that a set is countable.
+\begin{Theorem}
+    Let $B$ be a non-empty set. Then the following are equivalent.
+    \begin{enumerate}
+	\item
+	    $B$ is countable.
+	\item
+	    There is a surjective function $\map{f}{\Zplus}{B}$.
+	\item
+	    There is an injective function $\map{g}{B}{\Zplus}$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    Assume that $B$ is countable. Hence $B$ is either finite or countably infinite. In the later case, there
+    is a surjection $\map{f}{\Zplus}{B}$. If $B$ is finite, then there is a bijection $\map{g}{S_n}{B}$
+    for some $n\in\Zplus$. Define $\map{f}{\Zplus}{B}$ as follows:
+    $f(i) = g(i)$ for $i \leq n$ and $f(i) = g(n)$ for $i > n$. Thus $f$ is a surjection. Hence we have shown
+    $(1)\implies (2)$.
+
+    Assume that there is a surjection $\map{f}{\Zplus}{B}$. This means that for any $b$ in $B$,
+    $\invIm{f}{\setX{b}}\neq\emptyset$. Moreover, for $b_1,b_2 \in B$, if $b_1\neq b_2$, then
+    $\invIm{f}{\setX{b_1}} \neq \invIm{f}{\setX{b_2}}$. Let $g(b) = \min\invIm{f}{\setX{B}}$. Then $g(b)$ is
+    an injective function from $B$ to $\Zplus$. Thus, we have shown that $(2) \implies (3)$.
+
+    Assume there is an injective function $\map{g}{B}{\Zplus}$. To show that $B$ is countable we need to show
+    that either $B$ is finite or $B$ is countably infinite. We can assume $B$ is not finite. 
+    Thus $\dirIm{g}{B} \subset {\Zplus}$ is not finite. IF $\dirIm{g}{B}$ was countably infinite, then $B$
+    would be countably infinite. Hence we need to show that any infinite subset of $\Zplus$ is countably
+    infinite which would mean that $(3)\implies (1)$.
+\end{proof}
+\begin{Remark}
+    The above theorem (part (2)) 
+    states that for a countable set we can list its elements as a \textbf{sequence}. Thus if
+    $A$ is countable, then $A = \setX{a_{1},a_{2},\cdots}$.
+\end{Remark}
+\begin{Proposition}
+    Any infinite subset of $\Zplus$ is countably infinite.
+\end{Proposition}
+\begin{proof}
+    Let $B$ be an infinite subset of $\Zplus$. 
+    There is bijection $\map{f}{\Zplus}{\Zplus}$ that lists the elements of $\Zplus$ in a sequence. 
+    The intuitive idea is to go along the sequence and check if it belongs to $B$. 
+    We want a function $\map{g}{\Zplus}{B}$ that is bijective. 
+    For example as we move along the sequence in $f$, the first occurance of an element in $B$ occured in the
+    index $k$. We set $g(1) = f(k)$. Then we continue traversing along the sequence in $f$ until we find an index
+    $l > k$ such that $f(l) \in B$. We set $g(2) = f(l)$. It is clear that such a function is surjective. 
+    How do we define the function $g$? Let us tweak $g$ a bit. Instead of taking the first occurance
+    of an element listed by $f$, we take the smallest element of $B$ listed by $f$. There must be an index $m$
+    such that $f(m) = \min{B}$. We take $g(1) = f(m)$ and proceed subsequently. 
+
+    Let $g(1)$ be the smallest element that is in
+    $B$. This is possible since $B \subset \Zplus$. Let $g(2)$ be the smallest element other than $g(1)$ that
+    is in $B$. This is called an \textbf{inductive} definition (or recursion). We define a function whose
+    domain is the natural numbers inductively, in this case,
+    \[g(n) = \min\setX{B-\setX{g(1),g(2),\ldots,g(n-1)}}.\]
+    It is clear that $g$ is injective. To see that $g$ is surjective, consider an arbitrary element, say $b$, 
+    of $B$. For any $m \in \Zplus$ there is an $n \in \Zplus$ such that $g(n) > S_m$. Because if not, then $B$
+    would be finite. In particular for $m = b$ there is an $n$ such that $g(n) > b$. Let $C =
+    \set{n\in\Zplus}{g(n)\geq b}$. Then $C \subset \Zplus$ and so a minimum $p \in \Zplus$ exists such that
+    $g(p) \geq b$. This means that $g(1),g(2),\ldots,g(p-1)$ are all less than $b$. By definition of $g$,
+    $g(p)\leq b$. Thus it must be the case that $g(p) = b$.
+\end{proof}
+We have used a key idea here called the principle of recursive definition.
+\begin{Definition}[name=Principle of recursive definition]
+    Let $A$ be any set. Given a formula that defines $g(1)$ as a \textbf{unique} element of $A$ and for all
+    $i > 1$ defines $g(1)$ \textbf{uniquely} as an element of $A$ in terms of the values of $g$ for positive
+    integers less than $i$, this formula determines a \textbf{unique function} $\map{g}{\Zplus}{A}$.
+\end{Definition}
+\begin{Corollary}
+    A subset of a countable set is countable.
+\end{Corollary}
+\begin{proof}
+    Let $A \subset B$ such that $B$ is countable. Thus there exists an injection $\map{f}{B}{\Zplus}$. Hence,
+    $\map{\restrict{f}{A}}{A}{\Zplus}$ is also an injection.
+\end{proof}
+\begin{Corollary}
+    The set $\Zplus\times\Zplus$ is countable.
+\end{Corollary}
+\begin{proof}
+    Let $\map{f}{\Zplus\times\Zplus}{\Zplus}$ be given by $f(i,j) = 2^{i}3^{j}$. Then, $f$ is injective
+    (because $2,3$ are prime).
+\end{proof}
+\begin{Corollary}
+    The set of positive rational numbers is countable.
+\end{Corollary}
+\begin{proof}
+    Let $\map{f}{\Zplus\times\Zplus}{\Q^{+}}$ be defined by $f(i,j) = \frac{i}{j}$. Then $f$ is surjective.
+    We showed that there is a function $\map{g}{\Zplus}{\Zplus\times\Zplus}$ that is surjective. Thus
+    $\map{\fog{f}{g}}{\Zplus}{\Q^{+}}$ is surjective.
+\end{proof}
+\begin{Theorem}
+    A countable union of countable sets is countable.
+\end{Theorem}
+\begin{proof}
+    Let $\famA$ be a collection of countable sets $A_1,A_2,\ldots$. Since each $A_i$ is countable there is a
+    function $\map{f_i}{\Zplus}{A_i}$ that is a surjection. In other words we can list the elements of $A_i$'s,
+    \begin{align*}
+	A_1 &= \setX{a_{11},a_{12},a_{13},\ldots}\\
+	A_2 &= \setX{a_{21},a_{22},a_{23},\ldots}\\
+	&\vdots\\
+	A_j &= \setX{a_{j1},a_{j2},a_{j3},\ldots}\\
+	&\vdots
+    \end{align*}
+    Define $\map{g}{\Zplus\times\Zplus}{\countUnion{A_i}{i}}$ as,
+    $g(i,j) = a_{ij} = f_i(j)$. Thus $g$ is a surjection.
+\end{proof}
+\begin{Theorem}
+    A finite product of countable sets is countable.
+\end{Theorem}
+\begin{proof}
+    We have shown the analogous result for finite sets. Let $\set{A_i}{1\leq i \leq n}$ be a finite collection
+    of countable sets. We prove this by induction on $n$. The case $n= 1$ is trivial. When $n = 2$,
+    $A_1\times A_2 = \bigcup\limits_{a\in A_1}\setX{a}\times A_2$ is a countable unioon of countable sets and
+    is countable by the theorem above. We proceed by induction to prove it for any $n \in \Zplus$.
+\end{proof}
+\begin{Theorem}
+    Let $A$ be any set. There is NO injective map \break{}$\map{f}{\powSet{A}}{A}$ and there is no surjective map
+    $\map{g}{A}{\powSet{A}}$.
+\end{Theorem}
+\begin{proof}
+    We will show that there is no surjective map which maps $A$ onto the powerset of $A$. This will then imply
+    that there is no injective map that maps powerset of $A$ into $A$. This is because of the following:
+    \[\thereIs{\map{f}{B}{C}}\text{$f$ is injective, then}\hspace{0.05in}\thereIs{\map{g}{C}{B}}
+	\text{$g$ is surjective}.\]
+    Taking the contrapositive of this statement we can just show the non-existence of a surjective map. To
+    see why the above statement is true, assume there is an injection $\map{f}{B}{C}$. Thus for any $c \in
+    \dirIm{f}{B}$, there is a unique $b$ such that $f(b) = c$. Define $\map{g}{C}{B}$ as follows, if $c \in C$
+    is in $f(B)$, then $g(c) = b$ such that $f(b) = c$. If $c \in C$ such that $c \not\in f(B)$, then fix a
+    $b_0 \in B$ and let $g(c) = b_0$. Thus $g$ is surjective. Note that $B$ has to be non-empty for all this
+    to make sense.
+
+    Now we will show the non-existence of a surjective map from $A$ onto $\powSet{A}$ by contradiction. 
+    Assume, there is a $\map{g}{A}{\powSet{A}}$ such that $g$ is surjective. Thus for any $X \subset A$, there
+    is a $a \in A$ such that $g(a) = X$. Let $B = \set{a\in A}{a \in g(a)}$. Then $B \subset A$ and hence by
+    our assumption there is an $a_0 \in A$ such that $g(a_0) = B$.
+    There are two possibilities for $a_0$. Either $a_0 \in g(a_0)$ or $a_0 \not\in g(a_0)$. In the first case,
+    $a_0 \not\in B$ and in the second case $a_0 \in B$. Thus $g(a_0)\neq B$. Hence, $g$ cannot be surjective.
+\end{proof}
+\begin{Corollary}
+    There exists an uncountable set.
+\end{Corollary}
+\begin{proof}
+    There is no surjection from $\Zplus$ onto $\powSet{\Zplus}$. Thus, $\powSet{\Zplus}$ is uncountable.
+\end{proof}
+Let us now give a characterization of infinite sets. These sets are either countably infinite or uncountable.
+From our discussion following the definition of infinite sets, we already gathered a few notions of what is
+means to be for a set to be infinite. We elaborate on this now.
+\begin{Theorem}
+    Let $A$ be a set. The following statements about $A$ are equivalent.
+    \begin{enumerate}
+	\item
+	    There is an injective function $\map{f}{\Zplus}{A}$.
+	\item
+	    There exists a bijection of $A$ with a proper subset of itself.
+	\item
+	    $A$ is infinite.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    $(1)\implies(2)$
+    Let $\map{f}{\Zplus}{A}$ be an injective map. Note that $\map{f}{\Zplus}{f(\Zplus)}$ is a bijective map
+    that lists a subset of $A$ as a sequence $(a_1,a_2,\cdots)$. Let $B = A - \setX{a_1}$. Then $B$ is a
+    proper subset of $A$. Note that $A = f(\Zplus)\cup (\setDiff{A}{f(\Zplus)})$. 
+    Define $\map{g}{A}{B}$ as follows:
+    \begin{equation*}
+	g(a) = 
+	\begin{cases}
+	    a_{n+1}&\text{if $a = x_n \in f(\Zplus)$ for some $n$}\\
+	    a &\text{if $a \not\in f(\Zplus)$}
+	\end{cases}
+    \end{equation*}
+
+    $(2)\implies(3)$ This just follows from our discussion following the definition of infinite sets.
+
+    $(3)\implies(1)$
+    First pick \textbf{any} element of $A$ and call it $a_1$. Thus $f(1) = a_1$. Now, pick any element of $A$
+    which is not equal to $a_1$ and call it $a_2$. That is $f(2) \in A - \setX{a_1}$. This process will
+    continue indefinitely since $A$ is infinite. Hence $\map{f}{\Zplus}{A}$ is injective, where $f$ is
+    definied recursively as follows:
+    \[f(n) \in A - \setX{a_1,a_2,\ldots,a_n}.\]
+    However, there is a problem in our recursive definition for $f$. Namely, $f(1)$ is not unique and $f(n)$
+    is certainly not uniquely defined in terms of $\setX{a_1,a_2,\ldots,a_n}$, since we are picking an
+    arbitrary element of $A$. We need an additional axiom from set theory to make this possible.
+\end{proof}
+
+
+\textbf{Axiom of choice} Given a collection $\famB$ of non-empty sets, there exists a function 
+\[\map{c}{\famB}{\bigcup\limits_{B\in\famB}B},\]
+such that $c(B)\in B$ for any $B \in \famB$.
+
+Using the axiom of choice we can fix our recursive definition for $f$. 
+Let $\famB = \powSet{A}-\emptyset$. Then there exists a choice function such that $c(B) \in B$ for any $B \in
+\famB$. Pick $B = A$. Thus $c(A)$ gives an element of $A$ uniquely.
+Let $f(1) = c(A)$.
+Now $A - \setX{f(1)}$ is also in $\famB$. Define $f(2) = c(A - \setX{f(1)})$ which is again uniquely defined.
+Thus, define
+\[f(n) = c(A - \setX{f(1),f(2),\ldots,f(n-1)}).\]
+This is a valid recursive function.
+
+
+There is a equivalence relation which is induced by bijective functions.
+Let us define $A\sim B$ whenever there is a bijective map $\map{f}{A}{B}$. It is easy to see that $\sim$ is an
+equivalence relation. A set $A$ is countably infinite if $A \sim \Zplus$. Note that any two countably infinite
+sets are equivalent since if $A\sim \Zplus$ and $B \sim \Zplus$, then $A \sim B$. 
+
+This is an extremely
+important idea which we will explore now in the subsequent paragraph in the form of Cantor-Schroder-Bernstein
+theorem.
+
+Suppose $A,B$ are sets and $f$ is one-to-one function from $A$ into $B$. Then $A\sim f(A)\subset B$, so it is
+natural to think of $B$ as being at least as large as $A$. This suggests the following notation:
+\begin{Definition}
+    If $A,B$ are sets, then we will say that $B$ \textbf{dominates} $A$, and write $A \preceq B$, if there is
+    an injective function $\map{f}{A}{B}$. If $A\preceq B$ and $A\not\sim B$, then we say $B$ strictly
+    dominates $A$.
+\end{Definition}
+\begin{Theorem}[name=Schroder-Bernstein theorem]
+    If $A \preceq B$ and $B \preceq A$, then $A\sim B$.
+\end{Theorem}
+\begin{proof}
+    Let $\map{f}{A}{B}$ and $\map{g}{B}{C}$ be injective functions. Note that $\map{g}{B}{g(B)}$ is bijective.
+    Let $A_0 = \setDiff{A}{g(B)}$ and let us define recursively $A_n = g(f(A_{n-1}))$.
+    Let $X = \bigcup\limits_{n=0}^{\infty}A_n$. Then $X \subset A$. Define $Y = \setDiff{A}{X}$. Note that, $Y
+    \subset g(B)$. This is because if $a \in Y$ then $a \in A$ and $a \not\in A_0$, that is $a \in g(B)$.
+    Define,
+    \begin{equation*}
+	h(a) = 
+	\begin{cases}
+	    f(a) &\text{if $a\in X$}\\
+	    g^{-1}(a) &\text{if $a\in Y$}
+	\end{cases}
+    \end{equation*}
+    \textbf{Claim:} $h$ is injective. 
+    Assume $h(a_1) = h(a_2)$ for $a_1,a_2$ in $A$. The only cases we have to check are when $a_1\in X$ and
+    $a_2\in Y$ and vice-versa.
+    Suppose $a_1\in X$ and $a_2\in Y$. Then $f(a_1) = g^{-1}(a_2)$. Which means that $g(f(a_1)) = a_2$. Since
+    $a_1\in X$, there is an $n$ such that $a_1 \in A_n$ and hence $a_2 \in g(f(A_n))$ which means that $a_2
+    \in A_{n+1}$ i.e.~$a_2 \in X$ which is a contradiction. The other case is similar.
+
+    \textbf{Claim:} $h$ is surjective. Let $b \in B$. Then $g(b) \in A$. Thus $g(b) \in X$ or $g(b) \in Y$. If
+    $g(b)$ is in $Y$, then $h(g(b)) = g^{-1}(g(b)) = b$. Thus there is an $a = g(b) \in A$ such that $h(a) =
+    b$. If $g(b) \in X$, then there is an $A_n$ such that $g(b)\in A_n$. But $n$ cannot be $0$. Thus there is
+    an $n > 1$ such that $g(b) \in g(f(A_{n-1}))$. This means that there is an $x_1\in f(A_{n-1})$ such that
+    $g(x_1) = g(b)$. Since $g$ is injective, this means that $x_1 = b$ i.e.~there is an $x \in A_{n-1}$ such
+    that $f(x) = x_1 = b$. But this means that $h(x) = b$ for some $x \in A_{n-1}\subset X$.
+\end{proof}
+
+
+Now we will 
+show that $\mathbb{R}$ is uncountable.
+\begin{Theorem}[name=Uncountability of $\mathbb{R}$]
+    $\mathbb{R}$ is not countable.
+\end{Theorem}
+\begin{proof}
+    It is sufficient to show that the set $[0,1)$ is uncountable.
+    Lets suppose that $[0,1)$ is countable. Hence, we can list all its elements as $r_1, r_2, r_3,
+    \ldots$. For example,  
+    \begin{displaymath}
+	\begin{aligned}
+	    & r_1 = 0.\ \fbox{$\mathbf{9}$} \ 1 \ 3 \ 4 \ \ldots \\
+	    & r_2 = 0.\ 1 \ \fbox{$\mathbf{0}$} \ 7 \ 6 \  \ldots \\
+	    & r_3 = 0.\ 3 \ 0 \ \fbox{$\mathbf{1}$} \ 1 \  \ldots \\
+	    & r_4 = 0.\ 0 \ 0 \ 0 \ \fbox{$\mathbf{0}$} \ \ldots \\
+	    & \vdots
+	\end{aligned}
+    \end{displaymath}
+    We can find a $r \in [0,1)$ that does not belong to any $r_i \forall i \in \mathbb{Z}_+$.
+    Let r be such that its $j^{th}$ digit after the decimal is $0$ if the corresponding digit in
+    $r_j$ is non zero and let it be $1$ otherwise. Then for the example above we have 
+    \begin{displaymath}
+	r = 0.0101\ldots
+    \end{displaymath}	
+    Clearly, $r \in [0,1)$ but $r$ does not belong to any list. Hence, $\mathbb{R}$ is not
+    countable. 
+\end{proof}
+\begin{Corollary}
+    The irrational numbers are uncountable.
+\end{Corollary}
+\begin{proof}
+    $\mathbb{R} = \mathbb{R} - \mathbb{Q} \bigcup \mathbb{Q}$. We showed $\mathbb{Q}$ to be
+    countable. If $\mathbb{R} - \mathbb{Q}$ is countable then $\mathbb{R}$ will be countable.
+    Hence irrational numbers are uncountable. Thus we have more \emph{holes} than the rational
+    numbers.
+\end{proof}
+
+
+
+

@@ -1,0 +1,571 @@
+\chapter{Riemann Integration in \texorpdfstring{$\R$}{}}
+In this chapter we will discuss the definition and basic properties of the Riemann integral for real
+valued functions in one real variable. We will show that continuous functions are Riemann
+intergrable and we will derive the fundamental Theorem of calculus that shows that differentiation
+and intergration are \emph{inverse} process.
+
+\begin{Definition}
+    Given an interval $\left[a,b\right] \subset \mathbb{R}$, a partition of $\left[a,b\right]$ is a
+    finite sequence given by,
+    \[ a = x_0 < x_1 < x_2 < \dots < x_N = b.\]
+    The \emph{width} of this partition is the $max\lbrace x_i - x_{i-1}\rbrace$ for $i = 1 \dots N$.
+\end{Definition}
+\begin{Definition}
+    For any real number $\delta > 0$, $\delta$ - small partition of $\left[a,b\right] \subset 
+    \mathbb{R}$ is a partition whose width is less than $\delta$.
+\end{Definition}
+\begin{Definition}
+    For a function $f : \left[a,b\right] \to \mathbb{R}$ a \emph{Riemann sum} $S$ corresponding to a
+    partition of $\left[a,b\right]$ is given by,
+    \[ S = \sum_{i = 1}^N f(x'{_i})*(x_i - x_{i-1}),\]
+    for some $x_{i-1} \leq x'{_i} \leq x_i$.
+\end{Definition}
+Given any partion there are many Riemann sums corressponding to different choices of $x'$. 
+\begin{Definition}
+    A function $f : \left[a,b\right] \to \mathbb{R}$ is Riemann integrable if there is an $A \in
+    \mathbb{R}$ such that for any $\epsilon > 0$, there is a $\delta > 0$ such that for any Riemann
+    sum $S$ on a $\delta$ - small partition, $\lvert S - A \rvert < \epsilon$. 
+\end{Definition}
+If $f$ is Riemann integrable then we call $A$ the (definite) integral of $f$ over
+$\left[a,b\right]$ and we denote \[ A = \int_{a}^{b} f. \] The classical way to denote a definite
+integral is the familiar notation $\int_{a}^{b}fdx$. Note that $dx$ is just a notational convenience
+that doesn't mean anything.
+\begin{Proposition}
+    If $A$ exists, then it is unique.
+\end{Proposition}
+\begin{proof}
+    Suppose $A,A'$ are both the integral of $f$ over $\left[a,b\right]$. Then given any $\epsilon >
+    0$ there is a $\delta = \text{ min}(\delta_1,\delta_2)$ such that for any Riemann sum $S$ on a
+    $\delta$ -small partition we have $\lvert S - A\rvert < \epsilon/2$,
+    $\lvert S - A'\rvert < \epsilon/2$. Hence $\lvert A - A'\rvert = \lvert A - S + S - A'\rvert <
+    \epsilon$. Since $\epsilon > 0$ is arbitrary, this means that $\lvert A - A'\rvert = 0$. Hence,
+    $A = A'$. 
+    The existence of a $\delta$ -small partition is guaranteed. To see this choose $N \in
+    \mathbb{Z}_+$ such that the width of the partition is given by $\frac{b-a}{N}$. Choosing $N$
+    large enough, the width can be made smaller than $\delta$.
+\end{proof}
+Some examples,
+\begin{itemize}
+    \item The constanct function $f = c$ is Riemann integrable.
+	\begin{proof}
+	    Any Riemann sum $S$ is given by $\sum_{i = 1}^{N}f(x'_{i})(x_i - x_{i-1})$. Since $f =
+	    c$, the Riemann sum becomes $c\sum_{i = 1}^{N}(x_i - x_{i-1}) = c(x_N - x_0)$. Thus, $A
+	    = c(b - a)$. To check, for any $\epsilon > 0$ , take $\delta = 1$. Then for any 
+	    Riemann sum on $1$ -small partition, $\lvert S - c(b-a)\rvert$ = $\lvert c(b - a) - 
+	    (b-a)\rvert$. Hence $\lvert S - A \rvert = 0 < \epsilon$. 
+	\end{proof}
+    \item Fix a $\xi \in \left[a,b\right]$. Define a function $f : \left[a,b\right] \to \mathbb{R}$
+	given by, 
+	\[ f(x) = \left\{ 
+		\begin{array}{l l}
+		    c & \quad \text{if } x = \xi \\
+		    0 & \quad \text{if } x \neq \xi 
+		\end{array} \right. .\]
+	Then $\int_a^b f = 0$.
+	\begin{proof}
+	    For a $\delta$ -small partition, each $(x_i - x_{i-1}) < \delta$. Now whenever, $x_{i-1}
+	    < x'_i = \xi < x_{i}$, i.e if $\xi$ happens to be in-between tick points then the
+	    Riemann sum $S = c*(x_i - x_{i-1}) < c*\delta$. If $\xi$ happens to be one of the tick
+	    marks i.e $\xi = x_i$ then at most the Riemann sum can be $S = c*(x_i - x_{i-1}) +
+	    c*(x_{i+1} - x_{i}) < 2c*\delta$. This is because to the left we pick $x'_i = x_i$ and
+	    to the right we pick $x'_{i+1} = x_i$. Hence, we see that $\lvert S \rvert <
+	    2\lvert c \rvert *\delta$. Thus, given any $\epsilon > 0$, choose $\delta = 
+	    \frac{\epsilon}{2\lvert c \rvert}$. Hence, for any $\delta$ -small partition 
+	    $\lvert S - 0\rvert < \epsilon$, thus $A = 0$.
+	\end{proof}
+    \item Let $\alpha,\beta \in \left[a,b\right]$ with $\alpha < \beta$. Let $f : \left[a,b\right]
+	\to \mathbb{R}$ be defined by, 
+	\[ f(x) = \left\{ 
+		\begin{array}{l l}
+		    1 & \quad \text{if } x \in (\alpha,\beta) \\
+		    0 & \quad \text{if } x \in \left[a,b\right], x \neq (\alpha,\beta)  
+		\end{array} \right. .\]
+	Then $\int_a^b f = \beta - \alpha$.
+	\begin{proof}
+	    Let us say we found a $\delta$ -small partition $\delta < \beta - \alpha$. Thus there
+	    has to be atleast one \emph{tick} between $\alpha$ and $\beta$,  i.e we can find
+	    integers $p,q < N$ such that $x_{p-1} \leq \alpha < x_p \leq x_{q-1} < \beta \leq
+	    x_q$. For any Riemann sum corressponding to the partition,
+	    \[ f(x'_i) = \left\{ 
+		    \begin{array}{l l}
+			1 & \quad \text{if } x'_i \in (\alpha,\beta) \\
+			0 & \quad \text{ otherwise }   
+		    \end{array} \right. .\]
+	    Thus $S = \sum* (x_i - x_{i-1})$, whenever $x'_i$ is choosen in $ (\alpha,\beta)$. Lets
+	    look at some cases -
+	    \begin{enumerate}
+		\item $x'_i \in \left[x_{i-1},x_{i}\right]$ such that $i = p-1$. Then $f(x'_i) = 0$ .
+		\item $x'_i \in \left[x_{i-1},x_{i}\right]$ such that $i = p$. Then $f(x'_i) = 1$ 
+		    only when $x'_i > \alpha$. Thus we are not guranteed $f(x'_i) = 1$ always. 
+		\item $x'_i \in \left[x_{i-1},x_{i}\right]$ such that $i = p+1$. Then $f(x'_i) = 1$ always.
+		\item $x'_i \in \left[x_{i-1},x_{i}\right]$ such that $i = q - 1$. Then $f(x'_i) = 
+		    1$ always.
+		\item $x'_i \in \left[x_{i-1},x_{i}\right]$ such that $i = q $. Then $f(x'_i) = 1$ 
+		    only when  $x'_i < \beta$. 
+		\item $x'_i \in \left[x_{i-1},x_{i}\right]$ such that $i = q + 1$. Then $f(x'_i) = 0$ .
+	    \end{enumerate}
+	    Hence we see that $p+1 \leq i \leq q-1$, then $S = \sum_i(x_i - x_{i-1})$. When $i \leq
+	    p - 1, i \geq q +1$ then $S = 0$. Thus,
+	    \[ \sum_{i = p+1}^{q-1}(x_{i} - x_{i-1}) \leq S \leq \sum_{i = p}^{q}(x_i - x_{i-1}). \]
+	    Since the left and right terms are just \emph{telescoping} terms we get,
+	    \[ x_{q-1} - x_p \leq S \leq x_q - x_{p-1}. \]
+	    Subtracting $\beta - \alpha$ and noting the following,
+	    \begin{enumerate}
+		\item $\lvert x_{q-1} - \beta \rvert < \delta$.
+		\item $\lvert x_{p} - \alpha \rvert < \delta$.
+		\item $\lvert x_{q} - \beta \rvert < \delta$.
+		\item $\lvert x_{p-1} - \alpha \rvert < \delta$.
+	    \end{enumerate}
+	    Thus,
+	    \[ \lvert S - (\beta - \alpha) \rvert < 2\delta.\]
+	    Hence, given any $\epsilon > 0$, choose $\delta = \text{ min}(\beta - \alpha,
+	    \epsilon/2)$ such that for any $\delta$ -small partition $\lvert S - (\beta - \alpha) 
+	    \rvert < 2\delta < \epsilon$. Hence $A = \beta - \alpha$.
+	\end{proof}
+    \item Let $f : \left[a,b\right] \to \mathbb{R}$ be defined in the following way,
+	\[ f(x) = \left\{ 
+		\begin{array}{l l}
+		    1 & \quad \text{if } x  \in \mathbb{Q}\\
+		    0 & \quad \text{otherwise }    
+		\end{array} \right. .\]
+	$f$ is NOT (Reimann) integrable.
+	\begin{proof}
+	    For a given $\epsilon > 0$ no matter how small we choose our $\delta$ if $x'_i \in
+	    \mathbb{Q}$ then $ S  = b-a $ . But for the same partition if $x'_i \not
+	    \in \mathbb{Q}$ then $S = 0$.
+	\end{proof}
+\end{itemize}
+In view of the last example let us reiterate the definition of Riemann integral which we will from
+now on just replace with the word integral keeping in mind that other integrals exists.
+\begin{Definition}
+    Let $f :\left[a,b\right]$. The (Riemann) integral $\int_{a}^{b}f$, if it exists, is the unique
+    number such that for any $\epsilon > 0$ there is a $\delta > 0$ such that for all Riemann sums
+    $S$ on a $\delta$ -small partition, \[\lvert S - \int_{a}^{b}f \rvert < \epsilon .\]
+\end{Definition}
+Now we'll look at some properties of the integral.
+
+\begin{Theorem}[name=Properties of Riemann integral]
+ Let $f,g : \left[a,b\right] \to \mathbb{R}$.
+    \begin{enumerate}
+	\item (LINEAR property) If $f,g : \left[a,b\right] \to \mathbb{R}$ are integrable and $c \in
+	    \mathbb{R}$ then $(f+g), c*f$ are integrable. These are given by,
+	    \begin{displaymath}
+		\begin{aligned}
+		    &\int_a^b (f+g) = \int_a^b f + \int_a^b g \\
+		    & \int_a^b c*f = c*\int_a^b f
+		\end{aligned}
+	    \end{displaymath}
+	\item (Order property) If $f,g : \left[a,b\right] \to \mathbb{R}$ are integrable and for all
+	    $x \in \left[a,b\right]$, $f \leq g$ then $\int_a^b f \leq \int_a^b g$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    \begin{enumerate}
+	\item Given any $\epsilon > 0$ there is a $\delta_f > 0$ such that for all Riemann sum $S_f$
+	    on the $\delta_{f}$ -small partition $\lvert S_f - \int_a^b f\rvert < \epsilon/2$.
+	    Similarly, there is a $\delta_{g} > 0$ such that for all Riemann sum $S_g$ on the
+	    $\delta_{g}$ -small partition $\lvert S_g - \int_a^b g\rvert < \epsilon/2$. Let $\delta
+	    = \text{ min}(\delta_{f},\delta_{g})$. Let $S_{f+g}$ be the Riemann sum on the $\delta$
+	    -small partition. Note that  $S_{f+g} = \sum_{i}(f+g)(x'_i)*(x_{i} - x_{i-1}) = S_f +
+	    S_g$. Thus,
+	    \begin{displaymath}
+		\begin{aligned}
+		     \lvert S_{f+g}-\int_a^b(f+g) \rvert & =  \lvert S_{f+g} - (\int_a^b f+\int_a^b
+		     g) \\
+		     & = \lvert (S_f - \int_a^b f) + (S_g - \int_a^b g) \rvert \\
+		     &\leq \lvert S_f - \int_a^b f \rvert + \lvert S_g - \int_a^b g \rvert \\
+		     & \quad = \epsilon.
+		\end{aligned}
+	    \end{displaymath}	
+	    Hence, $\int_a^b (f+g)$ is integrable.
+	    To show that $c*f$ is integrable, given any $\epsilon > 0$ there is $\delta > 0$ such
+	    that for any $\delta$ -small partition, $\lvert S - \int_a^b f \rvert <
+	    \frac{\epsilon}{\lvert c \rvert}$.  Let $S_{cf}$ be the
+	    Riemann sum on the $\delta$ -small partition for the function $c*f$. Then $S_{cf} =
+	    \sum_i c*f(x'_i)*(x_i - x_{i-1}) = c*S$. Easy to check that $\lvert S_{cf} - c\int_a^b
+	    f\rvert < \epsilon$.
+	\item First let us show that if $f \geq 0$ for all $x \in \left[a,b\right]$ then $\int_a^b f
+	\geq 0$. Given any $\epsilon > 0$ there is a $\delta > 0$ such that $\lvert S - \int_a^b f
+	\rvert < \epsilon$. Thus $\int_a^bf \geq S - \epsilon \geq -\epsilon$ since $S \geq 0$.
+	$\int_a^b f \in \mathbb{R}$ which is greater than $-\epsilon $ for any arbitrary $\epsilon >
+	0$. Thus $\int_a^b f \geq 0$. Now since $f \leq g$ for all $x$,$(g-f) \geq 0$ and so
+	$\int_a^b(g-f) \geq 0$ and using the linearity we get the proof.
+    \end{enumerate}
+\end{proof}
+\begin{Corollary}
+If $f$ is integrable real valued function on the interval $\left[a,b\right]$ and $m,M \in
+\mathbb{R}$ are such that $m \leq f(x) \leq M$ for all $x \in \left[a,b\right]$ then 
+\[ m(b-a) \leq \int_a^b f \leq M(b-a). \]
+\end{Corollary}
+\begin{proof}
+    We can consider $m,M$ as constant functions then the first inequality gives $m \leq f$ and so
+    from the Theorem above $int_a^b m \leq int_a^b f$. But we know that integral of the constant 
+    function $m$ is given by $m(b-a)$. Thus we get the first inequality. Similarly the other.
+\end{proof}
+We have shown the properties of the Riemann integral but have not yet talked about what functions
+are Riemann integrable. In the following section we'll talk about the existence of Riemann integral
+for a certain class of functions.
+
+\section{Existence of the Riemann integral}
+We'll start with the cauchy criterion for the integral.
+\begin{Lemma}
+    A real valued function $f$ on the interval $\left[a,b\right]$ is integrable on
+    $\left[a,b\right]$ iff given an $\epsilon > 0$ there is a $\delta > 0$ such that whenever 
+    $S_1,S_2$ are Riemann sums on a $\delta$ -small partition then $\lvert S_1-S_2\rvert <
+    \epsilon$. 
+\end{Lemma}
+\begin{proof}
+    $\Rightarrow$ If $f$ is integrable then given any $\epsilon > 0$ there is a $\delta$ such that
+for any Riemann sums on $\delta$ -small partitions $\lvert S - \int_a^b f \rvert < \epsilon/2$. Thus
+$S_1,S_2$ are Riemann sums on $\delta$ small partitions then $\lvert S_1 - S_2 \rvert = \lvert S_1 -
+\int_a^b f + \int_a^b f - S_2 \rvert < \epsilon $ from the triangle inequality.
+
+$\Leftarrow$ Given an $\epsilon > 0$ there is a $\delta > 0$ such that whenever $S_1,S_2$ are
+    Riemann sums on $\delta$ -small partition then $\lvert S_1 - S_2 \rvert < \epsilon$. Let
+    $S^{(1)}, S^{(2)}, S^{(3)} , \dots $ be Riemann sums where each $S^{(k)}$ is a Riemann sum on a 
+    partition of width less than $1/k$. Choose a $N \in \mathbb{Z_+}$ such that $1/N < \delta$. 
+    Then for any $m,n \geq N$, $S^{(m)},S^{(n)}$ are Riemann sums on a $\delta$ -small partition and
+    so by the hypothesis $\lvert S^{(n)} - S^{(m)} \rvert < \epsilon$. Hence $S^{(k)}$ is a cauchy
+    sequence in $\mathbb{R}$. Since $\mathbb{R}$ is complete $S^{(k)} \to A$ for some $A \in
+    \mathbb{R}$. Hence given any $\epsilon > 0$ there is a $N > 0$ such that whenever $n \geq N$,
+    $\lvert S^{(n)} - A \rvert < \epsilon/2$. Choose $n > N $ such that $1/n < \delta$. 
+    Let $S^{(m)} = S$ be any Riemann sum on a $\delta$ - small partition. 
+    Then $\lvert S - A \rvert = \lvert S - S^{(n)} + S^{(n)} - A \rvert < \epsilon$
+    using the triangle inequality. 
+\end{proof}
+
+Next we'll define step functions.
+\begin{Definition}
+    A real-valued function on the interval $\left[a,b\right]$ is called a step function if there
+    exists a partition $x_0,x_1,\dots,x_N$ of $\left[a,b\right]$ such that $f$ is constant on each
+    open subinterval $(x_0,x_1),(x_1,x_2),\dots,(x_{N-1},x_N)$.
+\end{Definition}
+\begin{Lemma}
+    A step function is integrable. In particular, if $x_0,x_1,\dots,x_N$ is a partition 
+    of $\left[a,b\right]$, if $c_1,c_2,\dots,c_N \in \mathbb{R}$ and if $f : \left[a,b\right]$ is
+    such that $f(x) = c_i$ if $x_{i-1} < x < x_i$ for $i = 1,\dots,N$ then,
+    \[ \int_a^b f = \sum_{i = 1}^N c_i(x_i - x_{i-1}). \]
+\end{Lemma}
+\begin{proof}
+    
+    We'll use example 2,3 following the definition of Riemann integral and the linear property to
+    prove this Lemma. For $i = 1, \dots, N$ define a function $\phi_{i} : \left[a,b\right] \to
+    \mathbb{R}$ by,
+    \[ \phi_{i}(x) = \left\{ 
+	    \begin{array}{l l}
+		1 & \quad \text{if } x \in (x_{i-1},x_i) \\
+		0 & \quad \text{if } x \in \left[a,b\right], x \not \in (x_{i-1},x_i) 
+	    \end{array} \right. .\]
+    Then $(f - \sum_{i=1}^N c*\phi_{i}(x)) = 0$ at all points except at the partition points
+    $x_1,\dots,x_N$. It is the sum of finite functions of type 2 seen in the example following
+    definition of Riemann integral. Thus $\int_a^b ( f - \sum_{i=1}^N c*\phi_{i}(x) ) = 0$. Also
+    note that each $\phi_{i}(x)$ is the type 3 function in the example and by linearity $\int_a^b 
+    \sum_{i=1}^N c*\phi_{i}(x) = c*\sum_{i}\int_a^b\phi_{i}$ which is given by $\sum_{i=1}^N c*(x_i
+    - x_{i-1})$. Noting that $f = (f - \sum_{i=1}^N c*\phi_{i}(x) ) + \sum_{i=1}^N c*\phi_{i}(x)$,
+    taking the integral we get the proof.
+\end{proof}
+The next proposition is an extremely important one stating that an integrable function can be
+arbitrarily sandwhiched between two step functions. This will be useful in showing that all
+continuous functions on a closed and bounded subset of $\mathbb{R}$ are Riemann integrable thereby
+giving us a class of functions that satisfy integrability.
+
+\begin{Proposition}
+    The real-valued function f on the interval $\left[a,b\right]$ is integrable on
+    $\left[a,b\right]$ iff for each $\epsilon > 0$ there exists step functions $f_1,f_2$ on
+    $\left[a,b\right]$ such that 
+    \begin{displaymath}
+	\begin{aligned}
+	    &f_1(x) \leq f(x) \leq f_2(x) \quad \text{for each } x \in \left[a,b\right], \\
+	    &\int_a^b(f_2(x) - f_1(x)) < \epsilon .
+	\end{aligned}
+    \end{displaymath}
+\end{Proposition}
+\begin{proof}
+    $\Rightarrow$. We'll carry out the proof in 3 steps. Given $f :\left[a,b\right]$ is integrable
+and given any $\epsilon > 0$. 
+
+\textbf{Step 1} : Show that $f$ is bounded on $\left[a,b\right]$
+Using the Cauchy criteria, we have a $\delta > 0$ and can find a partition $x_0,x_1,\dots,x_N$ of
+width less that $\delta$ such that any two Riemann
+sums $S_1,S_2$ for $f$ corresponding to this partition, $\lvert S_1 - S_2 \rvert < \epsilon/2$. That
+is, for arbitrary $x'_i,x"_i \in \left[x_{i-1},x_{i}\right]$, $i = 1,\dots,N$ we have,
+\[ \sum_{i = 1}^N \lvert (f(x'_i) - f(x"_i))*(x_i - x_{i-1}) \rvert < \epsilon/2 .\] Now, for any $j
+= 1, \dots, N$, pick $x'_i \neq x"_i$ but for all other $i$ pick $x'_i = x"_i$. Thus for this $j$ we
+have 
+\[ \lvert (f(x'_j) - f(x"_j))*(x_j - x_{j-1}) \rvert < \epsilon/2 .\] Since our choice of $x',x"$ are
+arbitrary pick $x"_j = x_j \neq x'_j$. Thus,
+\[ \lvert (f(x'_j) - f(x_j))*(x_j - x_{j-1}) < \lvert \epsilon/2 , \] and thus 
+\[ \lvert f(x'_j) \rvert < \lvert f(x_j) \rvert + \frac{\epsilon}{2(x_j - x_{j-1})} .\]
+Thus $f(x)$ is bounded in $\left[x_{j-1},x_{j}\right]$ 
+. We can do this for all $j \in 1, \dots, N$
+and so $f(x)$ is bounded in $\left[a,b\right]$.
+
+\textbf{Step 2} : Find the existence of step functions $f_1,f_2$ such that $f_1(x) \leq f(x) \leq 
+f_2(x)$.
+Since $f(x)$ is bounded on each $\left[x_{i-1},x_{i}\right]$, let us define the following :
+\begin{displaymath}
+    \begin{aligned}
+	&m_i = \text{ inf}\lbrace f(x'_i) : x'_i \in \left[x_{i-1},x_i\right]\rbrace \\
+	&m = \text{ min}(m_i : i = 1 \dots N) \\
+	&M_i = \text{ sup}\lbrace f(x'_i) : x'_i \in \left[x_{i-1},x_i\right]\rbrace \\
+	&M = \text{ max}(M_i : i = 1 \dots N)
+    \end{aligned}
+\end{displaymath}
+With this we can define step functions $f_1,f_2$ as follows : 
+    \[ f_{1}(x) = \left\{ 
+	    \begin{array}{l l}
+		m_i & \quad \text{if } x \in (x_{i-1},x_i) \quad i = 1,\dots,N \\
+		m & \quad \text{if } x = x_i \quad i = 0,\dots,N 
+	    \end{array} \right. ,\]
+    \[ f_{2}(x) = \left\{ 
+	    \begin{array}{l l}
+		M_i & \quad \text{if } x \in (x_{i-1},x_i) \quad i = 1,\dots,N \\
+		M & \quad \text{if } x = x_i \quad i = 0,\dots,N 
+	    \end{array} \right. .\]
+    Hence $f_1(x) \leq f(x) \leq f_2(x)$ for all $x \in \left[a,b\right]$. From the lemma concerning
+    step functions we know that $\int_a^b f_1 = \sum_{i = 1}^N m_i*(x_i - x_{i-1})$ and similarly
+    $\int_a^b f_2(x) = \sum_{i = 1}^N M_i*(x_i - x_{i-1})$.
+
+\textbf{Step 3} : Show that $\int_a^b (f_2(x) - f_1(x)) < \epsilon$.
+Since $m_i$ is the infimum of $f(x)$ for $x \in \left[x_{i-1},x_i\right]$, given an $\eta > 0$ there
+is some $\xi'_i \in \left[x_{i-1},x_i\right]$ such that $f(\xi'_i) < m_i + \eta$. Similarly there is
+some $\xi"_i \in \left[x_{i-1},x_i\right]$ such that $f(x"_i) > M_i + \eta$. Hence, 
+\[ \sum_{i = 1}^{N}(f(\xi"_i) - f(\xi'_i))*(x_i - x_{i-1}) > \sum_{i = 1}^{N}(M_i - \eta - m_i -
+    \eta)(x_i - x_{i-1}) .\]
+The left hand term is less than $\epsilon/2$ from the Cauchy criteria. The right hand term contain
+the integral of $f_1$ and $f_2$ as stated towards the end of step 2. Thus collecting the terms of
+$\eta$ which have telescoping sums we get :
+\[ \int_a^b (f_2 - f_1) -2\eta(b-a) < \epsilon /2 ,\] and so moving terms containing $\eta$ we have
+\[ \int_a^b (f_2 - f_1) < \epsilon/2 + 2\eta(b-a) .\] Since, $\eta > 0 $ was arbitrary we get the
+proof i.e 
+\[ \int_a^b (f_2 - f_1) \leq \epsilon/2 < \epsilon .\]
+
+$\Leftarrow$. Given step functions $f_1,f_2$ such that $f_1(x) \leq f(x) \leq f_2(x)$ for each 
+   $ x \in \left[a,b\right]$ and $\int_a^b(f_2(x) - f_1(x)) < \epsilon/3$. Since $f_1,f_2$ are
+   integrable (they are step functions), there is a $\delta > 0$ such that for a partition
+   $x_0,x_2,\dots,N$ of width less than delta, 
+   \begin{displaymath}
+       \begin{aligned}
+	   &\lvert \sum_{i=1}^N f_1(x'_i)(x_i - x_{i-1}) - \int_a^b f_1 \rvert < \epsilon/3 \\
+	   &\lvert \sum_{i=1}^N f_2(x'_i)(x_i - x_{i-1}) - \int_a^b f_2 \rvert < \epsilon/3 \\
+       \end{aligned}
+   \end{displaymath}
+   Let $S = \sum_{i = 1}^Nf(x'_i)(x_i - x_{i-1})$ be a riemann sum of $f$ on the partition. Since,
+   $f_1(x) \leq f(x) \leq f_2(x)$ for each $x$ we have
+   \[\sum_{i=1}^N f_1(x'_i)(x_i - x_{i-1}) \leq S \leq \sum_{i=1}^N f_2(x'_i)(x_i - x_{i-1}) .\]
+   Using the inequality above for the integrability of $f_1,f_2$ we have
+   \[\int_a^b f_1 - \frac{\epsilon}{3} \leq S \leq \int_a^b f_2 + \frac{\epsilon}{3}. \]Since this
+   is true for any Riemann sum of $f$ on a $\delta$ -small partition, let $S_1,S_2$ be two Riemann
+   sums of $f$ on the $\delta$ small partition then 
+   \[\int_a^b f_1 - \frac{\epsilon}{3} \leq S_1 \leq \int_a^b f_2 + \frac{\epsilon}{3}. \]
+   \[-\int_a^b f_1 + \frac{\epsilon}{3} \geq -S_2 \geq -\int_a^b f_2 - \frac{\epsilon}{3}. \]
+   Note that we have multiplied by $-1$ to get the inequality for $S_2$. Thus,
+   $S_1 - S_2 \leq 2\epsilon/3 + \int_a^b(f_2 - f_1)$. But using the hypothesis $
+   \int_a^b(f_2 - f_1) < \epsilon/3$ and so $S_1 - S_2 < \epsilon$. Similarly $S_1 - S_2 >
+   -\epsilon$. Hence,
+   \[ \lvert S_1 - S_2 \rvert < \epsilon .\] Thus we have established the cauchy criterion for $f$.
+   Hence $f$ is integrable.
+\end{proof}
+The next corollary was already proved in Step 1 of the proposition.
+\begin{Corollary}
+    If $f : \left[a,b\right]$ is integrable then $f$ is bounded.
+\end{Corollary}
+\begin{Theorem}[name=Continuous real valued function on compact sets are integrable]
+    If $f$ is a continuous real valued function on the interval $\left[a,b\right]$ then $f$ is
+    integrable.
+\end{Theorem}
+\begin{proof}
+    We will prove the Theorem by showing the existence of step functions $f_1,f_2$ such that for all
+    $x \in \left[a,b\right]$, $f_1(x) \leq f(x) \leq f_2(x)$ and given any $\epsilon > 0$ 
+    $\int_a^b(f_1(x),f_2(x)) <\epsilon$. Since $f$ is continuous on a compact subset of 
+    $\mathbb{R}$ $f$ is uniformly continuous. Thus for $\epsilon > 0 $ there is a $\delta > 0$ such
+    that for any $x',x" \in \left[a,b\right]$ whenever $\lvert x' - x" \rvert < \delta $ then
+    $\lvert f(x') - f(x") \rvert < \epsilon$. Choose a partition $x_0 < x_1 < \dots , < x_N$ such
+    that the width is less than $\delta$. Since $f$ is continuous on $\left[a,b\right]$, it is bounded in
+    $\left[a,b\right]$ and so it is bounded in each $\left[x_{i-1},x_i\right]$ for $i = 1,\dots,N$
+    and hence $f$ restricted to each $\left[x_{i-1},x_i\right]$ attains its maxima and mimima. Let
+    $x'_i,x"_i$ be the points where $f$ attains its minima and maxima when restricted to 
+    $\left[x_{i-1},x_i\right]$
+    Define $f_1,f_2$ as follows :
+    \[ f_{1}(x) = \left\{ 
+	    \begin{array}{l l}
+		f(x'_i) & \quad \text{if } x \in \left(x_{i-1},x_i\right) \quad i = 1,\dots,N \\
+		f(x) & \quad \text{if } x = x_i \quad i = 0,\dots,N 
+	    \end{array} \right. ,\]
+    \[ f_{2}(x) = \left\{ 
+	    \begin{array}{l l}
+		f(x"_i) & \quad \text{if } x \in (x_{i-1},x_i) \quad i = 1,\dots,N \\
+		f(x) & \quad \text{if } x = x_i \quad i = 0,\dots,N 
+	    \end{array} \right. .\]
+    Hence $f_1(x) \leq f(x) \leq f_2(x)$. Since $x'_i,x"_i \in \left[x_{i-1},x_i\right]$ and we have
+    a $\delta$ -small partition we get $\lvert x'_i - x"_i \rvert < \delta$ for each $i =
+    0,\dots,N$. Hence by uniform continuity, $\lvert f(x'_i) - f(x"_i) \rvert <
+    \frac{\epsilon}{b-a}$ for each $x'_i,x"_i \in \left[x_{i-1},x_i\right]$ and therfore 
+    for any $x \in \left[a,b\right]$ $\lvert f_1(x) - f_2(x) \rvert < \frac{\epsilon}{b-a}$. Thus, 
+    since $f_2 \geq f_1$ we can remove the absolute value to say 
+    $ f_2(x) - f_1(x) < \frac{\epsilon}{b-a}$. Hence max$\lbrace (f_2(x) - f_1(x)) : x \in 
+    \left[a,b\right]\rbrace < \frac{\epsilon}{b-a}$ . Thus,
+    \[ \int_a^b(f_2(x) - f_1(x)) \leq \text{ max} \lbrace (f_2(x) - f_1(x)) : x \in
+	\left[a,b\right]\rbrace .(b-a) .\] Hence $\int_a^b(f_2(x) - f_1(x)) < \epsilon$.
+
+\end{proof}
+Note that the existence of integrability based on continuity used the cauchy criteria in its proof
+which uses the complenetess on $\mathbb{R}$. Thus when our field is the rational numbers this
+existence is not guaranteed.   
+
+\begin{Theorem}
+    Let $a,b,c \in \mathbb{R}$, such that $a < b < c $ and let $f$ be a real valued function on
+    $\left[a,c\right]$. Then $f$ is integrable on $\left[a,c\right]$ iff $f$ is integrable on 
+    $\left[a,b\right]$ and $\left[b,c\right]$, in which case 
+    \[ \int_a^b f + \int_b^c f = \int_a^c f .\]
+\end{Theorem}
+\begin{proof}
+    $\Leftarrow$
+    Since $f$ is integrable on $\left[a,b\right]$ and $\left[b,c\right]$ we can find step functions
+    $h_1(x) \leq f(x) \leq h_2(x)$ for each $x \in \left[a,b\right]$ and $k_1(x) \leq f(x) \leq
+    k_2(x)$ on each $x \in \left[b,c\right]$ such that $\int_a^b (h_2(x) - h_1(x)) < \epsilon /2$
+    and $\int_b^c(k_2(x) - k_1(x)) < \epsilon/2$. Define $f_1,f_2$ as :
+    \[ f_{1}(x) = \left\{ 
+	    \begin{array}{l l}
+		h_1 & \quad \text{if } a \leq x \leq b \\
+		k_1 & \quad \text{if } b < x \leq c. 
+	    \end{array} \right. ,\]
+    \[ f_{2}(x) = \left\{ 
+	    \begin{array}{l l}
+		h_2 & \quad \text{if } a \leq x \leq b \\
+		k_2 & \quad \text{if } b < x \leq c. 
+	    \end{array} \right. ,\]
+    Then, $f_1,f_2$ are step functions such that $f_1(x) \leq f(x) \leq f_2(x)$ for all $x \in
+    \left[a,b\right]$. Since $f_1,f_2$ are step functions we can calculate $\int_a^c f_1$ and
+    $\int_a^c f_2$ and so $\int_a^c (f_2(x) - f_2(x))$. Moreover this is the same as $\int_a^b (f_2
+    -f_1) + \int_b^c (f_2 - f_1)$. Thus $\int_a^c (f_2 - f_1) < \epsilon$ and hence $f$ is integrable
+    in $\left[a,c\right]$.
+    
+    $\Rightarrow$
+    $f$ is integrable on $\left[a,c\right]$ then for any $\epsilon > 0$ there are step functions
+    $f_1,f_2$ on $\left[a,c\right]$ such that $f_1(x) \leq f(x) \leq f_2(x)$ and $\int_a^c (f_2(x) -
+    f_1(x)) < \epsilon$. Since $f_2(x) - f_1(x) \geq 0$ on $\left[a,b\right]$, $\int_a^b(f_2(x) -
+    f_1(x)) \geq 0$. Similarly $\int_b^c (f_2(x) - f_1(x)) \geq 0 $ on $\left[b,c\right]$ Moreover,
+    since $f_1,f_2$ are step functions,
+    \[\int_a^c (f_2(x) - f_1(x)) = \int_a^b (f_2(x) - f_1(x)) + \int_b^c (f_2(x) - f_1(x)).\]. Since
+    we noted that both integrals on the right hand side are positive and since the integral on the
+    left hand side is less than $\epsilon$ each integral on the right is less than $\epsilon$. But
+    that is the criteria of integrability of $f$ on $\left[a,b\right]$ and $\left[b,c\right]$.
+    Now we'll prove that if the Theorem holds then \[  \int_a^b f + \int_b^c f = \int_a^c f . \]
+    Given an $\epsilon > 0$, since $f$ is integrable on $\left[a,b\right]$ there is $\delta_{1} > 0$
+    such that if $S_1$ is a Riemann sum for any $\delta_{1}$ small partition 
+    $\lvert S_1 - \int_a^b f \rvert < \epsilon /3 $. Similarly there is $\delta_{2} > 0 $ such that
+    $\lvert S_2 - \int_b^c f \rvert < \epsilon /3$ and a $\delta_{3} > 0$ such that 
+    $\lvert S_3 - \int_a^c f \rvert < \epsilon /3$. Take $\delta = \text{ min
+    }(\delta_1,\delta_2,\delta_3)$ and note that for any $\delta$ -small partition  $S_3 = S_1 +
+    S_2$. Now,
+    \begin{displaymath}
+	\begin{aligned}
+	    \lvert \int_a^b f +  \int_b^c f -  \int_a^c f \rvert & = \lvert \int_a^b f - S_1 + 
+	    \int_b^c f - S_2  +  (S_1 + S_2) - \int_a^c f \rvert  \\
+	    & \leq \lvert S_1 - \int_a^b f \rvert + \lvert S_2 - \int_b^c f \rvert + 
+	    \lvert S_3 - \int_a^c f \rvert , \\
+	    & < \epsilon . 
+	\end{aligned}
+    \end{displaymath}
+    Since $\epsilon$ was arbitrary,
+    \[ \lvert \int_a^b f +  \int_b^c f -  \int_a^c f \rvert = 0. \] Thus the quantity inside the
+    absolute value is $0$ which completes the proof.
+\end{proof}
+\begin{Definition} 
+    If $f : \left[a,b\right] \to \mathbb{R}$ is integrable then,
+    \[ \int_a^b f = - \int_b^a f, \] and for any $a \leq c \leq b$,
+    \[ \int_c^c f = 0.\]
+\end{Definition}
+With this definition and the Theorem preceeding it, we can easily show the following corollary
+\begin{Corollary}
+    If $f$ is a real valued function on an interval in $\mathbb{R}$ which contains the points
+    $a,b,c$ and if two of the quantities $\int_a^b f, \int_b^c f, \int_a^c f$ exists, then the third
+    exists and 
+    \[ \int_a^b f + \int_b^c f = \int_a^c f .\]
+\end{Corollary}
+\begin{Corollary}
+    If $f$ is integrable on a closed interval in $\mathbb{R}$ then for any $a,b$ in the interval
+    $\int_a^b f$ exists. If $\lvert f(x) \rvert \leq M$ for all $x$ in the interval then for any
+    $a,b$ 
+    \[\lvert \int_a^b f \rvert \leq M \lvert b - a \rvert . \]
+\end{Corollary}
+
+\section{Fundamental Theorem of Calculus}
+\begin{Theorem}[name=Fundamental Theorem of calculus]
+    Let $f$ be a continuous real valued function on an open interval $\mathcal{U}$ in $\mathbb{R}$
+    and let $a \in \mathcal{U}$. Let the function $F$ on $\mathcal{U}$ be defined by 
+    \[F(x) = \int_a^x f,\] for all $x \in \mathcal{U}$. Then $F$ is differentiable and $F' =
+    f$. 
+\end{Theorem}
+\begin{proof}
+ We have to show that for any $x_0 \in
+    \mathcal{U}$,
+    \[ \lim_{x \to x_0} \frac{F(x) - F(x_0)}{x - x_0} = f(x_0) .\] 
+    Now for any $x \in \mathcal{U}$ and $x \neq x_0$ we have
+    \begin{displaymath}
+	\left.\lvert \frac{F(x) - F(x_0)}{x - x_0} - f(x_0)\rvert\right. = \left.\lvert \frac{\int_a^x f -
+	    \int_a^{x_0}f}{x - x_0} - f(x_0) \rvert\right.
+    \end{displaymath}
+    Now from the corollary of the previous Theorem for any $a,x,x_0 \in \mathcal{U}$,
+    \[ \int_a^x f = \int_a^{x_0} f + \int_{x_0}^{x} f ,\]
+    and since $f(x_0)$ is just a number we can write $f(x_0)$ as 
+    \[ f(x_0)*(x - x_0) = \int_{x_0}^x f(x_0) .\] Hence
+    \[\left.\lvert \frac{F(x) - F(x_0)}{x - x_0} - f(x_0)\rvert \right. = \left.\lvert
+	    \frac{\int_{x_0}^x (f - f(x_0))}{x -x_0}\rvert \right. .\]
+     Since $f$ is continuous at $x_0$, for a given $\epsilon > 0 $ there is a $\delta > 0$ such that 
+     whenever $\lvert x - x_0 \rvert < \delta$ then $\lvert f(x) - f(x_0) \rvert < \epsilon$. Thus
+     we see that $\epsilon $ is an upper bound for $\lbrace \lvert f(\xi) - f(x_0) \rvert : \text{
+	 $\xi$ in between $x$ and $x_0$ } \rbrace.$ Thus from the corollary 2 of the previous
+     Theorem $\lvert \int_{x_0}^x (f - f(x_0)) \rvert < \epsilon \lvert x - x_0 \rvert$. Hence,
+     \[\left.\lvert \frac{F(x) - F(x_0)}{x - x_0} - f(x_0)\rvert\right. < \epsilon .\] Since
+     $\epsilon > 0$ was arbitrary we get the proof.
+\end{proof}
+\begin{Corollary}
+    If $f$ is a real valued function on an open interval in $\mathbb{R}$, then there exists a real
+    valued function $F$ on the same interval whose derivative is $f$. 
+\end{Corollary}
+\begin{proof}
+    Pick an $a \in \mathcal{U}$ and for any $x \in \mathcal{U}$ let $F(x) = \int_a^x f $. Then from
+    the above Theorem $F' = f$.
+\end{proof}
+Note that $F$ is called the $\emph{anti-derivative}$ of $f$. Also the antiderivative is not unique.
+For if $F$ is the anti-derivative then so is $F + c$.
+\begin{Corollary}
+    If the real valued function $F$ an open interval $\mathcal{U}$ in $\mathbb{R}$ has the 
+    continuous derivative $f$ and $a,b \in \mathcal{U} $ then
+    \[ \int_a^b f = F(b) - F(a) .\]
+\end{Corollary}
+\begin{proof}
+    $f(x) = \frac{d}{dx}(F(x)) = \frac{d}{dx}( \int_a^x f)$. Since the derivatives of $F(x)$ and
+    $\int_a^b f$ are equal the functions must differ by a constant i.e 
+    \[ F(x) = \int_a^x f + c ,\] for all $x \in \mathcal{U}$. Now when $x = a$ we get $F(a) = 0 +
+    c$. Thus when $x = b$ we have $F(b) = \int_a^b f + F(a)$ and so we get the proof. 
+\end{proof}
+\begin{Corollary}[name=Change of variable Theorem]
+Let $\mathcal{U},\mathcal{V}$ be open intervals in $\mathbb{R}$ and 
+$\mathcal{U} \stackrel{\phi}{\longrightarrow} \mathcal{V}$ such that $\phi$ is a differentiable
+function with continuous derivative. Given a continuous function $f : \mathcal{V} \to \mathbb{R}$, 
+for any $a,b \in \mathcal{U}$
+\[ \int_{\phi(a)}^{\phi(b)} f(v)dv = \int_a^b f(\phi(u))\phi^{\prime}(u)du .\] 
+\end{Corollary}
+\begin{proof}
+    
+
+    We'll complete the proof in 2 steps.
+
+    \textbf{Step 1} : Find the anti-derivative of $f$ on $\mathcal{V}$.
+    Fix a $v = \phi(a)$ for $a \in \mathcal{U}$. Let $F : \mathcal{V} \to \mathbb{R}$ be the
+    function defined by $F(y) = \int_{\phi(a)}^y f(v)dv$. Since $f$ is continuous in $\mathcal{V}$,
+    $F$ is defined and by the fundamental Theorem of calculus $F' = f$. 
+
+    \textbf{Step 2} : Construct a composite function $G = F \circ \phi$ such that $G$ is an
+    antiderivative of $f$ in $\mathcal{U}$.
+    Let $G : \mathcal{U} \to \mathbb{R}$ be defined by $\int_{\phi(a)}^{\phi(x)} f(v)dv$. Then $G =
+    F \circ \phi$ and is the composite of two differentiable functions and hence by chain rule 
+    $G'(x) = F'(\phi(x))\phi^{\prime}(x) = f(\phi(x))\phi^{\prime}(x)$ . 
+    Hence by the fundamental Theorem of calculus $G(x) = \int_a^x f(\phi(x))\phi^{\prime}(x) + c$. 
+    Setting $x = a$ we get $c = 0$ and setting $ x = b$ we get the proof.
+
+\end{proof}
+

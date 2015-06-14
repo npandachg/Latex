@@ -1,0 +1,322 @@
+\documentclass[11pt]{amstext-l}
+
+\usepackage{mystylemath}
+\usepackage{myhomeworkstyle}
+\usepackage{interval}
+\intervalconfig{soft open fences}
+
+%
+% Title Page
+%
+
+\title{\vspace{2in}
+    \textmd{\textbf{\hmwkClass{STAT 620:\ Introduction to Measure Theoretic Probability}\\
+	    \hmwkTitle{1}}}\\
+    \normalsize\vspace{0.1in}\small{Due\ on\ \hmwkDueDate{Feb 11,2015}\ at 9:00am}\\
+    \vspace{0.1in}\large{\textit{\hmwkClassInstructor{Prof.\ Don Estep}\ 
+	    \hmwkClassTime{T-TH:\ 9\textemdash10:15am}}}
+    \vspace{3in}}
+
+\lhead{\hmwkAuthorName{Nishant Panda}}
+\chead{\hmwkClass{STAT 620}\: \hmwkTitle{1}}
+\rhead{\firstxmark}
+\lfoot{\lastxmark}
+\cfoot{\thepage}
+
+\author{\textbf{\hmwkAuthorName{Nishant Panda}}}
+\date{}
+
+\renewcommand{\part}[1]{\textbf{\large Part \Alph{partCounter}}\stepcounter{partCounter}\\}
+
+% Alias for the Solution section header
+\newcommand{\solution}{\textbf{\large Solution}}
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+%%%%%%%%% 1 %%%%%%%%%%%
+\begin{homeworkProblem}[1]
+    Show that any Cauchy sequence of real numbers is bounded. 
+    
+    \solution{}
+
+    Given a Cauchy sequence $\seq{p}{n}$ of real numbers, we have to show there is a positive
+    number $R$ such that for any positive integer $n$ we have $\lvert p_n \rvert < R$.
+    Since we have a cauchy sequence, for some $\epsilon = 1$ there is a positive integer $N$ such
+    that for any $m,n \geq N$, $\lvert p_m - p_n \rvert < 1$. Thus for any $n \geq N$, $\lvert p_n
+    \rvert < \lvert p_N \rvert + 1$. Let $R' = \max\set{\lvert p_i - p_N \rvert}{1\leq i \leq N-1}$. 
+    Thus $R'$ is greater than $0$. Let $R = \max(R',1) + \lvert p_N \rvert$. 
+    Thus for any positive integer $n$ we have $\lvert p_n \rvert < R $ for all $n
+    \in \Zplus$.
+\end{homeworkProblem}
+
+\pagebreak
+%%%%%%%%% 2 %%%%%%%%%%%
+\begin{homeworkProblem}[2]
+    Let $G \subset \R$. A point $x \in G$ is an interior point of $G$ if there is a positive number
+    $r$ such that $\left(x-r,x+r\right)$ is entirely contained in $G$. The set of all interior
+    points of $G$ is denoted by $G^{\circ}$. Show that,
+    $G$ is open if and only if $G^{\circ} = G$.
+\end{homeworkProblem}
+
+\solution{}
+
+We need to show the following:
+\begin{enumerate}
+    \item $G \text{\,open in \,} \R \implies G^{\circ} = G$. 
+    \item $G^{\circ} = G \implies G \text{\,open in \,} \R$. 
+\end{enumerate}
+To show the second implication it is equivalent to show that $G^{\circ}$ is open in $\R$. Thus we
+need to show:
+\begin{enumerate}
+    \item $G \text{\,open in \,} \R \implies G^{\circ} = G$. 
+    \item $G^{\circ} \text{\,open in \,} \R$. 
+\end{enumerate}
+For $(1)$, given that $G$ is open in $\R$ we need to show that $G^{\circ} \subset G$ and $G \subset
+G^{\circ}$. Without loss of generality we can assume $G^{\circ} \neq \emptyset$. Let $x$ be an
+element of $G^{\circ}$. By definition of $G^{\circ}$, there is a positive number $r$ such that the
+set $(x-r,x+r)$ is contained in $G$. But note that $x \in (x-r,x+r)$ and so $x \in G$.
+To show that $G \subset G^{\circ}$, let $x$ be an element of $G$. Since $G$ is open there is a
+positive number $r$ such that $(x-r,x+r)$ is contained in $G$. But this means that $x$ is an
+interior point of $G$ and so $x \in G^{\circ}$. 
+\vspace{0.25in}
+
+For $(2)$, let $x \in G^{\circ}$. We need to show that there is a positive number $r_x$
+such that $(x - r_x , x + r_x)$ is entirely contained in $G^{\circ}$. Let us denote by
+$\ball{r_x}{x}$ the interval $(x - r_x , x + r_x)$. Thus we need to show that for any $y \in
+\ball{r_x}{x}$ we must have $y \in G^{\circ}$, i.e. $y$ is an interior point of $G$.
+
+Since $x \in G^{\circ}$ we can find a positive number $r$ such that $\ball{r}{x} \subset G$. We
+will show that $\ball{r}{x}$ is also contained in $G^{\circ}$ and thus complete the proof. Let $y
+\in \ball{r}{x}$. Since $\ball{r}{x}$ is an open set in $\R$ there is a positive number $\delta$
+such that $\ball{\delta}{y} \subset \ball{r}{x}$. But this means that $\ball{\delta}{y} \subset G$
+and so $y$ is an interior point of $G$ i.e $y \in G^{\circ}$. Thus we found an $r_x = r$ such that 
+$(x - r_x, x+r_x)$ is entirely contained in $G^{\circ}$ and hence $G^{\circ}$ must be open. Hence
+$G$ open follows whenever $G = G^{\circ}$.
+
+\pagebreak
+%\pagebreak
+
+%%%%%%%%% 3 %%%%%%%%%%%
+\begin{homeworkProblem}[3]
+    Find an example to show that the union of countably many closed sets in not necessarily closed.
+
+    \solution{}
+
+    Consider the collection  $F = \set{F_i}{i \in \Zplus,i \geq 2}$ where each $F_i =
+    \left[0,1-\frac{1}{i}\right]$. Since each $F_i$ is a closed interval, it is a closed set in
+    $\R$. Also the collection $F$ is indexed by positive integers and so is a countable collection.
+    However, $\bigcup {F} = \interval[open right]{0}{1}$ is neither closed nor open in $\R$. 
+\end{homeworkProblem}
+\pagebreak
+%%%%%%%%% 4 %%%%%%%%%%%
+\begin{homeworkProblem}[4]
+    Is $\Q$ open, closed or neither in $\R$?
+
+    \solution{}
+
+    $\Q$ is neither open nor closed in $\R$. To see why $\Q$ is not closed in $\R$ we know that
+    $\closure{\Q}= \R$. Hence there is a $r \not \in \Q$ such that $r$ is a limit point of $\Q$.
+    Thus $\Q$ does not contain all its limit points and hence cannot be closed. 
+
+    To see why $\Q$ is not open, let $p \in \Q$ and let $r$ be a an arbitrary positive number. We
+    will show that $(p-r,p+r)$ is not contained in $\Q$. Let $a = p-r$ and $b = p+r$. From the
+    archimedian property we can deduce that there is a rational number $q$ contained in
+    $(a-\sqrt{2},b-\sqrt{2})$ and so there is an irrational number $q+\sqrt{2}$ in the interval
+    $(p-r,p+r)$. Since $r$ was arbitrary we have shown that no point of $\Q$ is an interior point of
+    $\Q$. Hence $\Q$ is not open.
+
+
+\end{homeworkProblem}
+
+\pagebreak
+%%%%%%%%% 5 %%%%%%%%%%%
+\begin{homeworkProblem}[5]
+    Let $M$ be a set. Define $d : M \times M \to \R^{+}$ by  
+    \begin{equation*}
+	d(x,y) = \begin{cases}
+	    0& \text{if}\quad x = y \\
+	    1& \text{if}\quad x \neq y
+	\end{cases}
+    \end{equation*}
+    Show that $d$ is a metric.
+
+    \solution{}
+
+    That $d(x,y)$ is positive when $x \neq y$ is evident from the definition. We must show that:
+    \begin{enumerate}
+	\item $d(x,x) = 0$,
+	\item $d(x,y) = d(y,x)$,
+	\item $d(x,z) \leq d(x,y) + d(y,z)$,
+    \end{enumerate}
+    for all $x,y,z \in X$.
+
+    For $(1)$, we note that $x = x$ and so $d(x,x) = 0$ follows from the definition. For $(2)$, if
+    $x = y$ then $d(x,y) = 0 = d(y,x)$. If $x \neq y$, then $d(x,y) = 1 = d(y,x)$.
+
+    For $(3)$, we have the following cases:
+    \begin{itemize}
+	\item $x = z$; $y = x$,
+	    Then $d(x,z) = 0$, $d(x,y) = 0$ and $d(y,z) = 0$.
+	\item $x = z$; $y \neq x$,
+	    Then $d(x,z) = 0$, $d(x,y) = 1$ and $d(y,z) = 1$.
+	\item $x \neq z$; $y = x$,
+	    Then $d(x,z) = 1$, $d(x,y) = 0$ and $d(y,z) = 1$. 
+	\item $x \neq z$; $y = z$,
+	    Then $d(x,z) = 1$, $d(x,y) = 1$ and $d(y,z) = 0$.
+	\item $x \neq y \neq z$,
+	    Then $d(x,z) = 1$, $d(x,y) = 1$ and $d(y,z) = 1$.
+    \end{itemize}
+    Thus in all cases $d(x,z) \leq d(x,y) + d(y,z)$.
+
+\end{homeworkProblem}
+
+\pagebreak
+%%%%%%%%% 6 %%%%%%%%%%%
+\begin{homeworkProblem}[6]
+    Show that a cauchy sequence that has a convergent subsequence itself converges.
+
+    \solution{}
+
+    Let $\seq{p}{n} \in \R$ be a cauchy sequence. Given a subsequence $\subseq{p}{n}{k}$ such
+    that $\converges{p}{n_k}{p}$ for some $p \in \R$, we have to show that $\converges{p}{n}{p}$.
+    Let $\epsilon$ be an arbitrary positive number. Since the subsequence converges to $p$, we can
+    find a positive integer $N_1$ such that $d(p_{n_k},p) < \frac{\epsilon}{2}$ for all $k$ 
+    greater than $N_1$. Also since $\seq{p}{n}$ is cauchy, there is a positive integer $N_2$ 
+    such that $d(p_m,p_n) < \frac{\epsilon}{2}$ for all $m,n$ greater than $N_2$. 
+    Choosing $N = \max(N_1,N_2)$ we observe that for any $n,m \geq N$,
+    \begin{align*}
+	d(p_n,p) &\leq d(p_n,p_m) + d(p_m,p), \\
+	&< \frac{\epsilon}{2} + \frac{\epsilon}{2}, \\
+	&< \epsilon.
+    \end{align*}
+    Here $m$ is some index in the subsequence i.e $m = n_k$ for some $k \geq N$. The first inequality
+    follows from the cauchy condition and the second is due to the convergence
+    of the subsequence. Hence $\seq{p}{n}$ converges to $p$.
+
+\end{homeworkProblem}
+
+\pagebreak
+%\pagebreak
+%%%%%%%%% 7 %%%%%%%%%%%
+\begin{homeworkProblem}[7]
+    Let $\seq{f}{n}$ be a Cauchy sequence of functions in $C\interval{a}{b}$.
+    \begin{itemize}
+	\item[(a)] Show that for each $x \in \interval{a}{b}$, the sequence of numbers $\seq{f}{n}$
+	    converges to a limit. Call that limit $f(x)$. This defines a real valued function on
+	    $\interval{a}{b}$.
+	\item[(b)] Show that $f(x)$ is continuous on $\interval{a}{b}$.
+    \end{itemize}
+
+    \solution{}
+
+    For $(a)$, fix a $x \in \interval{a}{b}$. Given $\left(f_n(x)\right)$ is Cauchy in $\R$. Since Cauchy
+    sequences are bounded (Problem 1), there is a closed interval in $\R$ such that for all $n$,
+    ${f}_n(x)$ is contained in that closed interval. Since closed and bounded sets in $\R$ are compact
+    (Heine-Borel), we must have that a subsequence i.e $\left(f_{n_k}(x)\right)$ must converge to some
+    $f(x) \in \R$. However we have shown that a cauchy sequence with convergent subsequence must
+    itself converge (Problem 6). Hence $f_n(x) \to f(x)$.
+
+    
+    For $(b)$, we will break the solution in two parts. We will use the following characterization
+    of closed sets i.e a set $F \subset \R$ is closed if and only if for any sequence in $F$ 
+    that converges to a point in $\R$, the limit also belongs to $F$. We will show 
+    \begin{itemize}
+	\item[Step 1] $\seq{f}{n} \quad \text{Cauchy} \quad \implies \seq{f}{n} \quad \text{converges uniformly to}
+	    \quad f$.
+	\item[Step 2] $f$ is pointwise continuous in $\interval{a}{b}$.
+    \end{itemize}
+
+    For \textbf{Step 1}, we are given that for each $x \in \interval{a}{b}$, the sequence
+    $\left(f_n(x)\right)$ is Cauchy. However since we have the sup metric i.e. $d(f_m,f_n) =
+    \max\set{\lvert f_n(x) - f_m(x) \rvert}{x \in \interval{a}{b}}$, we have a uniform cauchy
+    sequence, i.e.\ given an $\epsilon > 0$, there is a positive number $N$ such that for any $m,n
+    \geq N$ we have $d(f_m(x),f_n(x))$ for all $x \in \interval{a}{b}$.  
+
+    From $(a)$, we know that $f_1(x),f_2(x), \ldots$ converges to $f(x)$ for all $x \in
+    \interval{a}{b}$. Fix a $x \in \interval{a}{b}$, then for a given $\epsilon$, we have some $N$
+    such that $d(f_m(x),f_n(x)) < \epsilon/2$ for all $m,n \geq N$. Fix a $n \geq N$. Thus for all $m
+    \geq N$ we have that $f_m(x) \in \closure{\ball{\frac{\epsilon}{2}}{f_n(x)}}$. Since a closed
+    ball is a closed set and $f_m(x) \to f(x)$, we get that $f(x) \in 
+    \closure{\ball{\frac{\epsilon}{2}}{f_n(x)}}$. Thus $d(f(x),f_n(x)) < \epsilon$. Since this is
+    true for any $x$ we get the uniform convergence.
+
+    \vspace{0.5in}
+
+    For \textbf{Step 2}, we will show that uniform convergence of continuous function yields a 
+    continuous function. Fix a $x_0 \in \interval{a}{b}$ and let $\epsilon > 0$ be any positive 
+    number. For any $x$, consider the following inequality by repeated use of the triangle
+    inequality:
+    \begin{align*}
+	\lvert f(x) - f(x_0) \rvert &\leq \lvert f(x) - f_n(x)\rvert + \lvert f_n(x) - f(x_0) \rvert \\
+	&\leq \lvert f(x) - f_n(x) \rvert + \lvert f_n(x) - f_n(x_0)\rvert + \lvert f_n(x_0) -
+	f(x_0)\rvert 
+    \end{align*}
+
+    The first and third inequality can be made smaller than $\frac{\epsilon}{3}$ by choosing $n$
+    large enough, while the second inequality can by made smaller than $\frac{\epsilon}{3}$ by the
+    continuity of each $f_n$. Thus we have a $\delta > 0$ such that,
+    \[ \lvert f(x) - f(x_0) \rvert  < \epsilon\]
+    for any $x \in \interval{a}{b}$ whenever $\lvert x - x_0 \rvert < \delta$. Thus,
+    f is continuous at $x_0$. 
+\end{homeworkProblem}
+
+
+\pagebreak
+%%%%%%%%% 8 %%%%%%%%%%%
+
+\begin{homeworkProblem}[8]
+    Prove that if $f$ is uniformly continuous on $\interval{a}{b}$ then $\omega(f,\delta) \to 0$ as
+    $\delta \to 0$.
+
+    \solution{}
+
+    Given that $f$ is uniformly continuous we have to show:
+    \begin{itemize}
+	\item $\forEv{\epsilon > 0 }\thereIs{\gamma > 0 }\forEv{\delta}
+	    \suchThat{0 < \delta < \gamma}{\implies}{\omega(f,\delta) < \epsilon}$	
+
+    \end{itemize}
+    Fix an $\epsilon > 0$. Since $f$ is uniformly continuous there is a $\gamma > 0$ such that
+    whenever $\lvert x - y \rvert < \gamma$, $\lvert f(x) - f(y)\rvert < {\epsilon}'$ for all $x,y$ in the
+    domain of $f$. Here $0 < \epsilon ' < \epsilon$. Thus consider the set,
+    \[ E_{\gamma} = \set{\lvert f(x) - f(y) \rvert < {\epsilon}'}{\lvert x - y\rvert < \gamma} \]
+    $E_{\gamma} \subset \R$ and is bounded above by ${\epsilon}'$. Hence we must have that 
+    $\sup{E_{\gamma}} \leq \epsilon ' < \epsilon$. But for any $\delta < \gamma$, we have
+    $E_{\delta} \subset E_{\gamma}$ and hence $\sup E_{\delta} \leq \sup E_{\gamma}$. Noting that
+    $\sup{E_{\delta}} = \omega(f,\delta)$ we have shown that for any $\epsilon > 0$ there is a
+    $\gamma > 0$ such that
+    \[ 0 < \delta < \gamma \implies \omega(f,\delta) < \epsilon \]
+    Thus $\omega(f,\delta) \to 0$ whenever $\delta \to 0$.
+ 
+
+\end{homeworkProblem}
+
+
+\begin{homeworkProblem}
+    Compute the Bernstein polynomials of degree 1,2 and 3 for $e^x$ in $\interval{0}{1}$.
+
+    \solution{}
+
+    \begin{align*}
+	B_1(f,x) &= e^{0} \binom{1}{0} (1-x) + e^{1}\binom{1}{1}x \\
+	&= 1 + x(e-1)
+    \end{align*}
+
+    \begin{align*}
+	B_2(f,x) &= e^{0} \binom{2}{0}{(1-x)}^{2} + e^{1/2}\binom{2}{1}x(1-x) + 
+	e^{1}\binom{2}{2}x^{2}\\
+	& = 1 + 2x(e^{1/2} - 1) + x^{2}(1 + e - 2e^{1/2})
+    \end{align*}
+
+    \begin{align*}
+	B_3(f,x) &= e^{0} \binom{3}{0}{(1-x)}^{3} + e^{1/3}\binom{3}{1}x{(1-x)}^{2} + 
+	e^{2/3}\binom{3}{2}x^{2}(1-x) + e^{1}\binom{3}{3}x^{3} \\
+	&= 1 + 3x(e^{1/3} - 1) + 3x^2(1 - 2e^{1/3} + e^{2/3}) + x^{3}(e - e^{2/3} + e^{1/3} - 1) 
+    \end{align*}
+\end{homeworkProblem}
+
+
+\end{document}

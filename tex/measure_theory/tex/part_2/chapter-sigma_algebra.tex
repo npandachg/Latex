@@ -1,0 +1,2656 @@
+\chapter{Elements of measure theory: measurable sets}
+In this chapter, we will define the abstract notion of measurability of sets.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Sigma Algebra of sets}
+\begin{Definition}[name=Power set]
+    Let $X$ be a non-empty set. The family of all subsets of $X$ is called the \emph{power set} of $X$
+    and is denoted by $\powSet{X}$.
+\end{Definition}
+
+\begin{Definition}[name=Increasing sequence of sets]
+    Let $\seq{A}{n}$ be a sequence of subsets of $X$. If $\incSetSeq{A}$ and $\countU{A} = A$, then
+    we say that the $A_n$ form an increasing sequence of sets and increase to $A$. We denote this by
+    $\atobUp{A}{A}$.
+\end{Definition}
+
+\begin{Definition}[name=Decreasing sequence of sets]
+    Let $\seq{A}{n}$ be a sequence of subsets of $X$. If $\decSetSeq{A}$ and $\countI{A} = A$, then
+    we say that the $A_n$ form an decreasing sequence of sets and decrease to $A$. We denote this by
+    $\atobDown{A_n}{A}$.
+\end{Definition}
+
+Given two subsets $A,B \subset X$, we can write the union as a disjoint union as follows:
+\begin{equation*}
+    A \bigcup B = \left(A\right) \disjU \left(B \cap \comp{A}\right)
+\end{equation*}
+\begin{figure}
+  \includestandalone[width=0.5\textwidth]{tex/tikz_figures/disjU}
+  \caption{Disjoint union of two sets}\label{fig:tikz:disjU}
+\end{figure}
+Here we use $\disjU$ to denote that the union is between elements that are disjoint. 
+The above observation along with the \emph{DeMorgan's} Law can be used to show the following
+statements that equate an arbitrary union to disjoint union.
+
+\begin{Remark}\label{rmk:disjU}
+    Let $\seq{A}{n}$ be a sequence of subsets of $X$. Then,
+    \begin{enumerate}
+	\item $\finiteU{A}{n} = \left(A_1\right) \disjU \left(A_2 \cap \indxComp{A}{1}\right)
+	    \dots \disjU \left(A_n\cap\indxComp{A}{n-1}\dots\cap\indxComp{A}{1}\right)$. 
+	    Let us construct new sets $F_k = (A_k) \bigcap \comp{(\bigcup_{i = 1}^{k-1}
+		A_i)}$ for $k > 1$ and $F_1 = A_1$. Thus $\countU{A} = \countDisjU{F}$. Note that
+	    $F_k$ is just $\setDiff{A_k}{\bigcup_{i = 1}^{k-1}A_i}$. In this way,
+	    we can get a sequence of pairwise disjoint sets $\seq{F}{n}$ whose countable 
+	    union is the same as the countable union of the originial sequence.
+	\item If $\atobUp{A_n}{A}$ then, 
+	    \begin{enumerate}
+		\item $ A_n = \finiteU{A}{n} = A_1 \disjU \left(\setDiff{A_2}{A_1}\right) \dots \disjU
+		    \left(\setDiff{A_n}{A_{n-1}}\right)$,
+		\item $A = \countU{A} = \dot\bigcup_{i \in \Zplus}\left({\setDiff{A_i}{A_{i-1}}}\right)$, 
+		    where we take $A_0 = \emptyset$.
+	    \end{enumerate}
+	\item If $\atobUp{A_n}{A}$ then $\atobDown{\indxComp{A}{n}}{\comp{A}}$. If
+	    $\atobDown{A_n}{A}$ then $\atobUp{\indxComp{A}{n}}{\comp{A}}$.
+	    
+    \end{enumerate}
+\end{Remark}
+
+\begin{Definition}[name=Algebra of sets]
+    Let $X$ be a non-empty set. An \emph{algebra} on $X$ is a \emph{non-empty} collection of sets
+    $\algebra{A} \subset \powSet{X}$ with the following properties,
+    \begin{enumerate}
+	\item If $E \in \algebra{A}$ then $\comp{E} \in \algebra{A}$.
+	\item If $E_1,E_2,\dots,E_n \in \algebra{A}$ then $\bigcup_{i=1}^{n}E_i \in \algebra{A}$.
+    \end{enumerate} 
+\end{Definition}
+
+
+\begin{Definition}[name=Sigma-Algebra of sets]
+    Let $X$ be a non-empty set. A $\sigmaAlgebra$  on $X$ is a 
+    \emph{non-empty} collection of sets $\algebra{A} \subset \powSet{X}$ with the following properties,
+    \begin{enumerate}
+	\item If $E \in \algebra{A}$ then $\comp{E} \in \algebra{A}$.
+	\item If $\seq{E}{n} \in \algebra{A}$ then $\countU{E} \in \algebra{A}$.
+    \end{enumerate} 
+\end{Definition}
+\begin{Theorem}[name=Properties of sigma algebras]\label{thm:prop_sigmaA}
+    If $\family{A}$ is a $\sigma - \text{algebra}$ on $X$ then,
+    \begin{properties}
+	\item If $E_1,E_2,E_3,\dots, E_n \in \algebra{A}$ then $\finiteU{E}{n} \in \algebra{A}$.
+	\item $X, \emptyset \in \family{A}$.
+	\item If $\seq{E}{n} \in \family{A}$ then $\countI{E} \in \family{A}$.
+	\item If $E_1,E_2,E_3,\dots, E_n \in \algebra{A}$ then $\finiteI{E}{n} \in \algebra{A}$.
+	\item If $A,B \in \algebra{A}$ then $\setDiff{A}{B} \in \algebra{A}$.
+    \end{properties}
+\end{Theorem}
+Note that for an algebra the closure under countable intersection is generally not true. 
+Thus a $\sigma - \text{algebra}$ on a set $X$ is an algebra that is closed under countable union and
+intersection.
+\begin{proof}
+    We prove in order,
+    \begin{enumerate}
+	\item Let $E_i = E_n$ for $i > n$. Then $\finiteU{E}{n} = \countU{E} \in \algebra{A}$.
+	\item Since $\algebra{A}$ is non empty there is a $E \subset X$ such that $E \in
+	    \algebra{A}$. Thus $\comp{E} \in \algebra{A}$. Thus $X = E \cup \comp{E} \in
+	    \algebra{A}$ from the above property. Since $X \in \algebra{A}, \comp{X} = \emptyset \in
+	    \algebra{A}$.
+	\item From DeMorgan's Law.
+	\item Since $E_1,E_2,\dots,E_n \in \algebra{A}, \indxComp{E}{1},\dots,\indxComp{E}{n} \in
+	    \algebra{A}$. From $(1), \finiteUComp{E}{n} \in \algebra{A}$. Thus its complement
+	    $\finiteI{E}{n}$ is in $\algebra{A}$.
+	\item From above, $\setDiff{A}{B} = A \cap {\comp{B}}$ which is in $\algebra{A}$.
+    \end{enumerate}
+\end{proof}
+\begin{Example}\label{ex:type_of_sigma_alg}
+    The following are all $\sigmaAlgebra$s.
+    \begin{enumerate}
+	\item $\powSet{X}$ is a $\sigmaAlgebra$. It is called the maximal $\sigmaAlgebra$ on $X$.
+	\item $\lbrace \emptyset, X \rbrace$ is called the minimal $\sigmaAlgebra$ on
+	    $X$.
+	\item For any $B \subset X$, the collection $\lbrace \emptyset, B, \comp{B}, X\rbrace$ is a
+	    $\sigmaAlgebra$.
+	\item The collection $\algebra{A} = \set{A \subset X}{A \, \text{is countable or} \,
+	       	\comp{A}\,\text{is countable}}$ is a $\sigmaAlgebra$.
+	    \begin{proof}
+		$\comp{(\comp{A})} = A$. Thus if $A \in \algebra{A}$, it is either countable or
+		$\comp{A}$ is countable. Thus $\comp{A} \in \algebra{A}$. Let $\seq{A}{n} \in
+		\algebra{A}$. If all are countable then the countable union is countable and so is
+		in $\algebra{A}$. If not there exist an index $j \in \Zplus$ such that
+		$\indxComp{A}{j}$ is countable. Thus $\comp{(\countU{A})} = \countIComp{A} \subset
+		\indxComp{A}{j} \in \algebra{A}$.
+	    \end{proof}
+	\item (\textbf{Restricted} $\sigmaAlgebra$)
+	    Let $E \subset X$ be any set and let $\algebra{A}$ be a $\sigmaAlgebra$ on $X$. Then
+	    the collection $\algebra{A}_{E} = \set{E \cap A}{A \in \algebra{A}}$ is $\sigmaAlgebra$
+	    on $E$.
+	    \begin{proof}
+		Let $E_1 \in \algebra{A}_{E}$, then $E_1 = E \cap A$ for some $A \in \algebra{A}$.
+		The complement of $E_1$ in $E$ is given by $E \cap \indxComp{E}{1}$. Thus we have $E
+		\cap \indxComp{E}{1} = E \cap (\comp{E} \cup \comp{A})$ and so $E \cap \indxComp{E}{1} =
+		(E \cap \comp{E}) \cup (E \cap \comp{A})$. Thus $E \cap \indxComp{E}{1} = E \cap
+		\comp{A} \in \algebra{A}_{E}$. Let $\seq{E}{n}$ be a sequence in $\algebra{A}_{E}$.
+		Each $E_i = E \cap A_i$ for some $A_i \in \algebra{A}$. Therefore $\countU{E} =
+		E \cap \countU{A} \in \algebra{A}_{E}$.
+	    \end{proof}
+    \end{enumerate}
+\end{Example}
+\begin{Theorem}[name=Equivalent Characterization of $\sigmaAlgebra$]\label{thm:eq_ch_sigmaA}
+    A collection of sets $\algebra{A}$ is a $\sigmaAlgebra$ on $X$ iff it is closed under
+    complements and for any sequence of pairwise disjoint sets contained in the collection 
+    their union is also contained in the collection. 
+\end{Theorem}
+\begin{proof}
+    $\Rightarrow$ is immediately evident from the definition of $\sigmaAlgebra$. 
+
+    $\Leftarrow$ Consider a sequence of sets $\seq{E}{n} \in \algebra{A}$. Using~\ref{rmk:disjU},
+	we can construct a sequence of pairwise disjoint sets $\seq{F}{n}$, such that $\countU{A} =
+	\countDisjU{F} \in \algebra{A}$. 
+\end{proof}
+\begin{Definition}[name=Generated $\sigmaAlgebra$]
+    Let $X$ be any non-empty set and let $\family{E} \subset \powSet{X}$. The $\sigmaAlgebra$
+    generated by $\family{E}$ is the unique smallest $\sigmaAlgebra$ containing $\family{E}$ and is
+    denoted by $\sigmaGen{\family{E}}$.
+\end{Definition}
+In set theory a \emph{smallest} set in a collection is the set that is contained in every other set
+of the collection. The next theorem guarantees the existence of a smallest $\sigmaAlgebra$.
+\begin{Theorem}[name=Sigma Algebra generated by an arbitrary collection]\label{thm:sigma_al_gen}
+    Let $X$ be a non-empty set,
+    \begin{enumerate}
+	\item
+	    The intersection of any collection of $\sigmaAlgebra$ on $X$ is
+	    itself a $\sigmaAlgebra$.
+	\item 
+	    Let $\family{E} \subset \powSet{X}$. There is a unique smallest $\sigmaAlgebra$
+	    $\sigmaGen{\family{E}}$ containing $\family{E}$ in the sense that any $\sigmaAlgebra$ 
+	    containing $\family{E}$ must contain $\sigmaGen{\family{E}}$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    Given a non-empty set $X$,
+    \begin{enumerate}
+	\item
+	    Let $\mathcal{G}$ be a collection of $\sigmaAlgebra$ on $X$. Then,
+	    \begin{equation*}
+		\algebra{F} = \bigcap_{\algebra{A} \in \mathcal{G}}\algebra{A} =
+		\set{E{\subset}X}{\forEv{\algebra{A}\in\mathcal{G}},E\in\algebra{A}}.
+	    \end{equation*}
+	    Let $E \in \algebra{F}$. Thus $\forEv{\algebra{A} \in \mathcal{G}}$, $E \in \algebra{A}$ and
+	    hence $\comp{E} \in \algebra{A}$ for all $\algebra{A} \in \mathcal{G}$. Thus $E \in
+	    \algebra{F}$. Similary for a sequence of sets $\seq{E}{n}$ in $\algebra{F}$, 
+	    we have that $\countU{E} \in \algebra{F}$.
+	\item
+	    Let $\mathcal{G} = \set{\algebra{A}\,\text{on}\,X}{\family{E}\subset\algebra{A}}$. Then
+	    $\mathcal{G}$ is a collection of $\sigmaAlgebra$ on $X$.
+	    Define $\sigmaGen{\family{E}} = \bigcap_{\algebra{A} \in \mathcal{G}}\algebra{A}$. From above,
+	    $\sigmaGen{\family{E}}$ is a $\sigmaAlgebra$. By definition for any $\sigmaAlgebra$ $\algebra{A}$
+	    on $X$ that contains $\family{E}$, $\algebra{A} \in \mathcal{G}$ and so
+	    $\sigmaGen{\family{E}}
+	    \subset\algebra{A}$.
+    \end{enumerate}
+\end{proof}
+\begin{Remark}\label{rmk:obs_sigma_gen}
+    We make a few observations about the generated $\sigmaAlgebra$.
+    \begin{enumerate}
+	\item
+	    If $\family{E}$ is a $\sigmaAlgebra$, then $\family{E} = \sigmaGen{E}$.
+	    \begin{proof}
+		Note that $\family{E} \subset \family{E}$ and so if $\family{E}$ is a
+		$\sigmaAlgebra$, from the proof above $\sigmaGen{\family{E}} \subset \family{E}$.
+		That $\family{E} \subset \sigmaGen{\family{E}}$ is evident from the definition of
+		$\sigmaGen{\family{E}}$.
+	    \end{proof}
+	\item
+	    For any $A \subset X$, we have $\sigmaGen{\lbrace A \rbrace} = \lbrace \emptyset, A,
+	    \comp{A},X\rbrace$.
+	\item If $\family{E} \subset \family{F}$, then $\sigmaGen{\family{E}} \subset
+	    \sigmaGen{\family{F}}$.
+	    \begin{proof}
+		$\family{E} \subset \family{F} \subset \sigmaGen{\family{F}}$. Thus
+		$\sigmaGen{\family{E}} \subset \sigmaGen{\family{F}}$.
+	    \end{proof}
+    \end{enumerate}
+\end{Remark}
+A very important principle to prove statements about generated sigma algebra is called the
+\emph{principle of good sets} which is described in the following remark:
+\begin{Remark}[name=Principle of good sets]\label{rmk:prin_good_sets}
+    Suppose we want to show that for any collection $\family{E}$, the generated sigma algebra
+    $\sigmaGen{\family{E}}$ has a certain property $P$. IF we can find a sub-collection $\family{F}
+    \subset \sigmaGen{\family{E}}$ that has this property $P$, and show that $\family{F}$ is a
+    $\sigmaAlgebra$, then $\sigmaGen{\family{E}}$ has property $P$, provided
+    $\family{E}\subset\family{F}$.
+\end{Remark}
+We can generate new $\sigmaAlgebra$ from existing $\sigmaAlgebra$ using inverse maps.
+\begin{Theorem}[name=Pre-Image $\sigmaAlgebra$]\label{thm:pre_img_sigma}
+    Let $\map{f}{X}{Y}$ be a function.
+    \begin{enumerate}
+	\item
+	    If $\algebra{A}$ is a $\sigmaAlgebra$ on $Y$, then
+	    \begin{equation*}
+		\invIm{f}{\algebra{A}} := \set{\invIm{f}{A}}{A \in \algebra{A}}
+	    \end{equation*}
+	    is a $\sigmaAlgebra$ on $X$.
+	\item
+	    If $\algebra{B}$ is a $\sigmaAlgebra$ on $X$, then
+	    \begin{equation*}
+		\set{A\subset Y}{\invIm{f}{A}\in\algebra{B}}
+	    \end{equation*}
+	    is a $\sigmaAlgebra$ on $Y$.
+	\item
+	    If $\family{E}$ is a collection of sets in $Y$, then
+	    \begin{equation*}
+		\sigmaGen{\invIm{f}{\family{E}}} = \invIm{f}{\sigmaGen{\family{E}}}
+	    \end{equation*}
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    Given a function $\map{f}{X}{Y}$, 
+    \begin{enumerate}
+	\item Let $E \in \invIm{f}{\algebra{A}}$. Thus $E = \invIm{f}{A}$ for some $A \in
+	    \algebra{A}$. $\comp{E} = \comp{(\invIm{f}{A})} = \invIm{f}{\comp{A}}$ and 
+	    thus $\comp{E}\in\invIm{f}{\algebra{A}}$. Let $\seq{E}{n}$ be a sequence of sets in
+	    $\invIm{f}{\algebra{A}}$. Then $E_i = \invIm{f}{A_i}$. Thus $\countU{E} =
+	    \bigcup_{i\in\Zplus}\invIm{f}{A_i} = \invIm{f}{\countU{A}} \in \invIm{f}{\algebra{A}}$.
+	\item Let $E$ be in the collecion, hence, $E \subset Y$ such that $\invIm{f}{E} \in 
+	    \algebra{B}$, hence $\invIm{f}{\comp{E}} = \comp{(\invIm{f}{E})} \in \algebra{B}$. 
+	    Thus $\comp{E}$ is in the collection. Similar argument for countable union.
+	\item
+	    We need to show $\sigmaGen{\invIm{f}{\family{E}}} \subset 
+	    \invIm{f}{\sigmaGen{\family{E}}}$ and $ \invIm{f}{\sigmaGen{\family{E}}} \subset 
+	    \sigmaGen{\invIm{f}{\family{E}}}$.
+	    
+	    For any $A \in \family{E}$, $A \in \sigmaGen{\family{E}}$ and hence
+	    $\invIm{f}{\family{E}} \subset \invIm{f}{\sigmaGen{\family{E}}}$. But from
+	    $(1)$, we know that $\invIm{f}{\sigmaGen{\family{E}}}$ is a $\sigmaAlgebra$, and
+	    thus $\sigmaGen{\invIm{f}{\family{E}}} \subset
+	    \invIm{f}{\sigmaGen{\family{E}}}$.
+
+	    The other direction is tricky. We will use~\ref{rmk:prin_good_sets}. What we want to show
+	    is that for any $A \in \sigmaGen{\family{E}}$ we should have,
+	    \begin{equation*}
+		\invIm{f}{A} \in \sigmaGen{\invIm{f}{\family{E}}}.
+	    \end{equation*}
+	    Thus consider the collection of good sets $\family{F}$, such that
+	    \begin{equation*}
+		\family{F} = \set{A \in \sigmaGen{\family{E}}}{\invIm{f}{A} \in 
+		    \sigmaGen{\invIm{f}{\family{E}}}}
+	    \end{equation*}
+	    Clearly $\family{F}$ is not empty because $\family{E} \subset \family{F}$. This
+	    is easily observed because $\invIm{f}{\family{E}} \subset
+	    \sigmaGen{\invIm{f}{\family{E}}}$. If we show that $F$ is a $\sigmaAlgebra$ we
+	    are done.
+	    Let $E\in \family{F}$. Therefore $\invIm{f}{E} \in
+	    \sigmaGen{\invIm{f}{\family{E}}}$ but
+	    this means that $\comp{E} \in \family{F}$ since $\invIm{f}{\comp{E}} =
+	    \comp{(\invIm{f}{E})} \in \sigmaGen{\invIm{f}{\family{E}}}$. Similary for 
+	    countable unions. Thus $\family{F}$ is a $\sigmaAlgebra$ containing $\family{E}$ 
+	    and so $\sigmaGen{\family{E}} \subset \family{F}$.
+    \end{enumerate}
+\end{proof}
+Of particular interest is the situation involving a metric space, for example $\Rn$. In this case,
+we have a built in natural concept of distance plus the associated topology of sets, for example 
+open sets, closed sets etc.
+
+\begin{Definition}[name=Borel Sets]
+    Let $\metricS{X}{d}$ be a metric space. The $\sigmaAlgebra$ generated by the collection of open
+    sets in $X$ is called the \emph{Borel} $\sigmaAlgebra$ on $X$ and is denoted by $\borelS{X}$.
+    Its members are called the \emph{Borel sets}.
+\end{Definition}
+We can equivalently generate the Borel $\sigmaAlgebra$ using the family of closed sets. The Borel
+sets include open sets, countable union an intersection of open sets, closed sets, countable union
+and intersection of closed sets and so on. 
+\begin{Definition}
+    A countable intersection of open sets is called a $G_{\delta}$ set, a countable union of closed
+    sets is called a $F_{\sigma}$ set, a countable union of $G_{\delta}$ set is called
+    $G_{\delta\sigma}$ and so on.
+\end{Definition}
+The Borel $\sigmaAlgebra$ on $\Rn$, $\borelS{\Rn}$ is particularly important. When $n = 1$, we get
+the Borel $\sigmaAlgebra$ on the real line, $\borelS{\R}$. The most interesting generators are the
+family of open and half-open rectangles,
+
+\begin{align*}
+    &\family{J}_{n} = \set{\interval{a_1}{b_1} \times \dots \interval{a_n}{b_n}}{a_j,b_j \in \R}, \\	
+    &\family{J}^{o}_{n} = \set{(a_1,b_1) \times \dots (a_n,b_n)}{a_j,b_j \in \R}, \\	
+    &\family{J}^{cr}_{n} = \set{\interval[open left]{a_1}{b_1} \times \dots 
+	\interval[open left]{a_n}{b_n}}{a_j,b_j \in \R}, \\	
+    &\family{J}^{cl}_{n} = \set{\interval[open right]{a_1}{b_1} \times \dots 
+	\interval[open right]{a_n}{b_n}}{a_j,b_j \in \R}. \\	
+    &\family{J}^{o}_{\Q_{n}} = \set{(a_1,b_1) \times \dots 
+	(a_n,b_n)}{a_j,b_j \in \Q}. \\	
+\end{align*}
+Let us denote by $\family{G},\family{F},\family{K}$, the collection of open, closed and compact sets
+in $\Rn$. The following theorem is very useful in realizing the generating sets of $\borelS{\Rn}$.
+\begin{Theorem}[name=Generating Borel Sets in $\Rn$]\label{thm:gen_borel_rn}
+    We have,
+    \begin{enumerate}
+	\item 
+	    $\borelS{\Rn} = \sigmaGen{\family{G}}$.
+	\item
+	    $\borelS{\Rn} = \sigmaGen{\family{F}}$.
+	\item
+	    $\borelS{\Rn} = \sigmaGen{\family{K}}$.
+	\item
+	    $\borelS{\Rn} = \sigmaGen{\family{J}^{o}_{n}}$.
+	\item
+	    $\borelS{\Rn} = \sigmaGen{\family{J}^{cr}_{n}}$.
+	\item
+	    $\borelS{\Rn} = \sigmaGen{\family{J}^{cl}_{n}}$.
+	\item
+	    $\borelS{\Rn} = \sigmaGen{\family{J}_{n}}$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    $(1)$ is just the definition of Borel sets. For any open set $U \in \family{G}$, $\comp{U} \in
+    \family{F}$. Thus $U \in \sigmaGen{F}$ i.e $\family{G} \subset \sigmaGen{\family{F}}$ and thus
+    $\sigmaGen{\family{G}} \subset \sigmaGen{\family{F}}$. A similar argument with roles reversed 
+    leads to $\sigmaGen{\family{F}} \subset \sigmaGen{\family{G}}$. Any compact set $K$ is also a
+    closed set so $\sigmaGen{\family{K}} \subset \sigmaGen{\family{F}}$. Let us write a closed set
+    as a countable union of compact sets in $\Rn$. If $F \in \family{F}$, then let $F_i = F \cap
+    \closure{\ball{i}{\vect{0}}}, i\in \Zplus$. Each $F_i$ is an intersection of closed sets and 
+    is bounded and hence is compact in $\Rn$. Moreover,
+    \begin{equation*}
+	F = \countU{F}.
+    \end{equation*}	
+    Thus $F \in \sigmaGen{\family{K}}$ and so $\sigmaGen{\family{F}} \subset \sigmaGen{\family{K}}$.
+    Thus we have shown the following,
+    \begin{equation*}
+	\borelS{\Rn} = \sigmaGen{\family{G}} = \sigmaGen{\family{K}} = \sigmaGen{\family{F}}.
+    \end{equation*}
+    Let $R \in \family{J}^{o}_{n}$ be a open rectangle (box) in $\Rn$. Any open rectangle is an open
+    set, thus 
+    $\sigmaGen{\family{J}^{o}_{\Q_{n}}} \subset \sigmaGen{\family{J}^{o}_{n}} 
+    \subset \sigmaGen{\family{G}}$. Now for the other direction consider any open set $U \in
+    \family{G}$. $U = \bigcup\limits_{p\in U}\ball{\epsilon_{p}}{p}$. But for any open ball we can
+    inscribe a rectangle with rational endpoints in it and so,
+    \begin{equation*}
+	U = \bigcup\limits_{R \in \family{J}^{o}_{\Q_{n}};R \subset U}R
+    \end{equation*}
+    Thus $\family{G} \subset \sigmaGen{\family{J}^{o}_{\Q_{n}}}$ and so we get the following,
+    \begin{equation*}
+	\borelS{\Rn} = \sigmaGen{\family{J}^{o}_{n}}
+    \end{equation*}
+    Let $R^{cr} \in \family{J}^{cr}_{n}$ be a half-open rectangle in $\Rn$ closed at right.
+    Thus, $R^{cr} = \interval[open left]{a_1}{b_1} \times \dots 
+    \interval[open left]{a_n}{b_n}$ which can be written as,
+    \begin{equation*}
+	\interval[open left]{a_1}{b_1} \times \dots 
+	\interval[open left]{a_n}{b_n} = \bigcap\limits_{j\in\Zplus}(a_1,b_1+1/j) \times \dots
+	(a_n,b_1+1/j).
+    \end{equation*}	    
+    Thus, $\family{J}^{cr}_{n} \subset \sigmaGen{\family{J}^{o}_{n}}$. Let $R \in 
+    \family{J}^{o}_{n}$ be a open rectangle (box) in $\Rn$. 
+    Thus, $R = (a_1,b_1) \times \dots (a_n,b_n)$ which can be written as,
+    \begin{equation*}
+	(a_1,b_1)\times\dots(a_n,b_n) = \bigcup\limits_{j\in\Zplus}
+	\interval[open left]{a_1}{b_1-1/j}\times\dots\interval[open left]{a_n}{b_1-1/j}.
+    \end{equation*}
+    Thus,$\family{J}^{o}_{n} \subset \sigmaGen{\family{J}^{cr}_{n}}$. Hence we have shown,
+    \begin{equation*}
+	\sigmaGen{\family{J}^{o}_{n}} = \sigmaGen{\family{J}^{cr}_{n}}
+    \end{equation*}
+    A similar argument can be done for the family $\family{J}^{cl}_{n}$.
+\end{proof}
+\begin{Corollary}\label{thm:gen_borel_R}
+    $\borelS{\R}$ is generated by each of the following:
+    \begin{enumerate}
+	\item
+	    (Open intervals): $\family{E}_1 = \set{(a,b)}{a < b}$.
+	\item
+	    (closed intervals): $\family{E}_2 = \set{\interval{a}{b}}{a < b}$.
+	\item
+	    (half open closed right intervals): $\family{E}_3 = \set{\hInt{a}{b}}{a < b}$
+	\item
+	    (half open closed left intervals): $\family{E}_4 = \set{\interval[open right]{a}{b}}{a < b}$
+	\item
+	    (open rays): $\family{E}_5 = \set{(a,\infty)}{a \in \R}$
+	\item
+	    (open rays): $\family{E}_6 = \set{(-\infty,a)}{a \in \R}$
+	\item
+	    (closed rays): $\family{E}_7 = \set{\interval[open right]{a}{\infty}}{a \in \R}$
+	\item
+	    (closed rays): $\family{E}_8 = \set{\hInt{a}{\infty}}{a \in \R}$
+    \end{enumerate}
+\end{Corollary}
+Before moving onto the subject of measures, we'll give a technical result that will be useful in
+constructing measure for the Borel sets. The following just abstracts the class of half open
+rectangles.
+\begin{Definition}[name=Elementary family]
+    Let $X$ be a non-empty set. An elementary family is a collection $\family{E}$ of subsets of $X$
+    such that,
+    \begin{enumerate}
+	\item
+	    $\emptyset \in \family{E}$.
+	\item
+	    If $E,F \in \family{E}$ then $\intersection{E}{F} \in \family{E}$.
+	\item
+	    If $E \in \family{E}$, then $\comp{E}$ is a finite disjoint union of members of
+	    $\family{E}$.
+    \end{enumerate}
+\end{Definition}
+\begin{Example}\label{ex:hint_elem_fam}
+    Consider the family $\family{J}^{cr}_{1}$ of half-open closed right interval in $\R$. If we
+    include $-\infty,\infty$ then we refer to sets of this family as \textbf{h-intervals}. These are
+    collection of subsets of $\R$ of the form $\interval[open left]{a}{b}, (a,\infty), \emptyset$. 
+    $\family{J}^{cr}_{1}$ is an elementary family. To check the last condition of the definition,
+    consider the set $\interval[open left]{a}{b}$. Its complement is set $\interval[open
+    left]{-\infty}{a} \cup (b,\infty)$ which is the disjoint union of two \textbf{h-intervals}. 
+\end{Example}
+\begin{Theorem}[name=Constructing an algebra from elementary family]\label{thm:const_algebra_elem}
+    If $\family{E}$ is an elementary family, the collection, $\algebra{A}$ of finite disjoint unions
+    of members of $\family{E}$ is an algebra.
+\end{Theorem}
+\begin{proof}
+    First note that $\algebra{A}$ is not empty since $\family{E} \subset \algebra{A}$. This is
+    because any $E \in \family{E}$ can be written as the disjoint union of $E \disjU \emptyset$.
+
+    Let $A \in \algebra{A}$. Then $A = E_1 \disjU E_2 \disjU \dots \disjU E_n$. We need to show that
+    $\comp{A} \in \algebra{A}$. Note that $\comp{A} = \indxComp{E}{1} \cap \indxComp{E}{2} \cap
+    \dots \cap \indxComp{E}{n}$. However each $\indxComp{E}{m} = E^{m}_{1} \disjU \dots \disjU
+    E^{m}_{n_m}$. Therefore $\comp{A}$ is,
+    \[\bigcap\limits_{m =1}^{n}\disjU\limits_{j=1}^{n_m}E^{m}_{j} = 
+	\disjU\set{E_{j_1}^{1}\cap\dots\cap E_{j_n}^n}{1\leq j_m \leq n_m,\, 1\leq m \leq n},\]
+    which is a disjoint union of finite sets in $\family{E}$ and hence in $\algebra{A}$.
+
+    Let us show that $\algebra{A}$ is closed under union of two sets. By induction we will get
+    closure of finite union.
+    Let $A,B \in \algebra{A}$. Then $A = \finiteDisjU{C_i}{n_A}$ and $B = \finiteDisjU{D_i}{n_B}$. We
+    need to show that $A\cup B \in \algebra{A}$ i.e the following set,
+    \[A \cup B = \disjU\set{C_{j_A}\cup D_{j_B}}{1\leq j_A \leq n_A; 1\leq j_B \leq n_B}.\]
+
+    Each $C_{j_A}\cup D_{j_B}$ belong to $\algebra{A}$. 
+    To see this, let us show that if $C,D \in \family{E}$ then $C \cup D \in \algebra{A}$.
+    Note that, $\comp{D} = \finiteDisjU{E_i}{J}$. 
+    Thus $C \cap \comp{D} = \finiteDisjU{C\cap E_i}{J}$. Since
+    $C,E_i \in \family{E}$ we get $C \cap \comp{D} \in \algebra{A}$. But $C \cup D = (C \cap
+    \comp{D}) \disjU (D)$. Since $(C \cap \comp{D})$ is the disjoint union of sets in $\family{E}$,
+    $C \cup D$ is then a disjoint union of sets in $\family{E}$ and hence $C\cup D \in \algebra{A}$.
+    Thus from induction if $A_1, A_2, \dots, A_n \in \family{E}$ then $\finiteU{A}{n} \in
+    \algebra{A}$. 
+    Hence, each $C_{j_A}\cup D_{j_B}$ belong to $\algebra{A}$.
+    Thus by induction on $n_A \times n_B$ we get
+    the result. Now we can induct on a finite sequence of sets $A_i \in \algebra{A}$ to show that
+    $\algebra{A}$ is closed under finite unions. 
+\end{proof}
+\begin{Remark}\label{rmk:hinterval}
+    Note that if $\family{E}$ is the collection $\family{J}^{cr}_{1}$, then the collection
+    $\algebra{A}$ of finite disjoint unions of \textbf{h-intervals} is an algebra
+    by~\ref{thm:const_algebra_elem}. But note that $\family{E} \subset \family{A}$ and thus
+    $\sigmaGen{\family{E}} \subset \sigmaGen{\family{A}}$. However, 
+    $\sigmaGen{\family{A}} = \borelS{\R}$ which is also equal to $\sigmaGen{\family{E}}$
+    from~\ref{thm:gen_borel_rn}.
+\end{Remark}
+
+\section{Measures}
+We now consider how to measure the size of the sets in a given $\sigmaAlgebra$ on a set $X$.
+\begin{Definition}[name=Measure]
+    Let $X$ be a set on which there is a $\sigmaAlgebra$ $\algebra{M}$. A measure on the measurable
+    space $\metricS{X}{\algebra{M}}$ is a function \[\map{\mu}{\algebra{M}}{\interval{0}{\infty}}\]
+    satisfying,
+    \begin{enumerate}
+	\item
+	    $\measure{\emptyset} = 0$,
+	\item
+	    ($\sigma$-additivity) If $\seq{E}{n}$ be a sequence of pairwise disjoint sets in 
+	    $\algebra{M}$, then
+	    \begin{equation*}
+		\measure{\countDisjU{E}} = \sumInf{\measure{E_i}}.
+	    \end{equation*}
+    \end{enumerate}
+\end{Definition}
+A \emph{pre-measure} is function that satisfies the above on an \emph{algebra} and not necessarily
+on a $\sigmaAlgebra$. Note that for a \emph{pre-measure}, additivity is statisfied if the countable
+union of a sequence of sets is in the algebra. We will denote a pre-measure by $\preMeas$. 
+The triple $\measureS{X}{\algebra{M}}{\mu}$ is called a \emph{measure space}.
+A \emph{finite measure} is a measure with $\measure{X} < \infty$, and a \emph{probability measure}
+is a measure with $\measure{X} = 1$. Note that for a finite measure, for any $E \in \algebra{M}$,
+$\measure{E} < \infty$. A measure is said to be $\sigmaFinite$, if $\algebra{M}$
+contains a sequence $\incSetSeq{A}$ such that $\countU{A} = X$ and $\measure{A_i} < \infty$ for
+every $i \in \Zplus$. Most measures encountered in practice are at least $\sigmaFinite$, and
+non-$\sigmaFinite$ measures have some strange behaviour. A measure $\mu$ is $\sigma$ semi-finite if
+any set $F \in \algebra{M}$ such that $\measure{F} = \infty$ there is a set $E \in \algebra{M}$ and
+$E \subset F$ such that $\measure{E} < \infty$.
+
+\begin{Definition}[name=Finitely additive measure]
+    If $\seq{E}{i}$ are disjoint sets in $\algebra{M}$, and $\measure{\finiteDisjU{E}{n}} =
+    \sumFinite{\measure{E_i}}{n}$, then $\mu$ is finitely additive measure.
+\end{Definition}
+Note that a pre-measure will always satisfy finite additivity.
+\begin{Example}
+    Let $X$ be an uncountable set and let $\algebra{M}$ be the $\sigmaAlgebra$,
+    \begin{equation*}
+	\set{A \subset X}{A \, \text{is countable or} \,
+	    \comp{A}\,\text{is countable}}
+    \end{equation*}
+    Then the following set function defined on $\algebra{M}$,
+    \begin{equation*}
+	\measure{E} =
+	\begin{cases}
+	    1 &\text{E is countable}\\
+	    0 &\text{$\comp{E}$ is countable}
+	\end{cases}
+    \end{equation*}
+    is a finitely additive measure but is not countably additive.
+\end{Example}
+We collect all the important properties of a measure in the following theorem. The following
+properties will also be satisfied by a pre-measure provided we check that the countable union and
+intersection of a sequence of sets belong to the algebra.
+\begin{Theorem}[name=Properties of measure]\label{thm:prop_of_meas}
+    Let $\measureS{X}{\algebra{M}}{\mu}$ be a measure space. Then,
+    \begin{properties}
+	\item 
+	    (finite-additivity) $E,F \in \algebra{M}$ and $E \cap F = \emptyset$, then 
+	    \[\measure{E\disjU F} = \measure{E} + \measure{F}.\]
+	\item
+	    (monotonicity) If $E,F \in \algebra{M}$ and $E \subset F$ then 
+	    \[\measure{E} \leq \measure{F}.\]
+	    Moreover if $\measure{F} < \infty$, then 
+	    \[\measure{\setDiff{F}{E}} = \measure{F} - \measure{E}.\]
+	\item
+	    (sub-additivity) If $\seq{E}{i}$ be a sequence of sets in $\algebra{M}$, 
+	    then \[\measure{\countU{E}} \leq \sumInf{\measure{E_i}}.\]
+	\item
+	    (continuity from below) If $\seq{E}{i} \in \algebra{M}$, and \[\incSetSeq{E},\text{then}\]
+	    \[\measure{\countU{E}} = \lim\limits_{i\to\infty}\measure{E_i}.\]
+	\item
+	    (continuity from above) If $\seq{E}{i} \in \algebra{M}$, 
+	    and \[\decSetSeq{E}\] and $\measure{E_n} < \infty$ for some $n \in \Zplus$, 
+	    then \[\measure{\countI{E}} =
+	    \lim\limits_{i\to\infty}\measure{E_i}.\]
+    \end{properties}
+\end{Theorem}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item 
+	    Let $E_1 = E$ and $E_2 = F$ and $E_i = \emptyset$ for all $i \geq 3, i \in \Zplus$.
+	    Then, $\measure{E\disjU F} = \measure{\countDisjU{E}} = \measure{E} + \measure{F}$.
+	\item
+	    $F = E \disjU F\cap\comp{E}$, and so $\measure{F} = \measure{E} +
+	    \measure{F\cap\comp{E}}$, and hence $\measure{E} \leq \measure{F}$. 
+	    (Since $E,F \in \algebra{M}$, $F\cap\comp{E}$ is also in
+	    $\algebra{M}$, the result follows from $(1)$ because $\mu$ is a non-negative set
+	    function). Now if $\measure{F} < \infty$, then $\measure{E} < \infty$ and so we can
+	    subtract the $\measure{E}$ to obtain $\measure{F} - \measure{E} =
+	    \measure{F\cap\comp{E}} = \measure{\setDiff{F}{E}}$.
+	\item 
+	    From~\ref{rmk:disjU}, we can construct disjoint sets out of regular sets as follows,
+	    let $F_1 = E_1$ and $F_k = E_k - \finiteU{E}{k-1}$ for $k \geq 2$. 
+	    Note that each $\measure{F_k} \leq \measure{E_k}$ and $\countU{E} = \countDisjU{F}$. 
+	    Hence, \[\measure{\countU{E}} = \measure{\countDisjU{F}} = \sumInf{\measure{F_i}} \leq
+		\sumInf{\measure{E_i}}.\]
+	\item
+	   From~\ref{rmk:disjU}, we can construct disjoint sets as above, let $F_1 = E_1$ and 
+	   $F_k = E_k - \finiteU{E}{k-1} = E_k - E_{k-1}$ for $k \geq 2$.
+	   See~\ref{fig:tikz:measure_prop}. Also note that 
+	   $E_n = \finiteDisjU{F_i}{n}$ and so $\measure{E_n} = \measure{\finiteDisjU{F}{n}} =
+	   \sumFinite{\measure{F_i}}{n}$. Thus,
+	   \begin{align*}
+	       \measure{\countU{E}} &=\measure{\countDisjU{F}}  \\
+	       &=\sumInf{\measure{F_i}} \\
+	       &=\lim\limits_{n\to\infty}\sumFinite{\measure{F_i}}{n} \\
+	       &=\lim\limits_{n\to\infty}\measure{E_n}. 
+	   \end{align*}
+	   
+
+
+       \item
+	   
+	   Let $F_k = E_n - E_k$ for $k > n$, and $F_k = \emptyset$ for $k \leq n$. 
+	   Note that $E_n \supset E_{n+1} \supset E_{n+2} \dots$, 
+	   and so $F_{n+1} \subset F_{n+2} \dots$ i.e.~$F_{n+1} = E_n - E_{n+1} \subset E_n -
+	   E_{n+2} = F_{n+2}$ and so on. See~\ref{fig:tikz:measure_prop2}. Hence,
+	   \[\bigcup\limits_{i \geq n+1} F_i = \bigcup\limits_{i \geq n+1}(\setDiff{E_n}{E_i}) =
+	       \setDiff{E_n}{\bigcap\limits_{i \geq n+1}E_i}.\]
+	   Thus we get,
+	   \[\measure{\countU{F}} = \measure{E_n} - \measure{\bigcap\limits_{i \geq n+1}E_i}.\]
+	   because, $E_{n+k} \subset E_n$ and $\measure{E_n} < \infty$.
+	   Also we get a increasing sequence of sets $F_{i} \subset
+	   F_{i+1} \subset F_{i+2} \dots$, for $i > n$. Thus we know that,
+	   \[\measure{\countU{F}} = \lim\limits_{i\to\infty}\measure{F_i} = \lim\limits_{k\to\infty}
+	       \measure{\setDiff{E_n}{E_{n+k}}}.\]
+	   Since $E_{n+k} \subset E_n$ and $\measure{E_n} < \infty$ we get,
+	  \[\measure{\countU{F}} = \lim\limits_{i\to\infty}\measure{F_i} = 
+	      \measure{E_n} - \lim\limits_{k\to\infty}\measure{E_{n+k}}.\]
+	  Thus equating the two we get our result.
+ 
+    \end{enumerate}
+\end{proof}
+
+\begin{figure}
+    \includestandalone[width=0.45\textwidth]{tex/tikz_figures/measure_prop}
+    \caption{Illustration of proof~\ref{thm:prop_of_meas} $(4)$}\label{fig:tikz:measure_prop}
+\end{figure}
+\begin{figure}
+    \includestandalone[width=0.45\textwidth]{tex/tikz_figures/measure_prop2}
+    \caption{Illustration of proof~\ref{thm:prop_of_meas} $(5)$}\label{fig:tikz:measure_prop2}
+\end{figure}
+
+\section{Sets of measure zero and completion of measure}
+We know that we want to deal with sets of measure zero. There is a technical issue about such sets
+that we settle now.
+\begin{Definition}[name=Sets of measure zero]
+    If $\measureS{X}{\algebra{M}}{\mu}$ is a measure space, a set $E \in \algebra{M}$ with
+    $\measure{E} = 0$ is called a set of \emph{measure zero}. 
+\end{Definition}
+\begin{Definition}[name=Almost everywhere]
+    If a statement about points $x \in X$ is true except for $x$ in a set of \emph{measure zero}, we
+    say that the statement is true \emph{almost everywhere} and denote it by a.e.
+\end{Definition}
+\begin{Proposition}[name=Countable union of sets of measure $0$]\label{prop:count_union_meas_0}
+    A countable union of sets of measure zero has measure zero.
+\end{Proposition}
+\begin{proof}
+    From the sub-additivity property of measure, if $\seq{E}{i}$ is a sequence of measure zero then
+    $\measure{\countU{E}} \leq \sumInf{\measure{E_i}} = 0$. Since measure is a non-negative set
+    function we get $\measure{\countU{E}} = 0$.
+\end{proof}
+\begin{Remark}
+    If $\measure{F} = 0$ for some $F \in \algebra{M}$, then $\measure{E} = 0$ for any $E \subset F$
+    whenever $E \in \algebra{M}$. However, $E$ may not be in $\algebra{M}$. This is a technical
+    issue that we need to resolve. We will do so my adding to the $\algebra{M}$ all those
+    subsets of sets in $\algebra{M}$ that have measure $0$. This is called the completion of the
+    measure $\mu$.
+\end{Remark}
+\begin{Definition}[name=Complete measure space]
+    If $\measureS{X}{\algebra{M}}{\mu}$ is a measure space such that $\algebra{M}$ contains all
+    subsets of sets in $\algebra{M}$ with measure $0$, then $\measureS{X}{\algebra{M}}{\mu}$ is
+    \emph{complete}.
+\end{Definition}
+Completeness eliminates some annoying issues and it can always be obtained by enlarging the domain of
+a given measure to obtain an equivalent measure in the following sense:
+\begin{Theorem}[name=Completion of a measure]\label{thm:comp_of_meas}
+    Let $\measureS{X}{\algebra{M}}{\mu}$ be a measure space. Let $\family{N} = \set{N \in
+	\algebra{M}}{\measure{N} = 0}$. Define,
+    \[\closure{\algebra{M}} = \set{E\cup F}{E \in \algebra{M},\text{$\thereIs{N\in\family{N}}$ such
+	    that $F \subset N$}},\]
+     then $\closure{\algebra{M}}$ is a $\sigmaAlgebra$ on $X$ that contains $\algebra{M}$. Moreover,
+     the unique measure $\xoverline{\mu}$ on $\closure{\algebra{M}}$ defined by 
+     $\compMeasure{E\cup F} = \measure{E}$ for all $E \in \algebra{M}$ makes
+     $\measureS{X}{\closure{\algebra{M}}}{\xoverline{\mu}}$ complete.
+\end{Theorem}
+\begin{proof}
+    Clearly $\algebra{M} \subset \closure{\algebra{M}}$. We need to show that
+    $\closure{\algebra{M}}$ is a $\sigmaAlgebra$. Let $A \in \closure{\algebra{M}}$. Then $A = E
+    \cup F$ such that there is a $N \in \family{N}$ with $F \subset N$. Note that $F \subset N
+    \implies \comp{N} \subset \comp{F}$ and so $\comp{F} = \comp{N} \disjU \setDiff{N}{F}$. 
+    Thus $\comp{A} = \comp{E}\cap\comp{F} = \comp{E}\cap(\comp{N}\cup(\setDiff{N}{F}))$. 
+    Thus the distributive law yields,
+    \[\comp{A} = (\comp{E}\cap\comp{N})\cup (\comp{E}\cap{N}\cap\comp{F}).\]
+    Now $(\comp{E}\cap\comp{N}) \in \algebra{M}$ since both $E,N \in \algebra{M}$.
+    Also $(\comp{E}\cap{N}\cap\comp{F}) \subset N$ and hence $\comp{A} \in \closure{\algebra{M}}$.
+    Let $\seq{A}{i}$ be a sequence of sets in $\algebra{M}$. Then each $A_i = E_i \cup F_i$ such
+    that there is a $N_i \in \family{N}$ such that $F_i \subset N_i$. Thus,
+    \[\countU{A} = (\countU{E})\, \bigcup\, (\countU{F}).\]
+    $\countU{E} \in \algebra{M}$ and $\countU{F} \subset \countU{N}$.
+    From~\ref{prop:count_union_meas_0}, $\countU{N} \in \family{N}$ and hence $\countU{A} \in
+    \closure{\algebra{M}}$. Thus $\closure{\algebra{M}}$ is a $\sigmaAlgebra$.
+
+    We have to check if $\compMeasure{A}$ is well defined i.e if $A = E_1 \cup F_1 = E_2 \cup F_2$
+    then $\measure{E_1} = \measure{E_2}$. To see this, $E_1 \subset E_1 \cup F_1 = E_2 \cup F_2
+    \subset E_2 \cup N_2 \in \algebra{M}$. Thus $\measure{E_1} \leq \measure{E_2} + \measure{N_2} =
+    \measure{E_2}$. Similarly, $\measure{E_2}  \leq \measure{E_1}$. 
+    
+    Thus to show that 
+    $\measureS{X}{\closure{\algebra{M}}}{\xoverline{\mu}}$ is complete we need to show that for any
+    $A \in \closure{\algebra{M}}$, if $\compMeasure{A} = 0$, then for any $B \subset A$ we must have
+    $B \in \closure{\algebra{A}}$. Since $A = E \cup F$ where $F \subset N$ for some $N \in
+    \family{N}$, we have $\compMeasure{A} = \measure{E}$. But this implies that $\measure{E} = 0$
+    and so $E \in \family{N}$. Thus $A \in \family{N}$. But $B \subset A$ and so $B = \emptyset
+    \cup B$ where $\emptyset \in \algebra{M}$ and $B \subset A \in \family{N}$. Thus $B \in
+    \closure{\algebra{M}}$. 
+\end{proof}
+\begin{Example}
+    Consider a set $X \neq \emptyset$ and the minimal sigma 
+    algebra $\algebra{M} = \lbrace X,\emptyset\rbrace$ with a measure $\mu$ defined to be $0$ 
+    for any set in the $\algebra{M}$. Clearly $\measureS{X}{\algebra{M}}{\mu}$ is not complete. To
+    get a completion of $X$ we must add all subsets of $X$ to the $\sigmaAlgebra$. Thus
+    $\closure{\algebra{M}} = \powSet{X}$.
+\end{Example}
+\section{Construction of measures}
+A $\sigmaAlgebra$ is a huge set and specifying a set function that satisfies the requirements of a
+measure is not a trivial pursuit. Instead we work with set functions that can be easily constructed 
+and then derive a measure from it by restricting or extending its domain. One such way is the
+\emph{outer measure}. As we will see an outer measure can be derived easily from certain set 
+functions. Once an outer measure is constructed it can be restricted to generate a measure.
+\begin{Definition}[name=Outer measure]
+    If $X$ is a non-empty set, an outer measure on $X$ is a function
+    $\map{\outMeas}{\powSet{X}}{\interval{0}{\infty}}$ such that,
+    \begin{enumerate}
+	\item
+	    \[\outMeasure{\emptyset} = 0.\]
+	\item
+	    (Monotonicity) For any $A \subset B$,
+	    \[\outMeasure{A} \leq \outMeasure{B}.\]
+	\item
+	    (sub-additivity) For any $\seq{A}{i}$ in $\powSet{X}$,
+	    \[\outMeasure{\countU{A}} \leq \sumInf{\outMeasure{A_i}}.\]
+    \end{enumerate}
+\end{Definition}
+It is easy to see that every measure whose domain is the $\powSet{X}$ is an outer measure. Now we
+will show that an outer measure can be restricted to yield a measure. We will use Carath{\'e}dory's
+theorem to establish this result.
+
+\begin{Definition}[name=$\outMeasurable$ sets: Carath{\'e}dory's Criterion]\label{def:carath_crit}
+    Given any outer measure $\outMeas$, we say that a set $E$ is $\outMeasurable$ if,
+    \[\outMeasure{A} = \outMeasure{A\cap E} + \outMeasure{A\cap \comp{E}},\]
+    for any subset $A \subset X$.
+\end{Definition}
+We want those sets $E$ such that no matter what $A \subset X$ we take, outer measure of $A$ is
+additive on $A$ (w.r.t E). This is shown in~\ref{fig:tikz:caratheodary}. Note that $A$
+itself is not required to be $\outMeasurable$. A vague motivation for this is, if $E$ is a
+\emph{good} set and $A \supset E$, Carath{\'e}dory's criteria states that its outer measure
+$\outMeasure{E} = \outMeasure{E\cap A}$ is equal to $\outMeasure{A} -
+\outMeasure{\intersection{A}{\comp{E}}}$. While the later concerns measuring $E$ from
+    \emph{inside} $A$, the term $\outMeasure{E} = \outMeasure{E\cap A}$ concerns measuring $E$ from
+    \emph{outside} $E$. This is seen from the right side of~\ref{fig:tikz:caratheodary} and thus
+    \emph{good} sets have the same \emph{measure}{\textemdash}inside or outside.
+
+We can just say measurable instead of $\outMeasurable$ if $\outMeas$ is clear from the context.
+\begin{figure}
+  \includestandalone[width=0.75\textwidth]{tex/tikz_figures/caratheodary}
+  \caption{$\carathCrit$: $\outMeasure{A}$ is the sum of the two colors.}\label{fig:tikz:caratheodary}
+\end{figure}
+
+\begin{Proposition}\label{prop:carath_crit}
+    Given any outer measure $\outMeas$, we say that a set $E$ is $\outMeasurable$ if,
+    \[\outMeasure{A} \geq \outMeasure{A\cap E} + \outMeasure{A\cap \comp{E}},\]
+    for any subset $A \subset X$.
+\end{Proposition}
+\begin{proof}
+    From the~\ref{fig:tikz:caratheodary} it is easy to see that $A = \intersection{A}{E} \disjU
+    \intersection{A}{\comp{E}}$. Since $\outMeas$ is sub-additive we have $\outMeasure{A} \leq
+    \outMeasure{\intersection{A}{E}} + \outMeasure{\intersection{A}{\comp{E}}}$. Thus, for $E$ to be
+    $\outMeasurable$, we must have,
+    \[\outMeasure{A} \geq \outMeasure{A\cap E} + \outMeasure{A\cap \comp{E}},\]
+    for any subset $A \subset X$.
+\end{proof}
+\begin{Theorem}[name=Carath{\'e}odory Theorem]\label{thm:carath_restr_thm}
+    Let $X$ be a non-empty set with an outer measure $\outMeas$ defined on $\powSet{X}$. Define,
+    \[\algebra{M} = \set{E \subset X}{E\,\text{is $\outMeasurable$}}.\]
+    Then, $\algebra{M}$ is a $\sigmaAlgebra$ and the restriction of $\outMeas$ on $\algebra{M}$
+    is a measure. Thus, 
+    $\measureS{X}{\algebra{M}}{\restrict{\outMeas}{\algebra{M}}}$ is a measurable space.
+\end{Theorem}
+\begin{proof}
+    We first need to show that $\algebra{M}$ is a $\sigmaAlgebra$. A priori we don't know if
+    $\algebra{M}$ is empty or not. To this end we will show that $\emptyset \in \algebra{M}$.
+    If $\outMeasure{E} = 0$ then, 
+    we need to show that for any $A \subset X$, 
+    $\outMeasure{A} \geq \outMeasure{A\cap E} + \outMeasure{A\cap \comp{E}}$. Since,
+    $A \supset \intersection{A}{\comp{E}}$ and hence $\outMeasure{A} \geq \intersection{A}{\comp{E}}$
+    from monotonicity of $\outMeas$. Similarly, $ E\supset \intersection{A}{E}$ and 
+    $\outMeasure{E} \geq \intersection{A}{E}$. Thus, adding, $\outMeasure{A} + \outMeasure{E} \geq 
+    \outMeasure{A\cap E} + \outMeasure{A\cap \comp{E}}$. Since
+    $\outMeasure{E} = 0$, the result follows. Thus $E$ is $\outMeasurable$. This means that
+    $\emptyset \in \algebra{M}$ since $\outMeasure{\emptyset} = 0$. 
+
+    If $E \in \algebra{M}$ then for any $A \subset X$, 
+    $\outMeasure{A} = \outMeasure{\intersection{A}{E}} + \outMeasure{\intersection{A}{\comp{E}}}$. 
+    Replacing $E$ by $\comp{E}$ we get the same expression and thus $\comp{E} \in \algebra{M}$.
+
+    Let $E_1,E_2 \in \algebra{M}$. Then they satisfy $\carathCrit$~\ref{def:carath_crit}. Thus,
+    \begin{align*}
+	\carathEq{A_1}{E_1} \\
+	\carathEq{A_2}{E_2} 
+    \end{align*}
+    for any $A_1,A_2 \subset X$. Pick $A_1 = A \subset X$ and $A_2 = A \cap E_1$ and so we get,
+    \begin{align*}
+	\carathEq{A}{E_1} \\
+	\carathEq{A\cap\comp{E_1}}{E_2} 
+    \end{align*}
+    Substituting for $\outMeasure{\intersection{A}{\indxComp{E}{1}}}$ we get,
+    \[\outMeasure{A} = \outMeasure{\intersection{A}{E_1}} +
+	\outMeasure{\intersection{\intersection{A}{\comp{E_1}}}{E_2}} +
+	\outMeasure{\intersection{A}{\comp{(\union{E_1}{E_2})}}}.\]
+    Now, $\intersection{A}{(\union{E_1}{E_2})} =
+    (\intersection{A}{E_1})\disjU(\intersection{\intersection{A}{\comp{E_1}}}{E_2})$ is easily seen
+    as the disjoint union of two sets $X,Y$ where $X = A\cap E_1$, $Y = A \cap E_2$, and hence,
+    \[\outMeasure{\intersection{A}{E_1}} +
+    \outMeasure{\intersection{\intersection{A}{\comp{E_1}}}{E_2}} \geq 
+    \outMeasure{\intersection{A}{(\union{E_1}{E_2})}}.\]
+    Thus,
+    \begin{align*} \carathGeq{A}{(\union{E_1}{E_2})}\end{align*}which from~\ref{prop:carath_crit} means that
+    $\union{E_1}{E_2} \in \algebra{M}$. Thus we get finite additivity. Hence we have shown that
+    $\algebra{M}$ is an algebra. 
+    
+    Showing that $\algebra{M}$ is closed under a countable union of an arbitrary sequence of sets is
+    a little tricky. Instead we will show that $\algebra{M}$ is closed under countable union of a
+    sequence of disjoint sets. Then $\algebra{M}$ will be a $\sigmaAlgebra$
+    by~\ref{thm:eq_ch_sigmaA}. We will do this in 3 steps:
+    Let $\seq{E}{i}$ be a sequence of pairwise \emph{disjoint} sets of $\algebra{M}$ and let
+    $S_n = \finiteU{E}{n}$ and $S = \countU{E}$.
+    
+    \textbf{\large{Step 1}}:
+    We will show that for any $n \geq 1$,
+    \[\outMeasure{\intersection{A}{S_n}} = \sumFinite{\outMeasure{\intersection{A}{E_i}}}{n}.\]
+    Note that since we proved $\algebra{M}$ is an algebra, $\algebra{M}$ is closed under finite
+    unions and hence $S_n \in \algebra{M}$. We will use induction on $n$. The case $n=1$ is trivial.
+    Suppose it is true for some $k > 1 \in \Zplus$, then since $S_{k} \in \algebra{M}$ we get, 
+    \begin{align*}
+	\carathEqIndx{A\cap S_{k+1}}{S}{k} \\
+	&= \outMeasure{\intersection{A}{S_k}} + \outMeasure{\intersection{A}{E_{k+1}}} \\
+	&= \sumFinite{\outMeasure{\intersection{A}{E_i}}}{k} + \outMeasure{\intersection{A}{E_{k+1}}} \\	
+	&= \sumFinite{\outMeasure{\intersection{A}{E_i}}}{k+1}
+    \end{align*}
+
+    \textbf{\large{Step 2}}:
+    We will show,
+    \[\outMeasure{\intersection{A}{S}} = \sumInf{\outMeasure{\intersection{A}{E_i}}}.\]
+    From sub-additivity of $\outMeas$,
+    \[\outMeasure{\intersection{A}{S}} = \outMeasure{\countU{E}} \leq \sumInf{\outMeasure{E_i}}\] 
+    To show the other direction,
+    $S \supset S_n$ for any $n \in \Zplus$ and hence from monotonicity and \textbf{\large{Step 1}},
+    \[\outMeasure{\intersection{A}{S}} \geq \outMeasure{\intersection{A}{S_n}} =
+	\sumFinite{\measure{E_i}}{n}.\]
+    Taking the limit as $\atob{n}{\infty}$ we get the desired result.
+
+    \textbf{\large{Step 3}}:
+    We will show,
+    \begin{align*} \carathGeq{A}{S} \end{align*}
+    Consider an $n \in \Zplus$ and since $S_n \in \algebra{M}$ we have,
+    \begin{align*} \carathGeqIndx{A}{S}{n} \end{align*}
+    But for any $n \in \Zplus$, $\indxComp{S}{n} \supset \comp{S}$ and thus using
+    \textbf{\large{Step 1}} 
+    \begin{align*}
+	\outMeasure{A} \geq &\outMeasure{\intersection{A}{S_n}} + 
+	\outMeasure{\intersection{A}{\comp{S}}} \\
+	& = \sumFinite{\outMeasure{E_i}}{n} + \outMeasure{\intersection{A}{\comp{S}}}
+    \end{align*}
+    taking the limit as $\atob{n}{\infty}$ and using \textbf{\large{Step 2}} we get the result.
+    
+
+    Thus $\algebra{M}$ is a $\sigmaAlgebra$. It is easy to show that
+    $\mu = \restrict{\outMeas}{\algebra{M}}$ is a measure. Indeed all we need to show is that $\mu$
+    satisfies $\sigmaAdd$. 
+    Let $\seq{E}{i}$ be a sequence of pairwise \emph{disjoint} sets of $\algebra{M}$ and let
+    $S = \countU{E}$.
+    From \textbf{\large{Step 2}}, 
+    \[\outMeasure{\intersection{A}{S}} = \sumInf{\outMeasure{\intersection{A}{E_i}}}\] for any
+    $A\subset X$. If we restrict $\outMeas$ to $\algebra{M}$, this means,
+     \[\measure{\intersection{A}{S}} = \sumInf{\measure{\intersection{A}{E_i}}}\] for any
+    $A\in\algebra{M}$. Since $S \in \algebra{M}$ take $A = S$ and thus
+    \[\measure{\countDisjU{E}} = \sumInf{\measure{E_i}}.\]
+
+    Also interersting to note is that $\measureS{X}{\algebra{M}}{\mu}$ is complete. To see this take
+    any $E \in \algebra{M}$ such that $\measure{E} = 0$ and let $B \subset E$. Clearly $B \subset X$
+    and thus, \[\outMeasure{B} \leq \outMeasure{E} = \measure{E} = 0.\]
+
+    Hence, $\outMeasure{B} = 0$ which means $B \in \algebra{M}$ (as proved earlier).
+\end{proof}
+Thus we have seen that any outer measure can be restricted to a measure. Hence for this Theorem to be
+useful we must have an outer measure. We noted that describing a measure for all members of a
+$\sigmaAlgebra$ is no easy matter but now we have this outer measure on the maximal $\sigmaAlgebra$!
+This is not a concern since the next theorem shows that we can easily construct an outer measure
+from simple set functions defined on a simpler class. For example, lebesgue measure is defined on
+intervals. At this point it will do us well to tabulate the properties of all the measures we
+have seen. This is done in~\ref{tab:prop_measures}. 
+
+\begin{table}
+    \caption{Properties of measure, pre-measure and outer-measure}\label{tab:prop_measures}
+    \begin{tabular}{llcccr}
+	\toprule
+	Properties  & Measure $\mu$ & Pre-Measure $\preMeas$ & Outer-Measure $\outMeas$ \\
+	\midrule
+	domain & $\sigmaAlgebra$ & algebra & $\powSet{X}$\\
+	monotonicity & $\checkmark$ & $\checkmark$ & \checkmark\\
+	finite-additvity & $\checkmark$ & $\checkmark$ & -\\
+	finite-sub-additvity & $\checkmark$ & $\checkmark$ &$\checkmark$ \\
+	countable-additvity & $\checkmark$ &-&-\\
+	countable-sub-additvity & $\checkmark$ &-&$\checkmark$\\
+	\bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{Example}\label{ex:out_meas}
+    Let $X$ be an infinite set and define,
+    \begin{equation*}
+	\outMeasure{E} =
+	\begin{cases}
+	    \lvert E \rvert& \text{if $E$ is finite},\\
+	    \infty& \text{if $E$ is infinite}.
+	\end{cases}
+    \end{equation*}
+    Then $\outMeas$ is an outer measure.
+\end{Example}
+\begin{proof}
+    Clearly $\map{\outMeas}{\powSet{X}}{\extRealsPos}$ and $\outMeasure{\emptyset} = 0$. Let us check
+    monotonicity. If $A \subset B \subset X$, then if both are finite we have 
+    $\lvert A \rvert \leq \lvert B \rvert$ and so $\outMeasure{A} \leq \outMeasure{B}$. If $B$ is
+    infinite then its obvious.
+    Consider a sequence $\seq{A}{i}$ of sets in $X$. If any of the $A_i$ is infinite then 
+    $\outMeasure{\countU{A}} = \infty = \sumInf{\outMeasure{A_i}}$. Here we treat terms like $\infty +
+    \infty$ to be equal to $\infty$. If all $A_i$ are finite then there are two cases. Either
+    $\countU{A}$ is finite or it is infinite. (For expample, $\lvert A_i \rvert = i$, then
+    $\countU{A}$ is infinite if $A_i$ are pairwise disjoint). 
+    If $\countU{A}$ is finite then we know that $\lvert \countU{A} \rvert
+    \leq \sumInf{\lvert A_i \rvert}$ and hence the result follows. If $\countU{A}$ is infinite then
+    we can create a sequence of disjoint finte sets $F_k = \setDiff{A_k}{\finiteU{A}{k-1}}$. Then,
+    $\countU{A} = \countDisjU{F}$. Thus 
+    $\outMeasure{\countU{F}} = \sumInf{\outMeasure{F_i}} = \infty$ since we have finite disjoint
+    sets, but $\sumInf{\outMeasure{F_i}}
+    \leq \sumInf{\outMeasure{A_i}}$ and hence we get,
+    $\outMeasure{\countU{A}} \leq \sumInf{\outMeasure{A_i}}$. All finite sets are $\outMeas$
+    measurable.
+\end{proof}
+
+In~\ref{fig:tikz:construct_out_measure}, we illustrate a way of constructing outer measure. Say we
+have a set $A_k$. If we want to define an outer measure we start with a sequence of 
+simple sets $E^{k}_i$ whose union $\bigcup\limits_{i}E^{k}_{i} \supset A_k$. If we have a simple
+set function (maybe a pre-measure) $\rho$ for these sets then we get an overestimated outer measure 
+of $A$ given by 
+$\sumInf{\rho(E^k_i)}$. The idea is now to take all those collections of sets whose union contain 
+$A_k$ and then take the infimum of these overestimated outer measure. The infimum is then precisely
+the outer measure of $A_k$.
+
+
+\begin{Theorem}[name=Constructing outer measure]\label{thm:constr_out_measure}
+    Let $X$ be a non-empty set, $\family{E}\subset\powSet{X}$ be non-empty family of subsets of $X$
+    such that $\emptyset,X \in \family{E}$. Let there be a function
+    $\map{\rho}{\family{E}}{\extRealsPos}$ such that $\rho(\emptyset) = 0$. For any $A \in
+    \powSet{X}$, define
+    \[\outMeasure{A} = \inf\set{\sumInf{\rho(E_i)}}{\lbrace E_i \rbrace \subset
+	    \family{E}\,\text{and}\,A\subset\countU{E}},\]
+    then, $\outMeasure{A}$ is an outer measure (induced by $\rho$).
+\end{Theorem}
+
+\begin{figure}
+  \includestandalone[width=0.5\textwidth]{tex/tikz_figures/construct_out_measure}
+  \caption{Construction of outer measure}\label{fig:tikz:construct_out_measure}
+\end{figure}
+
+\begin{proof}
+    We will first check that the infimum exists. The set is certainly not empty since $X
+    \in \family{E}$ and $A \subset X$; atleast one such $E_i = X$ exists. Morever we are taking
+    infimum over positive reals that are bounded below by $0$ and hence the infimum exists.
+    
+    Lets check if $\outMeasure{\emptyset} = 0$. Since $\emptyset \in \family{E}$ it is trivally
+    contained in a collection of empty sets. Since $\rho(\emptyset) = 0$ we get the result.
+
+    Let us see if we get monotonicity. Let $A \subset B$. For any collection $\lbrace E_i \rbrace
+    \subset \family{E}$ if $\countU{E} \supset {B}$ then $\countU{E} \supset {A}$. Thus the set,
+    \begin{align*}
+	&\set{\sumInf{\rho(E_i)}}{\lbrace E_i \rbrace \subset
+	    \family{E}\,\text{and}\,A\subset\countU{E}}\\ 
+	&\hspace{2cm}\supset \\
+	&\set{\sumInf{\rho(E_i)}}{\lbrace E_i \rbrace \subset
+	    \family{E}\,\text{and}\,B\subset\countU{E}},
+    \end{align*}
+    hence the result follows.
+
+    Let $\seq{A}{k}$ be a sequence of sets in $X$ such that for each $k$ there is a sequence of
+    sets $\left(E^k_i\right)$ such that,
+    \begin{align*}
+	&A_k \subset \bigcup\limits_{i}E^k_i \, \text{and,} \\
+	&\sumInf{\rho(E^k_i)} \leq \outMeasure{A_k} + \epsilon,
+    \end{align*}	
+    for any $\epsilon > 0$. Pick $\epsilon = \frac{1}{2^k}$.
+    Now,
+    \[\bigcup\limits_{k}A_k \subset\bigcup\limits_{i,k}{E^k_i}.\]
+    Let $A = \bigcup\limits_{k}A_k$, thus $A \subset \bigcup\limits_{i,k}E^i_k$, and so by definition
+    \begin{align*}
+	\outMeasure{A} &\leq \sum\limits_{i,k=1}^{\infty}\rho(E^i_k) \\
+	&\leq \sum\limits_{k=1}^{\infty}(\outMeasure{A_k} + \frac{1}{2^k})\\
+	&\leq \sum\limits_{k=1}^{\infty}\outMeasure{A_k}.
+    \end{align*}
+    Thus $\outMeas$ is an outer measure.
+\end{proof}
+Note, at this point there is no relation between $\rho$ and the outer measure induced by $\rho$.
+Very little demands are made on $\rho$ and its domain $\family{E}$. An interesting question to ask
+would be{\textemdash}what if we had some additional structure on $\family{E}$, particularly what if 
+$\family{E}$
+were an algebra? In that case, if additionaly $\rho = \preMeas$ is a pre-measure, we have a relation
+between $\preMeas$ and the outer measure $\outMeas$ induced by $\preMeas$. The following Proposition
+showcases this relation.
+\begin{Proposition}\label{prop:out_meas_iduced_pre_measure}
+    If $\preMeas$ is a pre measure on $\algebra{E}$ and the outer measure induced by $\preMeas$ is
+    given as in~\ref{thm:constr_out_measure}, then
+    \begin{enumerate}
+	\item
+	    $\restrict{\outMeas}{\algebra{E}} = \preMeas$.
+	\item
+	    Every set in $\algebra{E}$ is $\outMeasurable$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    We need to show that $\restrict{\outMeas}{\algebra{E}} \leq \preMeas$ and 
+	    $\preMeas \leq \restrict{\outMeas}{\algebra{E}}$. Let $A \in \family{E}$.
+	    Clearly, $A \subset A$, consider the collection $\lbrace E_i \rbrace$ where $E_1 = A$
+	    and $E_i = \emptyset, i \geq 2$. Hence 
+	    $\restrict{\outMeas}{\algebra{E}}(A) \leq \preMeas(A)$. 
+	    To prove the other inequality, for any
+	    $\epsilon > 0$ there is a collection $\lbrace E_i \rbrace \subset \family{E}$ 
+	    such that $A \subset\countU{E}$ and, 
+	    \[\sumInf{\preMeas(E_i)} < \restrict{\outMeas}{\algebra{E}}(A) + \epsilon.\]
+	    Since $\preMeas$ is a pre-measure and $A \in \family{E}$, 
+	    if $\countU{E} \in \algebra{E}$ we get from sub-additivity of
+	    $\preMeas$, 
+	    \[\preMeas(A) \leq \sumInf{\preMeas(E_i)}.\]
+	    However, it may happen that $\countU{E} \not \in \algebra{E}$. 
+	    In that case, observe that, 
+	    \[A = \intersection{A}{\countU{E}} = \countU{A\cap E}.\]
+	    We will write union of $A \cap E_i$ as a disjoint union using~\ref{rmk:disjU}.
+	    Let $X_j = A\cap E_j $,
+	    $F_j = X_j - \bigcup\limits_{i=1}^{j}X_i, j \geq 2, F_1 = X_1$.
+	    Each $F_j \in \algebra{E}$, moreover $\disjU\limits_{j}F_j = A \in \algebra{E}$, thus
+	    \[\preMeas(A) = \sumInf{\preMeas(F_i)} \leq \sumInf{\preMeas(E_i)}.\]
+	    Thus,
+	    \[\preMeas(A) \leq \sumInf{\preMeas(E_i)}.\]
+	    Hence,
+	    \[\preMeas(A) < \restrict{\outMeas}{\algebra{E}}(A) + \epsilon,\]
+	    since $\epsilon$ is arbitrary we get the result.
+	\item
+	    Let $E \in \family{E}$. To show that $E$ is $\outMeasurable$ we have to show,
+	    \begin{align*}
+		\carathGeq{A}{E}
+	    \end{align*}
+	    for any $A \subset X$.
+	    Fix an $\epsilon > 0$, then there is a collection $\lbrace B_i \rbrace \subset
+	    \algebra{E}$ such
+	    that $\countUnion{B_i}{i} \supset A$ and, 
+	    \[\outMeasure{A} + \epsilon > \sumInf{\preMeas(B_i)}.\]
+	    Since $E \in \algebra{E}$, we can write 
+	    $B_i = (\intersection{B_i}{\comp{E}})\disjU (B_i \cap E)$ as a disjoint union of sets
+	    in $\family{E}$. 
+	    Using the fact that $\preMeas$ is a pre-measure, we get 
+	    \[\preMeas(B_i) = \preMeas(\intersection{B_i}{\comp{E}}) + \preMeas(B_i \cap E).\]
+	    Thus,
+	    \begin{align*}
+		\outMeasure{A} + \epsilon >& \sumInf{\preMeas(B_i \cap E)} + 
+		\sumInf{\preMeas(\intersection{B_i}{\comp{E}})} \\
+	       & \geq  \outMeasure{A\cap E} + \outMeasure{A\cap\comp{E}}.
+	   \end{align*}
+	   Since $\epsilon$ was arbitrary we get the result.
+    \end{enumerate}
+\end{proof}
+Now we are ready to prove the extension theorem i.e given an algebra $\algebra{E}$ on a set $X$,
+and a pre-measure $\preMeas$ we can extend
+the pre-measure to a measure $\mu$ on a $\sigmaAlgebra$ containing $\algebra{E}$.
+Such a construction can be achieved in two step:
+\begin{enumerate}
+    \item
+	First extend the pre-measure $\preMeas$ on $\algebra{E}$ to an outer measure $\outMeas$ on
+	$\powSet{X}$. See~\ref{thm:constr_out_measure}
+	and~\ref{prop:out_meas_iduced_pre_measure}.
+    \item
+	Then restrict the outer measure $\outMeas$ to a $\sigmaAlgebra$ $\algebra{M}$.
+	See~\ref{thm:carath_restr_thm}.
+\end{enumerate}
+This is an important result, since we start with simple set functions like measuring length of 
+interval etc.\ and want to extend this notion to a larger class of sets. The following theorem
+combines these observations and is called the Carath{\'e}odory Extension theorem.
+\begin{Theorem}[name=Carath{\'e}odory Extension Theorem]\label{thm:carath_ext_thm}
+    Let $X$ be a non-empty set and let $\algebra{E} \subset \powSet{X}$ be an algebra, $\preMeas$ a
+    pre-measure on $\algebra{E}$ and $\sigmaGen{\algebra{E}}$ be the $\sigmaAlgebra$ generated by
+    $\algebra{E}$. Then,
+    \begin{enumerate}
+	\item
+	    There exists a measure $\mu$ on $\sigmaGen{\algebra{E}}$ whose restriction to
+	    $\algebra{E}$ is $\preMeas$.
+	\item
+	    If $\nu$ is another measure on $\sigmaGen{\algebra{E}}$ that extends $\preMeas$, then
+	    $\nu(E) \leq \measure{E}$ for any $E \in \sigmaGen{\algebra{E}}$, with equality when
+	    $\measure{E} < \infty$. 
+	\item
+	    Additionally, if $\preMeas$ is $\sigmaFinite$, then $\mu$ is the unique extension of
+	    $\preMeas$ to a measure on $\sigmaGen{\algebra{E}}$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    Given non-empty set $X$, an algebra $\algebra{E}$ with a pre-measure $\preMeas$,
+    \begin{enumerate}
+	\item
+	    first extend $\preMeas$ to
+	    $\outMeas$,~\ref{thm:constr_out_measure},~\ref{prop:out_meas_iduced_pre_measure}. Then
+	    restrict $\outMeas$ to $\mu$ on $\sigmaAlgebra$ 
+	    $\algebra{M}$,~\ref{thm:carath_restr_thm}. Since
+	    $\algebra{M}$ contains $\algebra{E}$, it contains $\sigmaGen{\algebra{M}}$. Thus there is
+	    a measure $\mu$ on $\sigmaGen{\algebra{E}}$ such that,
+	    \[\mu = \restrict{\outMeas}{\sigmaGen{\algebra{E}}},\] and 
+	    \[\restrict{\mu}{\algebra{E}} = \restrict{\outMeas}{\algebra{E}} = \preMeas.\]
+	\item
+	    Note that, \[\restrict{\nu}{\algebra{E}} = \preMeas = \restrict{\mu}{\algebra{E}}.\] 
+	    Thus for any $A \in \algebra{E}$ we have $\nu(A) = \preMeas(A) = \measure{A}$. However,
+	    if $\lbrace A_i \rbrace $ is a collection of sets $A_i \in \algebra{E}$, $\countU{A}$ may
+	    or may not belong in $\algebra{E}$. In that case, it is not clear that if, 
+	    $A = \countU{A}$, then $\nu(A) = \measure{A}$. But for any integer $n$,
+	    \[\nu(\finiteU{A}{n}) = \mu(\finiteU{A}{n}).\]
+	    To this end observe that,
+	    $A_1 \subset (A_1\cup A_2) \subset \dots \subset \countU{A}$. 
+	    Thus we have an increasing sequence of sets $\seq{(\finiteU{A}{n})}{n}$ and 
+	    since $\nu,\mu$ are
+	    measures we get,
+	    \[\nu(A) = \lim\limits_{n\to\infty}\nu(\finiteU{A}{n}) =
+		\lim\limits_{n\to\infty}\measure{\finiteU{A}{n}} = \measure{A}.\]
+	    
+	    Here we have used~\ref{thm:prop_of_meas} (4) with $E_i =
+	    (\bigcup\limits_{j=1}^{i}A_j)$.
+
+	    Now, consider any $E \in \sigmaGen{\algebra{E}}$ such that a collection $\lbrace A_i
+	    \rbrace \subset \algebra{E}$ and $E \subset \countU{A}$. Then,
+	    \[\nu(E) \leq \nu(\countU{A}) \leq \sumInf{\nu(A_i)} = \sumInf{\preMeas(A_i)}.\]
+	    But this means that,
+	    \[\nu(E) \leq \inf\set{\sumInf{\preMeas(A_i)}}{E\subset\countU{A}} = \measure{E},\]
+	    since $E \in \sigmaGen{\algebra{E}}$.
+
+	    For any $\epsilon > 0$, let $A = \countU{A}$ such that the collection $\lbrace A_i
+	    \rbrace \subset \algebra{E}$ and $E \subset \countU{A}$ and,
+	    $\sumInf{\preMeas(A_i)} < \measure{E} + \epsilon$. But $\preMeas(A_i) =
+	    \measure{A_i}$ and $\measure{A} \leq \sumInf{\measure{A_i}}$ and hence,
+	    $\measure{A} < \measure{E} + \epsilon$.
+	    Now if $\measure{E} < \infty$, since $E \subset A$, $\measure{\setDiff{A}{E}} =
+	    \measure{A} - \measure{E} < \epsilon$. Thus,
+	    \begin{align*}
+		\mu(E) \leq &\mu(A) &&\text{because $E \subset A$}\\
+		& = \nu(A) &&\text{we proved this above}\\
+	        & = \nu(E) + \nu(A\cap\comp{E})	&&\text{because $A = E \disjU A\cap\comp{E}$} \\
+		& \leq \nu(E) + \mu(A\cap\comp{E}) &&\text{because $\nu(B) \leq \mu(B), \forall B
+		    \in \sigmaGen{\algebra{E}}$} \\
+		& \leq \nu(E) + \epsilon
+	    \end{align*}	
+	    Hence, $\measure{E} = \nu(E)$ whenever $\measure{E} < \infty$.
+	\item
+	    If $\preMeas$ is $\sigmaFinite$ then $X = \countU{A}$ with $\preMeas(A_i) < \infty$.
+	    We can take $A_i$ to be
+	    disjoint. (If not we can contruct sequence of disjoint set $F_i$ whose union is $X$).
+	    Take any $E \in \sigmaGen{\algebra{E}}$ such that $E \subset \countDisjU{A}$ and hence $E =
+	    \disjU\limits_{i}(E\cap A_i)$. Hence,
+	    \[\measure{E} = \sumInf{\measure{E\cap A_i}} = \sumInf{\nu(E\cap A_i)} = \nu(E).\]
+	    Note that the third equality is beacause $\measure{E\cap A_i} \leq \measure{A_i} =
+	    \preMeas(A_i) < \infty$ and we can use the results from above. Hence $\nu = \mu$.
+    \end{enumerate}
+\end{proof}
+\begin{Remark}[name=Relation between $\algebra{M}$ and $\sigmaGen{E}$]\label{rmk:rel_m_sigmaE}
+    This is illustrated in~\ref{fig:tikz:carath_ext_thm}. 
+\end{Remark}
+\begin{figure}
+  \includestandalone[width=0.5\textwidth]{tex/tikz_figures/carath_ext_thm}
+  \caption{Embedding of the various sets. The measures must agree on the \emph{edges}.}
+\label{fig:tikz:carath_ext_thm}
+\end{figure}
+\begin{Example}
+    Show the usefulness of~\ref{prop:out_meas_iduced_pre_measure}.
+\end{Example}
+\section{Borel Measure on the real line}
+We have now the machinary to measure all the Borel sets in $\R$. These are the sets that we care
+about. However we only have a notion of measure for simple sets like intervals,
+\textbf{h-intervals}, etc. Using such elementary notions we want to construct a measure on
+$\borelS{\R}$. We will begin with a general construction that will yield us the Cumulative
+Distribution Function (CDF).
+
+To motive the idea, let us say we have a \emph{finite} measure $\mu$ on $\borelS{\R}$. Thus we can measure the
+\text{h-intervals} like $\interval[open left]{-\infty}{x}$. Let $F(x) = 
+\measure{\interval[open left]{-\infty}{x}}$. Then we can observe a few facts about $F$,
+\begin{enumerate}
+    \item
+	(positive real valued) The function $F$ is such that $\map{F}{\R}{\extRealsPos}$.
+    \item
+	(increasing) If $x_1 \leq x_2$ then $\measure{\interval[open left]{-\infty}{x_1}} \leq 
+	\measure{\interval[open left]{-\infty}{x_2}}$ from monotonicity of $\mu$. Thus $F(x_1) \leq
+	F(x_2)$.
+    \item
+	(right continuous) If $\atobDown{x_n}{x}$ then $\interval[open left]{-\infty}{x} =
+	\bigcap\limits_{n=1}^{\infty}\interval[open left]{-\infty}{x_n}$. Thus, 
+	$\measure{\interval[open left]{-\infty}{x}} = 
+	\lim\limits_{n\to\infty}\measure{\interval[open left]{-\infty}{x_n}}$, i.e.\, 
+	$\atobDown{F(x_n)}{F(x)}$ as $\atobDown{x_n}{x}$.
+    \item
+	If $y > x$, then $\hIntInf{y} = \hIntInf{x} \disjU \hInt{x}{y}$ and hence,
+	$\measure{\hInt{x}{y}} = F(y) - F(x)$.
+\end{enumerate}
+Now we will turn this around and create a measure on $\borelS{\R}$ using function $F$ with 
+properties as seen above. Such functions are special and we define them below.
+\begin{Definition}[name=Monotonic functions]
+    A real valued function $F$ is \emph{increasing} if $F(x) \leq F(y)$ whenever $x < y$ for all $x,y \in
+    \R$. A real valued function $F$ is \emph{decreasing} if $F(x) \geq F(y)$ whenever $x < y $ for
+    all $x,y \in \R$. A real valued function $F$ is \emph{monotonic} if it is either increasing or
+    decreasing.
+\end{Definition}
+\begin{Theorem}[name=Monotonic functions and one-sided limits]\label{thm:mono_func}
+    If $\map{F}{\R}{\R}$ is a monotone function, then $F$ has right and left-hand limits at each
+    point $x \in \R$,
+    \begin{align*}
+	&F(a^{+}) = \lim\limits_{\atobDown{x}{a}}F(x) =  
+	\begin{cases}
+	    \inf\limits_{x > a}F(x)& \text{If $F$ is increasing}\\
+	    \sup\limits_{x < a}F(x)& \text{If $F$ is decreasing}
+	\end{cases} \\
+	&F(a^{-}) = \lim\limits_{\atobUp{x}{a}}F(x) = 
+	\begin{cases}
+	    \inf\limits_{x > a}F(x)& \text{If $F$ is increasing}\\
+	    \sup\limits_{x < a}F(x)& \text{If $F$ is decreasing}
+	\end{cases}
+    \end{align*}
+\end{Theorem}
+\begin{Definition}[name=Right continuous function]
+    A monotone function \[\map{f}{\R}{\R}\] is \emph{right continuous} if $F(a) = F(a^{+})$ for all
+    $a\in\R$, thus,
+    \[\lim\limits_{\atobDown{x}{a}}F(x) = F(a).\]
+\end{Definition}
+\begin{figure}
+    \includestandalone[width=0.45\textwidth]{tex/tikz_figures/right_continuous}
+    \caption{A right continuous increasing function}\label{fig:tikz:right_continuous}
+\end{figure}
+A right continuous function is show in~\ref{fig:tikz:right_continuous}.
+Now we begin our construction of measure on $\borelS{\R}$. We have seen that the collection of
+h-intervals is an elementary family (~\ref{ex:hint_elem_fam}). 
+A collection of finite disjoint union of h-intervals is, then, an
+algebra by~\ref{thm:const_algebra_elem}. If we can define a pre-measure on this algebra, then
+by~\ref{thm:carath_ext_thm}, we will have a measure on $\borelS{\R}$ (~\ref{rmk:hinterval}). 
+Thus our first step will be
+constructing a pre-measure.
+
+\begin{Proposition}[name=Pre-measure on collection of
+    \textbf{h-intervals}]\label{prop:pre_meas_hint}
+    Let $\family{J}^{cr}_{1}$ be the collection of \textbf{h-intervals} on $\R$ and let
+    $\algebra{A}$ be the algebra of finite disjoint unions of h-intervals. Let
+    $\map{F}{\R}{\R}$ be increasing and right continuous. If $\hInt{a_j}{b_j}$ ($j = 1\dots n$) 
+    are disjoint h-intervals, define 
+    \[\preMeasure{\finiteUnion{\hInt{a_j}{b_j}}{j}{n}} = \finiteSum{(F(b_j)-F(a_j))}{j}{n}.\] 
+    Then, $\preMeas$ is a pre-measure.
+\end{Proposition}
+\begin{proof}
+    First note that if $n=1$ and if $F(x) = x$, then the $\preMeas$ gives us the \emph{length} of
+    an h-interval. To show that $\preMeas$ is a pre-measure on the algebra $\algebra{A}$, we need to
+    show that $\preMeasure{\emptyset} = 0$ and $\preMeasure{\finiteDisjUnion{I}{i}{n}} =
+    \finiteSum{\preMeasure{I_i}}{i}{n}$. Moreover, if $\countDisjUnion{I}{i} \in \algebra{A}$, then we need to
+    show that $\preMeasure{\countDisjUnion{I_i}{i}} = \infiniteSum{\preMeasure{I_i}}{i}$. Note that
+    $\emptyset = \hInt{b}{b}$ and thus $\preMeasure{\emptyset} = 0$. 
+
+
+    We will complete the proof in following steps:
+    \newline
+    \textbf{Step 1}: Let us check finite additivity.
+    Let $I \in \algebra{A}$. Then $I = \finiteDisjUnion{I_i}{i}{n}$ where $I_i = \hInt{a_i}{b_i}$. Note
+    that $I_i \in \algebra{A}$ and hence, $\preMeasure{I_i} = F(b_i) - F(a_i)$. Thus,
+    \[\preMeasure{I} = \finiteSum{(F(b_i)-F(a_i))}{i}{n} 
+	= \finiteSum{\preMeasure{I_i}}{i}{n}.\]
+    Hence, $\preMeas$ satisfies finite additivity.
+    \\
+    \textbf{Step 2}: We will show that $\preMeas$ is well defined.
+    First let us look at a simple case. Let $I \in \algebra{A}$, 
+    $I = \finiteDisjUnion{\hInt{a_i}{b_i}}{i}{n_I}$. Now assume $I = \hInt{a}{b}$. 
+    If we re-label $a_i,b_i$, that is $a=a_1 < b_1 = a_2 < b_2 = a_3 \dots < b$,
+    then $\preMeasure{I} = F(b) - F(a)$ from cancellation. 
+    
+    Note, however, such a representation is not unique. We could have a $J\in \algebra{A}$ such that
+    $J = \finiteDisjUnion{\hInt{a_j}{b_j}}{j}{n_J} = \hInt{a}{b}$. But $\preMeasure{J}$
+    would also yield $F(b) - F(a)$ by the same argument. See~\ref{fig:tikz:borel_pre_meas}. 
+
+    Now, for a general case. If $I = \finiteDisjUnion{I_i}{i}{n_I} = \finiteDisjUnion{J_j}{j}{n_J}$, 
+    then $I_i \subset \finiteDisjUnion{J_j}{j}{n_J}$ and thus 
+    $I_i = \finiteDisjUnion{(I_i \cap J_j)}{j}{n_J}$. But $I_i \in \algebra{A}$, $I_i \cap J_j$ 
+    is an h-interval and hence $\preMeasure{I_i} = \finiteSum{\preMeasure{I_i \cap J_j}}{j}{n_J}$.
+    We have,
+    $\preMeasure{I} = \finiteSum{\preMeasure{I_i}}{i}{n_I}$ and hence, 
+    $\preMeasure{I} = \sum\limits_{i=1}^{n_I}\finiteSum{I_i \cap J_j}{j}{n_J}$. We can repeat this
+    argument by noticing that $J_j \subset \finiteDisjUnion{I_i}{i}{n_I}$. Hence, we get
+    \[\preMeasure{I} = \sum\limits_{i=1}^{n_I}\finiteSum{I_i \cap J_j}{j}{n_J} = \preMeasure{J}.\]
+    Thus $\preMeas$ is well defined.
+    \newline
+    \textbf{Step 3}: We will show that if $I = \countDisjUnion{I_i}{i} \in \algebra{A}$, then
+    $\preMeasure{I} = \preMeasure{\countDisjUnion{I_i}{i}} \geq \infiniteSum{\preMeasure{I_i}}{i}$.
+
+    If $I = \countDisjUnion{I_i}{i} \in \algebra{A}$ then 
+    $I = \finiteDisjUnion{\hInt{a_k}{b_k}}{k}{N}$. Since each $I_i$'s and each $\hInt{a_k}{b_k}$ 
+    are disjoint we can partition the sequence finitely, i.e for each $1\leq k \leq N$ pick $n$ in 
+    the sequence such that
+    $I_{n}\subset \hInt{a_k}{b_k}$. The set $n_k = \set{n \in \Zplus}{I_n \subset \hInt{a_k}{b_k}}$
+    indexs a subsequence of $I_i$. Hence there is atleast one such $n_k$, lets call it
+    $n_0$ such that $n_0$ is infinite, otherwise we will have only a finite sequence of $I_i$.
+    Without loss of generality we can disregard other $\hInt{a_k}{b_k}$ and just consider $I =
+    \hInt{a_{n_0}}{b_{n_0}} = \hInt{a}{b}$ (after dropping the $n_0$).
+    
+    Note that for $n \in \Zplus$, we have from finite additivity,
+    \[\preMeasure{I} = \finiteSum{\preMeasure{I_i}}{i}{n} + 
+	\preMeasure{\disjU\limits_{i>n}I_i}.\]
+    Since $F$ is increasing the last term is always greater than zero and thus,
+    \[\preMeasure{I} \geq \finiteSum{\preMeasure{I_i}}{i}{n}.\]
+    This is true for any $n \in \Zplus$ and thus taking $n \to \infty$, we get
+    \[\preMeasure{I} \geq \infiniteSum{\preMeasure{I_i}}{i}.\]
+    \newline
+    \textbf{Step 4}: We will show that 
+    $\preMeasure{I} \leq \infiniteSum{\preMeasure{I_i}}{i}$.
+    Pick any $\epsilon > 0$. Note that $I = \hInt{a}{b}$. 
+    Now assume $-\infty < a < b < \infty$. Since $F$ is right continuous at $a$,
+    there is a $\delta > 0$ such that $F(a+\delta) - F(a) < \epsilon$, but this means that
+    $\preMeasure{\hInt{a}{a+\delta}} < \epsilon$. Now, $I = \hInt{a}{a+\delta} \disjU 
+    \hInt{a + \delta}{b}$ and since $I \in \algebra{A}$, we get
+    \begin{align*}
+	\preMeasure{I} =& \preMeasure{\hInt{a}{a+\delta}} + \preMeasure{\hInt{a+\delta}{b}} \\
+	& < \epsilon + \preMeasure{\hInt{a+\delta}{b}} 
+    \end{align*}
+    Now that we have the right inequality we need to worry about $\preMeasure{\hInt{a+\delta}{b}}$.
+    We will use a compactness argument.
+    Note that $\interval{a+\delta}{b}$ is closed and bounded subset of $\R$ (from our assumption
+    about a,b) and is thus compact. Let us use $I_i$'s to create an open cover. However each $I_i$ is
+    an h-interval. We will use the right continuity of $F$ to create open intervals from each $I_i$.
+    Since $F$ is right continuous at each $b_i$, there is a $\delta_{i} > 0$ such that $F(b_i +
+    \delta_{i}) - F(b_i) < \frac{\epsilon}{2^i}$. Thus, 
+    $F(b_i+\delta_{i}) < F(b_i) + \frac{\epsilon}{2^i}$.  Let 
+    \[\family{G} = \set{(a_i,b_i + \delta_{i})}{i\in\Zplus}.\] be a family of open sets. Then,
+    $\interval{a+\delta}{b} \subset \bigcup\limits_{i\in\Zplus}(a_i,b_i + \delta_{i})$.
+    Thus $\family{G}$ is an open cover for the compact $\interval{a+\delta}{b}$, and thus there
+    exists a finite subcover,
+    \[\family{G}_{N} = \set{(a_i,b_i+\delta_{i})}{1\leq i \leq N}.\]
+    (We discard any such open set that is contained in a larger open set). After relabeling, we can
+    assume that,
+    \[b_i + \delta_{i} \in (a_{i+1},b_{i+1}+\delta_{i+1}), 1\leq i\leq N. \] 
+    See~\ref{fig:tikz:borel_pre_meas2}. Thus $F(b_i + \delta_i) \geq F(a_{i+1})$. 
+    Note that $b < b_N + \delta_{N}$ and $a + \delta > a_1$, and thus since $F$
+    is increasing $F(b) \leq F(b_N + \delta_{N})$ and $F(a+\delta) \geq F(a_1)$. 
+    Thus,
+    \begin{align*}
+	\preMeasure{I} <& \epsilon + \preMeasure{\hInt{a+\delta}{b}} \\
+	&= \epsilon + F(b) - F(a + \delta) \\
+	&\leq \epsilon  + F(b_N + \delta_N) - F(a_1)  \\
+	&= \epsilon  + F(b_N + \delta_N) - F(a_N) + \finiteSum{(F(a_{i+1}) - F(a_i))}{i}{N-1} \\
+	&\leq \epsilon + F(b_N + \delta_N) - F(a_N) +
+       	\finiteSum{(F(b_{i}+ \delta_{i}) - F(a_i))}{i}{N-1}\\
+	&< \epsilon + \finiteSum{(F(b_i)+\frac{\epsilon}{2^i}-F(a_i))}{i}{N} \\
+	&= \epsilon + \finiteSum{(\preMeasure{I_i} +\frac{\epsilon}{2^i})}{i}{N} \\
+	&< \infiniteSum{(\preMeasure{I_i})}{i} + 2\epsilon.
+    \end{align*}
+    Since $\epsilon$ was arbitrary we get our result.
+\end{proof}
+
+\begin{figure}
+    \includestandalone[width=0.45\textwidth]{tex/tikz_figures/borel_premeasure}
+    \caption{Illustration of proof~\ref{prop:pre_meas_hint}-well defined}\label{fig:tikz:borel_pre_meas}
+\end{figure}
+
+\begin{figure}
+    \includestandalone[width=0.65\textwidth]{tex/tikz_figures/borel_premeasure2}
+    \caption{Illustration of proof~\ref{prop:pre_meas_hint}-finite sub-cover}\label{fig:tikz:borel_pre_meas2}
+\end{figure}
+
+Now we apply the framework for constructing measures for the Borel Sets.
+
+\begin{Theorem}[name=Borel measure on the real line]\label{thm:borel_measure_R}
+    If $\map{F}{\R}{\R}$ is any increasing, right continuous function, there is a unique Borel
+    measure $\borelM{F}$ on $\R$ such that $\borelMeasure{F}{\hInt{a}{b}} = F(b) - F(a)$ for all
+    $a,b \in \R$. If $G$ is another such function, we have $\borelM{F} = \borelM{G}$ iff $F-G$ is a
+    constant. Conversely, if $\mu$ is a Borel measure on $\R$ that is finite on all bounded Borel
+    sets and we define,
+    \begin{equation*}
+	F(x) =
+	\begin{cases}
+	    \measure{\hInt{0}{x}} &\text{if $x > 0$}\\
+	    0 &\text{if $x = 0$} \\
+	    -\measure{\hInt{-x}{0}} &\text{if $x < 0$},
+	\end{cases}
+    \end{equation*}	
+    then $F$ is increasing and right continuous, and $\mu = \borelM{F}$.
+\end{Theorem}
+\begin{proof}
+    The~\ref{prop:pre_meas_hint} implies that $F$ induces a pre measure $\mu_0$ 
+    on the algebra $\algebra{A}$ of finite disjoint unions of h intervals. Thus, it can be 
+    extended by~\ref{thm:carath_ext_thm} to a measure $\borelM{F}$ on $\sigmaAlgebra$ 
+    generated by $\algebra{A}$ which is $\borelS{\R}$. 
+
+    When $F,G$ differ by a constant they give rise to the same pre measure $\mu_0$ on $\algebra{A}$.
+    Also $\mu_0$ is $\sigmaFinite$ since,
+    \[\R = \bigcup\limits_{i = -\infty}^{\infty}\hInt{i}{i+1},\]
+    hence by~\ref{thm:carath_ext_thm} they are equal on $\borelS{\R}$.
+
+    As for the converse, we follow the same argument as the observations noted at the beginning of
+    this section. The monotonicity of $\mu$ makes $F$ increasing. Since $\mu$ is continuous from
+    above and below, we get the right continuity of $F$. Moreover $\mu\hInt{a}{b} = F(b) - F(a) =
+    \borelM{F}$ on $\algebra{A}$ and thus $\mu = \borelM{F}$ by~\ref{thm:carath_ext_thm}.
+
+\end{proof}
+\begin{Remark}
+    From~\ref{rmk:rel_m_sigmaE}, we know that $\borelS{R}$ is not necessarily complete. We can
+    complete it to yield the set of all $\outMeasurable$ sets. This completion \emph{expands} the
+    Borel sets and yields what is called the \emph{Lebesgue} measurable sets. We give a precise
+    definition and few observations in the subsection below. 
+\end{Remark}
+
+\subsection{The Lebesgue-Stieltjes measure in $\R$}
+\break{}
+
+\begin{Definition}[name=Lebesgue-Stieltjes measure]
+    If $\map{F}{\R}{\R}$ is increasing and right continuous, the \emph{complete} measure of
+    $\borelM{F}$ denoted by $\closure{\borelM{F}}$ is called the Lebesgue-Stieltjes (L-S) measure. We
+    usually drop the overbar and denote it by the same $\borelM{F}$. The L-S measure associated by
+    the function $F(x) = x$ is called the \emph{Lebesgue} measure and is denoted by $\borelM{x} =
+    \borelM{\algebra{L}} = \mu$. We denote its domain by $\algebra{L}$, and call it the class of
+    \textbf{Lebesgue measurable sets}. 
+\end{Definition}
+
+We make some observations about the Lebesgue and Lebesgue-Stieltjes measures. We fix a monotone
+increasing, right continuous function $\map{F}{\R}{\R}$, the associated \emph{complete} measure $\mu
+= \borelM{F}$, and the domain $\algebra{M}$ of $\mu$. When $F(x) = x$, we denote $\algebra{M}$ as
+$\algebra{L}$. The measure space is thus the triple $\measureS{\R}{\algebra{M}}{\mu}$. For any
+$E\subset\algebra{M}$, $\mu$ is defined as,
+\begin{equation}\label{eq:ls_measure}
+    \measure{E} =
+    \inf\set{\infiniteSum{\measure{\hInt{a_i}{b_i}}}{i}}{E\subset\countUnion{\hInt{a_i}{b_i}}{i}},
+\end{equation}
+where $\measure{\hInt{a}{b}} = F(b) - F(a)$.
+
+\begin{Theorem}[name=Equivalent characterizations of L-S measures]\label{thm:equiv_lebesgue_meas}
+    If $\measureS{\R}{\algebra{M}}{\mu}$ is a L-S measurable space then for any $E \in \algebra{M}$,
+    \begin{itemize}
+	\item (Measure through open intervals)
+	    \begin{equation}\label{eq:ls_measure_open_interval}
+		\measure{E} =
+		\inf\set{\infiniteSum{\measure{(a_i,b_i)}}{i}}{E\subset\countUnion{(a_i,b_i)}{i}},
+	    \end{equation}
+	\item (Measure through open sets)
+	    \begin{equation}\label{eq:ls_measure_open_set}
+		\measure{E} =
+		\inf\set{\measure{G}}{E\subset G,\,\text{G is open}},
+	    \end{equation}
+	\item (Measure through compact sets)
+	    \begin{equation}\label{eq:ls_measure_compact_set}
+		\measure{E} =
+		\sup\set{\measure{K}}{E\supset K,\,\text{K is compact}}.
+	    \end{equation}
+    \end{itemize}
+\end{Theorem}
+\begin{proof}
+    Let us first prove~\ref{eq:ls_measure_open_interval}. Given a collection of open intervals
+    $(a_i,b_i)$, such that $E \subset \countUnion{(a_i,b_i)}{i}$, we construct a sequence of
+    h-intervals,
+    \[(a_i,b_i) = \countDisjUnion{\hInt{a_i}{b_i - 1/k}}{k} = \countDisjUnion{I_i^k}{k},\] 
+    where, $I_i^k = \hInt{a_i}{b_i - 1/k}$. Therefore,
+    \[E \subset \bigcup\limits_{i,k}^{\infty}I_i^k,\] and hence from~\ref{eq:ls_measure} we get,
+    \[\measure{E} \leq \sum\limits_{i,k = 1}^{\infty}\measure{I_i^k}.\]
+     From our construction we see, since each $\hInt{a_i}{b_i-1/k}$ are disjoint,
+     (to be formal, note that $I_i^1 \subset I_i^1 \disjU I_i^2 \dots$, thus
+     $\measure{\countUnion{I_i^k}{k}} =
+     \lim\limits_{n\to\infty}\measure{\finiteDisjUnion{I_i^k}{k}{n}}$),
+    \begin{align*}
+	\measure{(a_i,b_i)} &= \lim\limits_{n\to\infty}\finiteSum{\measure{\hInt{a_i}{b_i -
+		    1/k}}}{k}{n} \\
+	&= \infiniteSum{\measure{\hInt{a_i}{b_i - 1/k}}}{k}
+    \end{align*}
+    And thus,
+    \[\sum\limits_{i,k = 1}^{\infty}\measure{I_i^k} = \infiniteSum{\measure{(a_i,b_i)}}{i}\]
+    Hence,
+    \[ \measure{E} \leq \infiniteSum{\measure{(a_i,b_i)}}{i}.\]
+    To get the other inequality, fix an $\epsilon > 0$. Hence there is a sequence of $I_i =
+    \hInt{a_i}{b_i}$ such that $E \subset \countUnion{I_i}{i}$ and
+    \[\infiniteSum{\measure{I_i}}{i} < \measure{E} + \epsilon.\] 
+     Since, $F$ is right continuous at every $b_i$, there is $\delta_i > 0$ such that
+     $F(b+\delta_i)-F(b) < \frac{1}{2^i}$. Now, 
+     $(a_i,b_i + \delta_i) \subset \hInt{a_i}{b_i + \delta_i}$, thus 
+     $\measure{(a_i,b_i+\delta_i)} \leq \measure{\hInt{a_i}{b_i+\delta_i}}$. We have,
+     \begin{align*}
+	 \measure{\hInt{a_i}{b_i+\delta_i}} &= F(b_i+\delta_i) - F(a_i) \\
+	 &= F(b_i + \delta_i) - F(b_i) + F(b_i) - F(a_i) \\
+	 &< \frac{1}{2^i} + \measure{\hInt{a_i}{b_i}}. \\
+	 &\quad = \frac{1}{2^i} + \measure{I_i}
+     \end{align*}
+     Hence,
+     \[\infiniteSum{\measure{(a_i,b_i)}}{i} \leq \infiniteSum{\measure{I_i}}{i} <
+	 \measure{E} + \epsilon. \]
+     Since $\epsilon$ was arbitrary we get the result.
+
+     Now we will prove~\ref{eq:ls_measure_open_set}. Clearly, 
+     if $E \subset G = \countUnion{(a_i,b_i)}{i}$ then, 
+     $\measure{E} \leq \measure{G}$. Fix an $\epsilon > 0$, then from~\ref{eq:ls_measure_open_interval}, there
+     is a collection of open intervals $(a_i,b_i)$ such that $E \subset \countUnion{(a_i,b_i)}{i}$
+     and,
+     \[\infiniteSum{\measure{(a_i,b_i)}}{i} < \measure{E} + \epsilon.\]
+     Put $G = \countUnion{(a_i,b_i)}{i}$. Then $G$ is open and $E \subset {G}$. Also, $\measure{G}
+     \leq \infiniteSum{\measure{(a_i,b_i)}}{i}$. Hence, the result follows.
+
+     As for~\ref{eq:ls_measure_compact_set}, note that we are measuring from \emph{inside}. Compact
+     sets in $\R$ are closed and bounded and thus are in $\borelS{\R}$ and thus in $\algebra{M}$. So
+     for any $K \subset E$, where $K$ is compact, $\measure{K} \leq \measure{E}$ is evident. Thus,
+     we need to show the other direction. We will do it by cases.\\ 
+     \textbf{CASE I:} \\
+     E is bounded. If E is also closed then the result is obvious ($K = E$). Thus assume $E$ is not
+     closed. Hence, for any $\epsilon > 0$, we need to find a $K$ compact such that 
+     $K \subset E$ and $\measure{K} > \measure{E} - \epsilon$. Since $E$ is not closed
+     $\setDiff{\closure{E}}{E}$ is not empty. Using equation~\ref{eq:ls_measure_open_set} there is
+     an open set $G$ such that $\setDiff{\closure{E}}{E} \subset G$ and 
+     $\measure{G} < \measure{(\setDiff{\closure{E}}{E})}+ \epsilon$. Let $K =
+     \setDiff{\closure{E}}{G}$, then $K$ is compact since it is the intersection of two closed sets and
+     is bounded. See~\ref{fig:tikz:ls_compact}. Also $K \subset E$. From~\ref{fig:tikz:ls_compact},
+     it is also evident that $E\cap\comp{K} = E\cap{G}$, i.e
+     \begin{align*} 
+	 E\cap\comp{K} =& E \cap ( \comp{\closure{E}} \cup G) \\
+	 =& E \cap G
+     \end{align*}
+     Now, since $E = K \disjU (E\cap\comp{K}) = K \disjU (E \cap G)$, we have,
+     \begin{align*}
+	 \measure{K} &= \measure{E} - \measure{E\cap G} \\
+	 &= \measure{E} - (\measure{G} - \measure{\setDiff{G}{E}}) \\ 
+	 &\geq \measure{E} - \measure{G} + \measure{\setDiff{\closure{E}}{E}} \\
+	 &> \measure{E} - \epsilon.
+     \end{align*}
+     \textbf{CASE II:}\\
+     If $E$ is unbounded, then $E_j = E\cap\hInt{-j-1}{j}$ is bounded. Also $\atobUp{E_j}{E}$, hence
+     $\measure{E} = \lim\limits_{j\to\infty}{\measure{E_j}}$. If $\measure{E} = \infty$, then the
+     result is trivial. Hence, assume $\measure{E} < \infty$. Then for any $\epsilon$, there is a
+     $N$ such that,
+     \[\measure{E} < \measure{E_N} + \frac{\epsilon}{2}.\]
+     Also since $E_N$ is bounded, by the preceding argument, there is a compact set $K_N$ such that
+     $K_N \subset E_N$ and 
+     \[\measure{K_N} > \measure{E_N} + \frac{3\epsilon}{2},\] and thus
+     \[\measure{K_N} > \measure{E} + \epsilon.\]
+     Thus we have shown that, for any $\epsilon > 0$, there is a compact set $K_N \subset E$, 
+     such that 
+     \[\measure{K_N} > \measure{E} + \epsilon.\]
+\end{proof}
+
+\begin{figure}
+    \includestandalone[width=0.40\textwidth]{tex/tikz_figures/ls_compact}
+    \caption{Illustration of proof of~\ref{eq:ls_measure_compact_set}-compact
+	measure}\label{fig:tikz:ls_compact}
+\end{figure}
+Note that, the outer measure on $\powSet{\R}$ is defined as,
+\[\outMeasure{A} = \inf\set{\sumInf{\preMeasure{I_i}}}{\lbrace I_i \rbrace \subset
+	\family{E}\,\text{and}\,A\subset\countUnion{I}{i}},\]
+where $\family{E}$ is the algebra of finite disjoint union of h-intervals, and $\preMeasure{I_i} =
+F(b_i) - F(a_i)$, where $I_i = \hInt{a_i}{b_i}$. The set $A$ may or may 
+not be in $\algebra{M}$. For it to be measurable, it must satisfy $\carathCrit$. 
+Whenever $A \in \algebra{M}$, i.e A is L-S measurable, then we know $\outMeasure{A} = \measure{A}$.
+In the theorem below, we give an equivalent criteria for a set $A\subset \R$ to be $L-S$ measurable.
+
+\begin{Theorem}[name=Equivalent criteria for (L-S) measurablity]\label{thm:equiv_crit_LS_meas}
+    A set $A \subset \R$ is (L-S) measurable iff for every $\epsilon > 0$ there is an open set
+    $G_{\epsilon}\supset A$ such that,
+    \[\outMeasure{\setDiff{G_{\epsilon}}{A}} < \epsilon.\]
+\end{Theorem}
+\begin{proof}
+    Assume $A \subset \R$ is $(L-S)$ measurable. Then $\outMeasure{A} = \measure{A}$.
+    Fix an $\epsilon > 0$. From~\ref{eq:ls_measure_open_set} there is an open set $G$ such that,
+    \[\measure{G_{\epsilon}} < \measure{A} + \epsilon.\] Also $A$ satisfies $\carathCrit$,
+    \begin{align*}
+	\carathEq{G_{\epsilon}}{A}.
+    \end{align*}
+    Now, $A\cap G_{\epsilon} = A$. Assume $\outMeasure{A} < \infty$. Then,
+    \[\outMeasure{G_{\epsilon}\cap\comp{A}} = \outMeasure{G_{\epsilon}} - \outMeasure{A} = 
+	\measure{G_{\epsilon}} - \measure{A},\]
+    since $G_{\epsilon}$ is an open set, hence $G_{\epsilon} \in \algebra{M}$ and thus 
+    $\outMeasure{G_{\epsilon}} = \measure{G_{\epsilon}}$. But
+    $\measure{G_{\epsilon}} - \measure{A} < \epsilon$. Hence, we get the result.
+    If $\measure{A} = \infty$, then pick $A_j = A \cap \hInt{-j-1}{j}$. Since each $A_j$ is bounded,
+    by the preceding argument there is an open set $G_j \supset A_j$ such that 
+    $\measure{\setDiff{G_j}{A_j}} < \frac{\epsilon}{2^j}$. Let $G_{\epsilon} = \countUnion{G_j}{j}$.
+    Now,
+    \begin{align*}
+	\measure{\setDiff{G_{\epsilon}}{A}} &= \measure{\setDiff{(\countUnion{G_j}{j})}{A}} \\
+	& = \measure{\countUnion{(\setDiff{G_j}{A})}{j}} \\
+	& \leq \measure{\infiniteSum{(\setDiff{G_j}{A})}{j}} \\
+	& \leq \measure{\infiniteSum{(\setDiff{G_j}{A_j})}{j}} \\
+	& \leq \epsilon.
+    \end{align*}
+
+    Assume that $A \subset \R$ and for any $\epsilon > 0$ there is an open set $G_{\epsilon}$ such
+    that $\outMeasure{\setDiff{G_{\epsilon}}{A}} < \epsilon$. We need to show that $A$ is
+    $\outMeasurable$. Let $E \subset \R$ be any arbitrary set. The main idea is to show that if $A$
+    is measurable it will split \emph{E} w.r.t $\outMeas$.
+    See~\ref{fig:tikz:equiv_ls_measurability}. This motivates the statemet,
+    $\setDiff{E}{A} = (\setDiff{E}{G}) \disjU (\intersection{E}{(\setDiff{G}{A})})$. 
+    Since $G$ is $\outMeasurable$ we have,
+    \begin{align*}\carathGeq{E}{G}.\end{align*} Then from
+    monotonicity of $\outMeas$ and noting that $\intersection{E}{(\setDiff{G}{A})} \subset 
+    \setDiff{G}{A}$, $E\cap A \subset E\cap G$, we get
+    \begin{align*}
+	\outMeasure{E\cap A} + \outMeasure{E\cap\comp{A}} &= \outMeasure{E\cap A} 
+	+ \outMeasure{(\setDiff{E}{G}) \disjU (\intersection{E}{(\setDiff{G}{A})})} \\
+	&\leq \outMeasure{E\cap A} + \outMeasure{\setDiff{E}{G}} 
+	+ \outMeasure{\intersection{E}{(\setDiff{G}{A})}} \\
+	&\leq \outMeasure{E\cap G} + \outMeasure{\setDiff{E}{G}} 
+	+ \outMeasure{\setDiff{G}{A}} \\
+	&< \outMeasure{E} + \epsilon. \\
+    \end{align*}
+    Hence we get the result.
+\end{proof}
+
+\begin{figure}
+    \includestandalone[width=0.40\textwidth]{tex/tikz_figures/equiv_ls_measurability}
+    \caption{Illustration of proof of~\ref{thm:equiv_crit_LS_meas}- part of $E$ not in $A$ is the
+	sum of two parts.}\label{fig:tikz:equiv_ls_measurability}
+\end{figure}
+The~\ref{thm:equiv_crit_LS_meas} states that a set is $(L-S)$ measurable if and only if it can be
+approximated from \emph{outside} by an open set in such a way that the difference has arbitrarily
+small outer measure. This condition can be adopted as the criteria for a $\outMeasurable$ set. 
+However, the $\carathCrit$ is very general and is extremely useful for construction of other measures.
+
+The following theorem gives another characterization of $L-S$ measurable sets, as ones that can
+be \emph{squeezed} between open and closed sets.
+\begin{Theorem}[name=Squeezing a measurable set by open and closed set]\label{thm:LS_meas_squeezed_closed_open}
+    A subset $A \in \R$ is $(L-S)$ measurable if and only if for every $\epsilon > 0$, there is an
+    open set $G_{\epsilon}$ and a closed set $F_{\epsilon}$ such that $G_{\epsilon} \supset A
+    \supset F_{\epsilon}$ and,
+    \[\measure{\setDiff{G_{\epsilon}}{F_{\epsilon}}} < \epsilon.\]
+\end{Theorem}
+\begin{proof}
+    Assume that for every $\epsilon$ there is an open set and closed set $G_{\epsilon},F_{\epsilon}$
+    respectively, such that, $G_{\epsilon} \supset A
+    \supset F_{\epsilon}$ and
+    \[\measure{\setDiff{G_{\epsilon}}{F_{\epsilon}}} < \epsilon.\]
+    From monotonicity of $\outMeas$,
+    \[\outMeasure{\setDiff{G_{\epsilon}}{A}} < \outMeasure{\setDiff{G_{\epsilon}}{F_{\epsilon}}}
+	= \measure{\setDiff{G_{\epsilon}}{F_{\epsilon}}} < \epsilon, \]
+    since $G_{\epsilon},F_{\epsilon} \in \algebra{M}$. Thus, from~\ref{thm:equiv_crit_LS_meas}, $A$
+    is measurable.
+
+    Now, assume $A\subset\R$ is $(L-S)$ measurable. Fix an $\epsilon > 0$. Then there is an open set 
+    $G_{\epsilon}$ such that $\measure{\setDiff{G_{\epsilon}}{A}} < \epsilon/2$. Since $A$ is
+    $(L-S)$ measurable, $\comp{A}$ is also $(L-S)$ measurable and hence there is an open set
+    $H_{\epsilon}\supset \comp{A}$ such that 
+    $\measure{\setDiff{H_{\epsilon}}{\comp{A}}} < \epsilon/2$. Let $F_{\epsilon} =
+    \comp{H_{\epsilon}}$. Thus $F_{\epsilon} \subset A$. 
+    Note that $A\cap\comp{F_{\epsilon}} = H_{\epsilon}\cap A = \setDiff{H_{\epsilon}}{\comp{A}}$. 
+    Hence,
+    \begin{align*}
+	\measure{\setDiff{G_{\epsilon}}{F_{\epsilon}}} &= \measure{\setDiff{A}{F_{\epsilon}}} +
+	\measure{\setDiff{G_{\epsilon}}{A}}\\
+	& < \epsilon/2 + \epsilon/2 \\
+	&\quad = \epsilon.
+    \end{align*}
+\end{proof}
+\begin{Remark}\label{rmk:ls_meas_compact_open}
+    In the theorem above, if $A \in \algebra{M}$ and $\measure{A} < \infty$, then we can replace the
+    closed $F_{\epsilon}$ by a compact $K_{\epsilon}$ using~\ref{eq:ls_measure_compact_set}.
+\end{Remark}
+The next theorem states that any Borel set can be approximated up to a set of measure zero by a
+Borel set.
+\begin{Theorem}[name=Borel Approximation]\label{thm:borel_approximation}
+    Suppose that $A\subset \R$ is $(L-S)$ measurable. Then there exists a $G_{\delta}$ and
+    $F_{\sigma}$ set in $\borelS{\R}$ such that,
+    \[G_{\delta} \supset A \supset F_{\sigma}, \quad \measure{\setDiff{G_{\delta}}{A}} =
+	    \measure{\setDiff{F_{\sigma}}{A}} = 0.\]
+\end{Theorem}
+\begin{proof}
+    Since, $A$ is $(L-S)$ measurable, for every $k \in\Zplus$, there is an open set $G_k$ and a
+    closed set $F_k$ such that $G_k \supset A \supset F_k$ and  
+    $\measure{\setDiff{G_k}{F_k}} \leq \frac{1}{k}$. 
+    Put $G_{\delta} = \countIntersection{G_k}{k}$ and $F_{\sigma} = \countUnion{F_k}{k}$.
+    Fix an $\epsilon > 0$. For every $k$,
+    \begin{align*}
+	G_{\delta}\cap\comp{A} &\subset G_k\cap\comp{A}\\
+	& \subset G_k \cap \indxComp{F}{k}
+    \end{align*}
+    Thus picking a large $k$ such that $\frac{1}{k} < \epsilon$,
+    $\measure{\setDiff{G_{\delta}}{A}} \leq \measure{\setDiff{G_k}{F_k}} < \epsilon$. Since $\epsilon$ was
+    arbitrary, the result follows.
+    Similarly,
+    \begin{align*}
+	A\cap\indxComp{F}{\sigma} &\subset G_k\cap\indxComp{F}{\sigma}\\
+	& \subset G_k \cap \indxComp{F}{k},
+    \end{align*}
+    and the result follows.
+\end{proof}
+
+%\section{Borel and Lebesgue Measure in \texorpdfstring{$\Rn$}{}}
+\section{Borel and Lebesgue Measure in {$\Rn$}}
+Now we will extend the Borel measure on the real line to $\Rn$. If we view $\Rn$ as $\R \times \R
+\dots \times \R$, then we can think of $\Rn$ as the n dimensional product of the Real line. However,
+we do not have the machinary yet to deal with product measures. We will have to build the Borel
+measure as we did in~\ref{prop:pre_meas_hint}. This will give rise to a distribution function in
+$\Rn$ and the Lebesgue-Stieltjes measure will follow. 
+
+The
+key concept in that construction was that of the distribution function. Thus, given a finite measure
+on $\R$ we were able to construct an increasing, right continuous function $F$ on $\R$ and vice
+versa. See~\ref{thm:borel_measure_R}. Our goal would be to extend that idea to $\Rn$. Once we have a
+borel measure on $\Rn$, the complete measure associated with it would give us the Lebesgue-Stieltjes
+measure on $\Rn$. In $\R$ we looked at an elementary family of h-intervals. In $\Rn$, it will be the
+family of right semi-closed intervals (rectangles) $\family{J}_n^{cr}$. 
+However, as with $\R$ we need to include
+$-\infty,\infty$ and these will give us the generalized \textbf{h-intervals}. 
+
+If $\vect{a} = (a_1,\dots,a_n), \vect{b} = (b_1,\dots,b_n)$ are points in $\Rn$,
+let us define $\hInt{\vect{a}}{\vect{b}}$ as the set $\set{\vect{x}\in\Rn}{a_i< x_i \leq b_i,\,1\leq
+i\leq n}$. Similarly $(\vect{a},\infty) = \set{\vect{x}\in\Rn}{x_i > a_i,\,1\leq i \leq n}$ and 
+$\hInt{-\infty}{\vect{b}} = \set{\vect{x}\in\Rn}{x_i\leq b_i,\,1\leq i\leq n}$.
+Let $\family{E} \subset \Rn$ be the collection of all generalized h-intervals as described above.
+Then $\family{E}$ is an elementary family and by~\ref{thm:const_algebra_elem} the family
+$\algebra{A}$ of finite disjoint union of generalized h-intervals in $\family{E}$ is an algebra.
+Moreover, $\sigmaGen{\family{A}} = \borelS{\Rn}$. Thus, we have to define a pre-measure $\preMeas$
+on $\algebra{A}$ and by~\ref{thm:carath_ext_thm} we will have a unique measure on $\borelS{\Rn}$. We
+proceed as in~\ref{prop:pre_meas_hint}, but we need to define what is means for a function $F$ in
+$\Rn$ to be increasing and right continuous. The notion of a distribution function is more
+complicated in $\Rn$. As with our motivation in the previous section, let us assume we have a finite
+measure (for example the Lebesgue measure on a cube) in $\Rn$. In $\R$, we defined $F(x) =
+\measure{\hInt{-\infty}{x}}$. 
+Let us extend the same idea and define $\map{F}{\Rn}{\R}$ as,
+\[F(x_1,x_2,\dots,x_n) = \measure{\set{\vect{\omega}\in\Rn}{\omega_{i}\leq x_i}}.\]
+In $\R$, this lead to $\measure{\hInt{a}{b}} = F(b) - F(a)$. However, this wont be true in $\Rn$.
+We need some more ideas to make a jump from the real line to $\Rn$. One is the notion of order. In
+$\Rn$ there is no total order, however the following notion will suffice,
+\begin{Definition}[name=Order in $\Rn$]
+    Let $\vect{a},\vect{b}$ be points in $\Rn$. We say that $\vect{a}\leq\vect{b}$ iff $a_i\leq b_i$
+    for all $1\leq i \leq n$.
+\end{Definition}
+To generalize $F(b) - F(a)$, we need to define the \emph{difference} operator of a function $F$ from
+$\Rn$ to $\R$.
+\begin{Definition}[name=Difference Operator]
+    Let $\map{G}{\Rn}{\R}$. We define the difference of $G$ at the $ith$ cordinate evaluated at
+    $a_i,b_i$ as,
+    \[\diffOp{b_i}{a_i}G = G(x_1,x_2,\dots,x_{i-1},b_i,\dots,x_n) - 
+	G(x_1,x_2,\dots,x_{i-1},a_i,\dots,x_n). \]
+\end{Definition}
+\begin{Definition}[name=Increasing Function in $\Rn$]
+    Let $\map{F}{\Rn}{R}$ and for $\vect{a} \leq \vect{b}$, let us denote by
+    $F(\hInt{\vect{a}}{\vect{b}})$ as,
+    \[F(\hInt{\vect{a}}{\vect{b}}) = \diffOp{b_1}{a_1}\dots\diffOp{b_n}{a_n}F.\]
+    The function $F$ is said to be increasing iff $F(\hInt{\vect{a}}{\vect{b}}) \geq 0$ whenever
+    $\vect{a} \leq \vect{b}$.
+\end{Definition}
+The definition may seem peculiar but it is motivated by the following theorem,
+\begin{Theorem}[name=Measure and Distribution function in $\Rn$]
+    Let $\mu$ be a finite measure on $\borelS{\Rn}$ and define,
+    \[F(\vect{x}) = \measure{\hInt{-\infty}{\vect{x}}},\]
+    Then, if $\vect{a} \leq \vect{b}$, 
+    \[\measure{\hInt{\vect{a}}{\vect{b}}} = F(\hInt{\vect{a}}{\vect{b}}).\]
+\end{Theorem}
+\begin{proof}
+    We prove it for $n=3$ to make the notation simpler. 
+    \begin{align*}
+	\diffOp{b_3}{a_3}F &= F(x_1,x_2,b_3) - F(x_1,x_2,a_3) \\
+	&= \measure{\set{\vect{\omega}}{\omega_{1}\leq x_1,\,\omega_2\leq x_2,\,\omega_3\leq b_3}}
+	\\ 
+	&\quad	- \measure{\set{\vect{\omega}}{\omega_{1}\leq x_1,\,\omega_2\leq x_2,\,\omega_3\leq
+		a_3}} \\
+	&= \measure{\set{\vect{\omega}}{\omega_{1}\leq x_1,\,\omega_2\leq x_2,\,a_3 < \omega_3\leq
+		b_3}}
+    \end{align*}
+    Thus,
+    \begin{align*}
+	\diffOp{b_2}{a_2}\diffOp{b_3}{a_3}F &=\diffOp{b_2}{a_2}(F(x_1,x_2,b_3) - F(x_1,x_2,a_3)) \\
+	&= F(x_1,b_2,b_3) - F(x_1,a_2,b_3) \\
+	&\quad -F(x_1,b_2,a_3) + F(x_1,a_2,a_3)\\
+	&= \measure{\set{\vect{\omega}}{\omega_1\leq x_1,\,a_2 < \omega_2 \leq b_2,\, a_3 < \omega_3
+	    \leq b_3}}
+    \end{align*}
+    and thus we get the result from another application of the difference operator.
+\end{proof}
+For defining a right continuous function we need to define a \emph{right} limit. We say that a
+sequence of points $(\vect{x}^{(n)})$ in $\Rn$ coverges to a point $\vect{x}$ from the \emph{right}
+if for each co-ordinate $\atobDown{x_i^{(n)}}{x}$. We say that  $(\vect{x}^{(n)})$ \emph{decreases}
+to $\vect{x}$ and denote it by $\atobDown{(\vect{x}^{(n)})}{\vect{x}}$.
+\begin{Definition}[name=Right continuous function in $\Rn$]
+    A function, $\map{F}{\Rn}{R}$ is right continuous if for a sequence of points 
+    $\atobDown{\vect{x}^{(n)}}{\vect{x}}$; $\atobDown{F(\vect{x^{n}})}{F(\vect{x})}$.
+\end{Definition}
+\begin{Definition}[name=Distribution function in $\Rn$]
+    A distribution function $F$ is an increasing, right continuous function $\map{F}{\Rn}{\R}$.
+\end{Definition}
+\begin{Theorem}[name=Borel measure in $\Rn$]\label{thm:borel_meas_rn}
+    Let $F$ be a distribution function on $\Rn$ and set,
+    \[\borelM{F} = F(\hInt{\vect{a}}{\vect{b}}),\quad \vect{a}\leq\vect{b}.\]
+    Then $\borelM{F}$ is a measure on $\borelS{\Rn}$ and is called the borel measure on $\Rn$
+    induced by $F$.
+\end{Theorem}
+\begin{proof}
+    The proof follows the same idea as in~\ref{prop:pre_meas_hint}
+    and~\ref{thm:equiv_lebesgue_meas}.
+\end{proof}
+\begin{Definition}[name=Lebesgue-Stieltjes (L-S) measure on $\Rn$]
+    Let $F$ be a distribution function in $\Rn$ and $\borelM{F}$ the corresponding borel measure on
+    $\Rn$. The completion of $\borelM{F}$ is called the Lebesgue-Stieltjes measure on $\Rn$ and we
+    also denote is by $\borelM{F}$.
+\end{Definition}
+\begin{Example}
+    Let $F_1,F_2,\dots,F_n$ be n distribution function on $\R$, and define,
+    \[F(x_1,x_2,\dots,x_n) = F_1(x_1)\times F_2(x_2)\times\dots F_n(x_n).\]
+    $F$ is a distribution function on $\Rn$ with,
+    \[F(\hInt{\vect{a}}{\vect{b}}) = \finiteProduct{(F_i(b_i)-F_i(a_i))}{i}{n}.\]
+    When $F_i = x$ for all $i$, $F(\hInt{\vect{a}}{\vect{b}}) = \finiteProduct{(b_i-a_i)}{i}{n}$ and
+    the corresponding $L-S$ measure is the Lebesgue measure on $\Rn$.
+\end{Example}
+For a given distribution function $F$, we denote by $\measureS{\Rn}{\algebra{M}}{\mu}$ as
+Lebesgue-Stieltjes $(L-S)$ measure space. In particular the space of Lebesgue measure is denoted by
+$\measureS{\Rn}{\algebra{L}}{\mu}$. Thus by definition a set $E\subset \Rn$ is $L-S$ measurable if,
+\begin{equation*}
+    \measure{E} = \inf\set{\infiniteSum{F({\hInt{\vect{a}}{\vect{b}}}_{i})}{i}}{E \subset
+	\countUnion{{\hInt{\vect{a}}{\vect{b}}}_i}{i}},
+\end{equation*}
+which is equivalent to
+\begin{equation*}
+    \measure{E} = \inf\set{\infiniteSum{\measure{R_i}}{i}}{E \subset
+	\countUnion{R_i}{i}},
+\end{equation*}
+where $R_i$ are a sequence of closed rectangle with sides parallel to co-ordinate axes. 
+
+
+It is clear that all equivalent criteria for $(L-S)$ measurability we addressed for $\R$ holds for
+$\Rn$. Thus~\ref{thm:equiv_lebesgue_meas} holds in $\Rn$, in particular
+\begin{equation}\label{eq:lebesgue_meas_rn_open_set}
+    \measure{E} = \inf\set{\measure{G}}{E\subset G,\quad\text{G is open}},
+\end{equation}
+and 
+\begin{equation}\label{eq:lebesgue_meas_rn_compact_set}
+    \measure{E} = \sup\set{\measure{K}}{E\supset K,\quad\text{K is compact}}.
+\end{equation}
+To prove~\ref{eq:lebesgue_meas_rn_open_set}, note that if $E \subset G$ then $\outMeasure{E} \leq
+\outMeasure{G}$. Since both $E,G$ are $(L-S)$ measurable their outer measure is just the $(L-S)$
+measure $\mu$. Assume $\measure{E}$ is finite.  
+To prove the other direction, for any $\epsilon$ there exist a sequence of rectangles
+$\lbrace R_i \rbrace \subset \Rn$ such that $\infiniteSum{\measure{R_i}}{i} < \measure{E} +
+\epsilon$. Since $\measure{E}$ is finite each rectangle $R_i$ is bounded and there is an open
+rectangle $\interior{S_i}$ such that $R_i \subset \interior{S_i}$ and $\measure{{S_i}} <
+\measure{R_i} + \frac{\epsilon}{2^i}$. Since $\interior{S_i}$ is an open set, let $G =
+\countUnion{\interior{S_i}}{i}$. Thus we get our result.~\ref{eq:lebesgue_meas_rn_compact_set}
+follows exactly as in~\ref{thm:equiv_crit_LS_meas} (3) with minor modification in the case that $\measure{E}$
+is infinite.
+
+Similarly as in~\ref{thm:equiv_crit_LS_meas},~\ref{thm:LS_meas_squeezed_closed_open}
+and~\ref{thm:borel_approximation},
+\begin{Theorem}[name=$(L-S)$ Measurability in $\Rn$]\label{thm:equiv_Lebesgue_meas_rn}
+A set $E \subset \Rn \in \algebra{M}$ is $(L-S)$ measurable if and only if for every 
+$\epsilon > 0$,
+    \begin{enumerate}
+	\item
+	    there is an open set $G_{\epsilon} \subset \Rn$ such that
+	    $G_{\epsilon} \supset E$ and,
+	    \[\outMeasure{\setDiff{G_{\epsilon}}{E}} < \epsilon,\]
+	\item
+	    there is an open set $G_{\epsilon}$ and a closed set $F_{\epsilon}$, such that
+	    $G_{\epsilon}\supset E \supset F_{\epsilon}$ and,
+	    \[\measure{\setDiff{G_{\epsilon}}{F_{\epsilon}}} < \epsilon,\]
+	\item
+	    $E$ differs from a $G_{\delta}$ and a $F_{\sigma}$ set by a set of measure zero.
+    \end{enumerate}
+\end{Theorem}
+%\section{\texorpdfstring{$\ast$}{} Probability Space}
+\section{{$\ast$} Probability Space}
+We now specialize the general measure theory to provide a description of probability.
+
+\begin{Definition}[name=Probability space]
+    A probability space  is a measure space $\measureS{X}{\algebra{M}}{\mu}$ with $\measure{X} = 1$. The
+    measure $\mu$ is called a probability measure. The element of $\algebra{M}$ are called events.
+    In classical notation, $X$ is denoted by $\Omega$ and is called the sample space, 
+    $\algebra{M}$ is denoted by $\algebra{F}$ and
+    $\mu$ by $\mathbb{P}$. Thus a probability space is denoted by $\probS$.
+\end{Definition}
+Note that if $E \in \algebra{F}$ then $\comp{E} \in \algebra{F}$. This means that
+$\probMeasure{\comp{E}} = 1 - \probMeasure{E}$. This is a very useful result that is used very
+frequently in probability.
+\begin{Example}
+    We consider a few probability spaces.
+    \begin{enumerate}
+	\item
+	    Let $\Omega$ be countable set, $\Omega = \lbrace\omega_1,\omega_2,\dots\rbrace$. Suppose each
+	    point $\omega_i$ has probability $p_i$ of occuring so that $\sum\limits_{i}p_i = 1$. Let
+	    $\algebra{F} = \powSet{X}$. Define,
+	    \[\probMeasure{A} = \sum\limits_{x_i\in A}p_i,\quad A\in\algebra{F}.\]
+	    Then, $\probMeas$ is a probability measure. $\probS$ is called
+	    the discrete probability space.
+	\item
+	    Let $\Omega = \interval{0}{1}$, $\algebra{F}$ be the lebesgue measurable sets in
+	    $\interval{0}{1}$ and $\probMeas$ be the Lebesgue measure. This is called the uniform
+	    distribution. 
+	\item
+	    Let $\Omega = \R$ and set $F(x) = \frac{1}{2} + \frac{1}{\pi}\arctan(x)$. The function
+	    $F(x)$ is continuous, monotone increasing and non-negative with 
+	    $\lim_{x\to-\infty}F(x) = 0$ and  $\lim_{x\to\infty}F(x) = 1$. The distribution function
+	    $F$ defines a unique measure on $\borelS{\R}$. This is called the Cauchy distribution.
+    \end{enumerate}
+\end{Example}
+Next, we describe a measure theoretic probability model.
+
+\begin{Definition}[name=Measure theoretic probability model]
+    Let $X$ be the space of a probabilistic process. A measure theoretic model of the
+    process is an identification of $X$ with a set $\Omega$, a 
+    $\sigmaAlgebra$ $\algebra{F}$ on $\Omega$ and a measure $\probMeas$ on $\algebra{F}$. 
+    A subset $E\subset X$ is called a \emph{plausible} event if $\Omega_{E} \in \algebra{F}$, 
+    where $\Omega_{E}$ is the set of 
+    points in $\Omega$ which corresponds to points in $X$ for which $E$ occurs. 
+    We denote the probability of $E$ by $P(E)$ and set it to $\probMeasure{\Omega_E}$.  
+\end{Definition}
+The notation $\Omega_{E}$ here signifies that $X$ could be any probabilistic set up where we
+want to assign probabilities to subsets $E$ of $X$. In order to build a measure theoretic framework we
+identify with $X$ a set which we call the sample space $\Omega$ and construct a $\sigmaAlgebra$ on $\Omega$. 
+Such an identification and construction is not unique. To
+assign probabilities to events $E$ in $X$, we see if the corresponding set is in $\algebra{F}$. If it is, we
+assign it a probability; if not, we deem the set $E$ as not plausible within our measure theoretic framework.
+
+
+Now we will build a measure theoretic probability model to analyze an experiment that involves a
+sequence of infinite coin tosses. Let us assume we have a fair coin and we toss it infinitely many
+times. Also it will be safe to assume that any outcome of a toss doesn't depend on what preceeded it
+and will not affect any future outcomes. 
+Ofcourse, such an experiment is just a thought experiment and cannot be practically carried
+out. Our sample space will consist of \emph{points} like $(H,T,H,H,H,T,H,T,T,H,H,\dots,)$. We may
+have events such as the event $E$ of all those infinite sequences such that the first toss is a $H$.
+How do we assign a probability to such an event. First a couple of definitions.
+\begin{Definition}[name=Bernoulli trial and sequences.]
+    Suppose an experiment has two possible outcomes. A finite number of repetitions of the
+    experiment is a called a Bernoulli trial. An infinite sequence of experiments is called a
+    Bernoulli sequence.
+\end{Definition}
+Let $\mathcal{B}$ be the set of all Bernoulli sequences. Thus $\mathcal{B}$ is the space of
+our experiment of infinite coin tosses. In order to prescribe probability to events in a measure
+theoretic framework we need to identify $\mathcal{B}$ with the sample space of a probabilistic
+space. The following proposition says that there is a one to one correspondence between the unit
+interval and $\mathcal{B}$.
+
+\begin{Proposition}
+    There exists a $1-1$ correspondence from $\hInt{0}{1}$ into $\mathcal{B}$.
+\end{Proposition}
+\begin{proof}
+    Let $\omega \in \interval{0}{1}$. Then $\omega$ can be written as a binary expansion given by,
+    \[\omega = \infiniteSum{\frac{a_i}{2^i}}{i},\quad a_i= 0\,\text{or}\,1.\]
+    Let $\map{f}{\interval{0}{1}}{\mathcal{B}}$ be the map given by,
+    \begin{equation*}
+	f(\omega) = 
+	\begin{cases}
+	    H\,&\text{if $a_i = 1$},\\
+	    T\,&\text{if $a_i = 0$}.
+	\end{cases}
+    \end{equation*}
+    The map defined above fails to be a function since there are real numbers that have two
+    different binary expansion. For example $\frac{1}{2} = 0.10\dots$ or 
+    $\frac{1}{2} = 0.0111\dots$. To avoid this trouble we chose the later expansion. What this means
+    is that the function fails to be onto since we discard binary expansions terminating in an
+    infinite sequences of $0$ which corresponds to Bernoulli sequence ending in infinite $T$'s. Thus
+    there is a $1-1$ correspondence from $\hInt{0}{1}$ into $\mathcal{B}$.
+\end{proof}
+\begin{Remark}
+    Since $\hInt{0}{1}$ is uncountable, this implies that $\mathcal{B}$ is uncountable. However,
+    because the map isn't bijective we cannot identify every bernoulli sequence with a real number
+    in the unit interval. However there is only a countable subset of $\mathcal{B}$ that is not
+    mapped by $f$ above and since we know that a measure of a countable set is $0$ we can neglect
+    this set to build our measure theoretic framework. To show this, let $\mathcal{B}_{\text{neg}}$ be the
+    Bernoulli sequence that are not mapped by $f$. These are the sequences that end in infnite
+    $T$'s. Let $\mathcal{B}_{\text{neg}}^{k}$ be the bernoulli sequences that end in inifinite $T$'s
+    after the $k^{th}$ toss. Then $\mathcal{B}_{\text{neg}}^{k}$ is countable. But 
+    $\mathcal{B}_{\text{neg}} = \bigcup\limits_{k}\mathcal{B}_{\text{neg}}^{k}$ and so the set that
+    is not mapped by $f$ is countable. 
+\end{Remark}
+We can make $\mathcal{B}$ into a probability space by using the Lebesgue measure on the unit
+interval.
+\begin{Definition}[name=Borel Principle]
+    Let $\Omega = \hInt{0}{1}$. If $E$ is a \textbf{plausible} event of Bernoulli sequences, we
+    denote by $\Omega_{E}$ as the subset of real numbers in $\hInt{0}{1}$ that are Lebesgue
+    measurable and are given by the corresponding binary expansion. 
+    We set the probability of $E$, denoted by $P(E)$, as $\measure{\Omega_{E}}$.  
+\end{Definition}
+\begin{Example}
+    Let $E = $ event where $H$ occurs on the first toss.
+    $E = \lbrace H, X_1, X_2, X_3,\dots \rbrace$. The corresponding set in $\Omega$ is 
+    \[\Omega_{E} = \set{\omega\in\Omega; x=0.1d_1d_2d_3\dots}{d_i = 0\,\text{or}\,1}.\]
+    Is $E$ plausibe? That is is $\Omega_{E}$ Lebesgue measurable? The smallest number in
+    $\Omega_{E}$ is $0.100000\dots$ while the largest number is $0.11111\dots$. Thus
+    $\Omega_E = \hInt{1/2}{1}$ which is certainly Lebesgue measurable. Thus $P(E) =
+    \measure{\hInt{1/2}{1}} = 1/2$.
+\end{Example}
+\begin{Example}
+    Let $E$ be the event where the first $N$ tosses are prescribed. For example we could have for
+    $N=3$, $HTT$ as the first $3$ tosses. Thus,
+    \[\Omega_{E} = \set{\omega\in\Omega; x=0.a_1a_2\dots a_{N}d_1d_2d_3\dots}{d_i =
+	    0\,\text{or}\,1}.\]
+    Is $\Omega_{E}$ Lebesgue measurable? Again the smallest number is $a_1a_2\dots a_N
+    00000\dots$ while the largest number is $a_1a_2\dots a_N 11111$. Let $s = a_1a_2\dots
+    a_N000\dots$. Then $a_1a_2\dots a_N 111\dots = s + \sum\limits_{i \geq N+1}^{\infty}1/2^{i} = s
+    = 1/2^N$. Thus $\Omega_{E} = \hInt{s}{s+\frac{1}{2^N}}$ which is certainly Lebesgue
+    measurable. Thus $P(E) = \measure{\hInt{s}{s+\frac{1}{2^N}}} = \frac{1}{2^N}$.
+\end{Example}
+
+\begin{Example}
+    Consider the event $E$ in which $H$ occurs in the $N^{th}$ toss. The corresponding set 
+    \[\Omega_{E} = \set{\omega\in\Omega; x=0.d_1d_2\dots 1 d_{N+1}d_{N+2}d_{N+3}\dots}{d_i =
+	    0\,\text{or}\,1}\]
+    Here $\Omega_{E}$ can be thought of as a union of disjoint interval. As a concrete case,
+    consider $N=3$. Then we have the following cases:
+    $HTH,HHH,THH,HTH$. These correspond to 4 disjoint intervals of length $1/2^3$. Thus $P(E) = 4/8
+    =1/2$. In general, $P(E) = 2^{N-1}/2^N = 1/2$.
+\end{Example}
+In all these examples the Events have corresponded to either intervals or union of intervals.
+However, the power of a measure theoretic framework is not apparent since the above examples can be
+easily seen even in a discrete setting. To show the power of the Borel principle, we will look at
+the Weak Law of Large Numbers. See Appendix for a connection between weak law of large numbers and
+the approximation of continuous functions by polynomials.
+
+We believe that we should be able to detect the probabilities of Heads and Tails when flipping a
+coin by examining the results of many experiments. For example suppose the probability that Head
+occurs in a coin toss is $p$. If we don't know what $p$ is we can carry the experiment a large
+number of times and record the number of Heads that occured. The fraction of Heads then must give us
+some indication of $p$. However, a precise statement of this intuition is difficult to formulate.
+
+Say we are tossing a fair coin whose results are independent of any other coin tosses. 
+If we let $H_n$ to be the number of heads that occur in the first $n$ tosses, we \textbf{might} like
+to show
+\[\lim\limits_{n\to\infty}\frac{H_n}{n} = \frac{1}{2}.\]
+However this is certainly not true. In other words, we could get a sequence that ends in $H$
+infinitely or in $T$ infinitely. Intuitively, such sequences are not likely or typical. What is
+clear is that we need to create a careful formulation.
+
+\begin{Definition}[name=Number of Heads]
+    For $\omega \in \Omega$, define
+    \[S_N(\omega) = a_1 + \cdots + a_N,\quad \omega = 0.a_1a_2\dots\]
+    $S_N$ gives the number of heads in the first $N$ tosses of the Bernoulli sequence corresponding
+    to $\omega$. So $H_N = S_N(\omega)$.
+\end{Definition}
+Now, consider the event $E$ that the fraction of heads $H$ tends to $1/2$. The corresponding set 
+
+\begin{equation}\label{eq:SLLN_lebesgue_set}
+    \Omega_{E} = \set{\omega\in\Omega}{\atob{\frac{S_n(\omega)}{n}}{\frac{1}{2}}\quad\atob{n}{\infty}}
+\end{equation}
+Is $\Omega_{E}$ Lebesgue measurable? This set is highly complicated. What can we say about its
+elements? If $\omega \in \Omega_{E}$ then no matter what $\epsilon$ we take, there is an
+integer $k$ such that for all integers $n$ greater than $k$, the fraction of heads is within an
+$\epsilon$ of $\frac{1}{2}$. That is,
+\[\forEv{\epsilon}\thereIs{k}\forEv{n}\suchThat{n\geq
+	k}{\implies}{\distR{\frac{S_n(\omega)}{n}}{\frac{1}{2}} < \epsilon}.\]
+By the archimedes principle, for every $\epsilon > 0$, there is a positive integer $r$ such that
+$\frac{1}{r} < \epsilon$. Thus the above condition can be written as,
+\[\forEv{r}\thereIs{k}\forEv{n}\suchThat{n\geq
+	k}{\implies}{\distR{\frac{S_n(\omega)}{n}}{\frac{1}{2}} < \frac{1}{r}}.\]
+The advantage of such a formulation is that now we have positive integers as quantifiers. Let,
+\[A_{n,r} = \set{\omega\in\Omega}{\distR{\frac{S_n(\omega)}{n}}{\frac{1}{2}} < \frac{1}{r}}.\]
+This means that,
+\[\frac{n}{2}(\frac{1}{2} - \frac{1}{r}) < a_1 + a_2 + \cdots + a_n < 
+    \frac{n}{2}(\frac{1}{2} + \frac{1}{r}).\]
+Since $a_i$ are either $0$ or $1$ we have a finite choice of these. Thus $A_{n,r}$ is a disjoint
+union of intervals in $\Omega$ and is Lebesgue measurable. This means that,
+\[\Omega_{E} = \bigcap\limits_{r = 1}^{\infty}\bigcup\limits_{k = 1}^{\infty}\bigcap\limits_{n\geq
+    k}^{\infty}A_{n,r},\]
+is Lebesgue measurable since it is just a countable union and intersection of a Lebesgue measurable
+set. This is easy to see: if $\omega \in \Omega_{E}$ then for every $r$, 
+$\omega \in \bigcup\limits_{k = 1}^{\infty}\bigcap\limits_{n\geq k}^{\infty}A_{n,r}$. This means that
+there is a $k$ such that $\omega \in \bigcap\limits_{n\geq k}^{\infty}A_{n,r}$. Thus for all $n \geq
+k$, $\omega \in A_{n,r}$, i.e $\distR{\frac{S_n(\omega)}{n}}{\frac{1}{2}} < \frac{1}{r}$.
+Thus $\Omega_{E}$ is Lebesgue measurable in $\Omega$. 
+
+What is $P(E)$ i.e.~what is $\measure{\Omega_{E}}$? Intiuitely, we would guess that $P(E) = 1$.
+Indeed that is the case and the result is the famous \textbf{Strong Law of Large numbers}. To prove
+this statement we will show $\measure{\comp{\Omega_{E}}} = 0$. There are two ways to show a set
+has zero Lebesgue measure. Either the set is countable or it can be covered by intervals whose
+countable sum of measures can be made arbitrarily small. See~\ref{prop:lebesgue_meas_0}. We can rule
+out the first option which seems surprising at first but follows from a simple observation. 
+Consider the map, $\map{\sigma}{\Omega}{\Omega}$ given by,
+\[\sigma(\omega) = a_{1}11a_{2}11a_{3}11\cdots,\quad \omega = a_1a_2a_3\cdots.\]
+Since $\sigma$ is injective, $\sigma(\Omega) \subset \Omega$ is uncountable. Fix an $\omega \in
+\Omega$. Let $N = 3n$ for any positive integer $n$. Let $y \in \Omega$ be give by $\sigma(\omega)$.
+Then $S_N(y)$ is the number of heads in the first $N$ tosses which is always greater than $2n$, thus
+\[\frac{S_N(y)}{N} \geq \frac{2}{3}.\]
+This means that $\sigma(\Omega) \subset \indxComp{\algebra{F}}{E}$ and hence
+$\indxComp{\algebra{F}}{E}$ is uncountable.
+
+
+But first we will show a \emph{weaker} 
+statement. The notions weaker and stronger will be explained later when we describe measurable
+functions. Given an $\epsilon > 0$ let 
+\begin{equation}\label{eq:WLLN_lebesgue_set}
+    \Omega_{E_N} =
+\set{\omega\in\Omega}{\distR{\frac{S_n(\omega)}{N}}{\frac{1}{2}} \leq \epsilon}.
+\end{equation} 
+Note that,
+$\Omega_{E_N}$ is Lebesgue measurable because we can re-formulate the definition by using
+$\frac{1}{r}$, where $r$ is a positive integer such that $\frac{1}{r} < \epsilon$. 
+
+We gather these two notions in the following theorem.
+\begin{Theorem}[name=Law of large numbers for Bernoulli sequences]\label{thm:LLN_bernoulli_seq}
+    Let $\Omega = \hInt{0}{1}$ be the sample space identified with the Bernoulli sequences. Let
+    $\algebra{F}$ be the Lebesgue measurable sets in $\Omega$ and $\mu$ be the corresponding
+    Lebesgue measure. Thus, $\measureS{\Omega}{\algebra{F}}{\mu}$ is a probability space. Let
+    $\Omega_{E}$ be the set in $\algebra{F}$ as in~\ref{eq:SLLN_lebesgue_set} and
+    $\Omega_{E_N}$ be the set in $\algebra{F}$ as in~\ref{eq:WLLN_lebesgue_set}. Then, 
+    \begin{enumerate}
+	\item
+	    For every $\epsilon > 0$, 
+	    \[\lim\limits_{N\to\infty}
+		\measure{\set{\omega\in\Omega}{\distR{\frac{S_n(\omega)}{N}}{\frac{1}{2}} \leq \epsilon}} = 1\]
+	    i.e.,
+	    \[\atob{P({E_N})}{1}\,\text{as}\,\atob{N}{\infty}\]
+	\item
+	    \[\measure{\set{\omega\in\Omega}{\lim\limits_{N\to\infty}\frac{S_N(\omega)}{N}= \frac{1}{2}}}
+	    = 1\]
+	    i.e.,
+	    \[P({E}) = 1.\]
+    \end{enumerate}
+\end{Theorem}
+We will need a few more definitions and results from Riemann integration to prove this. The standard
+approach will be to prove results about the complement of the set.
+
+Each digit of the binary expansion of a real number in $\Omega$ (where we choose a unique binary
+expansion) can be thought as a selection of a dyadic partition of $\Omega$ as in~\ref{def:dyadic_cube}.
+At level $1$ we bisect the interval $\hInt{0}{1}$. The binary digit when in left is $0$ and $1$
+when in right. At level $2$, we bisect each of these to get four intervals indexed as $00,01,10,12$.
+Continuing, we achieve a dyadic partition of $\hInt{0}{1}$ at each level which corresponds to a
+digit in the binary expansion. Since each digit corresponds to a Bernoulli trial, we get a
+correspondence of the partition with the Bernoulli sequence. 
+
+Each Level $k$ partitions $\Omega$  into $2^{k}$ 
+intervals of $\interval[open left]{\frac{l}{2^{k}}}{\frac{l+1}{2^{k}}}$ 
+for $0 \leq l < 2^{k}$.  
+At each level of the partition we
+define the Rademacher functions which take the value of $1$ when the binary digit is $1$ and
+$-1$ when the binary digit is $0$. Thus $R_1$ has two values, $R_2$ has $4$ values, $R_n$ has $2^n$
+values. This is made precise in the definition below. See~\ref{fig:tikz:rademacher}.
+
+\begin{figure}
+  \includestandalone[width=0.5\textwidth]{tex/tikz_figures/rademacher_1}
+  \caption{We show the first three levels of dyadic partition with the corresponding Rademacher
+      functions $R_1$, $R_2$ and $R_3$. Red shows that Rademacher functions takes a value $-1$,
+      while blue shows that the function takes a value $1$.}\label{fig:tikz:rademacher}
+\end{figure}
+
+\begin{Definition}[name=Rademacher function]
+    For $\omega \in \Omega$, we define the $k^{th}$ Rademacher function by,
+    \begin{equation*}
+	R_k(\omega) = 2a_k -1,\quad \omega = 0.a_1a_2\dots
+    \end{equation*}
+    This means that,
+    \begin{equation*}
+	R_k(\omega) = 
+	\begin{cases}
+	    1,\,&a_k = 1,\\
+	    -1,\,&a_k = 0
+	\end{cases}
+    \end{equation*}
+\end{Definition}
+We can interpret $R_k$ like this. Suppose we bet on a sequence of coin tosses such that at each toss,
+we win $\$1$ if it is heads and lose $\$1$ if it is tails. Then $R_k(\omega)$ is the amount won or
+lost at the $k^{th}$ toss in the sequence of tosses represented by $\omega$.
+\begin{Proposition}\label{prop:rademacher}
+    Let $R_k$ denote the $k^{th}$ Rademacher function.
+    \begin{enumerate}
+	\item
+	    $ \int\limits_{0}^{1}R_{k_1}(x)R_{k_2}(x)\dots R_{k_n}(x) = 0\,\text{or}\,1$
+	    for any sequence $k_1 \leq k_2 \leq \cdots \leq k_n$. 
+	\item
+	   For $x \in \interval[open left]{0}{1}$, 
+	    \[ \sumInf{R_i(x)2^{-i}} = 2x - 1. \]
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	   Each $R_{k_i}$ is defined on partitions of $\interval[open left]{0}{1}$ into $2^{k_i}$ 
+	   intervals of $\interval[open left]{\frac{l}{2^{k_i}}}{\frac{l+1}{2^{k_i}}}$ 
+	   for $0 \leq l < 2^{k_i}$. Let the partition at level 
+	   $k_n$ be given by 
+	   \[\set{\Delta_{l}^{k_n} = \interval[open
+	       left]{\frac{l}{2^{k_n}}}{\frac{l+1}{2^{k_n}}}}{0 \leq l < 2^{k_n}}.\] 
+       
+           If $k_1 < k_2 < \cdots < k_n$, $R_{k_i}$ for $k_i < k_n$ will be constant on each of these 
+	   $\Delta_{l}^{k_n}$. Thus,
+	   \begin{align*} 
+	       \int\limits_{0}^{1}R_{k_1}(x)\dots R_{k_n}(x) & = \sum\limits_{l =
+		   0}^{2^{k_n}-1}\int\limits_{\Delta_{l}^{k_n}}R_{k_1}(x)\dots R_{k_n}(x) \\
+	       & = (R_{k_1}(x)\dots R_{k_{n-1}}(x))\int\limits_{\Delta_{0}^{k_n} + \Delta_{1}^{k_n}
+	       }R_{k_n}(x) \\
+	       & + \cdots + (R_{k_1}(x)\dots R_{k_{n-1}}(x))
+	       \int\limits_{\Delta_{2^{k_n-1}}^{k_n} + \Delta_{2^{k_n}}^{k_n}}R_{k_n}(x)
+	   \end{align*}  
+	   Each of the integral is $0$ and hence the sum
+	   is 0. If $k_1 = k_2 = k_3
+	   \cdots = k_n$ and n is even then total integral is one otherwise integral is $0$.
+       \item
+	   Let us write $R_i(x) = 2*a_i - 1$ where $x = 0.a_1a_2\cdots$ is the binary
+	   representation of $x$. Note that $x = \sum\limits_{i = 1}^{\infty}a_i/2^i$.
+	   \begin{align*}
+	       \sumInf{R_i(x)2^{-i}} &= \lim\limits_{n\to\infty}\sum\limits_{i=1}^{n}R_i(x)2^{-i} \\
+	       &= \lim\limits_{n\to\infty}(2*(a_1/2 + a_2/4 + \cdots + a_n/2^n))\\ 
+	       &\quad - \lim\limits_{n\to\infty}(1/2 + 1/4 + \cdots + 1/2^n) \\
+	       & = 2*x - 1 
+	   \end{align*}
+	   We get the second term by using the definition of $R_i$, i.e $R_i(x) = 2*a_i - 1$. We can
+	   split the limit because each converges. The first limit is just the binomial
+	   representation of $x$ and the second is a geometric series.
+    \end{enumerate}
+\end{proof}
+\begin{Definition}
+    We define $W_N(\omega) = \finiteSum{R_k(\omega)}{k}{N}$. Then $W$ gives the total amount won or
+    lost after the $N^{th}$ toss. Using the definition of $R_k$, we get
+    \begin{align*}
+	W_N(\omega) &= 2(a_1 + a_2 + \cdots + a_N) - N \\
+	&= 2S_N(\omega) - N.
+    \end{align*}
+\end{Definition}
+With the above definition, our condition in the set given by~\ref{eq:WLLN_lebesgue_set} becomes,
+\[\lvert W_N(\omega) \rvert \leq 2\epsilon N.\]
+We will need one more result before proving~\ref{thm:LLN_bernoulli_seq}. The special case of this
+result will be proved later.
+\begin{Proposition}\label{prop:chebychev_ineq_1}
+    Let $f$ be a non-negative, piecewise constant function on $\Omega$ and $\alpha > 0 \in \R$ be a
+    positive real number. Then,
+    \[\measure{\set{\omega\in\Omega}{f(\omega) > \alpha}} <
+	\frac{1}{\alpha}\int\limits_{0}^{1}f(\omega),\]
+    where the integeral is the standard Riemann integral in $\R$.
+\end{Proposition}
+\begin{proof}
+    Suppose $f$ is defined on the mesh $0 = \omega_{1} < \omega_{2} < \cdots < \omega_{k} = 1$ 
+    such that $f(\omega) = c_i$
+    whenever $\omega \in (\omega_{i},\omega_{i+1})$ for all $1 \leq i \leq k-1$.
+    Then,
+    \begin{align*}
+	\int\limits_{0}^{1}f(\omega) &= \finiteSum{c_i({\omega}_{i+1} - {\omega}_i)}{i}{k} \\
+	& \geq \finiteSumStack{c_i({\omega}_{i+1} - {\omega}_i)}{i=1}{c_i > \alpha}{k} \\
+	& > \alpha \finiteSumStack{({\omega}_{i+1} - {\omega}_i)}{i=1}{c_i > \alpha}{k} \\
+	& \quad = \alpha\measure{\set{\omega\in\Omega}{f(\omega) > \alpha}}.
+    \end{align*}
+\end{proof}
+Now we are ready to prove~\ref{thm:LLN_bernoulli_seq} (1) which is the \textbf{WLLN} for Bernoulli
+sequences.
+\begin{proof}
+    The complement of the set $\Omega_{E_N}$ is given by,
+    \[\indxComp{\Omega}{E_N} = \set{\omega\in\Omega}{\lvert W_N(\omega) \rvert > 2\epsilon
+	    N}.\]
+    Since $\epsilon$ is arbitrary we can disregard the factor of $2$ and square both sides to
+    remove the annoying absolute sign. Thus,
+    \[\indxComp{\Omega}{E_N} = \set{\omega\in\Omega}{W^{2}_{N}(\omega)  >
+	    N^2{\epsilon}^2}.\]
+    Now we can use~\ref{prop:chebychev_ineq_1} in stating,
+    \[\measure{\indxComp{\Omega}{E_N}} < 
+	\frac{1}{N^2{\epsilon}^2}\int\limits_{0}^{1}W^2_N(\omega).\]
+    To evaluate the integral we observe,
+    \begin{align*}
+	\int\limits_{0}^{1}W^2_N(\omega) &= \int\limits_{0}^{1}{(\finiteSum{R_k(\omega)}{k}{N})^2}\\
+	&= \finiteSum{\int\limits_{0}^{1}R_k^2(\omega)}{k}{N} + 
+	\finiteSumStack{\int\limits_{0}^{1}R_i(\omega)R_j(\omega)}{i,j=1}{i\neq j}{N}.
+    \end{align*}
+    The second summation is $0$ by~\ref{prop:rademacher} (1) while the first summation is $N$
+    because each integral is $1$.
+    Thus,
+    \[\measure{\indxComp{\Omega}{E_N}} \leq \frac{1}{N^2{\epsilon}^2}N =
+	\frac{1}{N{\epsilon}^2}.\]
+    Thus,
+    \[\atob{\measure{\indxComp{\Omega}{E_N}}}{0}\quad\text{as}\,\atob{N}{\infty}.\]
+
+\end{proof}
+
+We are now ready to prove~\ref{thm:LLN_bernoulli_seq} (2) which is the \textbf{SLLN} for the
+Bernoulli sequence.
+\begin{proof}
+    We noted that to show $\measure{\indxComp{\Omega}{E}} = 0$, for any $\epsilon$ 
+    we will have to find simple
+    sets (closed intervals) $E_i$ such that $\indxComp{\Omega}{E} \subset \countUnion{E_i}{i}$
+    and $\infiniteSum{\measure{E_i}}{i} < \epsilon$.
+    There is $\delta > 0 \in \R$ such that the set,
+    \[A_n = \set{\omega\in\Omega}{\lvert W_n(\omega) \rvert > \delta n}.\]
+    is not empty for some $n$.
+    How did we get this set? Consider an $\omega \in \indxComp{\Omega}{E}$. Then
+    $\frac{S_n(\omega)}{n} \not \to \frac{1}{2}$. This is equivalent to saying,
+    \[\thereIs{\delta}\forEv{N}\thereIs{n}\suchThat{n\geq
+	    N}{\land}{\distR{\frac{S_n(\omega)}{n}}{\frac{1}{2}} > \delta}.\]
+    Since $\distR{\frac{S_n(\omega)}{n}}{\frac{1}{2}} = \lvert 
+    \frac{W_n(\omega)}{n}\rvert$ the set $A_n$ is not empty.
+
+    Moreover, $A_n$ is just a finite union of disjoint h-intervals and is Lebesgue measurable.
+    By~\ref{prop:chebychev_ineq_1} (removing the absolute sign by raising to $4^{th}$ power)
+    \[\measure{A_n} < \frac{1}{{\delta}^4n^4}\int\limits_{0}^1(\finiteSum{R_k}{k}{n})^4.\]	
+    The integrand yields $5$ kinds of terms,
+    \begin{enumerate}
+	\item
+	    $R_j^4$ for $j = 1 \cdots n$.
+	\item
+	    $R_j^2 R_k^2$ for $j\neq k$.
+	\item
+	    $R_j^2 R_k R_l$ for $j\neq k \neq l$.
+	\item
+	    $R_j^3 R_k$ for $j \neq k$.
+	\item
+	    $R_j R_k R_l R_m$ for $j\neq k \neq l \neq m$.
+    \end{enumerate}
+    Using~\ref{prop:rademacher} it is easy to observe that only the first and second kind of terms integrate
+    out to $1$ while others give zero. There  are $n$ terms of the first kind and $3n(n-1)$ terms
+    involving the second kind.
+    Thus,
+    \[\measure{A_n} < \frac{3}{n^2{\delta}^{4}}.\]
+    The idea is to cover $\indxComp{\Omega}{E}$ using the sets $A_n$. Since these sets are not
+    necessarily closed we can take their closure to get closed intervals without changing the
+    measure. Thus it is not necessary to find closed intervals. However, we need to make sure that the
+    sequence of sets decrease in measure so that the countable sum can be made arbitrarily small.
+    
+    For a constant $C$, set $\delta_n = Cn^{\frac{-1}{2}}$. Then,
+    \[\infiniteSum{\frac{3}{{\delta_n}^4n^2}}{n} =
+	\frac{3}{C}\infiniteSum{\frac{1}{n^{\frac{3}{2}}}}{n}\] 
+     converges and can be made smaller than any epsilon by choosing sufficiently large $C$.
+
+     Let,\[E_n = \set{\omega\in\Omega}{\lvert W_n(\omega)\rvert > \delta_{n}n}.\]
+     If $\indxComp{\Omega}{E} \subset \countUnion{E_n}{n}$, then
+     \[\measure{\indxComp{\Omega}{E}} \leq \infiniteSum{\measure{A_n}}{n} =
+	 \frac{3}{C}\infiniteSum{\frac{1}{n^{\frac{3}{2}}}}{n} < \epsilon.  \]
+     Thus $\measure{\indxComp{\Omega}{E}} = 0$ provided 
+     $\indxComp{\Omega}{E} \subset \countUnion{E_n}{n}$. However, this is easy to see. Taking
+     complement what we need to show is 
+     \[\countIntersection{\indxComp{E}{n}}{n} \subset \Omega_{E}.\] This is easily verified.
+\end{proof}
+
+We have seen that remarkable observations can be made by working in a measure theoretic framework.
+Such arguments are standard in probability study. We isolate a few more concepts that are essential
+in probability computation. One such technique we already saw when we showed that the set $\Omega_{E}$
+is Lebesgue measurable by showing that is countable union and intersection of simple sets that are
+Lebesgue measurable. In general, to prove that a set is measurable w.r.t a probability measure, we need
+to show that it is an event in the underlying $\sigmaAlgebra$. This is usually done by showing that
+that the set is a finite (or countable) combination of countable unions and intersections of elementary
+sets that are events. We show a couple of examples to highlight this idea before giving a concrete 
+definition.
+\begin{Example}
+    Let $E$ be the event where $\infiniteSum{\frac{R_n(\omega)}{n}}{n}$ converges. This is an interesting series.
+    We know that $\infiniteSum{\frac{1}{n}}{n}$ diverges but $\infiniteSum{\frac{{(-1)}^{n}}{n}}{n}$
+    converges. Is $E$ a plausible event? In other words is $\Omega_{E}$ Lebesgue measurable?
+    Here $\Omega_{E}$ is given by,
+    \[\set{\omega\in\Omega}{\infiniteSum{\frac{R_n(\omega)}{n}}{n} < \infty}.\]
+    Let $T_n(\omega) = \finiteSum{\frac{R_k(\omega)}{k}}{k}{n}$. If $\omega\in\Omega_{E}$, then
+    for any $\epsilon$, there is an integer $k$ such that
+    $\distR{T_n(\omega)}{T_m(\omega)} < \epsilon$ whenever $n,m \geq \epsilon$. We can get rid of
+    the $\epsilon$ by finding a positive integer $r$ such that $\frac{1}{r} < \epsilon$.
+    Consider the set,
+    \[A_{m,n,r} = \set{\omega\in\Omega}{\distR{T_n(\omega)}{T_m(\omega)} < \frac{1}{r}}.\]
+    This set is Lebesgue measurable being a union of finite h-intervals in $\Omega$. We can write
+    $\Omega_{E}$ as,
+    \[\Omega_{E} =
+	\bigcap\limits_{r=1}^{\infty}\bigcup\limits_{k=1}^{\infty}\bigcap\limits_{m,n \geq
+	    k}^{\infty}A_{m,n,r}.\]
+    This shows that $\Omega_{E}$ is Lebesgue measurable.
+\end{Example}
+\begin{Example}
+    Let $E$ be the event where a prescribed sequence, say $HTTH$, occurs infinitely often. To
+    describe $\Omega_{E}$, let $E_n$ be the event where the pattern occurs beginning at the
+    $n^{th}$ step. $E_n$ is described by a finite number of conditions on the Rademacher functions,
+    \[\Omega_{E_n} = \set{\omega\in\Omega}{R_n(\omega) =
+	    1,R_{n+1}(\omega)=-1,R_{n+2}(\omega)=-1,R_{n+3}(\omega)=1}.\]
+    How do we get $\Omega_{E}$ from $\Omega_{E_n}$? Since the pattern occurs infinitely
+    often, no matter what integer $k$ we choose, there should be a $n$ far out such that
+    $\omega\in \Omega_{E_n}$. Thus,
+    \[\Omega_{E} = \bigcap\limits_{k=1}^{\infty}\bigcup\limits_{n\geq k}^{\infty}
+	\Omega_{E_n}.\]
+\end{Example}
+What can we say about their probabilities? 
+All these examples have a general pattern. Say we have a countable collection of events $\lbrace
+E_1,E_2,\cdots\rbrace$. Let $E$ be the event that infinitely many of the $E_i$'s occur. Can we
+determine the probability of $E$ from the probabilities of $E_i$'s? Two famous results{\textemdash} 
+the Borel-Cantelli Lemmas{\textemdash}are relevant to the answer. First we will give a description of
+the term infinitely often and almost always.
+
+For a sequence of events $\seq{E}{n}$,we define the limit superior, and limit
+inferior as.
+\begin{align*}
+    &\limSupSet{E}{n}{k} \\
+    &\limInfSet{E}{n}{k}.
+\end{align*}
+\begin{Remark}\label{rmk:limsup_liminf_set}
+    The terminology stems from the corresponding definitions for 
+    a sequence of real numbers. For example if we let $\seq{s}{n}$ to be
+    a sequence of real numbers then we can make observations of their limiting behavior by looking
+    at the $\sup$ and $\inf$ of the tail sets. Let us define the following,
+    \begin{align*}
+	u_n &= \inf\set{s_k}{k\geq n} \\
+	v_n &= \sup\set{s_k}{k\geq n} \\
+    \end{align*}
+    Then it is easy to see that $u_1 \leq u_2 \cdots$, while $v_1 \geq v_2 \geq \cdots$. Since this
+    are monotonic sequence, if they converge they will converge to their $\sup$ and $\inf$
+    respectively. Thus,
+    \begin{align*}
+	\liminf s_n & := \lim\limits_{n\to\infty}u_n = \sup\set{u_n}{n\in \Zplus} \\
+	\limsup s_n & := \lim\limits_{n\to\infty}v_n = \inf\set{v_n}{n\in \Zplus} \\
+    \end{align*}	
+    
+    Similarly, we can define the same for sequence of sets. However, to get supremum
+    and infimum, we need an order relation. This is done through the relation $\subset$. Thus if we
+    have a sequence of set $\seq{E}{n}$, the $\sup$ is defined as $\countUnion{E}{n}$. This is easy
+    to see; as for any $n$, $E_n \subset \countUnion{E}{n}$. Similarly, the $\inf$ is defined
+    as $\countIntersection{E}{n}$.   
+
+    Now analogously we can define,
+    \begin{align*}
+	U_n &= \inf\set{E_k}{k\geq n} \\
+	V_n &= \sup\set{E_k}{k\geq n} \\
+    \end{align*}
+    Thus, we have $U_1 \subset U_2 \subset U_3 \cdots$, while $V_1 \supset V_2 \supset V_3 \cdots$.
+    Thus we see that $\atobUp{U_n}{\countUnion{U_n}{n}}$ while 
+    $\atobDown{V_n}{\countIntersection{V_n}{n}}$. Hence,
+    \begin{align*}
+	\liminf E_n & := \lim\limits_{n\to\infty}U_n = \sup\set{U_n}{n\in \Zplus} \\
+	\limsup E_n & := \lim\limits_{n\to\infty}V_n = \inf\set{V_n}{n\in \Zplus} \\
+    \end{align*}	
+    
+
+    In probability, we denote the $\limsup E_n$ as the set $\lbrace E_n \quad \text{i.o}\rbrace$
+    where the i.o stands for \textbf{infinitely often}. This is from the fact that if $\omega \in
+    \limsup E_n$, then for any $n$ there is a $k$ such that $\omega \in E_k$. Thus no matter how far
+    out we go, we can \emph{find} a $k$ farther such that $\omega \in E_k$. Hence, $\limsup E_n$ is
+    the event that gives the point in $\Omega$ which are in infinitely many of the events.
+
+    We denote the set $\liminf E_n$ as the set $\lbrace E_n \quad \text{a.a}\rbrace$ where the a.a
+    stands for \textbf{almost always}. This is from the fact that if $\omega \in \liminf E_n$, then
+    there is an $n$ such that for any $k$ greater than $n$, $\omega \in E_k$. Thus, $\liminf E_n$ is
+    the event that all but a finite number of events occur. 
+
+    If $\limsup E_n = \liminf E_n = E$, then we say that $\limit{E_n}{n}{\infty} = E$.
+\end{Remark}
+We will need the following result.
+\begin{Proposition}\label{prop:prob_meas_limsup_liminf}
+    Let $\probS$ be a probability space. If $\lbrace E_n \rbrace \subset \algebra{F}$ is a countable
+    collection of events, then
+    \[\probMeasure{\liminf E_n} \leq \liminf \probMeasure{E_n} \leq \limsup \probMeasure{E_n} \leq
+	\probMeasure{\limsup E_n}.\]
+\end{Proposition}
+\begin{proof}
+    Note that $(\probMeasure{E_n})$ is a sequence of positive numbers and so the middle inequality
+    is trivial. First let us show that,
+    \[\probMeasure{\liminf E_n} \leq \liminf \probMeasure{E_n}.\]
+    Consider the set,
+    \[U_n = \inf\set{E_k}{k\geq n} = \bigcap\limits_{k\geq n}E_k.\]
+    Then, by~\ref{rmk:limsup_liminf_set}, $\seq{U}{n}$ is an increasing sequence, and by the properties
+    of a measure (see~\ref{thm:prop_of_meas}),
+    \[\probMeasure{\liminf E_n} = \probMeasure{\countUnion{U_n}{n}}
+	=\lim\limits_{n\to\infty}\probMeasure{U_n}.\]
+    Since $U_n \subset E_k$ for all $k \geq n$, $\probMeasure{U_n} \leq \probMeasure{E_k}$ for all
+    $k\geq n$. Thus,
+    \[\probMeasure{U_n} \leq \inf\set{\probMeasure{E_k}}{k\geq n}.\]
+    Hence, taking limits
+    \[\lim\limits_{n\to\infty} \probMeasure{U_n} \leq
+	\lim\limits_{n\to\infty}\inf\set{\probMeasure{E_k}}{k\geq n} = \liminf\probMeasure{E_n}.\]
+    We get the other inequality using an analogous argument.
+\end{proof}
+
+\begin{Theorem}[name=Continuity of Probability measure]\label{thm:continuity_prob_measure}
+    Let $\set{E_n}{n\in\Zplus}$ be a countable collection of events in a probability space $\probS$.
+    If $E = \lim\limits_{n\to\infty}E_n$, then $\limit{\probMeasure{E_n}}{n}{\infty} = \probMeasure{E}$. 
+\end{Theorem}
+\begin{proof}
+    Since $\lim\limits_{n\to\infty}E_n = \limsup E_n = \liminf E_n$,
+    using~\ref{prop:prob_meas_limsup_liminf} we get the desired result. This theorem highlights the
+    continuity of the probability measure since,
+    \[\limit{\probMeasure{E_n}}{n}{\infty} = \probMeasure{\lim\limits_{n\to\infty}E_n},\]
+    interchanges the limit operation.
+\end{proof}
+\begin{Theorem}[name=First Borel-Cantelli Lemma]\label{thm:borel_cantelli_1}
+    Given a probability space $\probS$ and a countable collection of events, $\lbrace E_n \rbrace
+    \subset \algebra{F}$, let $E = \lbrace E_n \,\text{i.o}\rbrace$. Then,
+    \[\text{If}\,\infiniteSum{\probMeasure{E_n}}{n} < \infty\quad\text{then}\, \probMeasure{E} = 0.\]
+\end{Theorem}
+\begin{proof}
+    Let $V_n = \bigcup\limits_{k\geq n}E_k$. Then $E = \countIntersection{V_n}{n}$. Thus $E \subset
+    V_n$ for every $n$. Now,
+    \[\probMeasure{V_n} \leq \series{\probMeasure{E_k}}{k}{n}{\infty}.\]
+    Since, $\infiniteSum{\probMeasure{E_n}}{n} < \infty$, for any $\epsilon$, there is an $N$ such
+    that $\series{\probMeasure{E_k}}{k}{N}{\infty} < \epsilon$. Thus,
+    \[\probMeasure{E} \leq \probMeasure{V_N} \leq 
+	\series{\probMeasure{E_k}}{k}{N}{\infty} < \epsilon.\]
+    Since $\epsilon$ was arbitrary we get the result.
+\end{proof}
+\begin{Example}[name=Run lengths]
+    Consider the probability space $\probS$, where $\Omega = \hInt{0}{1}$, $\algebra{F}$ is the
+    collection of Lebesgue measurable sets in $\Omega$ and $\probMeas = \mu$ is the Lebesgue
+    measure. Thus we are in the Borel space of describing infinite coin tosses. For any $n$ define
+    the run length function $l_n$ by,
+    \begin{equation*}
+	l_n(\omega) = \# \,\text{consecutive $1$'s in the binary expansion of $\omega$ starting at
+	    the $n^{th}$ place}.
+    \end{equation*}
+    Thus $l_n(\omega) = k$ if,\[R_{n(\omega)} = 1, R_{n+1}(\omega) = 1,\ldots,R_{n+k-1} = 1,R_{n+k} =
+	-1.\]
+    A run length function gives us the number of consective heads in a sequence $\omega$ of
+    infinite coin tosses. Take a sequence of non-negative integers $r_1,r_2,r_3,\ldots$ and let
+    $E_n$ be the event that we have atleast $r_n$ consecutive heads starting at the $n^{th}$ toss. 
+    Then, 
+    \[\Omega_{E_n} = \set{\omega\in\Omega}{R_{n(\omega)} = 1, R_{n+1}(\omega) = 1,\ldots,R_{n+r_n-1} 
+	    = 1}.\]
+    Let $E = \lbrace E_n\,\text{i.o} \rbrace$. Then,
+    \[P(E_n) = \measure{\Omega_{E_n}} = {(\frac{1}{2})}^{r_n}.\]
+    By~\ref{thm:borel_cantelli_1}, if $\infiniteSum{{\left(\frac{1}{2}\right)}^{r_n}}{n} < \infty$, then
+    $P(E) = 0$. As a concrete case take $r_n = n$. Then the probability of the event that consists
+    of $n$ consecutive heads starting at the $n^{th}$ toss, infinitely often, is $0$.
+\end{Example}
+Next we define conditional probability and independence of events in a probability space.
+\begin{Definition}[name=Conditional probability measure]
+    Suppose $A,B$ are events in a probability space $\probS$ with $\probMeas(B) > 0$. The
+    conditional probability (measure) of $A$ given $B$ is 
+    \[\probMeasure{A|B} = \frac{\probMeasure{A\cap B}}{\probMeasure{B}}.\]
+\end{Definition}
+\begin{Remark}
+    Fix an event $B \in \algebra{F}$. Then the the conditional probability measure is a 
+    function $\map{\probMeasure{.|B}}{\algebra{F}}{\extRealsPos}$. Recall that $\algebra{F}_{B}$ is the
+    restricted sigma algebra. See~\ref{ex:type_of_sigma_alg}. If we restrict the sample space to $B$, the measure space
+    $\measureS{B}{\algebra{F}_{B}}{\probMeasure{.|B}}$ becomes a probability space. This is proved in the
+    following theorem.
+\end{Remark}
+\begin{Theorem}[name=Conditioned probability space]
+    Let $\probS$ be a probability space. For an given $B \in \algebra{F}$, 
+    $\measureS{B}{\algebra{F}_{B}}{\probMeasure{.|B}}$ is also a probability space.
+\end{Theorem}
+\begin{proof}
+    Note that $\algebra{F}_{B} = \set{E\cap B}{E \in \algebra{F}}$ is a $\sigmaAlgebra$.
+    Clearly, $\cProbMeasure{\emptyset}{B} = 0$. Also,
+    \[\cProbMeasure{B}{B} = \frac{\probMeasure{B\cap B}}{\probMeasure{B}} = 1.\]
+    Now, let $\lbrace A_i \rbrace \subset \algebra{F}_{B}$ be a sequence of pairwise disjoint sets in the
+    restricted sigma algebra $\algebra{F}_{B}$.
+    \begin{align*}
+	\cProbMeasure{(\countDisjUnion{A_i}{i})}{B} &= 
+	\frac{\probMeasure{(\countDisjUnion{A_i}{i})\cap B}}{\probMeasure{B}} \\
+	&= \frac{\probMeasure{\countDisjUnion{(A_i\cap B)}{i}}}{\probMeasure{B}} \\
+	&= \frac{\infiniteSum{\probMeasure{(A_i\cap B)}}{i}}{\probMeasure{B}} \\
+	&= \infiniteSum{\cProbMeasure{A_i}{B}}{i} \\
+    \end{align*}
+\end{proof}
+The conditional probability measure of an event $A$ in a sample space, given the probability measure of an
+event $B$ in a sample space corresponds to probability of event $A$ occuring knowing that $B$ has occured. We
+give an example below to highlight this, i.e knowing that $B$ has occured, our sample space is now the
+restricted probability space $\measureS{B}{\algebra{F}_{B}}{\probMeasure{.|B}}$. Hence calculating the
+probability of $A$ is calculating the conditional probability measure of $A$ given $B$.
+\begin{Example}\label{ex:independece_2_events}
+    Let $\mathcal{B}$ be the probabilistic space of the Bernoulli sequence of infinite coin tosses. Let $A$ be
+    the event that we tossed two consecutive Heads, and $B$ be the event that the first toss was head. What is
+    the probability that $A$ occured given that $B$ occured? Recall that our  probability space $\probS$ 
+    is given by $\Omega = \hInt{0}{1}$, $\algebra{F} = \text{Lebesgue measurable sets in $\Omega$}$, 
+    and $\probMeas = \mu$, the Lebesgue measure.
+
+    Since $B$ occured, we need to calulate $P(A|B)$. With $A$ we identify the corresponding set in the sigma
+    algebra as \[\Omega_{A} = \set{\omega\in\Omega}{R_1(\omega) = 1,R_2(\omega) =1}.\]
+    Hence $P(A) = \measure{\Omega_{A}} = \measure{\hInt{\frac{3}{4}}{1}} = \frac{1}{4}$.
+    Similary $P(B) = \measure{\Omega_{B}} = \measure{\hInt{\frac{1}{2}}{1}} = \frac{1}{2}$.
+    Thus \[P(A | B) = \measure{\Omega_A|\Omega_B} = 
+	\frac{\measure{\Omega_{A} \cap \Omega_{B}}}{\measure{\Omega_{B}}} = \frac{1}{2}.\]
+\end{Example}
+The following theorem is very important whose proof is almost trivial.
+\begin{Theorem}[name=Total probability theorem]\label{thm:total_prob_thm}
+    Let $\probS$ be a probability space. If $\lbrace H_i \rbrace $ is a countable collection of pairwise
+    disjoint events such that $\probMeasure{H_i} \neq 0$ for all $i$ and $\countUnion{H_i}{i} = \Omega$, 
+    then for any event $A \in \algebra{F}$,
+    \[\probMeasure{A} = \infiniteSum{\cProbMeasure{A}{H_i}\probMeasure{H_i}}{i}.\]
+\end{Theorem}
+\begin{proof}
+    Since $A \subset \Omega$, we can observe that $ A \subset \countDisjUnion{H_i}{i}$. 
+    Thus $A = \countDisjUnion{(A\cap H_i)}{i}$.
+    Hence,
+    \begin{align*}
+	\probMeasure{A} &= \probMeasure{\countDisjUnion{(A\cap H_i)}{i}} \\
+	& = \infiniteSum{\probMeasure{A\cap H_i}}{i} \\
+	& = \infiniteSum{\cProbMeasure{A}{H_i}\probMeasure{H_i}}{i}.
+    \end{align*}
+\end{proof}
+If knowing that $B$ occured doesn't change the probability of $A$, then we know that $A$ and $B$ are
+independent. For example if $B$ is event that the first coin toss is a Head and $A$ is the event that the
+second toss also a Head, then $A$ is independent of $B$. That is $P(A | B) = P(A)$.
+We make this notion precise w.r.t a probability space.
+\begin{Definition}[name=Independence of events]
+    Given a probability space $\probS$, two events $A,B$ are independent if
+    \[\probMeasure{A\cap B} = \probMeasure{A}\probMeasure{B}.\]
+\end{Definition}
+Note that in~\ref{ex:independece_2_events}, the events $A,B$ are NOT independent. Also, observe that the 
+definition is symmetric.  
+\begin{Proposition}
+    If $A_1,A_2$ are independent events in a probability space $\probS$, then so are $\indxComp{A}{1}$ and
+    $A_2$.
+\end{Proposition}
+\begin{proof}
+    Note that, $A_2 = (A_2\cap A_1) \disjU (A_2 \cap \indxComp{A}{1})$. Thus,
+    \begin{align*}
+	&\probMeasure{A_2} = \probMeasure{A_2\cap A_1} + \probMeasure{A_2 \cap \indxComp{A}{1}} \\
+	&\implies \probMeasure{A_2} - \probMeasure{A_2\cap A_1} = \probMeasure{A_2 \cap \indxComp{A}{1}} \\
+	&\implies \probMeasure{A_2} - \probMeasure{A_2}\probMeasure{A_1} = 
+	\probMeasure{A_2 \cap \indxComp{A}{1}} \\
+	&\implies \probMeasure{A_2}(1 - \probMeasure{A_1}) = \probMeasure{A_2 \cap \indxComp{A}{1}} \\
+	&\implies \probMeasure{A_2}\probMeasure{\indxComp{A}{1}} = \probMeasure{A_2 \cap \indxComp{A}{1}}
+    \end{align*}
+\end{proof}
+We extend this idea for a collection of events.
+\begin{Definition}[name=Independence of a collection of events and sigma algebras]
+    A collection of events $\lbrace A_i \rbrace$ are independent if for each $n\in\Zplus$ and each selection
+    of integers, $1\leq i_1 < i_2 < \cdots < i_k\leq n$,
+    \[\probMeasure{A_{i_1}\cap\ldots\cap A_{i_k}} = \finiteProduct{\probMeasure{A_{i_j}}}{j}{k}.\]
+    We say a collection of $\sigmaAlgebra$s $\lbrace \algebra{F}_i\rbrace$ are independent if each collection
+    of events chosen individually from the $\sigmaAlgebra$s are independent.
+\end{Definition}
+\begin{Example}
+    Three events $A,B,C$ in the probability space $\probS$ are independent if
+    \begin{enumerate}
+	\item
+	    $\probMeasure{A\cap B} = \probMeasure{A}\probMeasure{B}$.
+	\item
+	    $\probMeasure{A\cap C} = \probMeasure{A}\probMeasure{C}$.
+	\item
+	    $\probMeasure{B\cap C} = \probMeasure{B}\probMeasure{C}$.
+	\item
+	    $\probMeasure{A\cap B\cap C} = \probMeasure{A}\probMeasure{B}\probMeasure{C}$.
+    \end{enumerate}
+\end{Example}
+\begin{Example}
+    Let $H_i$ be the event that the $i^{th}$ toss is a head in the space of Bernoulli sequences $\mathcal{B}$.
+    Easy to check that the corresponding events $\Omega_{H_i} = \set{\omega\in\Omega}{R_i(\omega) = 1}$ 
+    are independent.
+\end{Example}
+\begin{Proposition}
+    If $\lbrace A_i\rbrace$ are independent then so are $\lbrace \indxComp{A}{i} \rbrace$.
+\end{Proposition}
+\begin{Theorem}[name=Second Borel-Cantelli Lemma]\label{thm:borel_cantelli_2}
+    Let $\probS$ be a probability space and $\lbrace A_i \rbrace$ be a collection of independent events. Let
+    $A =\lbrace A_n \,\text{i.o}\rbrace$. 
+    \[\text{If}\,\infiniteSum{\probMeasure{A_i}}{i} = \infty\quad \text{then}\,\probMeasure{A} = 1.\]
+\end{Theorem}
+\begin{proof}
+    $A = \limSupSet{A}{k}{n}$ and so $\comp{A} = \bigcup\limits_{k=1}\bigcap\limits_{n\geq k}\indxComp{A}{n}$.
+    To show that $\probMeasure{A} = 1$, we will show that 
+    $\probMeasure{\comp{A}} = 0$. It suffices to show that 
+    $\probMeasure{\bigcap\limits_{n\geq k}\indxComp{A}{n}} = 0$ for all $k$. Due to independence,
+    \[\probMeasure{\bigcap\limits_{n\geq k}^{l}\indxComp{A}{n}} =
+	\prod\limits_{n=k}^{l}\probMeasure{\indxComp{A}{n}}.\]
+    Now, $\probMeasure{\indxComp{A}{n}} = 1 - \probMeasure{A_n}$. Since $1-x\leq e^{-x}$,
+    $\probMeasure{\indxComp{A}{n}} = 1 - \probMeasure{A_n} \leq e^{-\probMeasure{A_n}}$. Hence,
+    \[\probMeasure{\bigcap\limits_{n\geq k}^{l}\indxComp{A}{n}} \leq
+	\prod\limits_{n=k}^{l}e^{-\probMeasure{A_n}} = e^{-\sum\limits_{n=k}^{l}\probMeasure{A_n}}.\]
+    Thus, as $\atob{l}{\infty}$, $\atob{\probMeasure{\indxComp{A}{n}}}{0}$.
+\end{proof}
+\begin{Example}\label{ex:borel_cantelli_2_ex1}
+    Let $H_n$ be the event of a head at the $n^{th}$ toss. The corresponding event in the $\sigmaAlgebra$
+    is\[\Omega_{H_n} = \set{\omega\in\Omega}{R_n(\omega) = 1}.\]
+    Furthermore, $\probMeasure{\Omega_{H_n}} = \frac{1}{2}$. Since $\infiniteSum{\frac{1}{2}}{i} = \infty$,
+    the probability that we see Heads infinitely often is $0$.
+\end{Example}
+\begin{Example}
+    Any finite pattern in an infinite sequence of coin tosses occurs infinitely often with probability of $1$.
+    To see a concrete case, consider the sequence $HTTH$. Let $E_n$ be the event where $HHTH$ occur starting
+    at step $n$ and let $\Omega_{E_n}$ be the corresponding set in the $\sigmaAlgebra$. Then 
+    \[\Omega_{E_n} = \Omega_{H_n}\cap\indxComp{\Omega}{H_{n+1}}
+	\cap\indxComp{\Omega}{H_{n+2}}\cap\Omega_{H_{n+3}},\]
+    where $\Omega_{H_n}$ is described in~\ref{ex:borel_cantelli_2_ex1}. From independence 
+    $\probMeasure{\Omega_{E_n}} = \frac{1}{2^4}$.
+    Since $\Omega_{E_n}$ and $\Omega_{E_{n+1}}$ are not independent we cannot
+    apply~\ref{thm:borel_cantelli_2}. However, $\lbrace \Omega_{E_n},
+    \Omega_{E_{n+4}},\Omega_{E_{n+8}},\cdots\rbrace$ are independent that satisy,
+    \[\infiniteSum{\probMeasure{\Omega_{E_{4n+1}}}}{n} = \infty.\]
+    So, $\probMeasure{\lbrace \Omega_{E_{4n+1}}\,\text{i.o} \rbrace } = 1$. But,
+    \[\lbrace \Omega_{E_{4n+1}}\,\text{i.o} \rbrace \subset 
+	\lbrace \Omega_{E_{n}}\,\text{i.o} \rbrace.\]
+    Hence, $\probMeasure{\Omega_{E_{n}}\,\text{i.o} \rbrace} = 1$, since probability measure of any event
+    is bounded by $1$.
+\end{Example}
+From now onwards, we will not be explicit in stating an underlying probabilistic process. We will denote the
+probability of an event by its probability measure.

@@ -1,0 +1,1468 @@
+\chapter{Basic group theory}
+In this chapter we will cover the essentials of abstract algebra. The notion of algebra is very fundamental
+and we will study this in an abstract setting. Our main motivation comes from the number systems that are
+familiar to us. We all know how the integers (set of integers is denoted by $\Z$) behave. If we add two
+integers we get a new integer. If we add any integer to $0$ we get the same integer and for any integer, we
+can subtract it from itself to get back $0$. Adding in this sense is an algebraic operation. Our goal in this
+chapter will be to study ways in which we can abstract this notion.
+\section{Groups: fundamental algebraic structure}
+\begin{Definition}
+    An operation $\star$ on a set $A$ is a function
+    \begin{equation*}
+	\star : A \times A \to A
+    \end{equation*}
+\end{Definition}
+
+For example if $A = \Z$, then $ + ,*$ are operations. Few characteristics are noted below:
+\begin{itemize}
+    \item If for any $a,b \in A$, $a \star b = b \star a$ then the operation is commuatative.
+    \item If for any $a,b,c \in A$ $a \star \left(b \star c \right) = \left(a \star b \right) \star
+	c $ then the operation is associative.
+    \item If for any $a \in A$ there is an element $e \in A$ such that $a \star e = e \star a = a$,
+	then $e$ is called the identity element of $A$ w.r.t the operation $\star$.
+    \item If for every $x \in A$ there is an element $a \in A$ such that $ a \star x = x \star a =
+	e$, then $a$ is the inverse of $x$ w.r.t the operation $\star$.
+\end{itemize}
+
+An \emph{algebraic structure} is a set with one or more operations defined on it. One of the most
+simplest and useful algebraic structure is the group. 
+
+\begin{Definition}
+    A group is a \emph{triple} $\left(G,\star,e\right)$ consisting of a set $G$, an operation
+    $\star$ defined on it and an identity element $e$ such that 
+    \begin{enumerate}
+	\item $G$ is \emph{closed} under $\star$ i.~e.~for every $a,b \in G$ $a \star b \in G$.
+	\item $G$ is associative.
+	\item For any element $a \in G$ there is an element $e \in G$ such that $e$ is an identity
+	    element.
+	\item For every element $a \in G$ there is an inverse element denoted by $a^{-1}$ such that
+	    $a \star a^{-1} = a^{-1} \star a = e$.
+    \end{enumerate}
+\end{Definition}
+
+When the operation is addition we will denote it by $+$ and the identity element by $0$.
+When the operaton is multiplication we will denote it by $\cdot$ and the identity element by $1$.
+Thus $\left(\Z,+,0\right)$ is a group. This is called the \textbf{addititive group of integers}. 
+Note that $\left(\Z^{+},\cdot,1\right)$, where $\Zplus = \set{n\in\Z}{n > 0}$, is not a group
+because any integer greater than $1$ does not have a multiplicative inverse. Another group is the
+congruence class of integers for example $\left(\Z_{3},+,{\left[0\right]}_{3}\right)$ is a group.
+See~\ref{App:integers} for this definition and some basic properties of integers. We will define congruence
+class later in the chapter.
+
+Usually, with a group of finite elements we denote the operation with a \emph{group table}. As an
+example the group table denoting modular arithmetic in the group $\Z_{2}$ is given below.
+
+\begin{tabular}{ccc}
+\toprule
+$+$    & $\left[0\right]$ & $\left[1\right]$  \\
+\midrule
+$\left[0\right]$      & $\left[0\right]$    & $\left[1\right]$      \\
+$\left[1\right]$      & $\left[1\right]$    & $\left[0\right]$       \\
+\bottomrule
+\end{tabular}
+
+In general for an operation $\star$, the group table will be:
+\begin{tabular}{cccc}
+\toprule
+$\star$    & $\ldots$ & $y$ & $\ldots$  \\
+\midrule
+$\vdots$      & $\vdots$    & $\vdots$  & $\vdots$     \\
+$x$      & $\ldots$    & $x \star y$  & $\ldots$      \\
+\bottomrule
+\end{tabular}
+
+Note that \emph{commutative} property is not required as an axiom of group theory. For example
+consider the set of $n \times n $ matrices $\matmn{n}{n}$ where $\F = \R$ that are invertible, with the
+operation being matrix multiplication. This is an important set and we denote it by $GL_{n}(\F)$. We will talk
+more about $GL_{n}(\F)$ when we discuss invertible matrices. It is easy to check that with the Identity 
+matrix such a set is a group, however it is not commutative. 
+
+Whenever commutative property holds we denote the group
+as an \emph{Abelian} group.
+\begin{Definition}[name=Abelian group]
+    A commutative group is called an Abelian group.
+\end{Definition}
+For example both $\left(\Z,+,0\right)$ and
+$\left(\Z_{m},+,{\left[0\right]}_{m}\right)$ are Abelian groups.
+
+As an example of an Abelian group on sets, consider the \emph{symmetric difference} between two sets
+$A,B$ defined as $A + B = \left(A - B\right) \bigcup \left(B - A\right)$. Here, $A - B$ means all the
+elements of $A$ that are not in $B$. Consider any set $D$ and the power set of $D$ defined by
+$\powSet{D} = \lbrace A: \, A \subset D \rbrace$. Note the $A + \emptyset = A$. Thus we can
+form the group $\left(\powSet{D},+,\emptyset\right)$. Note that for every $ A \in
+\powSet{D}$, $A^{-1} = A$. Next, we will consider some elementary properties of groups. 
+
+\begin{Proposition}[name=Uniqueness of identity and inverse elements]
+    In any group $\left(G,\star,e\right)$, $e$ is the unique identity element. Also, for any $a \in G$,
+    there is an unique inverse element $a^{-1}$ such that $a \star a^{-1} = e$.
+\end{Proposition}
+\begin{proof}
+    Let $e_1$ also be an identity element. Then $e_1 \star e = e$ because $e$ is an identity element
+    of $G$ and similarly $e_1 \star e = e_1$ since $e_1$ is also an identity element of $G$. But
+    this means $\left(e_1,e\right) \mapsto e \text{ and } e_1$. Thus $e = e_1$.
+
+    Consider an element $a \in G$. Let $a^{-1}$ and $a_1^{-1}$ be two inverse element of $a$.
+    Consider $\left(a^{-1} \star a\right)\star a_1^{-1}$. Since $a^{-1}$ is an inverse element we
+    get $e \star a_1^{-1} = a_1^{-1}$. Also since a group is associative 
+    $\left(a^{-1} \star a\right)\star a_1^{-1}$ is equal to 
+    $a^{-1} \star \left(a \star a_1^{-1}\right)$ which is equal to $a^{-1} \star e = a^{-1}$ since
+    $a_{1}^{-1}$ is also an inverse element of $a$. Thus $a^{-1} = a_1^{-1}$.
+\end{proof}
+
+\begin{Remark}\label{rmk:prod_notation}
+    From now on we will not explicitly denote the operation by $\star$. Thus $a \star b$ will be written
+    as $ab$. We will call this the \textbf{product} of two elements $a,b$ in the group. This doesn't mean that the
+    operation is multiplication, rather we are being implicit in defining the operation in the group. If the
+    operation is addition ($+$) then $ab$ will mean $a+b$. Similarly if the opereation is compostion, 
+    $ab$ will mean $a\circ b$.
+\end{Remark}
+
+The most basic rule of calculation in groups is the cancellation law, which allows us to cancel
+common factors in equations. 
+\begin{Theorem}[name=Cancellation Laws in Groups]
+    If $G$ is a group and $a,b,c \in G$, then
+    \begin{enumerate}
+	\item $ab = ac$ implies $b=c$ and
+	\item $ba = ca$ implies $b=c$
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    \emph{Multiply} (operate) both sides of the equation $(1)$ $ab = ac$ by $a^{-1}$ on the left 
+    to get $b = c$. 
+    \begin{align*}
+	ab & = ac \\
+	a^{-1}(ab) & = a^{-1}(ac) \\
+	(a^{-1}a)b & = (a^{-1}a)c \\
+	eb & = ec \\
+	b & = c
+    \end{align*}
+    Similarly multiply both sides of the equation $(2)$ $ba = ca$ by $a^{-1}$ on the
+    right to get $b=c$.
+\end{proof}
+Note that we cannot apply cancellation laws to the equation $ab = ca$ because we may not have
+a commutative group.
+
+The next theorem will be stated without proof. 
+\begin{Theorem}
+    If $G$ is a group and $a,b$ are elements of $G$ then,
+    \begin{equation*}
+	ab = e \quad \text{implies} \quad a = b^{-1} \quad \text{and} \quad b = a^{-1}
+    \end{equation*}
+\end{Theorem}
+
+The next theorem states some important facts about inverses. The first being that the product of the
+inverse is the inverse of the products and the second being that the inverse of the inverse of an
+element is the element. Again it is to be noted that the term \emph{product} here just means the
+operation.
+
+\begin{Theorem}
+    If $G$ is a group and $a,b,c$ are elements of $G$, then 
+    \begin{enumerate}
+	\item ${(ab)}^{-1} = b^{-1}a^{-1}$ and 
+	\item ${(a^{-1})}^{-1} = a$
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    For $(1)$ we have to show that either $(ab)$ is the inverse of $b^{-1}a^{-1}$ of vice versa.
+    Thus let us look at the product $(ab)b^{-1}a^{-1}$.
+    \begin{align*}
+	(ab)b^{-1}a^{-1} = & \, a(bb^{-1})a^{-1}  \\
+	= & \, aea^{-1} \\
+	= & \, aa^{-1} \\
+	= & \, e
+    \end{align*}
+    Hence, ${(ab)}^{-1} = b^{-1}a^{-1}$.
+
+    For $(2)$ we know that $(a^{-1})$ is the inverse of $a$ ie $a(a^{-1}) = e$. 
+    Thus from the Theorem above ${(a^{-1})}^{-1} = a $.
+\end{proof}
+
+\begin{Definition}
+    If $G$ is a finite group, the number of elements in $G$ is called the order of $G$ and is
+    denoted by $\lvert G \rvert$. 
+\end{Definition}
+
+With these theorems we can solve elementary equations in Groups. Note that $a^n$ is meant to be the
+product of $n$ $a's$ i.~e.~$aaa\ldots a$ n times.
+
+To solve for $x$ in the equation $axb = c$, we multiply on the right by $b^{-1}$ to get $ax =
+cb^{-1}$ and then we multiply by $a^{-1}$ on the left to get $x = a^{-1}cb^{-1}$. To solve the
+simultaneous equation given by $x^2a = bxc^{-1} \quad \text{and} \quad acx = xac$, from the first we
+see that $ b^{-1}x^2a = xc^{-1}$ and multiplying by $a^{-1}$ on the right we see that
+$b^{-1}x^{2} = xc^{-1}a^{-1}$. Now multiplying by $x^{-1}$ on the right we see 
+$b^{-1}xxx^{-1} = c^{-1}a^{-1}$ and thus $b^{-1}x = c^{-1}a^{-1}$ i.~e.~$x = bc^{-1}a^{-1}$. This
+satisfies the second equation.  
+
+With two groups we can form a new group given by the direct product. Let $G,H$ be two groups with
+operations $\star_{1}$ and $\star_{2}$. Then $G \times H$ is the direct product of $G$ and $H$ and
+is given by
+\begin{equation*}
+    G \times H = \lbrace (x,y) : \quad x \in G \quad and \quad y \in H \rbrace
+\end{equation*}
+For elements $(x_1,y_1)$ and $(x_2,y_2)$ in $G$ the operation in $G \times H$ is defined as
+\[(x_1,y_1) \star (x_2,y_2) = (x_1\star_{1}x_2, y_1\star_{2}y_2).\]
+
+As an example consider the direct product of the (additive) groups $\Z_{2}$ and $\Z_{3}$ 
+given by $\Z_{2} \times Z_{3}$. This group will consist of $6$ elements and the group table
+(omitting the subscripts $2$ and $3$) is given
+by
+
+\begin{tabular}{ccccccc}
+\toprule
+$+$    & $(\left[0\right]$,$\left[0\right])$ & $(\left[0\right]$,$\left[1\right])$ 
+& $(\left[0\right]$,$\left[2\right])$ & $(\left[1\right]$,$\left[0\right])$
+& $(\left[1\right]$,$\left[1\right])$ & $(\left[1\right]$,$\left[2\right])$\\
+\midrule
+$(\left[0\right]$,$\left[0\right])$   & $(\left[0\right]$,$\left[0\right])$   
+& $(\left[0\right]$,$\left[1\right])$ & $(\left[0\right]$,$\left[2\right])$  
+& $(\left[1\right]$,$\left[0\right])$
+& $(\left[1\right]$,$\left[1\right])$ & $(\left[1\right]$,$\left[2\right])$ \\
+
+$(\left[0\right]$,$\left[1\right])$   & $(\left[0\right]$,$\left[1\right])$   
+& $(\left[0\right]$,$\left[2\right])$ & $(\left[0\right]$,$\left[0\right])$  
+& $(\left[1\right]$,$\left[1\right])$
+& $(\left[1\right]$,$\left[2\right])$ & $(\left[1\right]$,$\left[0\right])$ \\
+
+$(\left[0\right]$,$\left[2\right])$   & $(\left[0\right]$,$\left[2\right])$   
+& $(\left[0\right]$,$\left[0\right])$ & $(\left[0\right]$,$\left[1\right])$  
+& $(\left[1\right]$,$\left[2\right])$
+& $(\left[1\right]$,$\left[0\right])$ & $(\left[1\right]$,$\left[1\right])$ \\
+
+$(\left[1\right]$,$\left[0\right])$   & $(\left[1\right]$,$\left[0\right])$   
+& $(\left[1\right]$,$\left[1\right])$ & $(\left[1\right]$,$\left[2\right])$  
+& $(\left[0\right]$,$\left[0\right])$
+& $(\left[0\right]$,$\left[1\right])$ & $(\left[0\right]$,$\left[2\right])$ \\
+
+$(\left[1\right]$,$\left[1\right])$   & $(\left[1\right]$,$\left[1\right])$   
+& $(\left[1\right]$,$\left[2\right])$ & $(\left[1\right]$,$\left[0\right])$  
+& $(\left[0\right]$,$\left[1\right])$
+& $(\left[0\right]$,$\left[2\right])$ & $(\left[0\right]$,$\left[0\right])$ \\
+
+$(\left[1\right]$,$\left[2\right])$   & $(\left[1\right]$,$\left[2\right])$   
+& $(\left[1\right]$,$\left[0\right])$ & $(\left[1\right]$,$\left[1\right])$  
+& $(\left[0\right]$,$\left[2\right])$
+& $(\left[0\right]$,$\left[0\right])$ & $(\left[0\right]$,$\left[1\right])$ \\
+\bottomrule
+\end{tabular}
+
+
+One of the most important groups are the permutation groups.
+\begin{Definition}
+    Given a set $A$, a permutation of the set $A$ is a \emph{bijective} function from $A$ onto $A$.
+\end{Definition}
+
+Given a set $A$, the set of all permutations on $A$ is denoted by $\Sigma_{A}$ or $\sym(A)$. It is easy to see
+that $\left(\sym(A),\circ,e_A\right)$ is a group. Here
+$\circ$ is the \emph{composition} operation given by 
+\begin{equation*}
+    \left(f \circ g\right)(x) = f(g(x)) \quad \text{for all $x \in A$ and $f,g \in \sym(A)$}.
+\end{equation*}
+The identity element $e_A$ is the identity function given by $e_A(x) = x$.
+When $A$ is a finite set of cardinality $n$ we can regard the set of permuations on $A$ as the set
+of permutations on $1,2,\ldots,n$ and denote it by $\Sigma_{n}$ or $S_n$ where the later symbol is
+used to denote the \emph{symmetric} group on $n$ elements.
+
+What are the elements of $S_1$? The only function that is possible is one that maps $1$ to $1$.
+We denote this by,
+
+\begin{equation*}
+    \epsilon =
+    \begin{pmatrix}
+	1\\
+	1\\
+    \end{pmatrix}
+\end{equation*}
+
+The notation is such that the bottom row shows how the function acts on the top row, i.e.~$\epsilon(1) = 1$.
+Similarly, we can write the elements of $S_2$ as follows,
+
+\begin{alignat*}{2}
+\epsilon &=
+ \begin{pmatrix}
+  1 & 2  \\
+  1 & 2  \\
+ \end{pmatrix}
+ & \quad \alpha &=  
+ \begin{pmatrix}
+  1 & 2\\
+  2 & 1 \\
+ \end{pmatrix}
+\end{alignat*}
+We can see that $\fog{\epsilon}{\alpha} = \fog{\alpha}{\epsilon} = \alpha$ and $\fog{\alpha}{\alpha} =
+\epsilon$. Thus $S_2$ is an Abelian group. We will see that $S_3$ is not Abelian. From now on we will denote
+the operation (composition) as product i.e $\fog{\alpha}{\beta}$ will be denote as $\alpha\beta$.
+
+Let the elements of $S_3$ be $\epsilon,\alpha,\beta,\gamma,\delta,\kappa$ given by
+\begin{alignat*}{3}
+\epsilon &=
+ \begin{pmatrix}
+  1 & 2 & 3 \\
+  1 & 2 & 3 \\
+ \end{pmatrix}
+ & \quad \alpha &=  
+ \begin{pmatrix}
+  1 & 2 & 3 \\
+  2 & 1 & 3 \\
+ \end{pmatrix}
+ & \quad \beta &=  
+ \begin{pmatrix}
+  1 & 2 & 3 \\
+  1 & 3 & 2 \\
+ \end{pmatrix}
+\end{alignat*}
+
+\begin{alignat*}{3}
+\gamma &=
+ \begin{pmatrix}
+  1 & 2 & 3 \\
+  3 & 2 & 1 \\
+ \end{pmatrix}
+ & \quad \delta &=  
+ \begin{pmatrix}
+  1 & 2 & 3 \\
+  2 & 3 & 1 \\
+ \end{pmatrix}
+ & \quad \kappa &=  
+ \begin{pmatrix}
+  1 & 2 & 3 \\
+  3 & 1 & 2 \\
+ \end{pmatrix}
+\end{alignat*}
+
+Let us check if $S_3$ is Abelian. It is easy to observe that,
+
+\begin{alignat*}{2}
+\beta\alpha &=
+ \begin{pmatrix}
+  1 & 2 & 3 \\
+  3 & 1 & 2 \\
+ \end{pmatrix}
+ & \quad \alpha\beta &=  
+ \begin{pmatrix}
+  1 & 2 & 3 \\
+  2 & 3 & 1 \\
+ \end{pmatrix}
+\end{alignat*}
+Thus $\alpha\beta \neq \beta\alpha$. This is the simplest non-Abelian group we can find. The nex proposition
+shows that all symmetric groups of $n$ elements where $n$ is greater than $2$ must be non-Abelian.
+\begin{Proposition}\label{prop:non_abelia_sn}
+    Every symmetric group of $n > 2$ elements is non-Abelian.
+\end{Proposition}
+\begin{proof}
+    We have shown that $S_3$ is non-Abelian. For any $S_n$ where $n > 3$ we fix the letters $4,5\ldots,n$ and
+    only permute the first $3$. There are $6$ such possibilities that correspond to permutations in $S_3$ and
+    since $S_3$ is non-Abelian, one of such permutation must not commute and thus $S_n$ when $n > 2$ is a
+    non-Abelian group.
+\end{proof}
+
+
+Every permutation in $S_n$ can be broken down into simple parts called cycles. As
+an example let us look at the following permutation,
+\begin{equation*}
+    f =
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
+  3 & 1 & 6 & 9 & 8 & 2 & 4 & 5 & 7 \\
+ \end{pmatrix}
+\end{equation*}
+
+We can observe that $f(1) = 3$, while $f(3) = 6$, $f(6) = 2$ and $f(2) = 1$. Thus we started with
+$1$ and ended at $1$. We can consider this \emph{chain or cycle} $1,3,6,2$ and observe 
+that $f$ acts on the left element to yield the right element giving back the first element when
+acting on the last. Similarly the other chains are $4,9,7$
+and $5,8$.
+
+\begin{Definition}
+    Let $a_1,a_2,\ldots,a_s$ be distinct elements of the set $\lbrace 1,2,\ldots,n\rbrace$. By the
+    cycle $\left(a_1 a_2 \ldots a_s\right)$ we mean the permutation
+    \begin{equation*}
+	a_1 \rightarrow a_2 \rightarrow \ldots \rightarrow a_{s-1} \rightarrow a_{s} \rightarrow
+	a_{1}
+    \end{equation*}
+    of $\lbrace 1,2,\ldots,n\rbrace$ which carries $a_1$ to $a_2$, $a_2$ to $a_3$ and so on and
+    $a_s$ to $a_1$, while leaving all the remaining elements of $\lbrace 1,2,\ldots,n\rbrace$ fixed.
+\end{Definition}
+
+For example in $S_5$, the cycle $\left(254\right)$ is the permutation
+\begin{equation*}
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  1 & 5 & 3 & 2 & 4  \\
+ \end{pmatrix}
+\end{equation*}
+
+Let us see how composition works on cycles. Let $\alpha,\beta \in S_5$ be given by $(245)$ and $(124)$. To get
+$\alpha\beta$ we must operate $\beta$ and then operate $\alpha$ on the result. The
+permutations are shown below,
+\begin{equation*}
+    \beta = 
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5 \\
+  2 & 4 & 3 & 1 & 5\\
+ \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+    \alpha = 
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5 \\
+  1 & 4 & 3 & 5 & 2\\
+ \end{pmatrix}
+\end{equation*}
+Thus to get $\alpha\beta$ we have to see how $\alpha$ acts on $\left(2,4,3,1,5\right)$. From
+the permuation above we observe that $\alpha\beta = \left(4,5,3,1,2\right)$.
+If two cycles have no elements in common then they are \emph{disjoint}. For example the two cycles
+introduced above are not disjoint whereas $(123)$ and $(45)$ are disjoint cycles. It is easy to see
+that disjoint cycles commute i.~e.~$(123)(45) = (45)(123)$. The next theorem shows that any
+permuation can be written as a product of disjoint cycles. We will give an informal explaination of
+the proof.
+\begin{Theorem}
+    Every (finite) permutation is either the identity, a single cycle or the product of disjoint 
+    cycles.
+\end{Theorem}
+Let us look at an example. Consider the permuatation,
+\begin{equation*}
+    f = 
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5 & 6 \\
+  3 & 4 & 5 & 2 & 1 & 6 \\
+ \end{pmatrix}
+\end{equation*}
+We begin with the first element $i_1 \in \lbrace 1,2,\ldots,6\rbrace$ such that $f(i_1) \neq i_1$. If no such
+$i_1$ exists then $f$ must be identity. 
+In this case we get $i_1 = 1$. Next we look at $f(i_1) = i_2$ which in this case is $3$. If 
+$f(i_2) = i_1$ then we stop and our first cycle will be $(i_1,i_2)$. However, in this example $f(3)
+= 5$ and so let us denote $i_3 = 5$ and again check if $f(i_3) = i_1$. Here we get $f(5) = 1 = i_1$
+and so we stop and our first cycle is $(135)$. Let us now pick the smallest element $i_4$ which is
+in $\lbrace 1,2,\ldots,n \rbrace - \lbrace i_1,i_2,i_3\rbrace$ (If this were not possible, the we would have
+exhuasted all elements and will end up with a single cycle.). This gives us $i_4 = 2$. We repeat the
+steps above to get $i_5 = 4$ and this is where are cycle stops. Now we pick the smallest element
+$i_6 \in \lbrace 1,2,\ldots,n\rbrace - \lbrace i_1,i_2,i_3,i_4,i_5 \rbrace$. The only one left is
+$6$ and is unmoved by $f$. Thus $f = (135)(24)$. 
+\begin{Definition}[name=Transposition]
+    A cycle of $s$ elements has length $s$. A cycle of length $2$ is called a \emph{transposition}. 
+\end{Definition}
+Note that a cycle $(abc)$ can be written in atleast
+two different ways as product of transpositions given by $(abc) = (ab)(ac)$ and $(abc) = (cb)(ca)$.
+Any
+cycle $(a_1 a_2 \ldots a_s)$ can be written as product of transpositions given by 
+\begin{equation*}
+    (a_s a_{s-1})(a_s a_{s-2})\ldots (a_{s}a_{1})
+\end{equation*}
+For example consider the following permutation,
+\begin{equation*}
+    f = 
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  4 & 1 & 2 & 5 & 3  \\
+ \end{pmatrix}
+\end{equation*}
+$f$ can be written as $(14532)$, which can also be written as $(23)(25)(24)(21)$. To see how this is
+true we will work out the composition from \emph{right} to \emph{left} step by step.
+Let us look at $(24)(21)$.
+\begin{equation*}
+    (21) = 
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  2 & 1 & 3 & 4 & 5  \\
+ \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+    (24) = 
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  1 & 4 & 3 & 2 & 5  \\
+ \end{pmatrix}
+\end{equation*}
+And thus $(24)(21)$ is 
+\begin{equation*}
+    (24)(21) = 
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  4 & 1 & 3 & 2 & 5  \\
+ \end{pmatrix}
+\end{equation*}
+Again let us work out  $(25)$ composed with this.
+\begin{equation*}
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  4 & 1 & 3 & 2 & 5  \\
+ \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+    (25) = 
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  1 & 5 & 3 & 4 & 2  \\
+ \end{pmatrix}
+\end{equation*}
+And thus we get,
+\begin{equation*}
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  4 & 1 & 3 & 5 & 2  \\
+ \end{pmatrix}
+\end{equation*}
+Thus when we compose with $(23)$ we get
+\begin{equation*}
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  4 & 1 & 3 & 5 & 2  \\
+ \end{pmatrix}
+\end{equation*}
+\begin{equation*}
+    (23) = 
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  1 & 3 & 2 & 4 & 5  \\
+ \end{pmatrix}
+\end{equation*}
+we get,
+\begin{equation*}
+ \begin{pmatrix}
+  1 & 2 & 3 & 4 & 5  \\
+  4 & 1 & 2 & 5 & 3  \\
+ \end{pmatrix}
+\end{equation*}
+which was our original permuatation.
+
+\begin{Definition}
+    The parity of permuatation is \emph{even} if it can be written as an even number of
+    transpostions. It is odd if the number of transpostions are odd. 
+\end{Definition}
+For example the parity of $(14532)$ from above is even. 
+\begin{Definition}
+    The signature (sign) of a permuation is $-1$ if the parity is odd and $1$ if the parity is
+    even and for any $\pi \in S_n$ the signuture is denoted by $sign(\pi)$. 
+\end{Definition}
+
+Every permutation can be written as product of transpositions. However the number of transposition
+is not unique. What is unique is the parity. Every permutation can either be written as an even
+number of transposition or odd.
+
+\begin{Theorem}
+    The identity permuation has signature $1$.
+\end{Theorem}
+\begin{proof}
+    To prove this we will need to show that the identity permuation can only be written as an even
+    number of transposition. Another way to look at it is by saying that if the identity permutation
+    is written as a transpostion of $m$ terms then it can be reduced to $m-2$ terms. 
+
+    To see this let $\epsilon = t_{1}t_{2}t_{3}{\dots}{t_{k}}t_{k+1}\dots t_m$. Let $x \in \Z^{+}$ be a numeral
+    that appears in $t_k$ and moreover it is the last appearance of $x$. Let $t_k = (xa)$. There are
+    four cases to consider for $t_{k-1}$.
+    \begin{enumerate}
+	\item CASE 1 $t_{k-1} = (xa)$. Then $(xa)(xa)$ is just the identity and we can remove both $t_{k-1}$ 
+	    and $t_k$ leaving $\epsilon$ unchanged. Thus we have reduce the transpostions to $m-2$ terms.
+	\item CASE 2 $t_{k-1} = (xb)$. Then $(xb)(xa) = (xab) = (xa)(ab)$ and so we have moved the 
+	    last occurance of $x$ to $t_{k-1}$. Applying this repeatedly we will end up with CASE 1.
+	\item CASE 3 $t_{k-1} = (ba)$. Then $(ba)(xa) = (xba) = (xb)(ba)$ and is similar to CASE 2.
+	\item CASE 4 $t_{k-1} = (bc)$. Then $(bc)(xa) = (xa)(bc)$ and is similar to CASE 2.
+    \end{enumerate}
+
+    Hence we can reduce a transposition of $m$ terms to that of $m-2$. Thus $m$ has to be even other
+    wise if $m$ is odd repeated reduction will lead to transposition of single term and that is not
+    possible since we have an identity permutation.
+\end{proof}
+
+\begin{Theorem}
+    If $\pi \in S_n$ then $\pi$ cannot be both an odd permutation and an even permutation.
+\end{Theorem}
+\begin{proof}
+    If $\pi$ can be written as both as an odd permutation and an even permutation then so can
+    $\pi^{-1}$. But that would mean that $\epsilon = \pi \circ \pi ^{-1}$ can be written as an odd
+    permutation by chosing $\pi$ as even and $\pi^{-1}$ as odd. This will violate the theorem above.
+\end{proof}
+
+Some useful facts about parity can be seen from the following viewpoint. Consider the symmetric
+group $S_n$ and construct a polynomial with factors $(t_i - t_j)$ as follows 
+\begin{equation*}
+    f = \prod_{1 \leq i < j\leq n}(t_i - t_j).
+\end{equation*}
+For example when $n = 4$, then $f = (t_1-t_2)(t_1-t_3)(t_1-t_4)(t_2-t_3)(t_2 - t_4)(t_3-t_4)$. In
+all there will be $n*(n-1)/2$ terms. Each permutation $\pi \in S_n$ converts the polynomial 
+$f$ into a new polynomial given by  
+\begin{equation*}
+    \pi f = \prod_{1 \leq i < j\leq n}(t_{\pi{(i)}} - t_{\pi{(j)}}).
+\end{equation*}
+For example if $\tau \in S_4 = (2,4)$ then $\tau f = (t_1-t_4)(t_1-t_3)(t_1-t_2)(t_4-t_3)(t_4 -
+t_2)(t_3 - t_2)$. Thus $\tau f = -f$.
+
+Note that for any $\pi \in S_n$ we have that $\pi f = f$ except possibly a $\pm$ sign. 
+\begin{Lemma}
+    Consider the symmetric group $S_n$. Then
+    \begin{itemize}
+	\item If $\sigma \in S_n$ is a transposition then $\sigma f = -f$.
+	\item For any $\sigma,\tau \in S_n$ $(\sigma \tau)(f) = \sigma(\tau f)$.
+	\item For any $\sigma \in S_n$ we have $\sigma(f) = sign(\sigma) f$.
+    \end{itemize}
+\end{Lemma}
+
+\begin{proof}
+    \begin{itemize}
+    \item If $\sigma = (a,b)$ then either $a < b$ or $b < a$. WLOG let $a < b$ then the factor
+	$(t_a - t_b)$ will change to $(t_b - t_a)$. For all other factors that don't have $a,b$
+	nothing will change. The factors containing only one of $a$ or $b$ come in pairs that is
+	$(t_a - t_k)$ and $(t_k - t_b)$ and so their changes will cancel sign. Thus $\sigma f = -1 f$.
+	Note that the sign of a transposition is $-1$. Thus $\sigma f = sign(\sigma) f$ in this case.
+    \item Note that
+	\begin{equation*}
+	(\sigma \tau)(f) =  \prod_{1 \leq i < j\leq n}(t_{\sigma \circ \tau{(i)}} - 
+	t_{\sigma\circ\tau{(j)}}) = \prod_{1 \leq i < j\leq n}(t_{\sigma(\tau{(i)})} - 
+	t_{\sigma(\tau{(j)})}) = \sigma(\tau (f)).
+    \end{equation*}
+    \item $\sigma(i) , \sigma(j) \leq n$ and so $\sigma(f)$ doesn't change $f$ except possibly the
+	sign. If $\sigma$ is even permutation then the sign changes will be in pairs and $\sigma f =
+	f$ else $\sigma f = -1 f$. This can be seen by repeated application of the results above. 
+	Hence $\sigma f = sign(\sigma) f$.
+\end{itemize}
+\end{proof}
+\begin{Theorem}\label{thm:sign_permutation}
+    Let $S_n$ be the symmetric group of $n$ elements. Then for any $\sigma,\tau$ in $S_n$, we have
+    $sign(\sigma \tau) = sign(\sigma)sign(\tau)$.
+\end{Theorem}
+\begin{proof}
+    This follows immediately from the above Lemma. 
+\end{proof}
+
+One other way to get groups from a given group $G$ is to look at subsets of $G$ that preserve the
+algebraic structure.
+\begin{Definition}
+    Let $\left(G,\star,e\right)$ be a group and $S$ be a non-empty subset of $G$. Then $S$ is called
+    a subgroup of $G$ iff
+    \begin{enumerate}
+	\item $S$ is closed w.r.t $\star$.
+	\item $S$ is closed w.r.t inverses.
+    \end{enumerate}
+\end{Definition}
+Again dropping $\star$ the first condition means that for any $a,b \in S$ it must be that $ab \in
+S$ while the second condition states that for any $a \in S$, $a^{-1} \in S$. It is easy to see 
+that $\left(S,\star,e\right)$ is also a group.
+
+Given a set $A$, the set of all functions defined on $A$ is denoted by $\mathcal{F}\left[A\right]$
+i.~e.
+\begin{equation*}
+    \mathcal{F}\left[A\right] = \lbrace f | \quad f : A \to A \rbrace
+\end{equation*}
+When $A = \R$, then $\mathcal{F}\left[\R\right]$ is the set of all \emph{real valued} functions.
+Addition of two functions $ f,g \in \mathcal{F}\left[\R\right]$ is given by 
+\begin{equation*}
+    \left(f + g\right)(x) = f(x) + g(x) \quad \text{for all $x \in \R$}.
+\end{equation*}
+
+Thus we can consider $\left(\mathcal{F}\left[\R\right],+,0_f\right)$ as a group where the identity
+element is the \emph{zero function} $0_{\R} : \R \to \R$ given by
+\begin{equation*}
+    0_{\R}(x) = 0 \quad \text{for all $x \in \R$}.
+\end{equation*}
+
+Some important subgroups of $\left(\mathcal{F}\left[\R\right],+,0_{\R}\right)$  are the set of real
+valued \emph{continuous} functions, real valued \emph{differentiable} functions etc.
+
+For any group $G$, the two trivial subgroups are the singleton $\lbrace e \rbrace$, and the entire set $G$. 
+All other subgroups of $G$ are called \emph{proper} subgroups. 
+
+Given a group, it is usually not possible to identify all the subgroups. However the next proposition shows 
+that for the group $\groupS{\Z}{+}{0}$, we can identify all the subgroups.
+\begin{Proposition}\label{prop:subgroups_integers}
+    For any integer $b \geq 0$, the subset $b\Z$ is a subgroup of $\groupS{\Z}{+}{0}$, where
+    \[b\Z = \set{n\in\Z}{n = bk\quad\text{for some $k\in\Z$}}.\]
+    Moreover, every subgroup $H$ of $\Z$ is of they type $H = b\Z$ for some $b \in \Z$.
+\end{Proposition}
+\begin{proof}
+    First we will show that $b\Z$ is a subgroup of $\Z$. Note that $0 = b 0$ and hence $0$ is in $b\Z$.
+    Let $x,y \in b\Z$. Then $x = bm$ and $y = bn$ for some $m,n \in \Z$. Thus $x + y = b(m+n)$ and hence $x+y
+    \in b\Z$. For any $x = bm \in bZ$, we have $bm + b(-m) = b(0) = 0$. Hence $b(-m)$ is the additive inverse
+    of $x$. Now let $H$ be a subgroup of $\Z$. If $H$ contains only $0$ then $H = 0\Z$. Assume there is an $m
+    \in H$ such that $m \neq 0$. Either $m < 0$ or $ m > 0$. In both cases $H$ contains a positive number
+    ($-m$ or $m$) and hence it must contain a smallest positive integer (well defined property). Let $b > 0$
+    must be the smallest integer in $H$. Since $H$ is a subgroup of $Z$ it must contain $b+b+b \ldots$, $b +
+    (-b) \ldots$ i.e~$H \supset b\Z$. Let $m$ be any element of $H$. By the division algorithm we can
+    write, $m = bq + r$ such that $0\leq r < b$. But this means that $r \in H$ since $m,bq$ are in $H$. But
+    $b$ was the smallest positive integer in $H$ and this must mean that $r = 0$. Hence $H = b\Z$.
+\end{proof}
+
+Finite subgroups can be
+thought of subsets that contain finite elements of a group along with all their products and the
+products of their inverses.
+
+\begin{Definition}
+    If $a_1,a_2,\ldots,a_n$ are any finite number of elements of a group $G$, then the subgroup
+    generated by $a_1,a_2,\ldots,a_n$ is the set formed by including all the the possible
+    \emph{products} of $a_1,a_2,\ldots,a_n$ along with their inverses.
+\end{Definition}
+For example if $a,b$ are elements of $G$, then the subgroup generated by $a,b$ is the set that
+contains elements like $abab^{-1}$, $b^{-1}a^{-1}b^{-1}$, $aaabbbaa$ etc. 
+
+\begin{Definition}
+    A subgroup of a group $G$ is calle a cyclic subgroup if it generated by a single element $a \in
+    G$ and is denoted by $\langle a \rangle$.
+\end{Definition}
+Thus $\langle a \rangle$ contains $a,aa,aaa,aaaa,\ldots$ and
+$a^{-1},a^{-1}a^{-1},a^{-1}a^{-1}a^{-1},\ldots$ and $aa^{-1} = e$.
+
+We can see that $b\Z$ is a subgroup of $\Z$ that
+contains all multiples of $\Z$ i.e.~all the integers divisible by $b$. 
+Hence $b\Z$ is the subgroup generated by a single element $b$. Thus $b\Z$ is a
+cyclic subgroup of $\Z$. What is the subgroup of $\Z$ that is generated by two integers $a \geq 0,b\geq 0$.
+Let us assume that both $a,b$ are not simultaneously zero. Then the set,
+\[a\Z + b\Z = \set{n\in\Z}{n = ar + bs,\quad\text{for some $r,s\in\Z$}},\]
+is a subgroup of $Z$. By~\ref{prop:subgroups_integers}, this must be equal to $d\Z$ for some $d > 0 \in Z$.
+Since $d\Z$ is the set of all integers divisibe by $d$, it must be the case that $d$ divides both $a,b$. This
+is because the set $d\Z$ contains all the multiples of $a$ (with $b0$) and similarly all the multiples of $b$
+(with $a0$). If $e$ is any integer that divides $a,b$ it must divide any combination $ar + bs$, which means
+that $e\Z \subset d\Z$. Hence, $d = \gcd(a,b)$.
+
+In these examples it will be useful to introduce some shorthand. Let $\groupS{G}{\ast}{e}$ 
+be a group and let $x$ be any
+element of $G$. For any $n \in \Zplus$ let us identify the following,
+\begin{align*}
+    &x^n = \underbrace{x{\ast}x{\ast}x\ast \ldots \ast x}_\text{$n$ times}\\ 
+    &x^{-n} = \underbrace{x^{-1}{\ast}x^{-1}{\ast}x^{-1}\ast \ldots \ast x^{-1}}_\text{$n$ times}\\ 
+    &x^0 = e
+\end{align*}
+Again following~\ref{rmk:prod_notation} we will omit the $\ast$. 
+It is easy to see that the following hold for any $m,n\in \Z$
+\begin{align*}
+    &x^{m+n} = x^{m}x^{n}\\
+    &{(x^{m})}^n = x^{mn}\\
+    &x^{-n} = {(x^{-1})}^n = {(x^{n})}^{-1}
+\end{align*}
+\begin{Observation}
+    If there is a non-zero integer $m$ such that $x^{m} = e$, then there must be a positive integer $n$ such
+    that $x^n = e$. This is easy to see if $m > 0$, in which case $n = m$. If $m < 0$, then $n = -m > 0$ and
+    $x^{n} = x^{-m} =  {(x^{m})}^{-1} = e^{-1} = e$.
+\end{Observation}
+This leads us to a definition,
+\begin{Definition}[name=Order of an element]
+    Let $G$ be a group with the identity $e$. For any element $x \in G$ if there exist a non-zero 
+    integer $m$ such that $x^{m} = e$, then the order of the element $x$ is the
+    \textbf{least positive integer} $n$ such that $x^{n} = e$. If there is no such $n$ such that $x^n = e$
+    then we say that $x$ has infinite order. We denote the order of $x$ by $\ord(x)$.
+\end{Definition}
+For example in page~$\pageref{prop:non_abelia_sn}$, $\alpha \in S^n$ has order $2$ since $\alpha^{2} = \epsilon$.
+Similarly the order of $\delta = 3$ since $\delta^{3} = \epsilon$. For any non zero element $b$ in $\Z$ with
+the additive group $\groupS{\Z}{+}{0}$, $b^n = \underbrace{b + b + \ldots b}_\text{$n$ times}$. And hence $b$
+has infinite order.
+
+The following proposition collects some important facts about the order of an element.
+\begin{Proposition}\label{prop:order_of_element}
+    Let $G$ be a group with the identity element $e$. Let $a$ be an element of $G$. Then,
+    \begin{enumerate}
+	\item
+	    If $\ord(a) = n$ is finite, then there are exactly $n$ different powers of $a$ given by,
+	    \[a^0,a^1,\ldots,a^{n-1}.\] 
+	\item
+	    If $\ord(a)$ is infinite, then all powers of $a$ are different.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    Let $m \in \Z$ be any power of $a$. By division theorem $m = nq + r$ for $0\leq r < n$. Thus,
+	    \[a^{m} = a^{nq}a^{r} = {(a^{n})}^{q}a^{r} = e a^r = a^r.\]
+	    Hence any power of $a$ is of the form $a^0,a^1,\ldots,a^{n-1}$. To show that these powers are
+	    different, let us assume that for some $r,s \in Z$ such that $r,s$ are one of the integers in
+	    $0,1,\ldots,n-1$, $a^r = a^s$. WLOG assume $r < s$ i.e~$0\leq r < s \leq n-1$. Then $0 < s-r < n$,
+	    and hence,
+	    \[a^{r} = a^s \implies a^{r}{(a^s)}^{-1} = e \implies a^{r-s} = e,\]
+	    but since $n$ is the smallest positive integer that makes $a^n = e$, it must be the case that
+	    $r=s$ which gives us a contradiction. Hence the powers in $0,1,\ldots,n-1$ are different.
+	\item
+	    Assume $r < s$ and $a^r = a^s$ to get $a^{r-s} = e$ which is a contradiction.
+    \end{enumerate}
+\end{proof}
+\begin{Definition}[name=Cyclic group]
+    If $G$ is a group and $a \in G$ such that $G = \langle a \rangle$,then we call $G$ a cyclic group. Thus a
+    cyclic group $G$ is given by,
+    \[G = \set{a^n}{n\in\Z}.\]
+    We call $a$ the generator of $G$. If no finite $n$ exists, then $G$ is a cyclic group of infinite order.
+\end{Definition}
+For example $\Z_{6}$
+is a cyclic group that is generated by ${\left[1\right]}_6$. Is the additive group of integers $\Z$ cyclic? We
+can easily see that $\groupS{Z}{+}{0}$ is generated by $1$. Moreover it is of infinite order. 
+In general what is the order of a cyclic group? Since we
+have shown in~\ref{prop:order_of_element}, that if an element $a$ of group $G$ has order $n$, there are $n$
+distinct element of $\langle a \rangle$ if $n$ is finite and all distinct powers if $n$ is infinite. 
+Hence, if $G = \langle a \rangle$, then $\abs{G} = n = \ord(a)$. If a
+group is cyclic, is it the case that any of its subgroup is cyclic? The answer isn't obvious. If $G$ is a cyclic
+group of order $n$ such that $G = \langle a \rangle$, and $H$ is a subgroup of $G$, then it must have as its 
+elements some powers of $a$. What powers of $a$ generate $H$? Intuition suggest that we must take the smallest
+such power. This result is proved in the following proposition.
+\begin{Proposition}
+    Every subgroup of a cyclic group is cyclic.
+\end{Proposition}
+\begin{proof}
+    Let $G$ be a cyclic group generated by $a$. Let $m$ be the smallest positive integer such that $a^m \in
+    H$. We claim that $H = \langle a^m \rangle$. Let $t$ be any integer such that $a^t \in H$. By division
+    theorem there is a $r\in\Zplus$ such that $0\leq r < m$ and,
+    \begin{align*}
+	&t = mq + r \\
+	&\implies a^t = {(a^m)}^q a^r\\
+	&\implies a^t {({(a^m)}^q)}^{-1} = a^r.
+    \end{align*}
+    Since $a^m \in H$, we have ${({(a^m)}^q)}^{-1} \in H$. Since we assumed $a^t \in H$, this means that $a^r$
+    is also in $H$. But this contradicts our assumption that $m$ was the smallest positive integer for which
+    $a^m \in H$. Hence, $r = 0$. This means that if $a^t \in H$ then $t = mq$. Hence $H$ is generated by
+    $a^m$.
+\end{proof}
+\section{Mappings on groups: isomorphism and homomorphism} 
+The notion of congruence in geometry is well understood. Two shapes are congruent if they have the same
+structure, i.e.~a plane motion consisting of rotation, translation and dilitation (magnifying or shrinking) 
+can make one figure coincide with the other. Such a motion can be thought of as a transformation, i.e~a
+function that takes one shape and produces an image shape that coincides with the second shape. 
+In terms of groups, we have an algebraic structure and we want to find out when two groups are essentially
+representing the same structure. A precise characterization of this notion leads to the following definition,
+\begin{Definition}[name=Isomorphism]
+    Let $G_1,G_2$ be groups. A \textbf{bijective} function \break{}$\map{f}{G_1}{G_2}$ is called an isomorphism if,
+    \[f(\underbrace{ab}_{\text{op.~in $G_1$}}) = \underbrace{f(a)f(b)}_{\text{op.~in $G_2$}},\]
+    for any $a,b \in G_1$. If $G_1,G_2$ are isomorphic, we denote it by $G_1 \cong G_2$.
+\end{Definition}
+Let us consider a few examples.
+\begin{Example}
+    The following are all isomorphic groups.
+    \begin{enumerate}
+	\item
+	    Let $G_1 = \lbrace \pm 1, \pm i \rbrace \subset \groupS{\C-(0,0)}{\cdot}{1}$. Let $G_2 = \langle
+	    \sigma \rangle \subset S_4$, where $\sigma$ is given by,
+	    \begin{equation*}
+		\begin{pmatrix}
+		    1 & 2 & 3 & 4 \\
+		    2 & 3 & 4 & 1 \\
+		\end{pmatrix}
+	    \end{equation*}
+	    Note that $G_1$ is a cyclic group generated by $i$ since $i^0 = 1$, $i^1 = i$, $i^2 = -1$ and $i^3
+	    = -1$. The order of $\langle \sigma \rangle$ is also $4$. If we define a function,
+	    $\map{f}{G_1}{G_2}$ given by $f(i^k) = \sigma^{k}$ for $k = 0,1,2,3$ we get a bijection.
+	    Moreover for $a,b \in G_1$, $a = i^k, b = i^l$ for some $k,l \in 0,1,2,3$. If $a\neq b$ then
+	    $k\neq l$ and hence,
+	    \[f(ab) = f(i^k i^l) = f(i^{k+l}) = \sigma^{k+l} = \sigma^{k}\sigma^{l} = f(a)f(b).\]
+	    Hence $G_1\cong G_2$. We can see that an isomorphism is a re-labelling of a groups elements. Here
+	    $f$ just \textbf{re-labels} element of $G_1$ given by elements of $G_2$.
+	\item
+	    Let $G_1$ be the group $\groupS{\R}{+}{0}$ and let $G_2$ be the group $\groupS{\R-{0}}{\cdot}{1}$.
+	    Define the function $\map{f}{G_1}{G_2}$ to be $f(x) = e^x$ for all $x \in \R$. Then $f$ is
+	    bijective. Moreover for any $x,y \in \R$,
+	    \[f(x + y) = e^{(x+y)} =e^{x}e^{y} = f(x) \cdot f(y). \]
+	    Hence $G_1 \cong G_2$.
+    \end{enumerate}
+\end{Example}
+Example (1) above gives us a useful result.
+\begin{Proposition}\label{prop:cyclic_group_iso}
+    Any two cyclic groups of the same order are isomorphic.
+\end{Proposition}
+\begin{proof}
+    Let $G_1$ be a cyclic group of order $n$ generated by $a$ and let $G_2$ be the cyclic group of order $n$
+    generated by $b$. The function $\map{f}{G_1}{G_2}$ given by $f(a^i) = b^i$ for $i = 0,1,n-1$ is bijective
+    and for any $x\in G_1,y\in G_2$, $f(xy) = f(x)f(y)$. Hence $G_1\cong G_2$. If both $G_1,G_2$ are of
+    infinite order then pick $a,b$ to be any non-identity element in $G_1$ and $G_2$ respectively.
+\end{proof}
+When can we fail to have an isomorphism between groups $G_1,G_2$? A few simple cases to check will be:
+\begin{itemize}
+    \item
+	$\abs{G_1} \neq \abs{G_1}$
+    \item
+	$G_1$ is abelian but $G_2$ is not (or vice-versa).
+    \item
+	$G_1$ has element of different order than $G_2$.
+\end{itemize}
+It turns out that any group is isomorphic to a group of permutations. This is an important theorem since it
+tells us that the permutation group are in some sense the most fundamental group. A precise statement is given
+in the following theorem due to A. Cayley.
+\begin{Theorem}[name = Cayley's theorem]\label{thm:cayley_thm}
+    Every group $G$ is isomorphic to a subgroup of the symmetric group $\sym(G)$.
+\end{Theorem}
+There is some complexity in proving this statement, since we need to find an isomorphic function $f$ which
+maps every element of $G$ to a bijective function defined on $G$. Fix an $a \in G$ and consider the map 
+$\map{\tau}{G}{G}$ given by, $\tau(x) = ax$ for every $x \in G$. We can make the following observations:
+\begin{itemize}
+    \item
+	If $\tau(x) = \tau(y)$, then $ax = ay$ which means $x = y$.
+    \item
+	For any $y \in G$, we can write $y = aa^{-1}y$ and hence there is an element $x = a^{-1}y \in G$ such
+	that $y = \tau(x)$.
+\end{itemize}
+These two observations show that for a fixed $a$ this function $\tau$ is bijective defined on $G$. Let us
+denote this function as $\tau_{a}$ to show the dependence of $a$. Clearly $\tau_{a}$ is an element of
+$\sym(G)$. Let $G^{\ast} = \set{\tau_{a}}{a\in G}$ be the collection of all such $\tau$, i.e.~as we vary $a$ 
+we get a new function and we take all such functions. Then $G^{\ast} \subset \sym(G)$, but is it a subgroup?
+For any $\tau_{a},\tau_{b}$ in $G^{\ast}$,
+the composition $\tau_{a}\tau_{b}$ is given by $(ab)x = \tau_{ab}(x)$ 
+for any $x \in G$. Since $ab$ is an element of $G$,
+this means that $G^{\ast}$ is closed under composition. Similarly for any $\tau_{a}$ in $G^{\ast}$ if we
+define ${(\tau_{a})}^{-} = \tau_{a^{-1}}$, then $\tau_{a}\tau_{a^{-1}}(x)$ is equal to $aa^{-1}x = x$ which is
+the identity function. Hence $G^{\ast}$ is a subgroup. Now we have our isomorphism.
+\begin{proof}
+    For any $a \in G$ let $\map{\tau_{a}}{G}{G}$ be defined as,
+    \[\tau_{a}(x) = ax,\]
+    for any $x \in G$. Then $\tau_{a} \in \sym(G)$. Let $G^{\ast} = \set{\tau_{a}}{a\in G}$. Then $G^{\ast}
+    \subset G$ is a subgroup of $G$. Define $\map{f}{G}{G^{\ast}}$ as,
+    \[f(a) = \tau_{a}.\]
+    If $f(a) = f(b)$ then $\tau_{a} = \tau_{b}$ which means that $a = b$ since $\tau$ is injective. Thus $f$
+    is injective. Fix a $b
+    \in G$, then since $\tau_{b}$ is surjective, there is an $a \in G$ such that $\tau_{b}(a) = b$ which means
+    that $f(a) = b$. Thus $f$ is surjective. Hence, $f$ is bijective.
+    Also for any $a,b \in G$,
+    \[f(ab) = \tau_{ab} = \tau_{a}\tau_{b},\]
+    becuase for any $x \in G$, $\tau_{ab}(x) = abx = \tau_{a}(bx) = \tau_{a}\tau_{b}(x)$. Hence, $f$ is an
+    isomorphic function. Thus, $G\cong G^{\ast}$.
+\end{proof}
+While an isomorphism tells us which groups are \textbf{similar}, we would want to know which maps 
+preserve the underlying algebraic structure. Certainly any isomorphic function does that. What other functions
+have this property? Such maps are very important, in fact a case can be made for them
+being more important than the groups themselves. As with any important concept we give them a name.
+\begin{Definition}[name=Homomorphism]
+    Let $G_1,G_2$ be two groups. A function \break{}$\map{f}{G_1}{G_2}$ is called a homomorphism if,
+    \[f(\underbrace{ab}_{\text{op.~in $G_1$}}) = \underbrace{f(a)f(b)}_{\text{op.~in $G_2$}},\]
+    for any $a,b \in G_1$. 
+\end{Definition}
+Let us give a few examples of homomorphisms.
+\begin{Example}
+    The following are all homomorphism,
+    \begin{enumerate}
+	\item
+	    Any $\map{f}{G_1}{G_2}$ that is an isomorphism is also a homomorphism.
+	\item
+	    The trivial homomorphism given by $f(x) = e_2$ where $e_2$ is the identity element in $G_2$. This is
+	    because $f(xy) = e_2 = e_2e_2 = f(x)f(y)$.
+	\item
+	    Let $f$ be the function $\map{f}{S_n}{\lbrace \pm 1\rbrace}$ given by $f(\sigma) = sign(\sigma)$,
+	    for any $\sigma \in S_n$. Then, by~\ref{thm:sign_permutation}, $f$ is a homomorphism. While $f$ is
+	    surjective for $S_n$ when $n > 1$, it is by no means injective. Hence, $f$ is NOT an isomorphism.
+	\item
+	    Let $G_1$ be the additive group of integers $\groupS{\Z}{+}{0}$ and let $G_2 = S_2 =
+	    \lbrace \epsilon,\alpha\rbrace$ where $\alpha$ is the transposition $(1 2)$. Then the function,
+	    $\map{f}{G_1}{G_2}$ given by,
+	    \begin{equation*}
+		f(x) = 
+		\begin{cases}
+		    \epsilon &\text{if $x$ is even}\\
+		    \alpha &\text{if $x$ is odd},
+		\end{cases}
+	    \end{equation*}
+	    is a homomorphism, because if $x,y$ are even then $f(x + y) = \epsilon = \epsilon\epsilon =
+	    f(x)f(y)$, and
+	    when $x$ is even and $y$ is odd, then $f(x + y) = \alpha = \epsilon\alpha= f(x)f(y)$.
+    \end{enumerate}
+\end{Example}
+\begin{Proposition}\label{prop:hom_prop_group}
+    Let $G_1,G_2$ be groups with identity elements $e_1,e_2$ respectively. If $\map{f}{G_1}{G_2}$ is a
+    homomorphism, then
+    \begin{enumerate}
+	\item
+	    $f(e_1) = e_2$,
+	\item
+	    $f(x^{-1}) = {(f(x))}^{-1}$.
+    \end{enumerate}
+\end{Proposition}
+
+\begin{proof}
+    For any $x \in G_1$, $f(x)e_2 = f(x) = f(x e_1) = f(x)f(e_1)$. Thus by the cancellation law of groups we
+    get $e_2 = f(e_1)$. 
+
+    For the second statement, ${f(x^{-1})}f(x) = f(x x^{-1}) = f(e_1) = e_2$. Hence, 
+    $f(x^{-1}) = {(f(x))}^{-1}$.
+\end{proof}
+
+A group homomorphism induces two natural subgroups that are extremely important.
+\begin{Definition}[name=Kernel]
+    Let $G_1,G_2$ be groups and let $\map{f}{G_1}{G_2}$ be a homomorphism. The kernel of $f$ is the set
+    $\ker(f)$ of all the elements of $G_1$ which are mapped by $f$ to the identity element $e_2$ of $G_2$.
+    That is,
+    \[\ker(f) = \set{x \in G_1}{f(x) = e_2}.\]
+\end{Definition}
+Note that $\ker(f) = \invIm{f}{\lbrace e_2 \rbrace}$, where the latter is the inverse image of the set
+$\lbrace e_2 \rbrace$. Since $e_1$ is mapped by a homomorphism to $e_2$, a kernel is never empty.
+\begin{Definition}[name=Image or Range]
+    Let $G_1,G_2$ be groups and let $\map{f}{G_1}{G_2}$ be a homomorphism. The image or range of $f$ is the 
+    set $\Ima(f)$ of all the element of $G_2$ that have been mapped by some elements of $G_1$. That is,
+    \[\Ima(f) = \set{y \in G_2}{\thereIs{x\in G_1}\,\text{such that}\, f(x) = y}.\]
+\end{Definition}
+The following proposition states that these two sets are in fact subgroups.
+\begin{Proposition}
+    Let $G_1,G_2$ be groups and let $\map{f}{G_1}{G_2}$ be a homomorphism. The kernel and image of $f$ 
+    are subgroups of $G_1,G_2$ respectively.
+\end{Proposition}
+\begin{proof}
+    To see that $\ker(f)$ is a subgroup of $G_1$, we need to check if it is closed under operation and inverses
+    in $G_1$. Let $a,b \in \ker(f)$, then $f(a) = f(b) = e_2$. Thus $e_2 = f(a)f(b) = f(ab)$. Hence $ab \in
+    \ker(f)$. Let $a \in \ker(f)$ which means $f(a) = e_2$. But $e_2 = e_2^{-1} = {(f(a))}^{-1} = f(a^{-1})$.
+    Hence $a^{-1} \in \ker(f)$.
+
+    To see that image is a subgroup of $G_2$, let $c,d \in \Ima(f)$. Hence there are $x_c,x_d \in G_1$ such
+    that $f(x_c) = c$ and $f(x_d) = d$. Since $G_2$ is a group $f(x_c)f(x_d) \in G_2$ and hence
+    $cd = f(x_c)f(x_d) = f(x_c x_d)$ is in $G_2$. But since $x_c,x_d \in G_1$, this means that there is an $x
+    = x_c x_d$ such that $f(x) = cd \in G_2$. Hence $cd \in \Ima(f)$. Let $c \in \Ima(f)$. Thus there is an
+    $x_c \in G_1$ such that $f(x_c) = c$. But $c^{-1} = {(f(x_c))}^{-1} = f(x_c^{-1})$. Hence there is an $x =
+    x_c^{-1}$ in $G_1$ such that $f(x) = c^{-1} \in G_2$. Thus $c \in \Ima(f)$. 
+\end{proof}
+The kernel is a special subgroup. To see this, take any $x \in G_1$. For any $a \in \ker(f)$, let us consider
+$f(xax^{-1})$. Since $a,x^{-1} \in G_1$, $ax^{-1}$ is also in $G_1$ and since $f$ is a homomorphism we have,
+$f(xax^{-1}) = f(x)f(ax^{-1}) = f(x)f(a)f(x^{-1})$. Since $f(a) = e_2$, we have $f(xax^{-1}) = f(x)f(x^{-1}) =
+f(xx^{-1}) = f(e_1) = e_2$. Thus $xax^{-}$ is also in the kernel. We isolate this important property in the
+definition below.
+\begin{Definition}[name=conjugate]
+    Let $G$ be a group and let $a,x$ be element of $G$. The element $xax^{-1} \in G$ is called a conjugate of
+    $a$. If $H$ is a subgroup of $G$, we say that $H$ is \textbf{closed under conjugation} if for any $a \in
+    H$, all the conjugates of $a$ are also in $H$.
+\end{Definition}
+\begin{Definition}
+    A subgroup $H$ of $G$ which is closed under conjugation is called a normal subgroup of $G$ and is denoted
+    by $\nSg{H}{G}$.
+\end{Definition}
+\begin{Example}
+    Let $G_1,G_2$ be groups and let $\map{f}{G_1}{G_2}$ be a homomorphism. Then $\ker(f)$ is a normal subgroup
+    of $G_1$ i.e.~$\nSg{\ker(f)}{G_1}$.
+\end{Example}
+\begin{Example}
+    Let $G$ be a group and let us define the following set, called the center of a group. Then,
+    \begin{Definition}
+	the set,
+	\[Z(G) = \set{z\in G}{zx = xz\,\forEv{x\in G}},\]
+    \end{Definition}
+    is a normal subgroup of $G$. This is easy to see since for any $z \in G$, $zx = xz$ which means that $z =
+    xzx^{-1}$. The center of group $G$ is the collection of all those elements of $G$ that commute with every
+    element of $G$.
+\end{Example}
+We collect some elementary properties of homomorphism.
+\begin{Proposition}\label{prop:prop_hom}
+    Let $G,H,K$ be groups. The following are some of the basic properties of homomorphism.
+    \begin{properties}
+    \item
+	If $\map{f}{G}{H}$ and $\map{g}{H}{K}$ are homomorphism, then the composition map
+	$\map{\fog{g}{f}}{G}{K}$ is also a homomorphism.
+    \item
+	If $\map{f}{G}{H}$ is a homomorphism, then $f$ is injective if and only if $\ker{f} = \lbrace e
+	\rbrace$, where $e$ is the identity element of $G$.
+    \item
+	If $\map{f}{G}{H}$ is a homomorphism and $K \subset G$ is a subgroup of $G$ then the direct image of
+	$K$, i.e.~$f(K)$ is a subgroup of $H$.
+    \item
+	If $\map{f}{G}{H}$ is a homomorphism and $J \subset H$ is a subgroup of $H$ then the inverse image of
+	$J$, i.e.~$\invIm{f}{J}$ is a subgroup of $G$. Moreover $\ker(f) \subset \invIm{f}{J}$.
+    \end{properties}
+\end{Proposition}
+
+\section{Cosets and Quotient groups}
+In this section we will explore some of the most important concepts in group theory. We have studied the
+fundamentals of group theory by analyzing groups and maps that preserve group structure. Now we will build on
+it to realize some of the most astonishing facts about group theory. We will need a few facts from set theory
+concerning equivalence relations and partitions. See~\ref{App:set_theory}.
+Let $A,B$ be any arbitrary sets and let $\map{f}{A}{B}$ be any function. Then $f$ induces a natural partition
+of $A$ give by the equivalence relation $\sim$ on $A$,
+\[a\sim b\quad \text{if}\, f(a) = f(b).\]
+What are the equivalence class of this relation? The main idea is to think about the inverse image of $f$. If
+we fix a $y \in \Ima(f)$, then $\invIm{f}{\lbrace y \rbrace}$ is the collection of all those elements in $A$ that
+are mapped to $y$. Since $y$ is in the image of $f$, the inverse image $\invIm{f}{\setX{y}}$ is not empty. 
+If $a,b \in \invIm{f}{\lbrace y \rbrace}$, then $f(a) = f(b) = y$ and thus $a \sim b$.
+For any $y\in \Ima(f)$, let $x_y\in A$ be such that $f(x_y) = y$. Then the equivalence class of $x_y$ is given by,
+\[\eqClass{x_y} = \set{a \in A}{f(a) = f(x_y)} = \invIm{f}{\lbrace y \rbrace}.\] 
+So we can see that $A$ is partitioned as follows,
+\[A = \bigcup\limits_{y\in \Ima(f)}\eqClass{x_y}.\]
+We denote the set of all equivalent classes in $A$ as $\barX{A}$. 
+Thus we can see that the inverse image partitions the domain in the way described above. In other words we can
+identify the image with the set of all equivalence classes as follows:
+There is a bijective map $\map{\barX{f}}{\barX{A}}{\Ima{f}}$ given by,
+\[f(\eqClass{a}) = f(a).\]
+Clearly this is injective because we know that if $\eqClass{a}\cap\eqClass{b}\neq \emptyset$ 
+then they represent the same equivalent class. In other words if $f(\eqClass{a}) = f(\eqClass{b})$ then 
+$f(a) = f(b)$, which means that $a\sim b$ which means that $\eqClass{a} = \eqClass{b}$. The map is surjective
+since for any $y \in \Ima{f}$, the inverse image of $y$ is one of the equivalence classes. Thus we can identify the
+image with the set of all equivalence classes on the domain. 
+
+We can make some important observations when $A = G_1$ and $B = G_2$ are groups.
+\begin{Observation}
+    Let $G_1,G_2$ be groups with identity element $e_1,e_2$ respectively, 
+    and let $\map{f}{G_1}{G_2}$ be a homomorphism. Since a homomorphism always carries $e_1$ to $e_2$ we know
+    that $e_2 \in \Ima(f)$. Thus from the discussion above $\invIm{f}{\lbrace e_2 \rbrace}$ is one of the
+    equivalence classes of $A$ namely $\eqClass{e_1}$. But this is precisely the Kernel of $f$! Hence
+    $\ker{f}$ is one of the equivalence classes of $A$. What are the other equivalence classes? The next
+    proposition gives a remarkable answer to this question.
+\end{Observation}
+\begin{Proposition}\label{prop:hom_equiv_group}
+    Let $G_1,G_2$ be groups with identity element $e_1,e_2$ respectively, 
+    and let $\map{f}{G_1}{G_2}$ be a homomorphism. Let $\sim$ be the equivalence relation on $A$ given by $a\sim b
+    \quad \text{if} f(a) = f(b)$. Any equivalence class of $A$ is given by $a\ker{f} = \set{an}{n\in\ker{f}}$.
+    In other words $f(a) = f(b)$ if and only if $b = an$ for some $n\in \ker{f}$.
+\end{Proposition}
+\begin{proof}
+    If $b = an$ for some $n \in \ker{f}$, then since $f$ is a homomorphism and using the properties of the
+    kernel, \[f(b) = f(a)f(n) = f(a)e_2 = f(a).\]
+    For the other implication, let $f(a) = f(b)$. Then 
+    \[e_2 = {(f(a))}^{-1}f(b) = f(a^{-1})f(b) = f(a^{-1}b).\]
+    Hence, $a^{-1}b \in \ker{f}$, i.e.~there is some $n \in \ker{f}$ such that $n = a^{-1}b$ which means that
+    $an = b$.
+\end{proof}
+
+This motivates a very important idea in group theory, namely that of a \textbf{coset}.
+\begin{Definition}[name=Left coset]
+    Let $\groupS{G}{\ast}{e}$ be a group and let $H \subset G$ be any subgroup of $G$. 
+    The left coset of $H$ is given by the set,
+    \[a{\ast}H = \set{b \in G}{\thereIs{h\in H},\,\text{such that}\quad b = a{\ast}h},\]
+    where $a$ is an element of $G$.
+\end{Definition}
+In short $a\ast H$ contains elements of the form $a\ast h$ for some $h$ in $H$. Again following our convention
+in~\ref{rmk:prod_notation}, we denote the left coset of $H$ by $aH$.
+Is $aH$ a subgroup of $G$? Let $x,y \in aH$. Then $x = ah_1$ and $y = ah_2$ for some $h_1,h_2 \in H$. Thus 
+$xy = (ah_1)(ah_2)$ which is not necessarily $ah_1h_2$. Thus cosets are not necessarily subgroups of $G$. The
+only coset that is a subgroup of $G$ is when $a = e$ and in that case $eH = H$. 
+
+\begin{Proposition}
+    The left cosets are equivalence classes on $G$ for the relation given by,
+    \[a \sim b \, \text{if}\, b = ah,\]
+    for some $h \in H$.
+\end{Proposition}
+\begin{proof}
+    Since $e$ is in $H$, $a = ae$ and hence $a\sim a$. If $a \sim b$, then $b = ah$ which means that $a =
+    bh^{-1}$. Since $H$ is a subgroup $h^{-1}$ is in $H$ and hence $b \sim a$. If $a \sim b$ and $b \sim c$ then
+    $b = ah_1$ and $c = bh_2$ for some $h_1,h_2\in H$. Thus $c = ah_1h_2 = ah$ where $h = h_1h_2 \in H$.
+    Hence, $a \sim c$.
+\end{proof}
+Thus we see that the cosets $aH$ \textbf{partition} $G$. The next proposition states that the cosets of $H$
+have the same cardinality of $H$. This has an important ramification for finte Groups. This means that if $H$
+is a finite subgroup, then each coset will have the same number of elements as in $H$.
+\begin{Proposition}
+    If $H$ is an subgroup of $G$, then there is a one-to-one correspondence from $H$ onto $aH$.
+\end{Proposition}
+\begin{proof}
+    Let $\map{f}{H}{aH}$ be given by $f(b) = ab$ for any $b \in H$. Let $f(b) = f(c)$ which means $ab = ac$,
+    which means that $b = c$. Hence, $f$ is injective. Let $x$ be any element of $aH$. Then $x = ah$ for some
+    $h \in H$ i.e.~there is a $h$ in $H$ such that $f(h) = ah = x$. Hence $f$ is surjective.
+\end{proof}
+\begin{Observation}
+    If $H$ has $n$ elements, then every coset $aH$ has $n$ elements.
+\end{Observation}
+\begin{Theorem}[name=Lagrange theorem]\label{thm:Lagrange_thm}
+    Let $G$ be a finite group, and $H$ any subgroup of $G$. The order of $G$ is a multiple of the order of
+    $H$.
+\end{Theorem}
+\begin{proof}
+    Each coset of $H$ has the same number of elements as $H$
+    that is $\abs{aH} = \abs{H}$.
+    Let the number of distinct cosets be $m$. Then $\abs{G} = m*\abs{H}$. Thus $\abs{H}$ divides $\abs{G}$.
+\end{proof}
+This is an important result. It says that if a group $G$ has $15$ elements, it have can have subgroups with
+elements $1,3,5,15$. Thus there will be two non-trivial subgroups of elements $3$ and $5$. If a group has $7$
+elements, then it cannot have any non-trivial subgroups!
+\begin{Corollary}
+    If $G$ is a group with prime number of elements, then $G$ is cyclic group generated by any element of $G$
+    that is not an identity.
+\end{Corollary}
+\begin{proof}
+    Let $a \in G$ be any element of $G$ which is not equal to $e$. Consider the cyclic subgroup $\langle a
+    \rangle$ of order $m$. Then by~\ref{thm:Lagrange_thm}, $m$ must divide $p$. Since $p$ is prime and $m \neq
+    1$, this means that $m = p$. Hence $G = \langle a \rangle$. Since any cyclic groups are isomorphic, this
+    means that there is only one type of group with prime number of elements.
+\end{proof}
+We usually denote the number of distinct cosets of $H$ by $\left[G:H\right]$ and call it the index of $H$ in
+$G$.
+
+Now we will look at another important idea in group theory. We have seen that any homomorphic image induces a
+normal subgroup given by its kernel. Is there a coverse? That is given any normal subgroup can be construct a
+homomorphic image that has the normal subgroup as its kernel? Before we proceed to accomplish this, 
+we will construct the congruence class of
+integers. This will serve as an example of what we are going to show. 
+
+Let $n$ be any positive integer and let $H = n\Z$ be a subroup of $\groupS{\Z}{+}{0}$. It is easy to check
+that $H$ is normal. Infact since $\Z$ is Abelian, $H$ is Abelian and any subgroup of an Abelian group must be
+normal (easy to prove). What are the cosets of $H$? Any coset of $H$ is given by the set $a\ast H$. Since we
+are in an additive group, $\ast$ here is (addition) $+$. Thus if $b$ is in $a + H$, then $b$ must be of the
+form $a + nk$ for some integer $k$ i.e $(b-a)$ is a multiple of $n$. How many cosets are there? In other words
+what is $\left[\Z : H\right]$? Let $b$ be any integer, by the division theorem $b = qn + r$, hence $b,r$ are
+in the same coset. There are $n$ distinct remainders $0,1,2,\ldots,n-1$ and hence there are $n$ distinct cosets
+given by $0 + H, 1+H, \ldots, (n-1) + H$. Since each coset is an equivalence class, we denote it by
+\[\eqClass{0},\eqClass{1},\ldots,\eqClass{n}.\]
+The set of all these equivalent classes partition $\Z$ and we denote them by $\barX{H}$. However, we will
+given an alternate notation for the above. We denote the set of cosets for $H = n\Z$ as $\Z/n\Z$.
+A very remarkable observation is that $\Z/n\Z$ can be given a group structure.
+Let us define addition over $\Z/n\Z$ as follows,
+\[\eqClass{a} + \eqClass{b} = \eqClass{a+b},\]
+for any $\eqClass{a},\eqClass{b} \in \Z/n\Z$.
+Is this well defined. The left hand side is a set, the right hand side is a set and $+$ is an operation. Does 
+the operation give the same result if we pick different elements from the set? In other words, let $a_1,a_2
+\in \eqClass{a}$ and $b_1,b_2 \in \eqClass{b}$. Is it the case that $\eqClass{a_1+b_1} = \eqClass{a_2 + b_2}$?
+If $a_1 \in \eqClass{a}$, then $a_1 = a + nk_1$. Similarly $b_1 = b + nl_1$. Thus $a_1 + b_1 = (a+b) + nh_1$
+where $h_1 = k_1 + l_1$. Hence $a_1 + b_1 \in \eqClass{a+b}$. Similarly $a_2 + b_2 \in \eqClass{a+b}$ and thus
+the notion is well defined. Hence we can state that 
+\[\groupS{\Z/n\Z}{+}{\eqClass{0}},\]
+is a group. Consider the map
+\[\map{\phi}{\Z}{\Z/n\Z}\]
+given by $\phi(a) = \eqClass{a}$. Note that $\phi$ is surjective. Moreover, $\phi(a + b) = \phi(a) + \phi(b)$
+and hence $\phi$ is a homomorphism. What is $\ker(\phi)$? It is precisely $n\Z$, since for any $b \in n\Z$, 
+$b \in 0 + n\Z$ and the other way too, and hence $\eqClass{b} = \eqClass{0}$ i.e.~$\phi(b) = \eqClass{0}$.
+Hence $\ker(f) = n\Z$. Thus, starting with a normal subgroup $H = n\Z$, we were able to construct a
+homomorphism which had $H$ as its kernel. This is an important result and we pursue it in the following
+paragraphs. First, an important proposition.
+
+\begin{Proposition}
+    If $H$ is a normal subgroup of $G$, then $aH = Ha$ for every $a \in G$.
+\end{Proposition}
+\begin{proof}
+    Let $h$ be any element of $H$. Then for any $a$ in $G$, $aha^{-1}$ is in $H$. Let $x$ be an element of
+    $aH$. Then $x = ah$ for some $h \in H$. Now $xa^{-1} = aha^{-1}$ which is in $H$ because $H$ is normal.
+    Let $xa^{-1} = h'$. Then $x = h'a \in Ha$. Thus $aH \subset Ha$. A similar argument leads to $Ha \subset
+    aH$, hence $aH = Ha$.
+\end{proof}
+\begin{Proposition}
+    Let $\nSg{H}{G}$. Then $(aH)\ast(bH) := (ab)H$ is a well defined operation.
+\end{Proposition}
+\begin{proof}
+    Let $aH = a'H$ and let $bH = b'H$. We need to show that $(ab)H = (a'b')H$. Let $d \in (ab)H$. Then
+    $d = abh$ for some $h \in H$. Thus $d \in a(bH)$ which means that $d \in a(Hb)$. Hence $d = ah_1b$ for some
+    $h_1\in H$. But $ah_1 = a'h_2$ for some $h_2 \in H$ and hence $d = a'h_2b$ wich means that $d \in a'(Hb)$
+    and hence $d \in a'(bH)$ i.e $d = a'bh_3$ and using the fact that $bh_3 = b'h_4$ for some $h_4 \in H$ we
+    get $d = a'b'h_4$ and hence $d \in (a'b')H$. The other inclusion is analogous. 
+\end{proof}
+\begin{Example}
+    The assumption that $H$ be a normal subgroup is crucial. For example let $G = S_3$ and let $H = \lbrace
+    \epsilon,\beta\rbrace$. Then $\delta H = \lbrace \delta,\alpha \rbrace$ = $\alpha H$ and 
+    $\kappa H = \lbrace \kappa, \beta \rbrace = \gamma H$.
+    However, $(\fog{\delta}{\kappa})H = H \neq (\fog{\alpha}{\gamma})H = \kappa H$.
+\end{Example}
+\begin{Example}
+    Let $H = n\Z$. Then $(a + H) + (b + H) = (a+b) + H$ is a well defined operation. Note that $a + H =
+    \eqClass{a}$ and $b + H = \eqClass{b}$.
+\end{Example}
+\begin{Definition}[name=Quotient Group]
+    Let $\nSg{H}{G}$ with the group $\groupS{G}{\ast}{e}$, and consider the set of all cosets of $H$,
+    \[G/H :=\set{a \ast H}{a\in G},\]
+    called the quotient set. 
+    The triple $\groupS{G/H}{\ast}{H}$ is called the quotient group with the operation $\ast$ defined as,
+    \[(a\ast H)\ast(b\ast H) = (a\ast b)\ast H.\]
+\end{Definition}
+The fact that it is a group is due to the proposition above. Following our discussion
+in~\ref{rmk:prod_notation}, we will omit the operation $\ast$.
+\begin{Proposition}
+    Let $\nSg{H}{G}$. The quotient group $G/H$ is a 
+    homomorphic image of the group $G$ where the homomorphism is given by,
+    \[\phi(a) = aH,\]
+    for all $a \in G$. Moreover, for any normal subgroup $\nSg{H}{G}$, the homomorphic map 
+    $\map{\phi}{G}{G/H}$ has $H$ as its kernel.
+\end{Proposition}
+\begin{proof}
+    The proof uses the same ideas in our discussion of $\Z/n\Z$.
+\end{proof}
+Let us recapitulate what we have observed so far.
+\begin{itemize}
+    \item
+	If $G$ is any group and if $\nSg{H}{G}$, then we can construct a homomorphic map from $G$ that has $H$ as
+	its kernel. Note that any homomorphic map $f$ on a group $G$ induces a normal subgroup on $G$ given by  
+	$\ker{f}$.
+    \item
+	A normal subgroup $\nSg{H}{G}$ enables us to form a quotient group $G/H$ whose elements are called cosets
+	of $H$. The canonical projection map $\map{f}{G}{G/H}$ given by $f(a) = aH$ is a surjective
+	homomorphism from $G$ onto $G/H$. The kernel of $f$ is $H$.
+    \item
+	Any homomorphic map $\map{f}{G}{\Ima{f}}$ is a surjective map. The image of $f$ partitions $G$ into 
+	its cosets given
+	by $\ker{f}$.
+\end{itemize}
+
+Now we will see every homomorphic image of a group $G$ is a quotient group of $G$. More exactly, every
+homomorphic image of $G$ is isomorphic to a quotient group of $G$. 
+\begin{Theorem}[name=Fundamental homomorphism theorem]
+    Let $\map{f}{G}{H}$ be a surjective homomorphism. If $K = \ker{f}$, then
+    \[H\cong G/K.\]
+\end{Theorem}
+Note that if $f$ is not surjective we can replace $H$ by $\Ima{f}$.
+\begin{proof}
+    Since $f$ is surjective $H =  \Ima{f}$, and hence $H$ partitions $G$ by the following equivalence
+    relation,
+    \[a\sim b \iff f(a) = f(b).\]
+    Now, $G/K$ also partions $G$ given by the relation,
+    \[a \sim b \iff b = ak,\]
+    for some $k \in K$.
+    Thus we need to find a correspondence between these two partitions. But this is easy, define
+    \[\map{\phi}{H}{G/K},\]
+    given by $\phi(y) = aK$, where $y = f(a)$.
+    Is $\phi$ injective?
+    Let $\phi(y_1) = \phi(y_2)$ where $y_1 = f(a_1)$ and $y_2 = f(a_2)$. Then we have $a_1K = a_2K$ which
+    means that $a_2 = a_1k$ for some $k \in K$. Hence $f(a_2) = f(a_1k) = f(a_1)f(k) = f(a_1)e_2 = f(a_1)$.
+    Thus $y_2 = y_1$.
+
+    Is $\phi$ surjective? Any element of $G/K$ is given by $aK$ for some $a \in G$ and so $f(a) = aK$.
+    Finally, we need to show that $\phi$ is a homomorphism. Let $y_1 = f(a)$ and $y_2 = f(b)$ for some $a,b
+    \in G$. Note that $f(a)f(b) = f(ab)$ because $f$ is a homorphism. Then,
+    \[\phi(y_1y_2) = \phi(f(a)f(b)) = \phi(f(ab)) = (ab)K = aKbK = \phi(y_1)\phi(y_2).\]
+\end{proof}
+\section{Rings and Fields}
+In this section, we will will look at sets that have two (algebraic) operations defined on it. We have studied
+sets with a single operation in some detail in the preceeding sections. Such sets were called Groups. If in
+a group we can identify another operation, then we are increasing the complexity of its algebraic structure.
+In the simplest form, the only things we would need in order to understand the effect of the second operation
+are that the second operation be associative and there is a well defined interplay between the two operations.
+
+Traditionally we call the first operation addition and the second operation multiplication. These don't have
+to correspond to the notion of additon and multiplication in number system and infact can be quite bizzare. We
+define the simplest algebraic structure with two operations as an object with $4$ things,
+$\left(G,+,0,\cdot\right)$ where $G$ is a non-empty set, $+$ is a well defined operation called addition, 
+$0$ is the identity element w.r.t.~addition and $\cdot$ is a well defined operation called multiplication.
+
+\begin{Definition}[name=Ring]
+    By a ring $\left(G,+,0,\cdot\right)$, we mean a set $G$ with operation $+,\cdot$ called addition and
+    multiplication which satisfy the following axioms:
+    \begin{itemize}
+	\item
+	    $\groupS{G}{+}{0}$ is an Abelian group.
+	\item
+	    Multiplication ($\cdot$) is associative i.e.~$(a\cdot b)\cdot c = a \cdot (b\cdot c)$ for 
+	    all $a,b,c$ in $G$.
+	\item
+	    Multiplication is \emph{distributive} over addition. That is, for all $a,b,c$ in $G$,
+	    \begin{itemize}
+		\item
+		    $a\cdot(b+c) = a\cdot b + a\cdot c$,
+		\item
+		    $(b+c)\cdot a = b\cdot a + c\cdot a$.
+	    \end{itemize}
+    \end{itemize}
+\end{Definition}
+\begin{Example}
+    The simplest examples are the familiar number system $\Z$, $\Q$, $\R$ and $\C$.
+\end{Example}
+\begin{Example}
+    We saw that $\Z_{n}$ is the quotient group $\groupS{\Z/n\Z}{+}{\eqClass{0}}$. We can also define $\cdot$
+    as $\eqClass{a}\cdot\eqClass{b} := \eqClass{a\cdot b}$, where $a\cdot b$ is the multiplication of integers,
+    which is well defined. It is easy to check that $\left(\Z/n\Z,+,\eqClass{0},\cdot\right)$ is a ring. 
+\end{Example}
+
+\begin{Remark}
+    We will omit the $\cdot$ for multiplication from here on and just denote $a\cdot b$ as $ab$ for any $a,b$
+    in $G$.
+\end{Remark}
+\begin{Remark}
+    Since $\groupS{G}{+}{0}$ is an additive group in the ring, we must be careful in denoting the additive
+    inverses and group operation. Thus for any $a,b$, the addition operation will be denoted by $a + b$.
+    Similarly, for any $a$ the additive inverse will be denoted by $(-a)$ and hence $a + (-a) = 0 = (-a) + a$.
+    The cancellation property will read $a + b = a + c$ implies $b = c$ and $a + b = 0$ implies $a = (-b)$ and
+    $b = (-a)$. $a^n$ will mean $a + a + a + \cdots + a$, $n$ times. The additive inverse of any element $a$
+    will be called the \textbf{negative} of $a$
+\end{Remark}
+What happens in a ring when we multiply element in $G$ with $0$ and with additive inverses i.e.~negatives.
+\begin{Proposition}
+    Let $G$ be a ring (here we identify a set with the ring instead of being technically correct) and let
+    $a,b$ be any element in $G$. Then,
+    \begin{enumerate}
+	\item
+	    $a0 = 0a = 0$,
+	\item
+	    $a(-b) = -(ab) = -(a)b$, 
+	\item
+	    $(-a)(-b) = ab$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    First, observe that
+	    \[0 + a0 = a0 = a(0 + 0) = a0 + a0.\]
+	    Thus, from cancellation law in $0 + a0 = a0 + a0$
+	    \[0 = a0.\]
+	\item
+	    This follows from,
+	    \[a(-b) + ab = a(-b + b) = a0 = 0.\]
+
+	\item
+	    Using the above twice,
+	    \[(-a)(-b) = -(a)\left[-b\right] = -\left[-(ab)\right].\]
+	    Since $(-(-a)) = a$ we get the result.
+    \end{enumerate}
+\end{proof}
+We have catalogued the basic properties of a ring. Usually we see rings with some additional properties and we
+will now describe them.
+By definition, a ring is commutative w.r.t.~to addition. When multiplication is also commutative, we give it a
+different name.
+\begin{Definition}[name=Commutative ring]
+    A ring where multiplication is commutative is called a commutative ring.
+\end{Definition}
+Note that we have not demanded that there be a identity element w.r.t~multiplication in a ring. 
+\begin{Definition}[name=Ring with unity]
+    When a ring has an identity element w.r.t~multiplication, we call the ring a ring with unity and denote
+    the identity element by $1$. If in addition to an identity element, the ring is commutative we call it a
+    commutative ring with unity.
+\end{Definition}
+\begin{Example}
+    The number systems $\Z,\Q,\R,\C$ all are commutative rings with unity.
+\end{Example}
+How are $0$ and $1$ related? 
+\begin{Definition}
+    A trivial ring is a ring whose only element is $0$.
+\end{Definition}
+For any non-trivial ring with unity $1\neq 0$. This is because if $1 = 0$, then $x = 1x = 0x = 0$ for any $x$
+which is a contradiction since we stated that we have a non-trivial ring.
+Once we have an identity element w.r.t.~multiplication, we can ask if there are multiplicative inverses. First
+observe that $0$ doesnot have a multiplicative inverse in a non-trival ring. For if $x$ was the multiplicative
+inverse of $0$, then, $0 = 0x = 1$ which we showed is not possible in non-trivial rings. This leads to a very
+important algebraic structure.
+\begin{Definition}[name=Field]
+    A field $\F$ is a commutative ring with unity in which every non-zero element is invertible
+    w.r.t.~multiplication. Thus a field is an object $\left(\F,+,0,\cdot,1\right)$, with a non-empty set $\F$
+    and two operations $+,\cdot$ called addition and multiplication respectively, with their respective
+    identity elements $0,1$ such that:
+    \begin{enumerate}
+	\item
+	    $\groupS{\F}{+}{0}$ is an Abelian group and,
+	\item
+	    $\groupS{\F-\setX{0}}{\cdot}{1}$ is an Abelian group.
+    \end{enumerate}
+\end{Definition}
+\begin{Example}
+    $\Z$ is not a field. The only elements that are invertible w.r.t.~multiplication are $-1,1$. The other
+    number systems $\Q,\R,\C$ are fields.
+\end{Example}
+\begin{Example}
+    Let us consider the ring $\left(\Z/4\Z,+,[0],\cdot\right)$. The multiplication table is given by,
+    \begin{tabular}{ccccc}
+	\toprule
+	$\cdot$    & $\left[0\right]$ & $\left[1\right]$  & $\eqClass{2}$ & $\eqClass{3}$\\
+	\midrule
+	$\left[0\right]$      & $\left[0\right]$    & $\left[0\right]$  &$\eqClass{0}$ &$\eqClass{0}$  \\
+	$\left[1\right]$      & $\left[0\right]$    & $\left[1\right]$  &$\eqClass{2}$ &$\eqClass{3}$  \\
+	$\left[2\right]$      & $\left[0\right]$    & $\left[2\right]$  &$\eqClass{0}$ &$\eqClass{2}$ \\
+	$\left[3\right]$      & $\left[0\right]$    & $\left[3\right]$  &$\eqClass{2}$ &$\eqClass{1}$ \\
+	\bottomrule
+    \end{tabular}
+    Note that $\eqClass{2}$ doesn't have a multiplicative inverse and hence $\Z/4\Z$ is not a field. 
+    ($\Z/p\Z$ where $p$ is prime will be a field. See~\ref{App:integers} for details.)
+\end{Example}
+
+We have learnt that when the product of two numbers say $ab$ is $0$ then one of the factors must be $0$ 
+i.e.~\[ab = 0 \implies a=0\,\text{or}\,b=0.\]
+This is true in any number system, 
+however for a general ring this is generally true. From the table above we see that
+$\eqClass{2}\eqClass{2} = \eqClass{0}$, but neither of them are $\eqClass{0}$.
+\begin{Definition}[name=Divisors of zero]
+    In any ring, a non-zero element $a$ is called a divisor of zero if there is a \emph{non-zero} element $b$
+    in the ring such that $ab = 0$.
+\end{Definition}
+We also know from number systems that if $ax = ay$ and if $a \neq 0$ then $x = y$. This is the cancellation
+property. In a field, this is certainly true. However in general rings this is false. Again, from the table
+above, note that $\eqClass{2}\eqClass{1} = \eqClass{2}\eqClass{3}$, but $\eqClass{1}\neq\eqClass{3}$.
+\begin{Definition}[name=Cancellation property]
+    A ring is said to have the cancellation propery if, for any $a,b,c$ in the ring 
+    $ab = ac$ or $ba = ca$ implies $b = c$, provided $a
+    \neq 0$.
+\end{Definition}
+\begin{Proposition}
+    A ring has the cancellation property iff it has no divisors of zero.
+\end{Proposition}
+\begin{proof}
+    Let the ring have the cancellation property and let $ab = 0$. Assume $a \neq 0$. Now $ab = 0 = a0$ and so
+    by cancellation $b = 0$. Thus there are no divisors of zero.
+    Let the ring have no divisors of zero and let $ab = ac$ such that $a \neq 0$. Then $ab - ac = 0$ and so
+    $a(b-c) = 0$ which means that $b-c = 0$ and hence $b = c$.
+\end{proof}
+\begin{Definition}[name=Integral domain]
+    A ring is said to be an integral domain if it is a commutative ring with unity having the cancellation
+    property.
+\end{Definition}
+\begin{Example}
+    The integers $\Z$ is an integral domain because it has no divisors of zero. Note that an integral domain
+    need not be a field since we saw that $\Z$ is not a field. However, every field is an integral domain
+    since it has the cancellation property.
+\end{Example}
+We end our discussion on basic group theory. In the next chapter we will start with the study of linear
+algebra.
+\endinput
+

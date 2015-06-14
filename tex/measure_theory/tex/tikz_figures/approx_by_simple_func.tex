@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage{standalone}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+\begin{document}
+\pagestyle{empty}
+\begin{tikzpicture}[scale = 2.5]
+    \draw[->,ultra thick] (-.5,0) -- (7.5,0) node(xline)[right] {} ;
+    \draw[->,ultra thick] (0,-.5) -- (0,7) node(yline)[right] {} ;
+    \draw[name path=curve,red,ultra thick] plot[smooth] coordinates {(0,0) (1.5,5) (3,1.5) (5,3.5) (7,0)};
+    \node at (2,6) {\Huge{$f$}};
+    \node at (2,0.5) {\Huge{$s_{n}$}};
+    \path[name path=hor] (0,3) -- ++(7,0);
+    \path[name intersections={of=curve and hor}];
+    \draw[ultra thick] (intersection-1) -- (intersection-2) node(xline2) {} ;
+    \draw[ultra thick] (intersection-3) -- (intersection-4) node(xline3) {};
+    \path[name path=hor1] (0,1) -- ++(8,0);
+    \path[name path=hor2] (0,2) -- ++(8,0);
+    \path[name intersections={of=curve and hor1,name=i}];
+    \path[name intersections={of=curve and hor2,name=j}];
+    \draw[dotted] (i-1) -- (i-2) node(xline6){} ;
+    \draw[dotted] (j-1) -- (j-2) node(xline4){} ;
+    \draw[dotted] (j-3) -- (j-4) node(xline5){};
+    \draw[ultra thick] (intersection-1) -- (intersection-1 |- xline4) node(A) {};
+    \draw[ultra thick] (j-1) -- (j-1 -| A);
+    \draw[ultra thick] (j-1) -- (j-1 |- xline6) node (B) {};
+    \draw[ultra thick] (i-1) -- (i-1 -| B);
+    \draw[ultra thick] (i-1) -- (i-1 |- xline) ;
+    \draw[ultra thick] (intersection-4) -- (intersection-4 |- xline5) node (C) {};
+    \draw[ultra thick] (j-4) -- (j-4 -| C);
+    \draw[ultra thick] (j-4) -- (j-4 |- xline6) node (D) {};
+    \draw[ultra thick] (i-2) -- (i-2 -| D);
+    \draw[ultra thick] (i-2) -- (i-2 |- xline);
+
+    \draw[ultra thick] (intersection-2) -- (intersection-2 |- xline4) node(E) {};
+    \draw[ultra thick] (j-2) -- (j-2 -| E);
+    \draw[ultra thick] (j-2) -- (j-2 |- xline6) node (F)[left] {};
+    \draw[ultra thick] (intersection-3) -- (intersection-3 |- xline4) node(G) {};
+    \draw[ultra thick] (j-3) -- (j-3 -| G) node(H) {};
+    \draw[ultra thick] (j-3) -- (j-3 |- xline6) node(I)[right] {};
+    \draw[ultra thick] (I) -- (F);
+    \draw[dotted] (i-1) -- ++(-1,0);
+    \draw[dotted] (j-1) -- ++(-1.22,0);
+    \node at (-2,1.5) {\Huge{$\Delta_n = 2^{-n}$}};
+\end{tikzpicture}
+\end{document}

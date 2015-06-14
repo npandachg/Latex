@@ -1,0 +1,21 @@
+\documentclass{article}
+\usepackage{mathrsfs} % for scripts
+\usepackage{tikz}[font=\boldmath,ultra thick,]
+\pgfmathsetseed{3}
+%\usepackage[active,tightpage]{preview}
+%\PreviewEnvironment{tikzpicture}
+%\setlength\PreviewBorder{5pt}
+\begin{document}
+\begin{tikzpicture}[scale=2.5]
+    \begin{scope}[fill opacity=0.65]
+	\draw[step=0.5cm,red,thick] (-2,-2) grid (2,2);
+	%\draw[step=0.6cm,red,very thin] (-2.5,-2.5) grid (2.5,2.5);
+	\pgfmathsetseed{3}
+	\draw[fill=blue!20] plot [smooth cycle, samples=8,domain={2:10}]
+	(\x*360/8+5*rnd:0.5cm+1cm*rnd) node at (0,0) {};
+	\node at (0.2,0.2) {\Huge $\mathbf{{A}_{k}}$};
+	\node at (1.8,1.8) {\Huge $\mathbf{{E}^{k}_i}$};
+	\node at (3.0,0.0) {\Huge $\mathbf{\bigcup\limits_{i}{E}^{k}_i\in\mathscr{E}}$};
+    \end{scope}
+\end{tikzpicture}
+\end{document}

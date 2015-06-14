@@ -1,0 +1,25 @@
+\documentclass{article}
+\usepackage{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{shapes,calc,positioning}
+\tdplotsetmaincoords{70}{120}
+
+\begin{document}
+\begin{tikzpicture}[scale=1.25, tdplot_main_coords,axis/.style={->,dashed},thick]
+
+% -- remove these 3 lines if no axis is preferred
+\begin{scope}
+    \draw[axis] (0, 0, 0) -- (3, 0, 0) node [right] {$X$};
+    \draw[axis] (0, 0, 0) -- (0, 3, 0) node [above] {$Y$};
+    \draw[axis] (0, 0, 0) -- (0, 0, 3) node [above] {$Z$};
+
+    \coordinate  (d1) at (0,0,0){};
+    \coordinate  (d2) at (3,3,3){};
+    \coordinate  (d3) at (1.5*3,1.5*3,1.5*3){};
+    \draw[->,ultra thick,blue] (d1) -- (d2) node[right]{\Large$\mathbf{v}_{1}$} ;
+    \draw[->,ultra thick,red!30] (d1) -- (d3) node[right] {\Large$c\mathbf{v}_1$} ;
+\end{scope}
+
+\end{tikzpicture}
+\end{document}

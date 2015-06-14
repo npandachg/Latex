@@ -1,0 +1,1318 @@
+\chapter{Basic Linear Algebra}
+
+\section{Vector spaces}
+Just as groups and rings were an abstraction of number systems, vector spaces are an abstraction of geometry.
+In mordern geometry, a point in $3$ dimensional space is abstracted as a vector. Typically, we identify a
+co-ordinate system and an origin to represent the $3D$ space around as. A \textbf{point} in space is
+identified with a \textbf{vector} whose end is rooted in the origin and whose tip is placed at the point in
+question. 
+Given a vector in a $3D$ space we can multiply it by a real number $c$ called a \textbf{scalar} to stretch or
+shrink the vector. See~\ref{fig:tikz:vector_scalar_mult}. 
+When $c$ is negative we reverse the direction of the vector. 
+\begin{figure}
+  \includestandalone[width=0.5\textwidth]{tex/tikz_figures/scalar_multiplication}
+  \caption{Scalar multiplying a vector}\label{fig:tikz:vector_scalar_mult}
+\end{figure}
+We can add two vectors
+$\vv_{1}$ and $\vv_{2}$ to get a new vector $\vv_{1} + \vv_{2}$. Addition of two vectors is certainly
+commutative as is shown in~\ref{fig:tikz:vector_add}. Note that whene we add $\vv_{1}$ to $-\vv_{1}$ we get
+the zero vector which is the origin of our co-ordinate system. 
+
+\begin{figure}
+  \includestandalone[width=0.5\textwidth]{tex/tikz_figures/vector_addition}
+  \caption{Vector addition}\label{fig:tikz:vector_add}
+\end{figure}
+
+We can abstract this notion by definining an algebraic structure that mimics the algebra of vectors in $3D$
+space. Let $\F$ be any field.
+\begin{Definition}
+    A vector space over a field $\F$ is a triple $\measureS{\vsp{V}}{+}{\alpha}$ where,
+    \begin{itemize}
+	\item
+	    $\vsp{V}$ is a set called the set of vectors.
+	\item
+	    $\map{+}{\vsp{V}\times\vsp{V}}{\F}$ is a binary operation.
+	\item
+	    $\map{\alpha}{\F\times\vsp{V}}{\F}$ is a scalar mulitiplication map such that
+	    $\alpha(\lambda,\vect{v}) := \lambda\cdot\vect{v}$,
+    \end{itemize}
+    and,
+    \begin{enumerate}
+	\item
+	    $\groupS{\vV}{+}{\zerv{\vV}}$ is a (commutative) Abelian group.
+	\item For any $\beta,\gamma \in \F$ and $\vu,\vv \in \vV$
+	    \begin{itemize}
+		\item
+		    $\beta\cdot(\vu + \vv) = \beta\cdot\vu + \beta\cdot\vv$.
+		\item
+		    $(\beta + \gamma)\cdot\vu = \beta\cdot\vu + \gamma\cdot\vu$.
+		\item
+		    $\beta\cdot(\gamma\cdot\vu) = (\beta\gamma)\cdot\vu$.
+		\item
+		    $1\cdot\vu = \vu$.
+	    \end{itemize}
+    \end{enumerate}
+    We usually do not denote the scalar multiplication map and in short a vector space over a field is denoted
+    by $\vspF{\vV}{F}$.
+\end{Definition}
+In this definition we have used $\textbf{boldface}$ letters for arbitrary vectors and greek letters for
+scalars (field elements). We can immediately observe two useful properties from the definition,
+\begin{Observation}
+    Let $\vspF{\vV}{F}$ be a vector space. For any $\vv \in \vV$,
+    \begin{enumerate}
+	\item
+	    $0\cdot\vv = \zerv{\vV}$
+	    \begin{proof}
+		We can write $0\cdot\vv$ as $(0+0)\cdot\vv$ which is equal to $0\cdot\vv + 0\cdot\vv$. There
+		is an additive inverse $-0\cdot\vv$ such that $-0\cdot\vv + 0\cdot\vv = \zerv{\vV}$. Thus,
+		\begin{align*}
+		    &0\cdot\vv = 0\cdot\vv + 0\cdot\vv \\
+		    &\iff 0\cdot\vv + -0\cdot\vv = 0\cdot\vv + 0\cdot\vv + -0\cdot\vv \\
+		    &\iff \zerv{\vV} = 0\cdot\vv + \zerv{\vV} \\
+		    &\iff \zerv{\vV} = 0\cdot\vv.
+		\end{align*}	    
+	    \end{proof}
+	\item
+	    $-1\cdot\vv = -\vv$.
+	    \begin{proof}
+		We can write $0\cdot\vv$ as $(1 + (-1))\cdot\vv$ and use the above observation along with the 
+		fact that
+		$1\cdot\vv = \vv$
+	    \end{proof}
+    \end{enumerate}
+\end{Observation}
+The two observations allow us to write $\beta\cdot\vv$ as $\beta\vv$ for any $\beta\in\F$ and $\vv\in\vV$.
+\begin{Example}
+    We list a few vector spaces.
+    \begin{enumerate}
+	\item
+	    Let $\F = \R$ and $\vV = \Rn$. For any $\vu \in \vV$ we can write $\vu = \compV{u}{n}$. 
+	    Define $\map{+}{\R^n\times\R^n}{\R}$ to be $\vu + \vv = \compSumV{u}{v}{n}$ and \break{}
+	    $\map{\alpha}{\R\times\Rn}{\R}$ to be $\beta\cdot\vu = \compV{\beta u}{n}$.
+	    Then $\vspF{\Rn}{\R}$ is a vector space.
+	    We can think of $\R^1$ as a vector space over $\R$. When $n = 3$, we get our usual vector algebra
+	    in the $3D$ space that motivated our discussion of vector spaces.
+	\item
+	    Let $X$ be a non-empty set and let $\F$ be a field.  We define,
+	    \[\F(X) := \set{f}{\map{f}{X}{\F}},\]
+	    with the following maps,
+	    $\map{+}{\F(X)\times\F(X)}{\F}$ as follows,
+	    \[\forEv{f,g\in\F(X)},\quad (f+g)(x) := f(x) + g(x),\]
+	    for any $x\in X$ and, 
+	    $\map{\alpha}{\F\times\F(X)}{\F}$ as
+	    \[\forEv{\beta\in\F},\quad(\beta\cdot f)(x) := \beta f(x), \]
+	    for any $x\in X$. Then $\vspF{\F(X)}{\F}$ is a vector space where the $\zerv{\F(X)}$ is the zero
+	    function that maps all points in $X$ to $0 \in \F$.
+    \end{enumerate}
+\end{Example}
+
+A particular vector space of the kind discussed in (2) above is the set of all polynomials. 
+\begin{Definition}
+    A polynomial defined on a set $X$ with coefficients from a field $\F$ is an expression of the form,
+    \[f(x) = a_0 + a_1x + a_2x^2 + \cdots + a_{n}x^{n},\]
+    where $n$ is a non-negative integer. The degree of a polynomial is the largest exponent $k$ of $x$ such
+    that $a_k \neq 0$. We denote the space of polynomials as $\F\left[X\right]$ or sometimes when $X$ is
+    obvious from the context as $P(\F)$.
+\end{Definition}
+\begin{Remark}
+    Note that $\Fn = \F \times F \times \cdots \times \F$, where the product is taken $n$ times. 
+    It is customary to express elements of $\Fn$ as column vectors. Thus if $\vv \in \F^3$, then we express
+    $\vv = \colvec{3}{\alpha}{\beta}{\gamma}$ for some $\alpha,\beta,\gamma$ in $\F$ which are called the
+    \textbf{co-ordinates} of $\vv$.
+\end{Remark}
+Just as in groups, we want to examine subsets of a given set that have the same algebraic structure.
+\begin{Definition}
+    Let $\vspF{\vV}{\F}$ be a vector space. A subset $\vW \subset \vV$ is called a subspace of $\vV$ if $\vW$
+    is a vector space over $\F$.
+\end{Definition}
+The following theorem shows that we only need to check $3$ conditions on a subset to determine if it is a
+subspace.
+\begin{Theorem}\label{thm:crit_subspace}
+    Let  $\vspF{\vV}{\F}$ be a vector space and let $\vW\subset \vV$ be a subset of $\vV$. Then
+    $\vspF{\vW}{\F}$ is a subspace of $\vV$ if and only if,
+    \begin{itemize}
+	\item
+	    $\zerv{\vV} \in \vW$.
+	\item
+	    (closed under addition) $\vx + \vy \in \vW$, whenever $\vx,\vy \in \vW$.
+	\item
+	    (closed under scalar multiplication) $\beta\cdot\vx \in \vW$, whenever $\vx\in\vW$ for any
+	    $\beta\in\F$.
+    \end{itemize}
+\end{Theorem}
+\begin{Example}
+    Let $C(\F)$ be the set of all continuous functions defined on a set $X$. Clearly $C(\F) \subset \F(X)$ and
+    it satisfies all the three properties above and so is a subspace of $\F(X)$.
+\end{Example}
+\begin{Example}
+    Let $P_n(\F)$ be the space of polynomials of degree less than or equal to $n$. Then $P_n(\F)$ is a
+    subspace of $P(\F)$.
+\end{Example}
+Given a collection of subspaces of a vector space, we can construct a new subspace. 
+\begin{Theorem}\label{thm:intersect_subspaces}
+    Any intersection of subspaces of a vector space $\vV$ is a subspace of $\vV$. It is the largest subspace
+    that is contained in each subspace. 
+\end{Theorem}
+\begin{proof}
+    Let $\famV$ be a collection of subspaces of $\vV$ and let
+    \[\vW = \bigcap\limits_{\vU\in\famV}\vU = \set{\vx\in\vV}{\vx\in\vU,\quad\forEv{\vU\in\famV}}.\]
+    To show that $\vW$ is a subspace of $\vV$ we need to show all the conditions in~\ref{thm:crit_subspace} are
+    satisfied. Since $\zerv{\vV}$ is in all the $\vU$, it is also in $\vW$. Consider $\vx,\vy \in \vV$ such
+    that $\vx,\vy$ are in $\vW$. Then by definition $\vx,\vy$ are in all $\vU$ and hence $\vx +\vy$ is in all
+    $\vU$ and thus $\vx + \vy$ is in $\vW$. Similary, it is closed under scalar multiplication.
+\end{proof}
+We can ask what is the smallest subspace that contains a collection of subspaces of a vector space. We might
+think the union of such a collection would give us an answer, but it is easy to check that given two subspaces
+$\vU,\vW$, their union may fail to be a subspace. To answer this, let us start with a definition.
+\begin{Definition}
+    Suppose $\vV$ is a vector space and let $\listV{\vU}{m}$ be subspaces of $\vV$. Then sum of $\listV{\vU}{m}$
+    is a subset of $\vV$ that contains all possible sums of elements of $\listV{\vU}{m}$. We denote it as,
+    \[\sumV{\vU}{m} = \set{\sumV{\vu}{m}}{\vu_{i}\in\vU_{i},\,1\leq i \leq m}.\]
+\end{Definition}
+\begin{Example}
+    Suppose $\vV$ is a subset of $\R^3$ containing all those vectors whose second and third co-ordinate are 
+    zero and $\vW$ is a subset of $\R^3$ containing all those vectors whose first and third co-odinates are
+    zero. Then \[\vV + \vW = \set{\colvec{3}{x}{y}{0}\in\R^3}{x,y\in\R}\] is a subset of $\R^3$.
+\end{Example}
+\begin{Theorem}
+    Suppose $\listV{\vU}{m}$ are subspaces of $\vV$. Then \break{} 
+    $\sumV{\vU}{m}$ is the smallest subspace of $\vV$
+    containing $\listV{\vU}{m}$.
+\end{Theorem}
+\begin{proof}
+    Since $\zerv{\vV}$ is in each $\vU_{i}$, the first condition of~\ref{thm:intersect_subspaces} is
+    satisfied. Let $\beta\in\F$ be an arbitrary scalar and let $\vx,\vy$ be in the sum space. Then there are
+    vectors $\listV{\vu}{m}$ and $\listV{\vv}{m}$ such that $\vu_{i},\vv_{i} \in \vU_{i}$ and,
+    \begin{align*}
+	&\vx = \sumV{\vu}{m},\\
+	&\vy = \sumV{\vv}{m}.
+    \end{align*}
+    Thus, $\dotV{\beta}{\vx} + \vy$ is given by,
+    \[\sumVecs{\dotV{\beta}{\vu}}{\vv}{m},\]
+    which is in the sum space. Suppose $\vW$ is any subspace of $\vV$ such that $\vU_{i} \subset \vW$ for $1\leq i
+    \leq m$. For any $\vx$ in the sum space $\vx = \sumV{\vu}{m}$, $\vu_{i}\in \vU_{i}$ and hence 
+    $\vx \in \vW$ and thus the sum space is a subset of $\vW$.
+\end{proof}
+Thus the sum space is the smallest space that contains a collection of \textbf{finite} subspaces of a vector
+space. The next example show that a vector in the sum space doesn't have a unique representation.
+\begin{Example}
+    Let,
+    \begin{align*}
+	&\vU_{1} = \set{\colvec{3}{x}{y}{0}\in\R^3}{x,y\in\R}\\
+	&\vU_{2} = \set{\colvec{3}{0}{0}{z}\in\R^3}{z\in\R}\\
+	&\vU_{3} = \set{\colvec{3}{0}{y}{y}\in\R^3}{y\in\R}\\
+    \end{align*}
+    Any $\vv = \colvec{3}{x}{y}{z} \in \R^3$ can be written as $\colvec{3}{x}{y}{z} = \colvec{3}{x}{y}{0} + 
+    \colvec{3}{0}{0}{z} + \colvec{3}{0}{0}{0}$ and hence
+    $\sumV{\vU}{m} = \R^3$. However, the representation is not unique. For example we can write
+    \[\colvec{3}{0}{0}{0} = \colvec{3}{0}{0}{0} + \colvec{3}{0}{0}{0} + \colvec{3}{0}{0}{0},\]
+    and
+    \[\colvec{3}{0}{0}{0} = \colvec{3}{0}{1}{0} + \colvec{3}{0}{0}{1} + \colvec{3}{0}{-1}{-1}.\]
+\end{Example}
+When we can write a vector in the sum space uniquely as the sum of vectors in each subspace comprising the sum
+space we call it a \textbf{Direct sum}.
+\begin{Definition}[name=Direct Sum]
+    Suppose $\vV$ is a vector space and let $\listV{\vU}{m}$ be subspaces of $\vV$. The sum $\sumV{\vU}{m}$ 
+    space is called a direct sum if each element in the sum space can be written uniquely as a sum 
+    $\sumV{\vu}{m}$, where each $\vu_{j}$ is in $\vU_{j}$. We denote the direct sum as,
+    \[\vU_{1}\oplus\cdots\oplus\vU_{m}.\]
+\end{Definition}
+\begin{Example}
+    Suppose $\vU$ is a the subspace of $\R^3$ consisting of those vectors whose last co-ordinate equals $0$
+    and $\vW$ is the subspace of $\R^3$ of those vectors whose first two co-ordinate equals $0$. Then
+    $\vU\oplus\vW = \R^3$. This is easily seen as any $\colvec{3}{x}{y}{z}$ in $\R^3$ is equal to
+    $\colvec{3}{x}{y}{0} + \colvec{3}{0}{0}{z}$. Moreover, this is unique since we don't get any contribution
+    from the first two co-ordinates from $\vW$ and from the last co-ordinate in $\vU$.
+\end{Example}
+\begin{Proposition}
+    Suppose $\listV{\vU}{m}$ are subspaces of $\vV$. Then $\sumV{\vU}{m}$ is a direct sum if and only if the
+    only way to write $\zerv{\vV}$ as a sum of vectors $\sumV{\vu}{m}$, where each $\vu_{j}$ is in $\vU_{j}$,
+    is by taking each $\vu_{j}$ equal to $\zerv{\vV}$.
+\end{Proposition}
+\begin{proof}
+    Note that $\zerv{\vV} = \zerv{\vV} + \cdots + \zerv{\vV}$, where we take the $m$ sums. If $\sumV{\vU}{m}$
+    is a direct sum then this is the only way to write $\zerv{\vV}$ as the sum of $\listV{\vu}{m}$ vectors
+    such that $\vu_{j}$ is in $\vU_{j}$.
+
+    Now, let $\sumV{\vU}{m}$ be a direct such that if $\zerv{\vV} = \sumV{\vu}{m}$, then each $\vu_{j} =
+    \zerv{\vV}$. Assume $\vv$ in the sum space can be written as,
+    \[\vv = \sumV{\vu}{m},\]
+    and
+    \[\vv = \sumV{\vw}{m},\]
+    where $\vu_{j},\vw_{j}$ is in $\vU_{j}$.
+    Now $\vv - \vv = \zerv{\vV}$ is in the sum space and so,
+    \[\zerv{\vV} = \diffVecs{\vu}{\vw}{m}.\]
+    According to our hypothesis, each $(\vu_j - \vw_j) = \zerv{\vV}$ which means that the representation of
+    $\vv$ is unique and hence the sum space is a direct sum.
+\end{proof}
+For a pair of subspaces, the condition to check if their sum space is a direct sum becomes simpler.
+\begin{Proposition}
+    Suppose $\vU,\vW$ are subspaces of $\vV$. Then $\vU + \vW$ is a direct sum if and only if $\vU\cap \vW =
+    \setX{\zerv{\vV}}$.
+\end{Proposition}
+\begin{proof}
+    First assume we have $\vU\oplus\vW$. Let $\vv$ be a vector in $\vU \cap \vW$. Then $-\vV$ is also in 
+    $\vU \cap \vW$. Hence $\zerv{\vV} = \vv + -\vv$. This means that $\vv = \zerv{\vV}$ because in a direct
+    sum the zero vector can only be written as sum of zero vector.
+
+    Assume $\vU \cap \vW = \setX{\zerv{\vV}}$. 
+    Let $\zerv{\vV} = \vu + \vw$. This means that $\vu = -\vw$ and hence $\vu$ is in $\vW$. Thus $\vu$ is in
+    $\vU \cap \vW$. But this implies that $\vu = \zerv{\vV}$. Hence $\vw = \zerv{\vV}$.
+\end{proof}
+Our next definition is again motivated by lines and planes in $3D$ geometry.
+
+\begin{Definition}[name=Linear combination]
+    Let $\vspF{\vV}{\F}$ be a vector space over the field $\F$ and let $S$ be an non-empty set of $\vV$. A
+    vector $\vv\in \vV$ is called a linear combination of the elements of $S$ if there is a \textbf{finite}
+    number of elements $\listV{\vu}{n}$ in $S$ and $\listV{\beta}{n}$ in $\F$ such that,
+    \[\vv = \lComb{\beta}{\vu}{n}.\]
+    If $S$ has finite vectors $\listV{\vu}{n}$, then we say that $\vv$ is a linear combination of
+    $\listV{\vu}{n}$.
+\end{Definition}
+Logically, a vector $\vv$ in $\vV$ is a linear combination of vectors in $S$ if,
+\[\thereIs{\listV{\vu}{n};\,\vu_{i}\in S}\thereIs{\listV{\beta}{n};\,\beta_{i}\in\F}
+    \suchThat{\vv}{=}{\lComb{\beta}{\vu}{n}}.\]
+Thus a vector $\vv$ is \textbf{NOT} a linear combination of vectors in $S$ if no matter what finite set of
+vectors we take in $S$ and no matter what corresponding finite set of scalars we take, we cannot write $\vv$
+as a linear combination of those vectors and scalars. Note that the zero vector $\zerv{\vV}$ is a linear
+combination of any non-empty subset of $\vV$ since $\zerv{\vV} = 0\vu$ for any $\vu \in \vV$.
+\begin{Definition}[name=Span]
+    Let $S$ be a non-empty subset of a vector space $\vV$. The span of $S$, denoted by $\Span{S}$, is the set
+    of all the linear combinations of the elements of $S$. For convenience we define $\Span{S} = 
+    \setX{\emptyset}$.
+\end{Definition}
+\begin{Example}
+    Let $\vV = \R^3$ over the field $\R$. Let $S = \setX{\colvec{3}{1}{1}{0}}$. Then $\Span{S}$ is the set of
+    all vectors of the form $\vu = \colvec{3}{\beta}{\beta}{0}$ which is seen as the line passing through
+    origin and containing the point $\colvec{3}{1}{1}{0}$.
+
+    If $S = \setX{\colvec{3}{1}{0}{0},\colvec{3}{0}{1}{0}}$, then the $\Span{S}$ is the set of all vectors of
+    the form $\vu = \colvec{3}{\beta}{\gamma}{0}$ for some $\beta,\gamma \in \R$. This is seen as the $XY$
+    plane.
+\end{Example}
+\begin{Proposition}
+    The span of any subset $S$ of a vector space $\vV$ is a subspace of $\vV$. Moreover, any subspace $\vU$
+    that contains $S$ must contain $\Span{S}$.
+\end{Proposition}
+\begin{proof}
+    First note that $\zerv{\vV}$ is contained in $\Span{S}$. Let $\vv_1$ be a vector in $\Span{S}$. Then there
+    are finite vectors $\listV{\vu}{n}$ in $S$ such that $\vv_1 = \lComb{\beta}{\vu}{n}$. Let $\vv_2$ be a
+    vector in $\Span{S}$. Then ther are finite vectors $\listV{\vw}{m}$ in $S$ such that $\vv_2 =
+    \lComb{\gamma}{\vw}{m}$.
+    Then $\vv_{1} + \vv_{2} = \lComb{\beta}{\vu}{n} + \lComb{\gamma}{\vw}{m}$ is a linear combination of
+    finite vectors in $S$. The case of scalar multiplication is similar.
+\end{proof}
+\begin{Definition}[name=Spanning set]
+    A subset $S$ of vector space $\vV$ is called a spanning set of $\vV$ if $\Span{S} = \vV$. Thus every
+    vector in $V$ can be written as a linear combination of vectors in $S$. We say that $S$ \textbf{generates}
+    or \textbf{spans} $\vV$.
+\end{Definition}
+\begin{Definition}[name=Linear dependence]
+    A subset $S$ of a vector space $\vV$ is called linearly dependent if there exists a finite number of
+    \textbf{distinct} vectors $\listV{\vu}{n}$ in $S$ and scalars $\listV{\beta}{n}$ in $\F$ such that there
+    is atleast one $\beta_{j} \neq 0$ and
+    \[\lComb{\beta}{\vu}{n} = \zerv{\vV}.\]
+\end{Definition}
+Logically this means that $S$ is linearly dependent set if,
+\[\thereIs{\listV{\vu}{n}}\thereIs{\listV{\beta}{n}}
+    \suchThat{\thereIs{1\leq j \leq n};\beta_j\neq
+	    0}{\text{and}}{\lComb{\beta}{\vu}{n} = \zerv{\vV}},\]
+where each $u_i$ is in $S$. When is a set $S$ \textbf{NOT} linearly dependent? For that to happen we must
+negate the logical statement above which says that if $S$ is NOT linearly dependent then,
+\[\forEv{\listV{\vu}{n}}\forEv{\listV{\beta}{n}}
+    \suchThat{\lComb{\beta}{\vu}{n} = \zerv{\vV}}{\implies}{\beta_{j}=0;\,\forEv{1\leq j\leq n}}.\]
+This is an important notion and needs a definition,
+\begin{Definition}[name=Linear independence]
+    A subset $S$ of vector space $\vV$ is Linearly independent if it is not linearly dependent. Thus for any
+    finite set of distinct vectors $\listV{\vu}{n}$ in $S$ and scalars $\listV{\beta}{n}$ in $\F$, if
+    $\lComb{\beta}{\vu}{n} = \zerv{\vV}$, then each $\beta_{j} = 0$. 
+\end{Definition}
+A method to determine if a given set of finite vectors is linearly dependent will be shown later when we
+discuss solution of linear systems of equation.
+\begin{Proposition}
+    Let $\vspF{\vV}{\F}$ be a vector field over the field $\F$ and let $S_1\subset S_2\subset\vV$.
+    Then,
+    \begin{enumerate}
+	\item
+	    If $S_1$ is linearly dependent, then $S_2$ is also linearly dependent.
+	\item
+	    If $S_2$ is linearly independent, then $S_1$ is also linearly independent.
+    \end{enumerate}
+    \begin{proof}
+	We prove $(1)$ since $(2)$ is just the contrapositive of $(1)$.
+	If $S_1$ is linearly dependent then there are vectors and scalars $\listV{\vu}{n}$ in $S_1$ and
+	$\listV{\beta}{n}$ in $\F$ respectively, such that atleast one such $\beta_{j}$ is not $0$ and
+	\[\lComb{\beta}{\vu}{n} = \zerv{\vV}.\]
+	But since $S_1 \subset S_2$, the vectors $\listV{\vu}{n}$ are in $S_2$ and they satisfy the condition
+	of linear dependence. Thus $S_2$ is linearly dependent.
+    \end{proof}
+\end{Proposition}
+
+There is a crucial interplay between linear independence and span. We start with a few useful
+observation.
+\begin{Proposition}\label{prop:span_linear_ind_0}
+    Let $S = \setV{\vu}{n}$ be a subset of a vector space $\vV$ over field $\F$, then 
+    $S$ is linearly dependent if and only if there is a vector $\vu_{j} \in S$ such that
+    $\vu_j$ is in $\Span{(S- \setX{\vu_{j}})}$. Moreover $\Span{S} = \Span{(S- \setX{\vu_{j}})}$
+\end{Proposition}
+\begin{proof}
+    Let $S$ be linearly independent. Then there are scalars $\listV{\beta}{n}$ in $\F$ and vectors
+    $\listV{\vu}{n}$ such that,
+    \[\lComb{\beta}{\vu}{n} = \zerv{\vV},\]
+    and there is atleast one $\beta_j$ such that $\beta_j \neq 0$.
+    Since we have a \textbf{Field} $\F$, we know that
+    every non-zero element of a field has a multiplicative inverse and so $\beta_j^{-1}$ exists 
+    and hence, 
+    \[\vu_j = \frac{1}{\beta_{j}}(\beta_1\vu_{1} + \cdots + \beta_{j-1}\vu_{j-1} + \beta_{j+1}\vu_{j+1} +
+	\cdots + \beta_{n}\vu_{n}).\]
+    Hence $\vu_{j}$ is in  $\Span{(\setV{\vu}{n} - \setX{\vu_{j}})}$.
+
+    If there is a $\vu_{j}$ such that $\vu_j$ is in $\Span{(\setV{\vu}{n} - \setX{\vu_{j}})}$, then there are
+    scalars such that,
+    \[\vu_j = \beta_1\vu_{1} + \cdots + \beta_{j-1}\vu_{j-1} + \beta_{j+1}\vu_{j+1} +
+	\cdots + \beta_{n}\vu_{n}.\]
+    Thus, 
+    \[\beta_1\vu_{1} + \cdots + \beta_{j-1}\vu_{j-1} + (-1)\vu_j + \beta_{j+1}\vu_{j+1} +
+	\cdots + \beta_{n}\vu_{n} = \zerv{\vV}.\] 
+    Hence $S$ is linearly independent. It is easy to check that $\Span{S} = \Span{(S- \setX{\vu_{j}})}$.
+\end{proof}
+\begin{Proposition}\label{prop:span_linear_ind_I}
+    Let $S$ be a linearly independent subset of a vector space $\vV$, and let $\vv$ be an element of $V$ that
+    is not in $S$. Then $S\cup\setX{\vv}$ is linearly dependent if and only if $\vv\in\Span{S}$.
+\end{Proposition}
+\begin{proof}
+    Let $\vv$ be in $\Span{S}$. Then there are finite vectors $\listV{\vu}{n}$ in $S$ and scalars
+    $\listV{\beta}{n}$ in $\F$ such that,
+    \[\vv = \lComb{\beta}{\vu}{n}.\]
+    Without loss of generality, we can assume $\vu$'s to be distinct. This means that,
+    \[(-1)\vv + \lComb{\beta}{\vu}{n} = \zerv{\vV}.\]
+    Since $\vv$ is not in $S$, none of the vectors $\vu_{j}$ is equal to $\vv$. Thus we have shown that the
+    set $S\cup\setX{\vv}$ is linearly dependent.
+
+    Assume $S\cup\setX{\vv}$ is a linearly dependent set. Then there is a set of finite distinct vectors
+    $\listV{\vu}{n}$ in $S\cup\setX{\vv}$ and scalars $\listV{\beta}{n}$ such that,
+    \[\lComb{\beta}{\vu}{n} = \zerv{\vv},\]
+    and atleast one such $\beta_{j}$ is not equal to $0$. One of the $\vu_{j}$'s must be $\vv$. If not all the
+    vectors are from $S$ and $S$ being linearly independent will contradict our assertion. Re-ordering, let
+    $\vu_n$ be $\vv$, then
+    \[\beta_{n}\vv + \lComb{\beta}{\vu}{n} = \zerv{\vV}.\]
+    Again, with similar reasoning $\beta_{n}$ cannot be $0$. Since we have a \textbf{Field} $\F$, we know that
+    every non-zero element of a field has a multiplicative inverse and so $\beta_n^{-1}$ exists and hence,
+    \[\vv = \frac{1}{\beta_n^{-1}}(\lComb{\beta}{\vu}{n}).\]
+    Thus $\vv$ is in $\Span{S}$.
+\end{proof}
+The proposition can be equivalently restated as follows:
+\begin{Remark}
+Let $S$ be a linearly independent subset of a vector space $\vV$, and let $\vv$ be an element of $V$ that
+is not in $S$. Then $S\cup\setX{\vv}$ is linearly independent if and only if $\vv\not\in\Span{S}$.
+\end{Remark}
+\begin{Theorem}[name=Exchange Lemma]\label{thm:exch_lemma}
+    Let $\vspF{\vV}{\F}$ be a vector space over a field $\F$. Consider the following sets:
+    \begin{itemize}
+	\item
+	    $S = \setV{\vv}{m}$,
+	\item
+	    $L = \setV{\vu}{n}$,
+    \end{itemize}
+    such that $\Span{S} = V$ and $L$ is linearly independent. Then $m\geq n$.
+\end{Theorem}
+\begin{proof}
+    We prove by contradiction. Assume $n > m$. The proof will use a construction of sets $S_{i}$ and $L_{i}$
+    in each stage $i$,
+    where, at the end of the stage we replace one element in $S_i$ by $\vu_i$. We will get a contradiction at
+    stage $m$.
+
+    \textbf{Stage 1}
+    Since $\Span{S} = \vV$, we can write $\vu_{1}$ as,
+    \[\vu_{1} = \lComb{\beta}{\vv}{m}.\]
+    There must be one $\beta_j$ such that $\beta_j$ is not equal to $0$. Let us re-order so that the
+    corresponding $\vv_{j}$ is $\vv_{m}$. Hence,
+    \[\vu_{1} = \beta_{m}\vv_{m} + \lComb{\beta}{\vv}{m-1},\]
+    and thus,
+    \[\vv_m = \frac{1}{\beta_{m}}(\vu_{1} + \lComb{-\beta}{\vv}{m-1}).\]
+    Replace $\vv_m$ by $\vu_1$.
+    \begin{align*}
+	&S_1 = \setX{\vv_{1},\ldots,\vv_{m-1},\vu_1},\\
+	&L_1 = \setX{\vu_{2},\ldots,\vu_{m},\ldots,\vu_{n}}.
+    \end{align*}
+    Claim:
+    \begin{itemize}
+	\item
+	    $\Span{S_1} = V$,
+	\item
+	    $L_1$ is linearly independent.
+	\item
+	    Number of $\vv_{j}$ in $S_{1}$ is $m-1$. 
+    \end{itemize}
+    Since $L_1 \subset L$ and $L$ was linearly independent, $L_1$ is linearly independent.
+    For any $\vw$ in $\vV$, $\vw = \lComb{\gamma}{\vv}{m}$.
+    Subsituting for $\vv_m$ we see that $\vw$ is in $\Span{S_1}$. The fact that we have $m-1$ $\vv$'s in $S_1$
+    is by replacing one such $\vv$'s (namely $\vv_{m}$) from $S$ to get $S_1$.
+
+    \textbf{Stage 2}
+    Since $\Span{S_1} = \vV$, we can write $\vu_{2}$ as,
+    \[\vu_{2} = \lComb{\beta}{\vv}{m-1} + \beta_m\vu_m.\]
+    First note that $\beta_j$'s for $1\leq j \leq m-1$ 
+    cannot be zero, since that would mean that $\vu_{2}$ is in $\Span{\setX{\vu_{1}}}$. Thus there exists a
+    $j$ such that $1\leq j \leq m-1$ and $\beta_j$ is not equal to $0$. Let us re-order such that the
+    corresponding $\vv_{j}$ is $\vv_{m-1}$. Hence,
+    \[\vu_{2} = \lComb{\beta}{\vv}{m-2} + \beta_{m-1}\vv_{m-1} + \beta_m\vu_m.\]
+    Replace $\vv_{m-1}$ by $\vu_{2}$ and set,
+    \begin{align*}
+	&S_2 = \setX{\vv_{1},\ldots,\vv_{m-2},\vu_2,\vu_1},\\
+	&L_1 = \setX{\vu_{3},\ldots,\vu_{m},\ldots,\vu_{n}}.
+    \end{align*}
+    Again:
+    \begin{itemize}
+	\item
+	    $\Span{S_2} = V$,
+	\item
+	    $L_2$ is linearly independent.
+    \end{itemize}
+    Since we have assumed that $n > m$, at the end of the $m^{th}$ stage, we would have exhausted 
+    all of $\vv$'s, that is 
+    \begin{align*}
+	&S_m = \setX{\vu_{m},\vu_{m-1},\ldots,\vu_2,\vu_1},\\
+	&L_m = \setX{\vu_{m+1},\ldots,\vu_{n}}.
+    \end{align*}
+    But note that $L_m$ is a subset of $L$ and hence should be linearly independent. But that is not the case,
+    since $S_m$ spans $\vV$, we can write,
+    \[\vu_{m+1} = \lComb{\beta}{\vu}{m},\]
+    and this is not possible since all $\beta_j$ cannot be zero for that would mean $\vu_{m+1} = \zerv{\vV}$,
+    but in that case $-\vu_{m+1} + \lComb{\beta}{\vu}{m} =\zerv{\vV}$ with non-zero coefficients.
+\end{proof}
+These two propositions are extremely useful. 
+\begin{Definition}[name=Basis]
+    Let $\vV$ be a vector space over field $\F$. A non-empty subset $\mcalB$ of $\vV$ is called a basis of
+    $\vV$ if $\Span{\mcalB} = \vV$ and $\mcalB$ is linearly independent. If $\mcalB$ is \textbf{finite} then
+    $\vV$ is called a \textbf{finite dimensional} vector space.
+\end{Definition}
+Note that, by~\ref{prop:span_linear_ind_I}, in a finite dimensional vector space the number of elements in a
+spanning set is always greater than or equal to the number of elements in a linearly independent set. The
+crucial property about basis in a finite dimensional vector space that we are going to see, is that every
+vector will have a unique representation w.r.t~a given basis. 
+First a few important observations.
+\begin{Proposition}
+    If $\vV$ is finite dimensional and $S$ is a subset of $\vV$ such that $\Span{S} = \vV$, then $S$ can be
+    reduced to give a basis for $\vV$.
+\end{Proposition}
+\begin{proof}
+    Let $S = \setV{\vu}{n}$. If $S$ is also linearly independent then $S$ is a basis. If not, then 
+    by~\ref{prop:span_linear_ind_0}, there is a vector $\vu_j \in S$ such that $\vu_j$ is in the span of the
+    rest of the vectors and the set formed by removing $\vu_j$ from $S$ doesn't change its span.  
+    Let $S_1 = S - \setX{\vu_j}$. If $S_1$ is linearly independent the we have found a basis. IF not we repeat
+    this process. Since $\vV$ is finite dimensional this process will stop eventually yielding a set of
+    distinct finite vectors that is a basis for $\vV$.
+\end{proof}
+\begin{Proposition}
+    If $\vV$ is finite dimensional and $L$ is a subset of $\vV$ such that $L$ is linearly independent, then
+    $L$ can be extended to a basis for $\vV$.
+\end{Proposition}
+\begin{proof}
+    Let $L = \setV{\vu}{n}$. Why does this set have to be finite? Since $\vV$ is finite dimensional there is a
+    set $S = \setV{\vv}{m}$ such that $\Span{S} = \vV$ and by the Exchange lemme we know that $n \leq m$.
+    If $L$ spans $\vV$ we have found our basis. If not, there is a $\vw \in \vV$ such that $\vw \not\in
+    \Span{L}$. But by~\ref{prop:span_linear_ind_I}, $L\cup\setX{\vw}$ is also linearly independent. If this
+    spans $\vV$ we are done, if not we continue. This process will stop eventually since we cannot have a
+    linearly independent set of more than $m$ vectors.
+\end{proof}
+These two propositions enable us to give a unique number to a finite dimensional vector space called its
+\textbf{dimension}
+\begin{Proposition}
+    If $\vV$ is a finite dimensional vector space, then $\vV$ admits a basis of finite vectors. Any two basis
+    in $\vV$ must have the same number of elements. Moreover, any vector $\vv$ in $\vV$ can be written
+    uniquely as a linear combination of vectors in the basis for $\vV$. 
+\end{Proposition}
+\begin{proof}
+    If $\vV$ is finite dimensional then it has a finite spanning set $S$. Since $S$ can be reduced to a basis,
+    every finite dimensional vector space admits a basis.
+    Let $\mcalB_{1}$ be a basis for $\vV$ with $m$ elements and let $\mcalB_{2}$ be a basis for $\vV$ with $n$
+    elements. Since $\mcalB_{1}$ is spanning and $\mcalB_{2}$ is linearly independent, $n \leq m$ by the
+    exchange theorem. Reversing the roles we get $m \leq n$. Thus $m =n$.
+
+    Let $\mcalB = \setV{\vu}{n}$ be a basis for $\vV$ and let
+    \[\vv = \lComb{\beta}{\vu}{n},\]
+    and
+    \[\vv = \lComb{\gamma}{\vu}{n}\]
+    be two representation of $\vv$ in $\vV$. Then $\zerv{\vV} = \lComb{(\beta-\gamma)}{\vu}{n}$. Since
+    $\mcalB$ is linearly independent, this must mean that each $\beta_j = \gamma_j$ and hence the
+    representation of $\vv$ in $\vV$ is unique w.r.t.~basis $\mcalB$.
+\end{proof}
+\begin{Definition}[name=Dimension]
+    If $\vV$ is finite dimensional vector space then the number of vectors in a basis $\mcalB$ for $\vV$ is
+    called the dimension of the vector space $\vV$.
+\end{Definition}
+\begin{Proposition}
+    Let $\vV$ be a vector space over the field $\F$ such that $\dim{V} = n$. Then,
+    \begin{enumerate}
+	\item
+	    If $S$ is a subset of $\vV$ such that $\Span{S} = \vV$, then the number of elements in $S$ is
+	    greater than or equal to $n$. If number of elements in $S$ is equal to $n$, then $S$ is a basis
+	    for $\vV$.
+	\item
+	    If $L$ is a linearly independent subset of $\vV$ that contains $n$ elements then $L$ is a basis
+	    for $\vV$.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    Let $\mcalB$ be a basis for $\vV$. Then $\mcalB$ has $n$ elements. Since a spanning set ($S$) cannot
+	    have fewer elements than a linearly independent set ($\mcalB$) in a finite dimensional vector
+	    space, the number of elements in $S$ is
+	    greater than or equal to $n$. If $S$ has $n$ elements, $S$ can be reduced to a basis. But each
+	    basis must have the same number of elements and so $S$ cannot be reduced any further. Hence $S$ is
+	    a basis.
+	\item
+	    $L$ can be extended to a basis for $\vV$, but any basis must have the same number of elements
+	    ($n$) and so $L$ must be a basis for $\vV$.
+    \end{enumerate}
+\end{proof}
+\begin{Proposition}
+    Let $\vW$ be a subspace of a finite dimensional vector space $\vV$. Then $\vW$ is also finite dimensional
+    and $\dim{\vW} \leq \dim{\vV}$. Moreover, if $\dim{\vW} = \dim{\vV}$, then $V = W$.
+\end{Proposition}
+\begin{proof}
+    Let $\dim{\vV} = n$ and let $\mcalB_{\vV}$ be a basis for $\vV$. If $\vW = \setX{\zerv{\vV}}$, then
+    $\dim{\vW} = 0 \leq n$. Assume there is a non-zero element $\vv_{1}$ in $\vW$. If there is a $\vv_{2} \in
+    \vV$ such that $\vv_{2}$ is not in the span of $\setX{\vv_{1}}$ and $\vv_{2}$ is in $\vW$, then
+    $\setX{\vv_{1},\vv_{2}}$ is linearly independent subset of $\vW$. Continuing this way we can get a linearly
+    independent set in $\vW$,
+    \[\setV{\vv}{k}.\]
+    However $k$ cannot be larger than $n$. Suppose $k = n$, 
+    if $\setV{\vv}{k}$ doesn't span $\vW$, then there must be an
+    element $\vv$ such that $\setX{\vv} \cup \setV{\vv}{k}$ is also linearly independent in $\vW$. But this
+    cannot happen if $k = n$. Hence $\setV{\vv}{k}$ also spans $\vW$, with $k \leq n$, 
+    and so is a basis for $\vW$. Thus
+    dimension of $\vW$ is less than dimension of $\vV$.
+
+    If $\dim{\vW} = n$, then the basis of $\vW$ is a linearly independent subset of $n$ vectors in $\vV$ and
+    hence must be a basis for $\vV$. Thus $\vV \subset \vW$. Hence $\vV = \vW$.
+\end{proof}
+The~\ref{thm:exch_lemma} and the subsequent propositions are extremely useful. We give a few applications of them
+for the case of sums and direct sums.
+\begin{Proposition}
+    If $\vW_{1},\vW_{2}$ are finite dimensional subspaces of vector space $\vV$, then the subspace 
+    $\vW_{1} + \vW_{2}$ is finite dimensional, and
+    \[\dim{(\vW_{1} + \vW_{2})} = \dim{\vW_{1}} + \dim{\vW_{2}} - \dim{(\vW_{1}\cap\vW_{2})}.\]
+\end{Proposition}
+\begin{proof}
+    Let $\dim{V} = n$. 
+    Since $\vW_{1} + \vW_{2}$ is the smallest subspace containing both $\vW_{1}$ and $\vW_{2}$, it is a
+    subspace of $\vV$ and hence finite dimensional.
+    Also, $(\vW_{1}\cap \vW_2)$ is the subspace contained in both $\vW_{1}$ and $\vW_{2}$ and hence it is
+    finite dimensional. Let $\mcalB_{(\vW_{1}\cap \vW_2)} = \setV{\vv}{k}$ where $k \leq \dim{\vW_{1}}$ and
+    $k \leq \dim{\vW_{2}}$.
+    Then $\mcalB_{(\vW_{1}\cap \vW_2)}$ can be extended to a basis for $\vW_{1}$, given by,
+    \[\mcalB_{\vW_{1}} = \setV{\vv}{k} \cup \setV{\vx}{p}.\]
+    Similarly, 
+    $\mcalB_{(\vW_{1}\cap \vW_2)}$ can be extended to a basis for $\vW_{2}$, given by,
+    \[\mcalB_{\vW_{2}} = \setV{\vv}{k} \cup \setV{\vy}{q}.\]
+
+    Claim:
+    \[\setV{\vv}{k}\cup\setV{\vx}{p}\cup\setV{\vy}{q}\]
+    is a basis of $\vW_{1} + \vW_{2}$.
+    It is easy to see that the above spans $(\vW_{1} + \vW_{2})$. To check linear independence, 
+    Let \[\lComb{\alpha}{\vv}{k} + \lComb{\beta}{\vx}{p} + \lComb{\gamma}{\vy}{q} = \zerv{\vV}.\]
+    Then,
+    \[\lComb{\alpha}{\vv}{k} + \lComb{\beta}{\vx}{p} = -\lComb{\gamma}{\vy}{q}. \]
+    Since the vector on the left hand side is an element of $\vW_{1}$ and the vector on the right hand side is
+    an element of $\vW_{2}$, they must be an element of both, i.e.~$(\vW_{1}\cap\vW_{2})$. Hence,
+    \[\lComb{\gamma}{\vy}{q} = \lComb{\delta}{\vv}{k}.\]
+    Thus,
+    \[\lComb{(\alpha-\delta)}{\vv}{k} + \lComb{\beta}{\vx}{p} = \zerv{\vV}.\]
+    These vectors are a basis for $\vW_{1}$ and so $\beta_j = 0$ for all $1 \leq j \leq p$. Thus we see that
+    $\alpha_{i}$'s and $\gamma_{l}$'s are all zero since they are co-efficients for basis in $\vW_{2}$.
+    Thus,
+    \[\setV{\vv}{k}\cup\setV{\vx}{p}\cup\setV{\vy}{q}\]
+    is a basis for $(\vW_{1} + \vW_{2})$.
+    Hence,
+    \begin{align*}
+	\dim{(\vW_{1} + \vW_{2})} &= k + p + q \\
+	& = (k + p) + (k + q) - q \\
+	& = \dim{\vW_{1}} + \dim{\vW_{2}} - \dim{(\vW_{1}\cap\vW_{2})}.
+    \end{align*}
+\end{proof}
+\begin{Remark}
+    If $\vV = \vW_{1} + \vW_{2}$, then we get that,
+    \[\dim{\vV} = \dim{\vW_{1}} + \dim{\vW_{2}} - \dim{(\vW_{1}\cap\vW_{2})}.\]
+    If we have a direct sum, that is if $\vV = \vW_{1} \oplus \vW_{2}$, then the above formula becomes,
+    \[\dim{\vV} = \dim{\vW_{1}} + \dim{\vW_{2}}.\]
+\end{Remark}
+
+\section{Homomorphic mappings between vector spaces: Linear Transformations}
+Just as we did in the case of groups, where we first studied the group structure and then the functions that
+preserve the structure, we now look at functions that preserve the vector space structure. Structure
+preserving maps are called homomorphism. In the case of linear algebra, homomorphisms between vector spaces
+are called linear transformation.
+
+\begin{Definition}[name=Linear transformation]
+    Let $\vspF{\vV}{\F},\vspF{\vW}{\F}$ be two vector spaces over the \textbf{same} field $\F$. A function,
+    $\map{T}{\vV}{\vW}$ is called a linear transformation if:
+    \begin{enumerate}
+	\item
+	    \[T(\underbrace{\vx + \vy}_{\text{op.~in $\vV$}}) = 
+		\underbrace{T(\vx) + T(\vy)}_{\text{op.~in $\vW$}},\]
+	\item
+	    \[T(\underbrace{\beta\vx}_{\text{op.~in $\vV$}}) = 
+		\underbrace{\beta T(\vx)}_{\text{op.~in $\vW$}},\]
+    \end{enumerate}
+    for any $\vx,\vy \in \vV$.
+\end{Definition}
+\begin{Remark}
+    It is easily observable that $T(\zerv{\vV}) = \zerv{\vW}$ and that $T(\lComb{\beta}{\vx}{n}) =
+    \lComb{\beta}{T(\vx)}{n}$.
+\end{Remark}
+\begin{Example}
+    The following are all linear transformations.
+    \begin{enumerate}
+	\item
+	    Let $\vx = \colvec{2}{x_1}{x_2}$ be an element of $\R^2$. Then $\map{T}{\R^2}{\R^2}$ defined by,
+	    $T(\vx) = \colvec{2}{2x_1+x_2}{x_2}$ is a linear transformation.
+	\item
+	    Let $\vx = \colvec{2}{x_1}{x_2}$ be an element of $\R^2$. 
+	    For any angle $\theta$ we define $\map{T_{\theta}}{\R^2}{\R^2}$ by, 
+	    \[T(\vx) = \colvec{2}{x_1\cos{\theta} - x_2\sin{\theta}}{x_1\sin{\theta} + x_2\cos{\theta}},\]
+	    is a linear transformation called the \textbf{rotation} by $\theta$.
+	\item
+	    Let $\vx = \colvec{2}{x_1}{x_2}$ be an element of $\R^2$.
+	    Define $\map{T}{\R^2}{\R^2}$ by $T(\vx) = \colvec{2}{x_1}{-x_2}$. Then, $T$ is the linear
+	    transformation called the \textbf{reflection} about the $x$ axis.
+	\item
+	    Let $\vx = \colvec{2}{x_1}{x_2}$ be an element of $\R^2$.
+	    Define $\map{T}{\R^2}{\R^2}$ by $T(\vx) = \colvec{2}{x_1}{0}$. Then, $T$ is the linear
+	    transformation called the \textbf{projection} on the $x$ axis.
+    \end{enumerate}
+\end{Example}
+As in the case of groups, any linear transformation induces two important subspaces.
+\begin{Definition}[name=Kernel]
+    Let $\vV,\vW$ be vector spaces over the field $\F$ and let $\map{T}{\vV}{\vW}$ be a linear transformation. 
+    We define the Kernel or \textbf{null space} as the subset $\ker{T}$ of $\vV$ as the inverse image
+    $\invIm{T}{\zerv{\vW}}$.
+\end{Definition}
+\begin{Definition}[name=Image]
+    Let $\vV,\vW$ be vector spaces over the field $\F$ and let $\map{T}{\vV}{\vW}$ be a linear transformation.
+    We define the image or \textbf{range} as the subset $\Ima{T}$ of $\vW$ as the direct image
+    $\dirIm{T}{\vV}$.
+\end{Definition}
+The following proposition is analogous to the case of groups.
+\begin{Proposition}
+    The kernel and image of a linear transformation $\map{T}{\vV}{\vW}$ are subspaces of $\vV$ and $\vW$
+    respectively.
+\end{Proposition}
+The next proposition gives us a method to determine a spanning set for the image of a linear transformation.
+\begin{Proposition}
+    Let $\vV,\vW$ be vector spaces over the field $\F$, and let $\map{T}{\vV}{\vW}$ be a linear
+    transformation. If $\mcalB_{\vV} = \setV{\vv}{n}$ is a basis for $\vV$, then
+    \[\Ima{T} = \Span{\setT{\vv}{n}{T}}.\]
+\end{Proposition}
+\begin{proof}
+    Let $\vw$ be in $\Ima{T}$. Then there is a vector $\vx \in \vV$ such that $T(\vx) = \vw$. But,
+    $\vx = \lComb{\beta}{\vv}{n}$ for some scalars $\listV{\beta}{n}$ in $\F$. Thus,
+    \[\vw = T(\lComb{\beta}{\vv}{n}) = \lCombT{\beta}{\vv}{n}{T},\]
+    which means that $\vw$ in $\Span{\setT{\vv}{n}{T}}$. Thus, $\Ima{T} \subset \Span{\setT{\vv}{n}{T}}$.
+
+    Let $\vw$ be in $\Span{\setT{\vv}{n}{T}}$ which means that,
+    \[\vw = \lCombT{\beta}{\vv}{n}{T} = T(\lComb{\beta}{\vv}{n}).\]
+    Let $\vx = \lComb{\beta}{\vv}{n}$. Then $\vx$ is a vector in $\vV$ such that $T(\vx) = \vw$ and hence
+    $ \Span{\setT{\vv}{n}{T}} \subset \Ima{T}$.
+\end{proof}
+We measure the \emph{size} of a subspace by its dimension. The kernel and image are so important that we
+attach special names to their dimensions.
+\begin{Definition}[name=Nullity]
+    The dimension of the kernel of a linear transformation $T$ is called its nullity and is denoted by
+    nullity$(T)$.
+\end{Definition}
+\begin{Definition}[name=Rank]
+    The dimension of the image of a linear transformation $T$ is called its rank and is denoted by rank$(T)$.
+\end{Definition}
+One of the most fundamental theorem of (finite dimensional) linear algebra is that of the relation between
+rank and nullity. 
+\begin{Theorem}[name=Dimension theorem]
+    Let $\vV,\vW$ be vector spaces over the field $\F$ and let $\map{T}{\vV}{\vW}$ be a linear transformation.
+    If $\vV$ is finite dimensional then,
+    \[\dim{\vV} = \dim(\ker{T}) + \dim(\Ima{T}).\]
+\end{Theorem}
+\begin{proof}
+    Since $\ker{T}$ is a subspace of $\vV$, it is finite dimensional. Let $\mcalB_{\ker{T}} = \setV{\vv}{k}$
+    be a basis for $\ker{T}$. Then $\mcalB_{\ker{T}}$ can be extended to a basis for $\vV$ given by,
+    \[\mcalB_{\vV} = \setV{\vv}{k} \cup \setV{\vu}{p},\]
+    such that $k + p = n$.
+
+    \textbf{Claim}: $\setT{\vu}{p}{T}$ is a basis for $\Ima{T}$.
+    First note that \[\setT{\vv}{k}{T} \cup \setT{\vu}{p}{T}\] spans $\Ima{T}$. 
+    Let $\vw$ be any vector in
+    $\Ima{T}$. Then,
+    \[\vw = \underbrace{\lCombT{\beta}{\vv}{k}{T}}_{\text{gives $\zerv{\vW}$}} + \lCombT{\gamma}{\vu}{p}{T},\]
+    which means that 
+    $\Ima{T} = \Span{\setT{\vu}{p}{T}}$ (we showed that $\Ima{T} \subset \setT{\vu}{p}{T}$. The other
+    inclusion is similar.)
+    We need to show that $\setT{\vu}{p}{T}$ is linearly independent subset of $\vW$.
+    Let,
+    \[\lCombT{\beta}{\vu}{p}{T} = \zerv{\vW}. \]
+    This means that,
+    \[\lComb{\beta}{\vu}{p} \in \ker{T},\]
+    that is,
+    \[\lComb{\beta}{\vu}{p} = \lComb{\alpha}{\vv}{k},\]
+    which implies that,
+    \[\lComb{\alpha}{\vv}{k} + \lComb{(-\beta)}{\vu}{p} = \zerv{\vV}.\]
+    Since this a linear combination of basis vectors in $\vV$, each $\beta_j$ must be $0$. Thus,
+    $\setT{\vu}{p}{T}$ is a basis for $\vW$. Thus, $\dim{\Ima{T}} = p$.
+    Now,
+    \begin{align*}
+	\dim{\vV} &= k + p \\
+	& = \dim{\ker{T}} + \dim{\Ima{T}}.
+    \end{align*}
+\end{proof}
+For a linear transformation, being $1-1$ is intimately connected to being onto. The next proposition is
+analogous to one for groups.
+\begin{Proposition}
+    A linear transformation $\map{T}{\vV}{\vW}$ is injective if and only if $\ker{T} = \setX{\zerv{\vV}}$.
+\end{Proposition}
+\begin{proof}
+    Let $T$ be injective. Assume $\vv_{1}$ in $\ker{T}$. Then,
+    $T(\vv_{1}) = \zerv{\vW}$. But since $\zerv{\vV}$ is also in $\ker{T}$, this implies $T(\vv_{1}) =
+    T(\zerv{\vV})$. However, since $T$ is injective we get $\vv_{1} = \zerv{\vV}$. Thus $\ker{T} =
+    \setX{\zerv{\vV}}$.
+
+    Assume $\ker{T} = \setX{\zerv{\vV}}$. Let $\vv_{1},\vv_{2}$ be elements of $\vV$ such that $T(\vv_{1}) =
+    T(\vv_{2})$. This means that $T(\vv_1 - \vv_2) = \zerv{\vW}$ and thus $(\vv_1 - \vv_2)$ is an element of
+    $\ker{T}$. But only $\zerv{\vV}$ is an element of $\ker{T}$ and hence $\vv_1 = \vv_2$.
+
+    Thus $T$ is $1-1$ if and only if $\dim{\ker{T}} = 0$.
+\end{proof}
+\begin{Proposition}
+    Let $\vV,\vW$ be finite dimensional vector spaces over field $\F$ such that $\dim{\vV} = \dim{\vW}$. Let
+    $\map{T}{\vV}{\vW}$ be a linear transformation. Then $T$ is one-to-one if and only if $T$ is onto.
+\end{Proposition}
+\begin{proof}
+    Let $T$ be $1-1$. Then, by the above proposition, $\dim{\ker{T}} = 0$.
+    To show that $T$ is onto, we need to show that $\dim{\Ima{T}} = \dim{\vW}$ since that would mean that
+    $\Ima{T} = \vW$ (because $\Ima{T} \subset \vW$).
+    By the dimension theorem,
+    \begin{align*}
+	\dim{\Ima{T}} &= \dim{\vV} - \dim{\ker{T}},\\
+	&= \dim{\vV} - 0,\\
+	&= \dim{\vW}.
+    \end{align*}
+
+    Let $T$ be onto. Hence $\dim{\Ima{T}} = \dim{\vW}$. By the dimension theorem,
+    \begin{align*}
+	\dim{\ker{T}} &= \dim{\vV} - \dim{\Ima{T}},\\
+	&= \dim{\vV} - \dim{\vW},\\
+	&= 0.
+    \end{align*}
+    Thus, $T$ is $1-1$.
+\end{proof}
+One of the most important properties of linear transformatios is that they are completely determined by their
+action on a basis.
+\begin{Proposition}
+    Let $\vV,\vW$ be vector spaces over field $\F$. Let $\mcalB_{\vV} = \setV{\vv}{n}$ be a basis for $\vV$.
+    If $\listV{\vw}{n}$ are vectors in $\vW$, then there is a unique linear transformation $\map{T}{\vV}{\vW}$
+    such that $T(\vv_i) = \vw_{i}$ for each $i$.
+\end{Proposition}
+\begin{proof}
+    We will first show existence. 
+    Note that $\vv_i = \lComb{\delta_{i}}{\vv}{n}$ where $\delta_{ij} = 1$ if $i = j$ and $0$ if $i\neq j$.
+    For any $\vu$ in $\vV$, we can write $\vu = \lComb{\alpha}{\vv}{n}$.
+    Let $\map{T}{\vV}{\vW}$ be such that,
+    \[T(\vu) = \lComb{\alpha}{\vw}{n}.\]
+    Thus, we see that $T(\vv_i) = \vw_{i}$ for each $i$. 
+    Let $\vx = \lComb{\alpha}{\vv}{n}$ and $\vy = \lComb{\beta}{\vv}{n}$. Then,
+    $\vx + \vy = \lComb{(\alpha + \beta)}{\vv}{n}$.
+    Thus,
+    \[T(\vx + \vy) = \lComb{(\alpha + \beta)}{\vw}{n} = \lComb{\alpha}{\vw}{n} + \lComb{\beta}{\vw}{n} =
+	T(\vx) + T(\vy).\]
+    Similarly we can show $T(\beta\vx) = \beta T(\vx)$ for any $\beta \in \F$. Thus $T$ is a linear
+    transformation.
+
+    Let $\map{U}{\vV}{\vW}$ be another linear transformation such that $U(\vv_{i}) = \vw_{i}$ for each $i$.
+    Then for any $\vx = \lComb{\alpha}{\vv}{n}$,
+    \[U(\vx) = \lCombT{\alpha}{\vv}{n}{U} = \lComb{\alpha}{\vw}{n} = T(\vx).\]
+\end{proof}
+\section{Matrices}
+In this section we will show that there is a very useful way to look at linear transformations between finite
+dimensional vector spaces. In particular, we will show that such linear transformation are matrices. First we
+define what an ordered basis means.
+\begin{Definition}[name=Ordered Basis]
+    Let $\vspF{\vV}{\F}$ be a finite dimensional vector space over the field $\F$. An ordered basis for $\vV$
+    is a a basis endowed with a specific order, that is an ordered basis for $\vV$ is a finite sequence of
+    linearly independent elements of $\vV$ that spans $\vV$.
+\end{Definition}
+\begin{Example}
+    If $\mcalB_{\vV} = \setV{\vv}{n}$ is a basis for $\vV$, then there are $n$! \emph{different} ordered bases
+    of $\vV$ from the given unordered basis $\mcalB_{\vV}$. We denote an ordered basis as
+    $\left(\listV{\vv}{n}\right)$. Thus $\left(\vv_2,\vv_3,\ldots,\vv_{n},\vv_{1}\right)$ is an ordered basis
+    for $\vV$ where the \textbf{first} basis is $\vv_2$. 
+\end{Example}
+\begin{Example}
+    For any field $\F$, $\Fn$ is a vector space of $\F$. What is a basis for $\Fn$? Note that any $\alpha$ in
+    $\F$ can be written as $\alpha\cdot 1$, where $1$ is the identity element of $\F$. Thus any
+    $\vect{\alpha} = \colvec{4}{\alpha_{1}}{\alpha_{2}}{\vdots}{\alpha_{n}}$ can be written as,
+    $\vect{\alpha} = \alpha_{1}\colvec{4}{1}{0}{\vdots}{0} + \cdots +
+    \alpha_{n}\colvec{4}{0}{0}{\vdots}{1}$. The \textbf{vectors} $\ve_{i} = \colvec{4}{0}{\vdots}{1}{0}$ with $1$
+    in the $i^{th}$ slots are called \textbf{standard} basis vectors for $\Fn$. Each field $\Fn$ is equipped
+    with its standard basis vectors. Thus $\mcalB_{\Fn} = \setV{\ve}{n}$ is the standard unordered basis for
+    $\Fn$. This is an important observation. To reiterate, any $\vx \in \Fn$ is represented by a column vector
+    \[\vx = \colvec{4}{\alpha_{1}}{\alpha_{2}}{\vdots}{\alpha_{n}},\]
+    if and only if
+    \[\vx = \lComb{\alpha}{\ve}{n}.\]
+\end{Example}
+Let us explore the structure of linear transformation between fields (as vector spaces) in the following
+examples. For any $\Fn$ we
+write $\left(\listV{\ve}{n}\right)$ as the standard ordered basis for $\vspF{\Fn}{\F}$.
+\begin{Example}
+    Let $\map{T}{\F}{\F}$ be a linear transformation. How can $T$ be described? Any $\vect{\alpha} \in \F$ 
+    can be written as $\alpha\cdot\vect{1}$.
+    Thus $T(\vect{\alpha}) = \alpha T(\vect{1})$. Note that $\vect{1} =\ve_{1}$ is the standard basis for $\F$.
+    Thus $T$ can be described as $T(\vx) = ax$ for any $\vx \in \F$ where $a = T(\ve_1)$.
+\end{Example}
+\begin{Example}
+    Let $\map{T}{\F^2}{\F}$ be a linear transformation. How can $T$ be described? Any $\vx =
+    \colvec{2}{x_1}{x_2}$ can be written as $\vx = x_1\ve_{1} + x_2\ve_{2}$. Thus $T$ can be 
+    described as $T(\vx) = a_{11}x_1 + a_{12}x_2$, where $a_{11} = T(\ve_{1})$ and $a_{12} = T(\ve_{2})$.
+\end{Example}
+\begin{Example}
+    We might be noticing a pattern. Let $\map{T}{\Fn}{\F}$ be a linear transformation. How can $T$ be
+    described? Any $\vx = \colvec{5}{x_1}{x_2}{x_3}{\vdots}{x_n} \in \Fn$ can be written as 
+    \[\vx = x_1\ve_1 + x_2\ve_2 + x_3\ve_3 + \cdots + x_n\ve_n.\]
+    Thus,
+    \[T(\vx) = a_{11}x_1 + a_{12}x_2 + \cdots + a_{1n}x_n,\]
+    where $a_{1j} = T(\ve_{j})$.
+\end{Example}
+\begin{Example}
+    Let $\map{T}{\F^2}{\F^2}$ be linear transformation. How can $T$ be described? We can think of $T$ as
+    $\colvec{2}{T_1}{T_2}$ where $\map{T_i}{\F^2}{F}$ is a linear transformation. We have seen how these behave,
+    that is for any $\vx = \colvec{2}{x_1}{x_2}$, 
+    \[T_i(\vx) = a_{i1}x_1 + a_{i2}x_2.\]
+    Thus, 
+    \[T(\vx) = \colvec{2}{T_1(\vx)}{T_2(\vx)} = \colvec{2}{a_{11}x_1 + a_{12}x_2}{a_{21}x_1 + a_{22}{x_2}}.\]
+\end{Example}
+\begin{Example}\label{ex:LT_Mat_Fields}
+    Let $\map{T}{\Fn}{\F^m}$ be linear transformation. How can $T$ be described? As seen above, we 
+    can think of $T$ as $\colvec{4}{T_1}{T_2}{\vdots}{T_m}$ where each $\map{T_i}{\Fn}{F}$ is a linear
+    transformation for $1 \leq i \leq m$. Let $\vx =  \colvec{3}{x_1}{\vdots}{x_n}$. For any $i$, 
+    \[T_i(\vx) = a_{i1}x_1 + \cdots + a_{in}x_n.\]
+    Thus,
+    \[T(\vx) = \colvec{4}{T_1(\vx)}{T_2(\vx)}{\vdots}{T_m(\vx)} = 
+	\colvec{4}{a_{11}x_1 + \cdots + a_{1n}x_n}{a_{21}x_1 + \cdots + a_{2n}x_n}{\vdots}{a_{m1}x_1 + \cdots +
+	    a_{mn}{x_n}}.\]
+\end{Example}
+Now we are ready to describe a matrix.
+\begin{Definition}[name=Matrix]
+    A matrix $M$ is a table of size $m\times n$ where $m$ is the number of rows and $n$ is the number of columns.
+    The elements of this table are elements of a field $\F$. We denote by $M[:,j]$, the $j^{th}$ column of the
+    matrix $M$ and by $M[i,:]$ the $i^{th}$ row of the matrix. The set of all matrices of size $m\times n$
+    with elements from field $\F$ is denoted by $\matmn{m}{n}$.
+
+    By the notation ${[a_{ij}]}_{m\times n}$ we mean a matrix of size $m\times n$ whose elements are given by
+    $a_{ij}$ for $1\leq i \leq m$ and $1 \leq j \leq n$.
+\end{Definition}
+Looking at our examples above, we see that any linear transformation $\map{T}{\Fn}{\F^{m}}$ can be described
+by a matrix. For example the matrix of $T$ as given in~\ref{ex:LT_Mat_Fields} is given by,
+\begin{equation*}
+    M_{T} = 
+    \begin{pmatrix} 
+	a_{11}&a_{12}&\cdots&a_{1n}\\
+	a_{21}&a_{22}&\cdots&a_{2n}\\
+	\hdotsfor[2]{4}\\
+	a_{m1}&a_{m2}&\cdots&a_{mn}
+    \end{pmatrix}
+\end{equation*}
+
+To see the precise relation, let us consider the action of $T$ on a standard basis vector 
+$\ve_{j}$. From~\ref{ex:LT_Mat_Fields}, we see that,
+
+\[T_i(\ve_{j}) = a_{i1}0 + \cdots + a_{ij}1 + \cdots + a_{in}0 = a_{ij}.\]
+
+Thus,
+\[T(\ve_{j}) = \colvec{4}{T_1(\ve_{j})}{T_2(\ve_{j})}{\vdots}{T_m(\ve_{j})} = 
+    \colvec{4}{a_{1j}}{a_{2j}}{\vdots}{a_{mj}},\]
+
+which is the $j^{th}$ column of the matrix $M_{T}$. 
+\begin{Definition}
+    Given a linear transformation $\map{T}{\Fn}{\Fm}$, the matrix of $T$, denoted by $M_{T}$ is a table of
+    size $m\times n$, with elements from field $\F$ such that,
+    \[M_{T}[:,j] = T(\ve_{j}),\]
+    where $\ve_{j}$ is the $j^{th}$ standard basis of the oderered basis,
+    $\left(\setX{e_1,e_2,\ldots,e_n}\right)$ for $\Fn$.
+\end{Definition}
+We can impart a group structure on the set of matrices.
+\begin{Proposition}
+    Let $\F$ be a field. The set $\matmn{m}{n}$ is an additive Abelian group, where addition ($+$) is given
+    by,
+    \[{[a_{ij}]}_{m\times n} + {[b_{ij}]}_{m\times n} = {[a_{ij} + b_{ij}]}_{m\times n}, \]
+    with the identity element ${[0]}_{m\times n}$ consiting of $0$ in each row and column.
+\end{Proposition}
+Thus, we can regard matrices as a separate entity without any relation to the underlying linear
+transformation. However, it would be remiss to not discuss this deep connection.
+\begin{Proposition}
+    Let $\vV,\vW$ be vector spaces over the field $\F$. We denote by $\homv{\vV}{\vW}$ as
+    the set of all linear transformations from $\vV$ to $\vW$, that is,
+    \[\homv{\vV}{\vW} = \set{\map{T}{\vV}{\vW}}{\text{$T$ is a linear transformation}}.\]
+    Then, $\groupS{\homv{\vV}{\vW}}{+}{\zerv{\homv{\vV}{\vW}}}$ is a vector space, where 
+    \[(T_1 + T_2)(\vv) := T_1(\vv) + T_2(\vv),\]
+    for any $T_1,T_2 \in \homv{\vV}{\vW}$ and any $\vv \in \vV$; and
+    \[(\beta T_1)(\vv) := \beta(T_1(\vv)), \]
+    for any $\beta \in \F$.
+\end{Proposition}
+We will not prove the proposition.
+
+An immediate consequence of this proposition is that $\homv{\Fn}{\F^{m}}$ is a vector space.
+In fact the group $\matmn{m}{n}$ can be given a vector space structure.
+
+\begin{Proposition}
+    $\matmn{m}{n}$ is a vector space over the field $\F$, with addition defined by,
+    \[{[a_{ij}]}_{m\times n} + {[b_{ij}]}_{m\times n} = {[a_{ij} + b_{ij}]}_{m\times n}, \]
+    and scalar multiplication by,
+    \[\beta{[a_{ij}]}_{m\times n} = {[\beta a_{ij}]}_{m\times n}.\]
+\end{Proposition}
+
+What is the relation between $\homv{\Fn}{\F^{m}}$ and $\matmn{m}{n}$? Intiuition suggests that these two are
+equivalent notions. 
+
+Given two linear transformations $\map{T_1}{\Fn}{\F^m}$ and $\map{T_2}{\Fn}{\F^m}$, what is the 
+matrix of $T_1 + T_2$?
+From the definition,
+\[M_{(T_1+T_2)}[:,j] = (T_1 + T_2)(\ve_{j}) = T_1(\ve_j) + T_2(\ve_j) = M_{T_1} + M_{T_2}.\]
+In other words, if $M_{T_1} = {[a_{ij}]}_{m\times n}$ and $M_{T_2} = {[b_{ij}]}_{m\times n}$, then
+$M_{(T_1+T_2)} = {[a_{ij} + b_{ij}]}_{m\times n}$. Similarly,
+we can easily see that $M_{(\beta T)}[:,j] = (\beta T)(\ve_{j}) = \beta T(\ve_{j})$. Thus if $M_{T} =
+{[a_{ij}]}_{m\times n}$, then $M_{(\beta T)} = {[\beta a_{ij}]}_{m\times n}$.  
+
+Thus addition of two linear transformations amounts to addition of their matrices and similarly for scalar
+multiplication. These two vector spaces seem to have the same algebraic structure. To make precise this notion
+we need to show that they are isomorphic.
+
+Recall that two algebraic structure are equivalent if they are isomorphic. 
+In the context
+of vector space, we define isomorphism as,
+\begin{Definition}
+    Two vector spaces $\vV$ and $\vW$ are isomorphic if there is a bijective linear transformation mapping
+    $\vV$ onto $\vW$.
+\end{Definition}
+Before we show that $\homv{\Fn}{\F^{m}}$ and $\matmn{m}{n}$ are isomorphic, we will need to understand what it
+means to mulitply a matrix with a vector. 
+
+Note that if $T \in \homv{\Fn}{\F^{m}}$, then $T(\vx) = T(\lComb{\alpha}{\ve}{n}) =
+\lCombT{\alpha}{\ve}{n}{T}$.
+Thus,
+\[T(\vx) = \finiteSum{\alpha_{i}M_{T}[:,i]}{i}{n}.\]
+
+This gives us a way to define a product of a matrix with a vector.
+\begin{Definition}
+Let $A$ be any $m\times n$ matrix. 
+For any $\vx \in \Fn$ such that \[\vx = \colvec{4}{\alpha_{1}}{\alpha_{2}}{\vdots}{\alpha_{n}},\] 
+let us define \[A\vx := \finiteSum{\alpha_{i}M[:,i]}{i}{n},\]
+as the \textbf{matrix-vector} product.
+\end{Definition}
+
+\begin{Proposition}
+    Let $A$ be a $m\times n$ matrix and let \[\vx = \colvec{4}{\alpha_{1}}{\alpha_{2}}{\vdots}{\alpha_{n}},\]
+    be a vector in $\Fn$.
+    Then $L_{A}(\vx):= A\vx$ is a linear transformation from $\Fn$ to $\F^{m}$ and is called the linear
+    transformation induced by $A$. 
+\end{Proposition}
+\begin{proof}
+    Let $\vx = \lComb{\alpha}{\ve}{n}$ and $\vy = \lComb{\beta}{\ve}{n}$ be two vectors in $\Fn$.
+    Then, $\vx + \vy = \finiteSum{(\alpha_{i} + \beta_{i})\ve_{i}}{i}{n}$ and thus,
+    \[(\vx + \vy) = \colvec{4}{(\alpha_{1}+\beta_{1})}{(\alpha_{2}+\beta_{2})}{\vdots}{(\alpha_{n}+\beta_{n})}\]
+    \begin{align*}
+	L_{A}(\vx + \vy) &= A(\vx + \vy)\\
+	& = \finiteSum{(\alpha_{j} + \beta_{j})A[:,j]}{j}{n} \\
+	& = \finiteSum{\alpha_{j}A[:,j]}{j}{n} + \finiteSum{\beta_{j}A[:,j]}{j}{n}\\
+	& = A\vx + A\vy \\
+	& = L_{A}(\vx) + L_{A}(\vy),
+    \end{align*}
+    where the $3^{rd}$ equalilty is due to the fact that $A[:,j]$'s are vectors in $\F^m$.
+    Similarly we can show scalar multiplication.
+\end{proof}
+\begin{Theorem}
+    The vector spaces $\homv{\Fn}{\F^m}$ and $\matmn{m}{n}$ are isomorphic. Hence, any linear transformation
+    from $\Fn$ to $\Fm$ is equivalent to a matrix of size $m\times n$.
+\end{Theorem}
+\begin{proof}
+    WE need to find a linear transformation $\map{U}{\homv{\Fn}{\Fm}}{\matmn{m}{n}}$ such that $U$ is
+    bijective.
+    Let us define $U$ to be,
+    \[U(T) = M_{T}.\]
+    Clearly $U$ is a linear transformation. To show that $U$ is bijective we must find a linear transformation
+    $\map{S}{\matmn{m}{n}}{\homv{\Fn}{\Fm}}$ such that,
+    \begin{enumerate}
+	\item
+	    $(\fog{S}{U})(T) = T$, for any $T$ in $\homv{\Fn}{\Fm}$ and,
+	\item
+	    $(\fog{U}{S})(A) = A$, for any $A$ in $\matmn{m}{n}$. 
+    \end{enumerate}
+    Let $S(A) := L_{A}$.
+    We will show the first one since the second is analogous.
+    \begin{align*}
+	(\fog{S}{U})(T) &= S(U(T)) \\
+	&= S(M_{T})\\
+	&= L_{M_{T}}
+    \end{align*}
+    To show that $T = L_{M_{T}}$, we need to just check if they agree on the basis vectors $(\listV{\ve}{n})$.
+    For any $1\leq i \leq n$,
+    \begin{align*}
+	L_{M_{T}}(\ve_{i}) &= M_{T}\ve_{i}\\
+	&= \finiteSum{\delta_{ij}M_{T}[:,j]}{j}{n}\\
+	&= M_{T}[:,i]\\
+	&= T(\ve_{i}).
+    \end{align*}
+    Here $\delta_{ij} = 1$ if $i =j$ and $0$ otherwise.
+\end{proof}
+
+Let us now look at the matrix of a composition. Let $\map{T_1}{\Fn}{\F^p}$ and $\map{T_2}{\F^p}{\F^m}$. Then
+the composite $\map{\fog{T_2}{T_1}}{\Fn}{\Fm}$ is easily seen to be a linear transformation. Note that
+$\fog{T_1}{T_2}$ may fail to be a function. What is the matrix of $\fog{T_2}{T_1}$?
+Let $\left(\listV{\ve^{n}}{n}\right)$ be the standard ordered basis of $\Fn$,  
+$\left(\listV{\ve^{p}}{p}\right)$ be the standard ordered basis for $\F^{p}$
+and $\left(\listV{\ve^{m}}{m}\right)$ be the standard ordered basis for $\F^{m}$.
+Let $M_{T_1} = {[a_{ij}]}_{p\times n}$ and let $M_{T_2} = {[b_{ij}]}_{m\times p}$.
+
+By definition,
+$M_{\fog{T_2}{T_1}}[:,j] = (\fog{T_2}{T_1})(\ve^{n}_{j})$.
+Thus,
+\begin{align*}
+    M_{\fog{T_2}{T_1}}[:,j] &= (\fog{T_2}{T_1})(\ve^{n}_{j}). \\
+    &= T_2(T_1(\ve^{n}_{j}))\\
+    &= T_2(M_{T_1}[:,j])\\
+    &= T_2(\colvec{4}{a_{1j}}{a_{2j}}{\vdots}{a_{pj}})\\
+    &= T_2(\finiteSum{a_{kj}\ve^{p}_k}{k}{p})\\
+    &= \finiteSum{a_{kj}T_2(\ve^{p}_k)}{k}{p}\\
+    &= \finiteSum{a_{kj}M_{T_2}[:,k]}{k}{p}\\
+    &= \finiteSum{a_{kj}\colvec{3}{b_{1k}}{\vdots}{b_{mk}}}{k}{p}\\
+    &= \finiteSum{a_{kj}(\finiteSum{b_{ik}\ve^{m}_{i}}{i}{m})}{k}{p}\\
+    &= \finiteSum{(\finiteSum{b_{ik}a_{kj}}{k}{p})\ve^{m}_{i}}{i}{m}.
+\end{align*}
+Hence, if $M_{\fog{T_2}{T_1}} = {[c_{ij}]}_{m\times n}$, then,
+\[c_{ij} = \finiteSum{b_{ik}a_{kj}}{k}{p}.\]
+We can use this to define a matrix multiplication operation.
+\begin{Definition}
+    Let $A = {[a_{ij}]}_{m\times p}$ be a matrix of size $m\times p$ and let $B = {[b_{ij}]}_{p\times n}$, then
+    we define a matrix $C = {[c_{ij}]}_{m\times n}$ of size $m\times n$ as the \textbf{product} of the matrix
+    $A$ and $B$ denoted by $C = AB$ whose elements are given by,
+    \[c_{ij} = \finiteSum{a_{ik}b_{kj}}{k}{p}.\]
+\end{Definition}
+Now that we have seen that matrices can be identified with linear transformations, we will abstract this
+notion to linear transformations between general finite dimensional vector spaces. The crucial idea that will
+help us in this regard is the notion of a co-ordinate. A co-ordinate map makes a finite dimensional vector
+space, of dimension $n$, look like $\Fn$.
+
+\begin{Definition}[name=Co-ordinate]
+    Let $\vspF{\vV}{F}$ be a finite dimensional vector space over $\F$ and let $\mcalB_{\vV} =
+    \left(\listV{\vv}{n}\right)$ be an ordered basis for $\vV$. For any $\vx \in \vV$, we can write $\vx$
+    uniquely as,
+    \[\vx =  \lComb{\beta}{\vv}{n}.\]
+    The co-ordinate of $\vx$ w.r.t~$\mcalB_{\vv}$, denoted by $\coord{\vx}{\mcalB_{\vv}}$, 
+    is an element of $\Fn$ given by,
+    \[\coord{\vx}{\mcalB_{\vv}} = \colvec{4}{\beta_{1}}{\beta_{2}}{\vdots}{\beta_{n}}.\]
+\end{Definition}
+
+\begin{Definition}[name=Co-ordinate map]
+    Let $\vspF{\vV}{F}$ be a finite dimensional vector space over $\F$ and let $\mcalB_{\vV} =
+    \left(\listV{\vv}{n}\right)$ be an ordered basis for $\vV$. For any $\vx \in \vV$, we can write $\vx$
+    uniquely as,
+    \[\vx =  \lComb{\beta}{\vv}{n}.\]
+    The co-ordinate map $\map{\phi_{\mcalB_{\vV}}}{\vV}{\Fn}$, is given by:
+    \[\varphi_{\mcalB_{\vV}}(\vx) = \coord{\vx}{\mcalB_{\vv}} = 
+	\colvec{4}{\beta_{1}}{\beta_{2}}{\vdots}{\beta_{n}}.\]
+\end{Definition}
+\begin{Remark}
+    Easy to see that a co-ordinate map is a linear transformation from $\vV$ to $\Fn$.
+\end{Remark}
+\begin{Remark}
+    Note that for any $\vv_{j}$ in $\mcalB_{\vV}$, $\phi_{\mcalB_{\vv}}(\vv_{j}) =
+    \coord{\vv_{j}}{\mcalB_{\vv}} = \ve_{j}$
+    where $\ve_{j}$ is the $j^{th}$ standard basis for $\Fn$.
+\end{Remark}
+
+\begin{Example}
+    Let $\vV = P_2(\R)$ be the vector space of polynomials in $\R$ of degree less than or
+    equal to $2$. It is easy to check that $\mcalB_{\vV} = \setX{1,x,x^2}$
+    is a basis for $\vV$. Let $f \in \vV$ be given by $4 + 6x - 7x^2$, then $f = 4(1) + 6(x) + (-7)x^2$ and
+    hence $\coord{f}{\mcalB_{\vv}} = \colvec{3}{4}{6}{-7}$.
+\end{Example}
+
+We said that an ordered basis induces a co-ordinate map that makes a $n$ dimensional vector space look like
+$\Fn$. We make this precise.
+\begin{Proposition}
+    Let $\vV$ be a finite dimensional vector space with dimension $n$.  Then $\vV$ is isomorphic to $\Fn$.
+\end{Proposition}
+\begin{proof}
+    Let $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$ be an ordered basis for $\vV$.
+    We will show that the co-ordinate map $\varphi_{\mcalB{\vV}}$ is an isomorphism from $\vV$ onto $\Fn$.
+    First, observe that $\varphi_{\mcalB_{\vV}}$ is a linear transformation.
+    Define $\map{\Phi_{\mcalB_{\vV}}}{\Fn}{\vV}$ as follows:
+    \[\Phi_{\mcalB_{\vV}}(\colvec{4}{\beta_{1}}{\beta_{2}}{\vdots}{\beta_{n}}) = \lComb{\beta}{\vv}{n}. \]
+    Clearly $\Phi_{\mcalB_{\vV}}$ is a linear transformation. It is easy to see that:
+    \begin{enumerate}
+	\item
+	    $\left(\fog{\varphi_{\mcalB_{\vV}}}{\Phi_{\mcalB_{\vV}}}\right)
+	    \left(\colvec{3}{a_1}{\vdots}{a_n}\right) = \colvec{3}{a_1}{\vdots}{a_n}$ 
+	    for any $a_i \in \F$ and,
+	\item
+	    $(\fog{\Phi_{\mcalB_{\vV}}}{\varphi_{\mcalB_{\vV}}})(\vu) = \vu$ for any $\vu \in \vV$.
+    \end{enumerate}
+    Thus, $\Phi^{}_{\mcalB_{\vV}} = \varphi^{-1}_{\mcalB_{\vV}}$.
+\end{proof}
+The above Proposition is extremely useful. We will now see that given any linear transformation between abstract
+finite dimensional vector spaces of dimension $n,m$ we can find the \textbf{equivalent} linear transformation
+between $\Fn,\Fm$.
+\begin{Definition}[name = Induced linear transformation]
+    Let $\vV,\vW$ be finite dimensional vector spaces of dimension $n$ and $m$ respectively. Let 
+    $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$ and $\mcalB_{\vW} = \left(\listV{\vw}{m}\right)$ 
+    be ordered basis for $\vV$ and $\vW$ respectively.
+    If $\map{T}{\vV}{\vW}$ is any linear transformation, we call $\map{\check{T}}{\Fn}{\Fm}$ the induced
+    linear transformation of $T$ w.r.t.~bases $\mcalB_{\vV}$ and $\mcalB_{\vW}$ given by:
+    \[\check{T} = \fog{\fog{\cMap{\mcalB_{\vW}}}{T}}{\cMapInv{\mcalB_{\vV}}}.\]
+\end{Definition}
+This makes it easier to define the matrix of a linear transformation between abstract finite dimensional
+vector spaces.
+
+%%%%%% Fig: Commutative diagram %%%%%
+
+\begin{Definition}[name=Matrix]
+    Let $\vV,\vW$ be finite dimensional vector spaces of dimension $n$ and $m$ respectively. Let 
+    $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$ and $\mcalB_{\vW} = \left(\listV{\vw}{m}\right)$ 
+    be ordered basis for $\vV$ and $\vW$ respectively.
+    If $\map{T}{\vV}{\vW}$ is any linear transformation, we denote by $\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$
+    the matrix of $T$, given by,
+    \[\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}} := M_{\check{T}}.\]
+\end{Definition}
+Let $A = {[a_{ij}]}_{m\times n}$ be the matrix of $T$ i.e.~$A = \matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$. What
+is the $j^{th}$ column of $A$, $A[:,j]$? By definition, $A[:,j] = M_{\check{T}}[:,j] =
+\check{T}(\ve^{n}_{j})$, where $\mcalB_{\Fn} = \left(\listV{\ve^{n}}{n}\right)$ is the standard ordered basis
+for $\Fn$.
+Thus,
+\begin{align*}
+    A[:,j] &= \check{T}(\ve^{n}_{j})\\
+    &= (\fog{\fog{\cMap{\mcalB_{\vW}}}{T}}{\cMapInv{\mcalB_{\vV}}})(\ve^{n}_{j}) \\
+    &= \cMap{\mcalB_{\vW}}\left(T\left(\cMapInv{\mcalB_{\vV}}(\ve^{n}_{j})\right)\right)\\
+    &= \cMap{\mcalB_{\vW}}\left(T(\vv_{j})\right) \\
+    &= \coord{T(\vv_{j})}{\mcalB_{\vW}}
+\end{align*}
+Thus, $T(\vv_{j}) = \series{a_{ij}\vv_{i}}{i}{1}{n}$.
+
+Let $\vu$ be a vector in $\vV$ such that $\vu = \lComb{\alpha}{\vv}{n}$. 
+What is $T(\vu)$ in terms of its matrix 
+$A = {[a_{ij}]}_{m\times n} = \matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$? Note that,
+\[T(\vu) = \series{\beta_{i}\vw_{i}}{i}{1}{m}.\]
+By definition,
+\[\fog{\cMap{\mcalB_{\vW}}}{T} = \fog{\check{T}}{\cMap{\mcalB_{\vW}}}.\]
+Thus,
+\begin{align*}
+    (\fog{\cMap{\mcalB_{\vW}}}{T})(\vu) & = \check{T}\left(\cMap{\mcalB_{\vV}}\left(\vu\right)\right)\\
+    & = \check{T}\left(\coord{\vu}{\mcalB_{\vV}}\right)\\
+    & = M_{\check{T}}\coord{\vu}{\mcalB_{\vV}}\\
+    & = A\coord{\vu}{\mcalB_{\vV}}.
+\end{align*}
+Hence if $T(\vu) = \series{\beta_{i}\vw_{i}}{i}{1}{m}$, then each $\beta_{i}$ is given by,
+\[\beta_i = \series{\alpha_{l}a_{il}}{l}{1}{n}.\]
+To re-iterate if $T\in \homv{\vV}{\vW}$ where $\dim{\vV} = n$ and $\dim{\vW} = m$, and if $A$ is the matrix of
+$T$, i.e.~$A = \matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$, then for any vector $\vu \in \vV$,
+\[\coord{T(\vu)}{\mcalB_{\vW}} = A\coord{\vu}{\mcalB_{\vV}}.\]
+
+Note that for any $\vx \in Fn$, $\coord{\vx}{\mcalB_{\Fn}} = \vx$, when $\mcalB_{\Fn}$ is the standard ordered
+basis for $\Fn$. Now let us generalize the definition of a linear transformation induced by a matrix.
+
+\begin{Definition}
+    Let $A = {[a_{ij}]}_{m\times n}$ be a matrix of size $m\times n$. The linear transformation
+    $L_{A}$ induced by $A$ is given as,
+    \[L_{A}(\vx) := A\coord{\vx}{\mcalB_{\vv}},\]
+    for any $\vx$ in $\Fn$ and any ordered basis $\mcalB_{\vv}$ of $\Fn$.
+\end{Definition}
+The next theorem states the equivalency of the vector space of matrices and linear transformation in finite
+dimensional vector spaces. The proof is similar to the particular case of mappings between $\Fn$ and $\Fm$.
+\begin{Theorem}
+    Let $\vV,\vW$ be finite dimensional vector spaces (over a field $\F$) 
+    of dimensions $n,m$ respectively. Then $\homv{\vV}{\vW}$
+    and $\matmn{m}{n}$ are isomorphic.
+\end{Theorem}
+Next, we define the matrix of addition of two linear transformation and composition of two linear
+transformations.
+\begin{Theorem}
+    Let $\vV,\vW$ be finite dimensional vector spaces over the field $\F$ and with dimensions $n,m$
+    respectively. Let $\mcalB_{\vV}$ and $\mcalB_{\vW}$ be ordered bases for $\vV$ and $\vW$ respectively. Let
+    $\map{T,U}{\vV}{\vW}$ be a linear transformation. Then
+    \begin{enumerate}
+	\item
+	    \[\matVW{T + U}{\mcalB_{\vV}}{\mcalB_{\vW}} = 
+		\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}} + \matVW{U}{\mcalB_{\vV}}{\mcalB_{\vW}}.\] 
+	\item
+	    \[\matVW{\beta T}{\mcalB_{\vV}}{\mcalB_{\vW}} = \beta\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}.\]
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    We will show for $(1)$.
+    Let $A = \matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$, $B = \matVW{U}{\mcalB_{\vV}}{\mcalB_{\vW}}$ and let 
+    $C = \matVW{T + U}{\mcalB_{\vV}}{\mcalB_{\vW}}$.
+    Let $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$. Then,
+    \begin{align*}
+	C[:,j] &= \cMap{\mcalB_{\vW}}{(T+U)(\vv_{j})}\\
+	& = \cMap{\mcalB_{\vW}}{\left(T(\vv_{j}) + U(\vv_{j})\right)}\\
+	& = \cMap{\mcalB_{\vW}}{T(\vv_j)} + \cMap{\mcalB_{\vW}}{U(\vv_j)}\\
+	& = A[:,j] + B[:,j].
+    \end{align*}
+\end{proof}
+\begin{Theorem}
+    Let $\vV,\vW,\vZ$ be finite dimensional vector spaces over field $\F$ and of dimensions $n,p,m$
+    respectively. Let $\mcalB_{\vV},\mcalB_{\vW}$ and $\mcalB_{\vZ}$ be ordered bases for $\vV,\vW$ and $\vZ$
+    respectively. If $\map{T}{\vV}{\vW}$ and $\map{U}{\vW}{\vZ}$ are linear transformations, then
+    \[\matVW{(\fog{U}{T})}{\mcalB_{\vV}}{\mcalB_{\vZ}} = 
+	\matVW{U}{\mcalB_{\vW}}{\mcalB_{\vZ}}\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}. \]
+\end{Theorem}
+\begin{proof}
+    Let $A = \matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$, $B = \matVW{U}{\mcalB_{\vW}}{\mcalB_{\vZ}}$ and let 
+    $C = \matVW{(\fog{U}{T})}{\mcalB_{\vV}}{\mcalB_{\vZ}}$.
+    Let $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$. 
+    Let $\mcalB_{\vW} = \left(\listV{\vw}{p}\right)$. 
+    Let $\mcalB_{\vZ} = \left(\listV{\vz}{m}\right)$. 
+    Let us denote by ${\left[\cMap{\mcalB_{\vZ}}{(\cdot)}\right]}_{i}$ as the $i^{th}$ 
+    co-ordinate (slot) of the co-ordinate
+    map $\varphi^{}_{\mcalB_{\vZ}}$.
+
+    Thus,
+    \begin{align*}
+	C[i,j] &= {\left[\cMap{\mcalB_{\vZ}}{(\fog{U}{T})(\vv_{j})}\right]}_{i}\\
+	& = {\left[\cMap{\mcalB_{\vZ}}{U\left(T(\vv_{j})\right)}\right]}_{i}\\
+	& = {\left[\cMap{\mcalB_{\vZ}}{U\left(\series{a_{lj}\vw_{l}}{l}{1}{p}\right)}\right]}_{i}\\
+	& = {\left[\cMap{\mcalB_{\vZ}}{\left(\series{a_{lj}U(\vw_{l})}{l}{1}{p}\right)}\right]}_{i}\\
+	& = {\left[\cMap{\mcalB_{\vZ}}{\left(\series{a_{lj}}{l}{1}{p}\series{b_{il}\vz_{i}}{i}{1}{m}\right)}\right]}_{i}\\
+	& = {\left[\cMap{\mcalB_{\vZ}}{\left(\series{\left(\series{b_{il}a_{lj}}{l}{1}{p}\right)\vz_{i}}{i}{1}{m}\right)}\right]}_{i}\\
+	& = \series{b_{il}a_{lj}}{l}{1}{p},\\
+    \end{align*}
+    which by definition means that $C = BA$.
+\end{proof}
+For any function $f$, it is important to ask if there is a $y$ such that $f(x) = y$ is meaningful. If $f$ were
+invertible, then this would mean that $x = f^{-1}\circ f = f^{-1}(y)$. We will see shortly that when $f$ is a
+linear transformation, such a question amounts to a solution of a system of linear equations. We have already
+seen invertible transformations when dealing with isomorphisms. We make this notion precise and discuss a few
+consequences in the following paragraphs. 
+
+\begin{Definition}
+    Let $\vV,\vW$ be vector spaces and let $\map{T}{\vV}{\vW}$ be a linear transformation. Let $I_{\vV}$ and
+    $I_{\vW}$ be the identity linear transformations on $\vV$ and $\vW$ respectively. A function,
+    $\map{U}{\vW}{\vV}$ is said to be an inverse of $T$ if,
+    \begin{enumerate}
+	\item
+	    $\fog{U}{T} = I_{\vV}$ and,
+	\item
+	    $\fog{T}{U} = I_{\vW}$.
+    \end{enumerate}
+\end{Definition}
+\begin{Remark}
+    The definition for invertibility of $T$ described above is equivalent to stating that $T$ is one-one and
+    onto. If $U$ is the inverse of $T$, then it is unique and we denote $U$ by $T^{-1}$.
+\end{Remark}
+\begin{Remark}
+    If $T,U$ are invertible then ${(\fog{U}{T})}^{-1} = \fog{T^{-1}}{U^{-1}}$. Morevore, ${(T^{-1})}^{-1} =
+    T$.
+\end{Remark}
+\begin{Theorem}
+    Let $\vV,\vW$ be vector spaces and let $\map{T}{\vV}{\vW}$ be an invertible linear transformation. Then
+    $T^{-1}$ is also a linear transformation.
+\end{Theorem}
+\endinput
+

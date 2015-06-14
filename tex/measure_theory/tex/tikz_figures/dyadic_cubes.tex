@@ -1,0 +1,15 @@
+\documentclass{article}
+\usepackage{mathrsfs} % for scripts
+\usepackage{standalone}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}[scale=2]
+    \begin{scope}[fill opacity=0.65]
+	\draw[step=1.0cm,red,thick] (-2,-2) grid (2,2);
+    \end{scope}
+    \begin{scope}[xshift=4cm]
+	\draw[step=0.25cm,blue,thick] (-2,-2) grid (1,0);
+	\draw[step=0.50cm,green,thick] (-2,0) grid (1,2);
+    \end{scope}
+\end{tikzpicture}
+\end{document}

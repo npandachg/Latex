@@ -1,0 +1,1542 @@
+\chapter{Metric Spaces}
+% put smiley
+Before beginning our study of limits, continuity and differentiation of functions it is important
+to understand the domains and ranges of functions and notions like distance between elements
+in a set. This notion of studying the \emph{closeness} of elements in a set is undertaken in the 
+field of \emph{topology}. 
+We will not study the ideas of topology in anywhere near their full generality. 
+Instead, we will study one particular way to define a notion of closeness by defining an explicit 
+distance among the elements of our set. The elements of such a set are usually called \emph{points}
+and the set with the associated distance function is called a metric space.
+
+We have seen functions like these :
+\begin{displaymath}
+    \begin{aligned}
+	& f : \mathbb{R} \rightarrow \mathbb{R} \\
+	& f : plane \rightarrow \mathbb{R} \\
+	& f : space \rightarrow \mathbb{R}
+    \end{aligned}
+\end{displaymath}
+Also we have seen \emph{curves} which are functions $f : \mathbb{R} \rightarrow \text{plane or
+space} $. In general we can define a \emph{n dimensional space} 
+ of reals to be 
+\begin{Definition}
+    \begin{displaymath}
+	\mathbb{R}^n := \left.\lbrace (x_1, x_2, \dots, x_n) : x_i \in \mathbb{R} \forall i =
+	    1\dots n \rbrace.\right.
+    \end{displaymath}
+\end{Definition}  
+We define a \emph{scalar} multiple of $\mathbf{x} \in \mathbb{R}^n$ to be 
+\begin{Definition}
+    For any $\alpha \in \mathbb{R}$,
+    \begin{displaymath}
+	\alpha\mathbf{x} : (\alpha*x_1, \alpha*x_2, \dots, \alpha*x_n)
+    \end{displaymath}
+\end{Definition}
+This enables us to talk about functions $f :  \mathbb{R}^n \rightarrow  \mathbb{R}^m $. Also as
+a notational candy we'll refer to elements of $ \mathbb{R}^n$ with boldface letters. We would also 
+need to calculate the \emph{distance} between two points of  $\mathbb{R}^n$. For any two elements
+$ \mathbf{x},\mathbf{y} \in \mathbb{R}^n$ we know about the \emph{dot product} defined as :
+\begin{Definition}
+    \begin{displaymath}
+	\text{dot}: \mathbf{x} . \mathbf{y} := \sum_{i=1}^{n} x_i*y_i
+    \end{displaymath}
+\end{Definition}
+With this we can define the \emph{length} of $\mathbf{x}$ to be the norm as follows :
+\begin{Definition}
+    \begin{displaymath}
+	\text{norm}: \lvert \lvert \mathbf{x} \rvert \rvert := \sqrt{\mathbf{x} . \mathbf{x}}
+    \end{displaymath}
+\end{Definition}
+Then the distance between two points $\mathbf{x},\mathbf{y} \in \mathbb{R}^n$ is 
+$\lvert \lvert \mathbf{x} -\mathbf{y} \rvert \rvert$.
+Even though we haven't defined the meaning of $\sqrt{}$, we can take a leap of faith and and just
+assume it has the same properties that we know of. Note that for $\mathbb{R}$, we can define
+$\lvert \lvert x \rvert \rvert$ to be just $\lvert x \rvert$. In more general sets, we'll need a 
+more general notion of distance. Knowing the properties of norm in $\mathbb{R}^n $ for $ n \leq 3$
+we can define a distance function in an abstract set as follows :
+\begin{Definition}
+    A metric on a set $E$ is the function $d : E \times E \rightarrow \mathbb{R}$ such that $\forall
+    p,q,r \in E$
+    \begin{enumerate}
+	\item $d(p,q) \geq 0$.
+	\item $d(p,q) = 0 \Leftrightarrow p = q$.
+	\item $d(p,q) = d(q,p)$. 
+	\item $d(p,r) \leq d(p,q) + d(q,r)$.
+    \end{enumerate}
+\end{Definition}
+Now we can define a \emph{metric space}. 
+\begin{Definition}
+    A metric space is a set $E$ with a metric $d$ defined on $E$.
+\end{Definition}
+Euclidean space is $\mathbb{R}^n$ with the euclidean distance. It is denoted by 
+$E^n :=$ $\left(\mathbb{R}^n, d_{\lvert \lvert . \rvert \rvert} \right)$.
+
+\begin{Theorem}[name=Euclidean metric space]\label{th:euclidean_space}
+$E^n$ is a metric space. 
+\end{Theorem}
+In order to prove this we'll be needing the following Lemma.
+\begin{Lemma}[name=Cauchy Schwarz]{\emph{Cauchy Schwarz :}}
+    \label{th:cauchy_schwarz}
+    $\lvert \mathbf{x} . \mathbf{y} \rvert \leq \lvert \lvert \mathbf{x} \rvert \rvert * 
+    \lvert \lvert \mathbf{y} \rvert \rvert$ $\forall \mathbf{x,y} \in \mathbb{R}^n$.
+\end{Lemma}
+\begin{proof}
+    $\forall \alpha,\beta \in \mathbb{R}$ we have the following :
+    \begin{displaymath}
+	\begin{aligned}
+	    0 \leq  &\lvert \lvert \alpha\mathbf{x} - \beta\mathbf{y} \rvert \rvert \\
+	    & = \left(\alpha\mathbf{x} - \beta\mathbf{y}\right). 
+	    \left(\alpha\mathbf{x} - \beta\mathbf{y}\right) \\
+	    & = \alpha^2 \mathbf{x}.\mathbf{x} + \beta^2 \mathbf{y}.\mathbf{y} -
+	    2*\alpha*\beta\mathbf{x}.\mathbf{y} \\
+	    & = \alpha^2 \lvert\lvert \mathbf{x} \rvert\rvert ^2 + 
+	    \beta^2 \lvert\lvert \mathbf{y} \rvert\rvert ^2 - 2*\alpha *\beta\mathbf{x}.\mathbf{y} \\
+	    2*\alpha*\beta\mathbf{x}.\mathbf{y} \leq & \ \alpha^2 \lvert\lvert \mathbf{x}
+	    \rvert\rvert ^2 + \beta^2\lvert\lvert \mathbf{y} \rvert\rvert ^2
+	\end{aligned}
+    \end{displaymath}	
+    Now choose $\alpha = \lvert\lvert \mathbf{y} \rvert\rvert$ and $\beta = \pm 
+    \lvert\lvert \mathbf{x} \rvert\rvert$. Hence proved.
+\end{proof}
+\begin{Corollary}
+    $\lvert\lvert \mathbf{x} + \mathbf{y} \rvert\rvert \leq \lvert\lvert \mathbf{x} \rvert\rvert +
+    \lvert\lvert \mathbf{y}\rvert\rvert$
+\end{Corollary}
+\begin{proof}
+    \begin{displaymath}
+	\begin{aligned}
+	    \lvert\lvert \mathbf{x} + \mathbf{y}\rvert\rvert ^2  = & \left(\mathbf{x} +
+		\mathbf{y}\right) .  \left(\mathbf{x} + \mathbf{y}\right) \\
+            = & \lvert\lvert \mathbf{x} \rvert\rvert ^2 + \lvert\lvert \mathbf{y} \rvert\rvert ^2 +
+	    2\mathbf{x}.\mathbf{y} \\
+            \leq & \lvert\lvert \mathbf{x} \rvert\rvert ^2 + \lvert\lvert \mathbf{y} \rvert\rvert ^2 +
+	    2\lvert \lvert \mathbf{x} \rvert\rvert * \lvert \lvert \mathbf{y} \rvert \rvert \\
+            & =\left(\lvert\lvert \mathbf{x} \rvert\rvert + \lvert\lvert \mathbf{y} \rvert\rvert
+	    \right)^2 	    
+	\end{aligned}
+    \end{displaymath}
+    Hence proved.
+\end{proof}
+Now we can prove \ref{th:euclidean_space}.
+\begin{proof}
+    In order to show $E^n$ is a metric space we have to show that the euclidean distance function
+    is indeed a metric. Properties 1-3 can be easily verified. To check the triangle inequality (i.e
+    property 4), we can see that 
+
+    \begin{displaymath}
+	\begin{aligned}
+	    d_{\lvert\lvert . \rvert\rvert}(\mathbf{x},\mathbf{z}) = & \lvert\lvert \mathbf{x}
+	    - \mathbf{y} \rvert\rvert \\
+	    = & \lvert\lvert (\mathbf{x} - \mathbf{y}) + (\mathbf{y} - \mathbf{z}) \rvert\rvert \\
+	    \leq & \lvert\lvert \mathbf{x} - \mathbf{y} \rvert\rvert + \lvert\lvert \mathbf{y} -
+	    \mathbf{z} \rvert\rvert \\
+	    & = d_{\lvert\lvert . \rvert\rvert}(\mathbf{x},\mathbf{y}) + 
+	    d_{\lvert\lvert . \rvert\rvert}(\mathbf{y},\mathbf{z})
+	\end{aligned}
+    \end{displaymath}
+\end{proof}
+
+\begin{Definition}
+    Suppose $(E,d)$ is a metric space and $E^{\prime} \subset E$. Then $(E^{\prime},d^{\prime})$ is
+    called a \emph{subspace} of $E$ where $d^{\prime}$ is a restriction of $d$ on $E$ i.e
+    \begin{displaymath}
+	\begin{aligned}
+	    & d^{\prime} : E^{\prime} \times E^{\prime} \rightarrow \mathbb{R} \\
+	& \forall p,q \in E^{\prime} \ d^{\prime}(p,q) = d(p,q)
+	\end{aligned}
+    \end{displaymath}	
+\end{Definition}
+
+Some examples
+\begin{itemize}
+    \item Subsets of $E^n$.
+    \item Let $E$ be any set. Define $d: E \times E \rightarrow \mathbb{R}$ by 
+    \begin{displaymath}
+	d(p,q) = \left\{ 
+	    \begin{array}{l l}
+		0 & \quad \text{if $p = q$}\\
+		1 & \quad \text{if $p \neq q$}
+	    \end{array} \right.
+    \end{displaymath}
+    \begin{proof}
+	We only need to verify the triangle inequality $d(p,r) \leq d(p,q) + d(q,r)$. Note that
+	$d(p,r) \leq 1$ always. However, can we have the right hand side to be both zero ? if
+	$d(p,q) = 0$ then $p = q$ and if $d(q,r) = 0$ then $q = r$. Hence, we have $p = r$ and hence
+	$d(p,r) = 0$. Hence it satisfies triangle inequality.
+    \end{proof}
+    Note that if $E$ has only 3 points, then those points are a \emph{triangle} in $E^2$. That is 
+    if $E$ is finite then it is a subspace of Euclidean metric space $E^{n+1}$. But if $E$ is
+    infinite it is not a subspace of an $E^n$.
+\end{itemize}
+Some consequences of a metric in a metric space $E$.
+\begin{itemize}
+    \item $d(p_1,p_n) \leq d(p_1,p_2) + \dots + d(p_{n-1},p_{n})$.
+    \item $\forall p,q,r \in E$ we have $\lvert d(p,r) - d(q,r) \rvert \leq d(p,q)$.
+	\begin{proof}
+	    From triangle inequality we have,
+	    \begin{displaymath}
+		\begin{aligned}
+		    & d(p,r) \leq d(p,q) + d(q,r) \\
+		    & \implies d(p,r) - d(q,r) \leq d(p,q)
+		\end{aligned}
+	    \end{displaymath}
+	    Similarly,
+	    \begin{displaymath}
+		\begin{aligned}
+		    & d(q,r) \leq d(q,p) + d(p,r) \\
+		    & \implies d(q,r) - d(p,r) \leq d(p,q)
+		\end{aligned}
+	    \end{displaymath}
+	    Hence proved.
+	\end{proof}	    
+\end{itemize}
+
+\section{Open, closed and bounded sets}
+\begin{Definition}{\emph{Open Ball:}}\label{def:open_ball}
+    In a metric space $(E,d)$, consider $p \in E$ and $\epsilon \in \mathbb{R} > 0$. Then the
+    open ball centered at $p$ of \emph{radius} $\epsilon$ is given by :
+    \begin{displaymath}
+	\mathcal{B}_{\epsilon}(p) := \left.\lbrace q \in E : d(q,p) < \epsilon \rbrace\right.
+    \end{displaymath}
+\end{Definition}
+
+\begin{Definition}{\emph{Closed Ball:}}\label{def:closed_ball}
+    In a metric space $(E,d)$, consider $p \in E$ and $\epsilon \in \mathbb{R} > 0$. Then the
+    closed ball centered at $p$ of \emph{radius} $\epsilon$ is given by :
+    \begin{displaymath}
+	\overline{\mathcal{B}_{\epsilon}(p)} := \left.\lbrace q \in E : d(q,p) \leq \epsilon 
+	    \rbrace\right.
+    \end{displaymath}
+\end{Definition}
+
+Some Examples : 
+\begin{itemize}
+    \item In $E^1$, for any $x \in \mathbb{R}$ we have an open ball :
+	\begin{displaymath}
+	    \mathcal{B}_{\epsilon}(x) := \left.\lbrace y \in \mathbb{R}  : \lvert y - x \rvert 
+		< \epsilon \rbrace\right. .
+	\end{displaymath}
+	It is the same as $\left.\lbrace y \in \mathbb{R} : x -\epsilon < y < x + \epsilon 
+	    \rbrace\right.$. 
+    \item In $E^2$,	
+	\begin{displaymath}
+	    \mathcal{B}_{\epsilon}(\mathbf{x}) := \left.\lbrace \mathbf{y} \in \mathbb{R}^2  : 
+		\lvert\lvert \mathbf{y} - \mathbf{x} \rvert\rvert 
+		< \epsilon \rbrace\right. .
+	\end{displaymath}
+
+	
+    \item Consider an \emph{unusual} metric space where
+	open balls are a bunch of different pieces.
+	
+    \item Let $E = (\mathbb{R}^2,d)$ where $d(\mathbf{x},\mathbf{y}) = \lvert x_1 - y_1 \rvert + 
+	\lvert x_2 - y_2 \rvert$. Then $\mathcal{B}_{\epsilon}(\mathbf{0}) = \left.\lbrace
+	    \mathbf{y} \in \mathbb{R}^2 : \lvert y_1 \rvert + \lvert y_2 \rvert < \epsilon 
+	    \rbrace \right. $. The unit ball then looks like :
+
+	
+
+
+\end{itemize}
+Now that we have seen open balls, we can define what we mean by \emph{open sets} in a metric space.
+\begin{Definition}
+    A set $\mathcal{U} \subset E$ is an open set if 
+
+    \begin{displaymath}
+	\forall \left(p \in \mathcal{U}\right) \ \exists\left(\epsilon(p)  > 0 \in \mathbb{R}\right) \
+       	\mathcal{B}_{\epsilon}(p) \subset \mathcal{U}.    \end{displaymath}
+\end{Definition}
+\begin{Theorem}[name=Open ball is an open set]\label{th:op_ballset}
+    In any metric space $(E,d)$, every open ball is an open set.
+\end{Theorem}
+\begin{proof}
+    
+    Given a $p \in E$ and an $\epsilon > 0 \in \mathbb{R}$, let $q$ be an arbitrary point of the 
+    set $\mathcal{B}_{\epsilon}(p)$. Let $\delta = \epsilon - d(q,p)$. Then we have $\delta > 0 \in
+    \mathbb{R}$. For any $r \in \mathcal{B}_{\delta}(q)$, we have $d(r,q) < \delta$. Now, 
+    \begin{displaymath}
+	\begin{aligned}
+	    d(r,p) \leq & \ d(r,q) + d(q,p) \\
+	    d(r,p) < & \ \delta + d(q,p) \\
+	    & = \epsilon - d(q,p) + d(q,p) 
+	\end{aligned}
+    \end{displaymath}	
+    Hence, $d(r,p) < \epsilon$. Thus, $r \in \mathcal{B}_{\epsilon}(p)$. Hence proved.
+    \\
+    
+\end{proof}
+Examples,
+\begin{itemize}
+    \item
+	In $E^n$, the closed ball $\overline{\mathcal{B}_{\epsilon}(\mathbf{0})}$ is not open.
+	Note that to show that this ball is not open we have to find a point in the ball 
+	such that there exist a point in that ball that is not contained in 
+	$\overline{\mathcal{B}_{\epsilon}(\mathbf{0})}$.
+	Let $\mathbf{p} = (1,0,\dots,0) \in E^n$. Then $\mathbf{p} \in 
+	\overline{\mathcal{B}_{\epsilon}(\mathbf{0})}$. Now take a point $\mathbf{q} \in
+	\mathcal{B}_{\epsilon}(\mathbf{p})$ such that $\mathbf{q} = (1+\frac{\epsilon}{2},0,\dots,0)$.
+	Then $d_{\lvert\lvert . \rvert\rvert}(\mathbf{q},\mathbf{p}) = \frac{\epsilon}{2}$, but
+	$d_{\lvert\lvert . \rvert\rvert}(\mathbf{q},\mathbf{0}) = 1 + \frac{\epsilon}{2}$.
+
+    \item In $E^n$ choose $a \in \mathbb{R}$ and let $\mathcal{H} = \left.\lbrace 
+	    (x_1, x_2, \dots, x_n) \in \mathbb{R^n} : x_1 > a \rbrace\right.$ 
+	    We can show that $\mathcal{H}$ is open. Given any $\mathbf{x} \in \mathbb{R}^n$ we
+	    know that $x_1 > a$. Therfore, $\epsilon = x_1 - a > 0 \in \mathbb{R}$. Now, we need
+	   to show that $\mathcal{B}_{\epsilon}(\mathbf{x}) \subset \mathcal{H}$. For any 
+	   $\mathbf{y} \in \mathcal{B}_{\epsilon}(\mathbf{x})$ we have $\lvert\lvert \mathbf{y} -
+	   \mathbf{x} \rvert\rvert < \epsilon$. That is 
+	   \begin{displaymath}
+	       \begin{aligned}
+		   \epsilon > & \lvert\lvert \mathbf{y} - \mathbf{x} \rvert\rvert \\
+		    & = \sqrt{\sum_{i=1}^n(x_i-y_i)^2} \\
+		    & \geq \sqrt{(x_1-y_1)^2} \\
+		    &\quad = \lvert x_1 - y_1 \rvert \\
+		    &\quad \geq x_1 - y_1
+	       \end{aligned}
+	   \end{displaymath}   
+	   Hence, $ \epsilon > x_1 - y_1$ and therfore $y_1 > a$ and so $\mathbf{y} \in
+	   \mathcal{H}$. Below we show $\mathcal{H}$ in $E^2$.
+
+	   
+
+\end{itemize}
+
+\begin{Theorem}[name=Properties of open sets]
+    In any metric space $(E,d)$ the following are true.    
+    \begin{enumerate}
+	\item $\emptyset$ is open.
+	\item $E$ is open.
+	\item For any collection of open sets in $E$, their union is open in $E$.
+	\item For any \emph{finite} collection of open sets in $E$, their intersection is open in 
+	    $E$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+
+    
+    
+
+    \begin{enumerate}
+	\item From the logical statement this is vacuously true.
+	\item Similar to above.
+	\item Let $G = \left.\lbrace \mathcal{U}_i \in E : i \in I \rbrace\right.$ be a 
+	    collection of open sets indexed by some possibly uncountable index set $I$. Let
+	    $p$ be an arbitrary point of $\bigcup_{i\in I} \mathcal{U}_i$. Then,
+	    \begin{displaymath}
+		\begin{aligned}
+		   & p \in \bigcup_{i\in I} \mathcal{U}_i \\
+		   & \Leftrightarrow \exists j \in I \ s.t \ p \in \mathcal{U}_j \\
+		   & \Leftrightarrow \exists \epsilon_j > 0 \in \mathbb{R} \ s.t \ 
+		       \mathcal{B}_{\epsilon_j}(p) \subset \mathcal{U}_j \\
+		\end{aligned}
+	    \end{displaymath}
+	    But, $\mathcal{U}_j \subset \bigcup_{i\in I} \mathcal{U}_i$. Hence, 
+	    $\mathcal{B}_{\epsilon_j}(p) \subset \bigcup_{i\in I} \mathcal{U}_i$. Hence, the union
+	    is open.
+	\item Let $G = \left.\lbrace \mathcal{U}_i : i \in \lbrace 1, \dots, n\rbrace
+		\rbrace\right.$ be a finite collection of $n \in \mathbb{Z}_+$ open sets in $E$.
+	    Then,
+	    \begin{displaymath}
+		\begin{aligned}
+		   & p \in \bigcap_{i = 1}^n \mathcal{U}_i \\
+		   & \Leftrightarrow \forall i \in \lbrace 1,\dots,n \rbrace \ s.t \ p 
+		       \in \mathcal{U}_i \\
+		   & \Leftrightarrow \forall i  \exists \epsilon_i > 0 \in \mathbb{R} \ s.t \ 
+		       \mathcal{B}_{\epsilon_i}(p) \subset \mathcal{U}_i \\
+		\end{aligned}
+	    \end{displaymath}
+	    Since there are only \emph{finite} such $i^{'s}$ there exists a minimum and since 
+	    each $\epsilon_i > 0$, the minimum is also greater than $0$. That is, let
+	    $\epsilon = min \left( \epsilon_i : i \in \lbrace 1, \dots, n \rbrace \right)$. Then,
+	   $ \forall i \ \mathcal{B}_{\epsilon}(p) \subset \mathcal{B}_{\epsilon_i}(p) \subset
+	   \mathcal{U}_i$. Therfore $\mathcal{B}_{\epsilon}(p) \subset 
+	   \bigcap_{i = 1}^n \mathcal{U}_i$.
+	   
+    \end{enumerate}
+\end{proof}
+With this we can look at the following equivalance. The obove properties are quite general and is 
+the definition of open sets in abstract topological spaces where choosing a metric may become 
+cumbersome. The following Theorem shows that if we have a metric space, the usual metric space 
+definition of open sets and topological notion are equivalent.
+\begin{Theorem}[name=Topological and metric space equivalence of open sets]
+    A set $\mathcal{U}$ is open iff it is a union of open balls in $E$.
+\end{Theorem}
+\begin{proof}
+    $\Leftarrow $ 
+	Since, an open ball in $E$ is an open set \ref{th:op_ballset}, 
+	for any collection its union is open by the Theorem above.
+	$\Rightarrow$
+    Given any point $p \in \mathcal{U}$ such that $\mathcal{U}$ is open, let
+    $\mathcal{B}_{\epsilon_{p}}(p)$ be an open ball around $p$. Each $\mathcal{B}_{\epsilon_{p}}(p)$
+    is a subset of $\mathcal{U}$ and hence $\bigcup_{p \in \mathcal{U}}\mathcal{B}_{\epsilon_{p}}(p)
+    \subset \mathcal{U}$. Similarly $\forall p \in \mathcal{U}$, there is an $\epsilon_{p}$ such
+    that $p \in \mathcal{B}_{\epsilon_{p}}(p)$. And hence $ p \in 
+    \bigcup_{p \in \mathcal{U}}\mathcal{B}_{\epsilon_{p}}(p)$. Therfore $\mathcal{U} \subset 
+    \bigcup_{p \in \mathcal{U}}\mathcal{B}_{\epsilon_{p}}(p)$. Hence proved.
+    
+\end{proof}
+\begin{Definition}
+    A subset $\mathcal{C} \subset E$ is closed if its complement is open.
+\end{Definition}
+\begin{Theorem}[name= Closed ball is a closed set]
+    A closed ball in $(E,d)$ is a closed set.
+\end{Theorem}
+\begin{proof}
+    Let $p \in E$ be an arbitray point in $E$ and $\epsilon > 0 \in \mathbb{R}$. 
+    Take any $q \in E - \overline{\mathcal{B}_{\epsilon}(p)}$ and let $\delta = d(q,p) - \epsilon$.
+    Then since $q \in  E - \overline{\mathcal{B}_{\epsilon}(p)}$
+    we have $d(q,p) > \epsilon$ and hence $\delta > 0 \in \mathbb{R}$. Now for any point $r \in
+    \mathcal{B}_{\delta}(q)$ we have,
+    \begin{displaymath}
+	\begin{aligned}
+	    d(r,p) \geq & \ d(q,p) - d(q,r) \\
+	    > & \ d(q,p) - \delta \\
+	    & = \epsilon
+	\end{aligned}
+    \end{displaymath}
+    Hence, $d(r,p) > \epsilon$ Therfore, $r \in E - \overline{\mathcal{B}_{\epsilon}(p)}$. Hence,
+    $\mathcal{B}_{\delta}(q) \subset E - \overline{\mathcal{B}_{\epsilon}(p)}$. Hence, the
+    complement of $\overline{\mathcal{B}_{\epsilon}(p)}$ is open. Hence, 
+    $\overline{\mathcal{B}_{\epsilon}(p)}$ is closed.
+\end{proof}
+
+Note that the following are equivalent. In general, a set $\mathcal{C} \subset E$ is closed if
+\begin{enumerate}
+    \item $E - \mathcal{C}$ is open.
+    \item $\forall \left(q \in E\right) \ \left[ q \not \in \mathcal{C} \implies \exists 
+	    \left(\delta > 0 \in \mathbb{R} \right) \ \mathcal{B}_{\delta}(q) \cap 
+	    \mathcal{C} = \emptyset \right] $.
+    \item $\forall \left(q \in E\right) \ \left[ \forall \left( \delta > 0 \in \mathbb{R}\right) \
+	    \mathcal{B}_{\delta}(q) \cap \mathcal{C} \neq \emptyset \implies q \in
+	    \mathcal{C}\right]$.
+\end{enumerate}
+The last one enables us to look at closed set only in terms of itself without using complements. For
+example to show that the open ball in $E^n$ is not closed all we have to do is find a point $q \in
+E$ such that  $\forall \left( \delta > 0 \in \mathbb{R}\right) \ \mathcal{B}_{\delta}(q) \cap 
+\mathcal{C} \neq \emptyset$ is true but $q \not \in \mathcal{C}$. Such a $q$ is shown in the figure
+below for $E^2$,
+
+
+
+Closed sets and open sets are not complements of each other. As these examples show, a set can be 
+both closed and open and also neither !!
+\begin{itemize}
+    \item Closed and open half spaces in $E^n$. A closed half space is defined as 
+	$\mathcal{C} = \left\lbrace x \in \mathbb{R}^n : x_1 \leq a \right\rbrace$. Note that the
+	complement of a closed half space is the open half space $\mathcal{H}$ which we showed to be
+	open. Hence, closed half space is closed. So half spaces defined like these are either 
+	closed or open.
+    \item Consider the set $\left[ 0 , 1\right)$ $\subset E^1$. This set is neither open nor closed.
+	To see why its not open we can look at the left point. To see why it is not closed we can
+	look at the right.
+    \item Let $E = E^1 - \lbrace 0 \rbrace$. Note that $\mathbb{R}_+ $ is open and so is 
+	$\mathbb{R}_{-}$. But $E = \mathbb{R}_+ \cup \mathbb{R}_{-}$. Since $\mathbb{R}_{-}$ is open
+	its complement is closed. But its complement is $\mathbb{R}_+$. Hence, $\mathbb{R}_+$ is
+	both closed and open. Similarly $\mathbb{R}_{-}$.
+\end{itemize}
+From the properties of open sets we can infer the properties of a closed set.
+\begin{Theorem}[name=Properties of closed sets]
+    In any metric space $(E,d)$ the following are true.    
+    \begin{enumerate}
+	\item $E$ is closed.
+	\item $\emptyset$ is open.
+	\item For any collection of closed sets in $E$, their intersection is open in $E$.
+	\item For any \emph{finite} collection of closed sets in $E$, their union is open in 
+	    $E$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    \begin{enumerate}
+	\item $E$ complement $\emptyset$ is open.
+	\item $\emptyset$ complement $E$ is open.
+	\item Let $G = \left.\lbrace \mathcal{C}_i \in E : \forall i \in I \rbrace\right.$ be a
+	    collection of closed sets $\mathcal{C}_i$ indexed by possibly uncountable index set $I$.
+	    Then note that $E - \bigcap_{i \in I}\mathcal{C}_i = \bigcup_{i \in I}\left(E - 
+		\mathcal{C}_i\right)$. But the right hand side is the union of an arbitrary
+	    collection of open sets and hence is open. Thus, we have shown that the complement is
+	    open. Hence, $\bigcap_{i \in I}\mathcal{C}_i$ is closed. 
+	\item Similar to above.
+    \end{enumerate}
+\end{proof}
+In a topological space we usually start with the open sets that satisfy properties 1-4 of the open
+sets and then infer the properties of closed sets. Hence, one gives us the other. Before looking at
+a few examples where we'll use these properties let us define \emph{open boxes}  in $E^n$. 
+
+\begin{Definition}
+    For any $\mathbf{a}, \mathbf{b}$ $\in \mathbb{R}^n$ with $a_i < b_i \ \forall i \in \lbrace 1
+    \dots n \rbrace$, an open box is the set $ \left.\lbrace \left(x_1,\dots,x_n\right) \in
+	\mathbb{R}^n : a_i < x_i < b_i \rbrace\right.$
+\end{Definition}
+The open box in $E^1$ is just the open interval $(a,b)$. In $E^2$ the open box looks like,
+
+
+While in $E^3$ it looks like,
+
+
+Now let us look at some examples where we'll use the properties of closed and open sets in 
+deciding whether the sets are closed or open.
+\begin{itemize}
+    \item In any metric space $(E,d)$, for any $p \in E$, the single point set $\lbrace p \rbrace$
+	is a closed set.
+	\begin{proof}
+	    We'll show that $E - \lbrace p \rbrace$ is open. Take any $q \in E - \lbrace p \rbrace$.
+	    Hence, $p \neq q$ and so let $\epsilon = d(q,p) > 0$. Thus the ball
+	    $\mathcal{B}_{\epsilon}(q)$ doesn't contain $p$. Hence $\mathcal{B}_{\epsilon}(q)
+	    \subset E - \lbrace p \rbrace$. Thus the complement is open and hence $\lbrace p
+	    \rbrace$ is closed.
+	\end{proof}
+    \item Every finite subset of $E$ is closed.
+	\begin{proof}
+	    Any finite set is the finite union of one point sets in $E$. By property 4 of closed
+	    sets such a union is closed.
+	\end{proof}
+    \item \emph{Spheres} are defined as the set $\mathcal{S} = \left.\lbrace q \in E : d(q,p) =
+	    \epsilon \rbrace\right.$ for a given $\epsilon > 0 \in \mathbb{R}$ and 
+	    a point $p \in E$. $\mathcal{S}$ is closed. Spheres are shown here in $E^2$ and $E^3$.
+	    
+	\begin{proof}
+	    Given an $\epsilon > 0 \in \mathbb{R}$ and a $p \in E$, $\mathcal{S} =
+	    \overline{\mathcal{B}_{\epsilon}(p)} - \mathcal{B}_{\epsilon}(p)$. Closed balls are
+	    closed sets while open balls are open sets whose complements are closed. Hence,
+	    rewriting $\mathcal{S} = \overline{\mathcal{B}_{\epsilon}(p)} \bigcap \left( E - 
+		\mathcal{B}_{\epsilon}(p) \right)$, we see that $\mathcal{S}$ is an intersection
+	    of two closed sets and hence by property 3 of closed sets, $\mathcal{S}$ is closed.	       
+	\end{proof}
+    \item Every open box in $E^n$ is an open set.
+	\begin{proof}
+	    An open box in $E^n$ is an intersection of $2n$ half open space $\mathcal{H}$. Hence by
+	    property 4 of open sets, open box is open.
+	\end{proof}
+\end{itemize}
+Now that we have seen some of the topological properties of open/closed sets, let us get back
+to something that is specific to metric spaces. We'll define what it means to say that a set is
+bounded in $(E,d)$.
+\begin{Definition}
+    A set $\mathcal{G} \subset E$ in a metric space $(E,d)$ is bounded if it lies in some open
+    ball  i.e,
+    \begin{displaymath}
+	\exists \left(p \in E\right) \exists \left(R > 0 \in \mathbb{R}\right) \ s.t \ \mathcal{G}
+	\subset \mathcal{B}_{R}(p).
+    \end{displaymath}
+\end{Definition}
+Let us look at some examples of bounded (or unbounded ) sets in $(E,d)$.
+\begin{itemize}
+    \item Every open (or closed ) ball is bounded.
+    \item Every open (or closed ) box is bounded in $E^n$.
+    \item The discrete metric space is bounded (take $\mathcal{B}_2(p)$ for any $p \in E$).
+    \item Half open (or closed ) spaces are not bounded.
+\end{itemize}
+
+Next we'll look at Theorem which says that for bounded sets the choice of center and radius isn't
+crucial.
+\begin{Theorem}[name= Bounded sets in metric space]
+    For any $p \in E$, a set $\mathcal{G} \subset E$ is bounded iff there is a radius $R > 0$ such
+    that $\mathcal{G} \subset \mathcal{B}_{R}(p)$.
+\end{Theorem}
+\begin{proof}
+    $\Leftarrow$ Follows from the definition of bounded sets. $\Rightarrow$ Since $\mathcal{G}$ is
+    bounded $\exists q \in E$ and $R' > 0$ such that $\mathcal{G} \subset \mathcal{B}_{R'}(q)$. Now
+    consider any point $p \in E$ such that $p \neq q$. Let $R = d(q,p) + R'$. Then for any 
+    $r \in \mathcal{B}_{R'}(q)$ we have $d(r,q) < R'$. Now $d(r,p) \leq d(r,q) + d(q,p)$. Hence
+    $d(r,p) < R$. This means that ${B}_{R'}(q) \subset {B}_{R}(p)$. Hence $\mathcal{G} \subset
+    {B}_{R}(p)$. The following picture depicts the mechanisms of the proof.
+    
+
+\end{proof}
+\begin{Corollary}
+    If $\mathcal{G}_1, \dots, \mathcal{G}_n$ are bounded then $\bigcup_{i=1}^{n}\mathcal{G}_i$ is
+    bounded.
+\end{Corollary}
+\begin{proof}
+    Fix a $p \in E$. From the above Theorem since each $\mathcal{G}_i$ is bounded there is a $R_i >
+    0$ such that $\mathcal{G}_i \subset \mathcal{B}_{R_i}(p)$. Let $R = $ max$(R_1,\dots,R_n)$. Then
+    for each $i$, $\mathcal{B}_{R_i} \subset \mathcal{B}_{R}$. Hence, $\bigcup_{i=1}^{n}
+    \mathcal{G}_i \subset \mathcal{B}_{R}$. Hence, the union is bounded.  
+\end{proof}
+Next we'll focus on \emph{sequences} in a metric space. However, before we begin talking 
+about sequences in a metric space we'll show that a closed and bounded subset 
+of $\mathbb{R}$ contains its supremum and infimum.
+
+\begin{Theorem}[name=Bounded and closed non-empty sets in $\mathbb{R}$]
+    If $\mathcal{C} \subset \mathbb{R}$ is nonempty, closed and bounded then $\mathcal{C}$ has a
+    greatest and least element.
+\end{Theorem}
+\begin{proof}
+    $\mathcal{C}$ is closed and bounded. Hence it is bounded from above.  Hence, there is a supremum $a \in \mathbb{R}$. If $a \in \mathbb{R}$ then we are 
+    done. $a$ cannot be in $\mathbb{R} - \mathcal{C}$. To show this, lets assume that $a \not \in 
+    \mathcal{C}$. Since $\mathcal{C}$ is closed, $\mathbb{R} - \mathcal{C}$ is open and there is 
+    $\epsilon > 0$ such that $\mathcal{B}_{\epsilon}(a) \cap \mathcal{C} = \emptyset$. But in 
+    $\mathbb{R}$, the $\mathcal{B}_{\epsilon}(a)$ is an open interval $ a - \epsilon < x < a +
+    \epsilon $. Hence for any $x \in \mathbb{R}$, if $x > a - \epsilon$ then 
+    $x \not \in \mathcal{C}$. But this means that $a - \epsilon$ is also the supremum of 
+    $\mathcal{C}$ giving us a contradiction. Hence $a$ must belong to $\mathcal{C}$. 
+    Similar argument can be used to show $\mathcal{C}$ contains its infimum.
+\end{proof}
+
+\section{Sequences in a metric space}
+\begin{Definition}
+    In a metric space $E$, a sequence denoted by $\left(p_i\right)$ is a function from $\mathbb{Z}_+
+\rightarrow E$.
+\end{Definition}
+We know from our intuition that if a sequence is getting closer and closer to a point, it must be
+converging to that point. We'll establish this intuition with the following concrete definition of
+the convergence of a sequence in a metric space.
+\begin{Definition}
+    A sequence $\left(p_i\right)$ converges to a point $p \in E$ if $\forall \epsilon > 0 \in
+    \mathbb{R}$ $\exists N \in \mathbb{Z}_+$ such that whenever $n \geq N$ then $d(p_n,p) <
+    \epsilon$ (i.e$p_n \in \mathcal{B}_{\epsilon}(p)$).
+\end{Definition}
+The following proposition will tell us that if a sequence converges it must converge to a unique
+point. Hence, we can talk about $\underline{the}$ \emph{limit} of a sequence.
+
+\begin{Proposition}[name= Uniqueness of limit of a convergent sequence]
+    A sequence $\left( p_n \right)$ in $(E,d)$ converges to \emph{atmost} one point.
+\end{Proposition}
+\begin{proof}
+    Suppose $\left( p_n \right)$ converges to $p,q \in E$ with $p \neq q$. Then $d(p,q) > 0$. Let
+    $\epsilon = d(p,q)$. Since we have a convergent sequence $\exists N_1 \in \mathbb{Z}_+$ such
+    that whenever $n \geq N_1$ we have $d(p_n,p) < \frac{\epsilon}{2}$. Similary there is another
+    $N_2 \in \mathbb{Z}_+$ such that whenever $n \geq N_2$ we have $d(p_n,q) < \frac{\epsilon}{2}$.
+    Let $N =$ max$(N_1,N_2)$. Then for $n \geq N$ both $d(p_n,p) < \frac{\epsilon}{2}$ and 
+    $d(p_n,q) < \frac{\epsilon}{2}$ are true. But this means, $d(p,q) \leq d(p,p_n) + d(p_n,q)$ and
+    hence $d(p,q) < \epsilon$ which is absurd since $\epsilon \text{ is } d(p,q)$. Hence we reach a
+    contradiction. Thus $p = q$.
+\end{proof}
+
+Thus if a sequence $\left( p_n \right)$ converges to a point $p$ we call $p$ the limit of the
+sequence $\left( p_n \right)$. Following are some equivalent notations for limits of a sequence.
+\begin{displaymath}
+    \begin{aligned}
+	p_n \rightarrow p. \\
+	\lim_{n \to +\infty}p_n = p.
+    \end{aligned}
+\end{displaymath}
+The choice of metric space is important in deciding whether a sequence converges or not. 
+Consider the following example
+\begin{itemize}
+    \item $\frac{1}{n} \rightarrow 0$ in $E^1$.
+    By Archimedian property we know that $\forall \epsilon > 0$ there is a $N \in \mathbb{Z}_+$ such
+    that $\frac{1}{N} < \epsilon$. Hence for any $ n \geq N$ we have $\frac{1}{n} \leq \frac{1}{N} <
+    \epsilon$. Thus $d(p_n,0) < \epsilon$.
+\item Take the sequence $\left(1/n\right)$ in $\mathbb{R}_+$ with the Euclidean metric. This
+    sequence doesn't converge. ($0 \not \in \mathbb{R}_+$)
+\end{itemize}
+Next we'll define a subsequence. 
+\begin{Definition}
+    A subsequence of a sequence $\left( p_n \right)$ is a sequence $\left( p_{n_i}
+    \right)$ where $ n_1 \ < \ n_2 \ < \ n_3 \ < \ \dots $.
+\end{Definition}
+For example $\left( 1/2n \right)$ is a subsequence of $\left( 1/n \right)$ with $n_1 = 2$, $n_2 = 4$
+and so on. 
+
+Intuition says that if a sequence converges to a point in a metric space, its subsequence 
+should also converge to the same point. We'll prove this in the next proposition. 
+\begin{Proposition}[name=Convergence of a subsequence]
+   A subsequence of a convergent sequence in a metric space converges to the same limit. 
+\end{Proposition}
+\begin{proof}
+    Given a sequence $\left(p_i\right) \rightarrow p$ . Hence given any $\epsilon > 0 \in
+\mathbb{R}$ there is a $N \in \mathbb{Z}_+$ such that whenever $n \geq N$ we have $d(p_n,p) <
+\epsilon$. But $\forall i \in \mathbb{Z}_+$ $n_i \geq i$.  
+Hence for $i \geq N$, $n_i \geq i \geq N$ so $d(p_{n_i},p) < \epsilon$. 
+\end{proof}
+We define the \emph{range} of a sequence $\left(p_i\right)$ to be the \textbf{set} $P = \left\lbrace
+    p_i : i \in \mathbb{Z}_+ \right\rbrace$. Note that a sequence is always infinite whereas the
+range of the sequence could be finite (e.g constant sequences). With this definition we can 
+define what it means for a sequence to be bounded in $(E,d)$.
+\begin{Definition}
+    A sequence $\left(p_i\right)$ is bounded if its range is bounded.
+\end{Definition}
+The next proposition shows that convergent sequences are bounded.
+\begin{Proposition}[name=Boundedness of convergent sequences]
+    Every convergent sequence is a metric space is bounded.
+\end{Proposition}
+\begin{proof}
+    Let $\left(p_n\right)$ be a convergent sequence in $E$. Then for $\epsilon = 1$ there is a
+    $N \in \mathbb{Z}_+$ such that whenever $n \geq N$, $d(p_n,p) < 1$. This means that there
+   are only finitely many points $p_1,p_2,\dots,p_{N-1}$ that are not in $\mathcal{B}_1(p)$. Choose
+  $R \in \mathbb{R}_+$ such that 
+  $R > max(d(p_1,p),\dots,d(p_{N-1},p)) + 1$. Then
+ $\forall n < N$, $d(p_n,p) < R$ and $\forall n \geq N$, $d(p_n,p) < 1 < R$. Hence, $\forall n \in
+ \mathbb{Z}_+$, $d(p_n,p) < R$. This means that for any element $p_n$ in the range of
+ $\left(p_n\right)$; $p_n \in \mathcal{B}_R(p)$. Hence, the sequence is bounded. 
+\end{proof}
+A closed subset of a metric space was defined to be the complement of an open set. Thus the
+knowledge of all closed subsets is equivalent to the knowledge of all open subsets. Now, we'll see
+that the knowledge of all open sets determines which sequences of points are convergent and to which
+limit. And knowledge of convergent sequences of points in the metric space determines which sets of
+a metric space are closed. Hence any statement concerning the open subsets of metric space can be
+translated to statements concerning closed subsets which itself can be translated into statements
+concerning convergent sequences of points and their limits. The next proposition will show the
+connection of open sets and convergent sequences. Before doing that let us define what a
+\emph{neighborhood} is. 
+\begin{Definition}
+    A neighborhood of a point $p \in E$ denoted by $\mathcal{N}[p]$ is an open set containing $p$. 
+\end{Definition}
+Note that an open ball of radius $r$ centered at $p$ is obviously a neighborhood of $p$, but a
+neighborhood of $p$ may or may not be an open ball.
+\begin{Proposition}[name=Open sets and convergent sequences]
+   $p_n \rightarrow p$ iff for any neighborhood $\mathcal{N}[p]$ 
+   there is a $N \in \mathbb{Z}_+$ such that whenever $n \geq N$, $p_n \in \mathcal{N}[p]$.
+\end{Proposition}
+\begin{proof}
+    $\Leftarrow$ since a ball is a neighborhood. 
+    $\Rightarrow$ Given $p_n \rightarrow p$. Let $\mathcal{N}[p]$ be any neighborhood of $p$. Then
+since $\mathcal{N}[p]$ is open and $p \in \mathcal{N}[p]$ there is an $\epsilon > 0$ such that
+$\mathcal{B}_{\epsilon}(p) \subset \mathcal{N}[p]$. Since $p_n \rightarrow p$, there is a $N \in
+\mathbb{Z}_+$ such that whenever $n \geq N$, $d(p_n,p) < \epsilon$ i.e $p_n \in
+\mathcal{B}_{\epsilon}(p)$. Hence, $p_n \in \mathcal{N}[p]$.
+\end{proof}
+Now we'll show the connection of closed sets and convergent sequences. 
+\begin{Theorem}[name=Closed sets and convergent sequences]
+    A set $\mathcal{C} \subset E$ is closed iff for every sequence $\left(p_i\right) \in
+    \mathcal{C}$ whenever $p_i \rightarrow p \in E$ then $p \in \mathcal{C}$.
+\end{Theorem}
+\begin{proof}
+    $\Rightarrow$ 
+     Let $\mathcal{C}$ be closed and let $\left(p_i\right) \in \mathcal{C}$ such that $p_i
+ \rightarrow p \in E$. Since $\left(p_i\right)$ is a convergent sequence, for any $\epsilon > 0$
+ there is a $N \in \mathbb{Z}_+$ such that whenever $n \geq N$, $d(p_n,p) < \epsilon$ i.e 
+$p_n \in \mathcal{B}_{\epsilon}(p)$. But $p_n \in \mathcal{C}$. Hence, $\mathcal{B}_{\epsilon}(p) \cap
+\mathcal{C} \neq \emptyset$. Since $\epsilon > 0$ was arbitrary and $\mathcal{C}$ is closed, $p \in
+\mathcal{C}$(from characterization of closed sets \#3). \\
+$\Leftarrow$ 
+Suppose $\mathcal{C}$ is not closed. Then there is a point $p \in E$ such that $\forall \epsilon >
+0$, $\mathcal{B}_{\epsilon}(p) \cap \mathcal{C} \neq \emptyset$ but $p \neq \mathcal{C}$. Since for 
+any $\epsilon >0$ we get a ball that intersects $\mathcal{C}$, let $\epsilon = 1/n$, there is a 
+$p_n \in \mathcal{C}$ such that $p_n \in \mathcal{B}_{1/n}(p)$. Its easy to see that $\left(p_n\right)$
+converges to $p$ since, let $\epsilon > 0$ choose $N \in \mathbb{Z}_+$ such that $1/N < \epsilon$.
+Then $n \geq N \implies 1/n \leq 1/N$. Thus $\mathcal{B}_{1/n}(p) \subset \mathcal{B}_{\epsilon}(p)$.
+But $p_n \in \mathcal{B}_{1/n}(p)$ hence, $d(p_n,p) < \epsilon$. Thus $p_n \rightarrow p$ but $p
+\not \in \mathcal{C}$.
+\end{proof}
+Some very important concepts in metric spaces are defined below. One very important concept is the
+idea of a cluster point or a limit point or accumulation ptof a set in a metric space. 
+Such a point is \emph{approximated} by points of the set.
+\begin{Definition}
+    A point $p \in E$ is a cluster point (or limit point) of a subset $S \subset E$ if \emph{every}
+    open ball about $p$ intersects $S$ in infinitely many points of $S$.
+\end{Definition}
+Note that the above definition is logically equivalent to saying that if every open ball about $p$
+contains a point of $S$ other than maybe $p$ then $p$ is the cluster point of $S$.
+Some examples :
+\begin{itemize}
+    \item $S = \left(0,1\right)$. The set of cluster points of $S = \left[0,1\right]$.
+    \item $S = \mathbb{Z}$ and $E = \mathbb{R}$. Then $S$ has no cluster points.
+    \item $S = \left.\lbrace 1/n : n \in \mathbb{Z}_+\rbrace\right.$. Then $S$ has only one cluster
+	point namely $0$.
+\end{itemize}
+\begin{Definition}
+    A point $p \in S$ in metric space $(E,d)$ is an interior point of $S$ if there is an open ball
+    around $p$ contained entirely in $S$.
+\end{Definition}
+Note that for a set to be open all its points must be interior points.
+\begin{Definition}
+    A point $p \in S$ in metric space $(E,d)$ is an isolated point if there is an open ball around
+    $p$ that contains not other points of $S$.
+\end{Definition}
+The set of integers $\mathbb{Z}$ in $\mathbb{R}$ contains only isolated points. For example consider
+the ball of radius $1/2$ about every integer.
+\begin{Definition}
+    A point $p \in E$ is the boundary point of the set $S \subset E$ in the metric space $(E,d)$ if
+    every open ball around $p$ contains points of $S$ and $S-E$. 
+\end{Definition}
+Note that every real number is a boundary point of $\mathbb{Q}$. We have seen a characterization of
+closed sets and converging sequences. A different characterization is based on cluster points.
+\begin{Theorem}
+    A set $S$ in metric space $(E,d)$ is closed if and only if it contains all its cluster points.
+\end{Theorem}
+\begin{proof}
+    Let $p$ be a cluster point of $S$ and assume $p \not \in S$. Hence $p \in E - S$. Since $S$ is
+    closed, $E-S$ is open and so there is a $r > 0$ such that $\mathcal{B}_r(p) \subset S^c$. But
+    this means that $p$ cannot be a cluster point of $S$ since for this $r$, 
+    $\mathcal{B}_r(p) \bigcap S = \emptyset$. Hence we have arrived at a contradiction. Thus $p \in
+    S$.
+
+    Let $p \in E$ be an arbitrary point such that $p \not \in S$. Hence $p \in E - S$ and so $p$ is
+    not a limit point of $S$. Thus there is an $r > 0$ such that $\mathcal{B}_r(p) \bigcap S =
+    \emptyset$. Hence for this $r$, $\mathcal{B}_r(p) \subset S^{c}$. Thus $S^c$ is open and so $S$
+    is closed.  
+\end{proof}
+Closed sets are very important in metric space as far as converging sequences are concerned. Given
+any set $S$ in metric space $(E,d)$ we can derive a closed set called the closure of $S$ by
+adjoining all its cluster points. 
+\begin{Definition}
+    Let $S \subset E$ in metric space $(E,d)$ and let $S'$ be the set of all the cluster points of
+    $S$, then the closure of $S$ is the set $\overline{S} = S \bigcup S'$.
+\end{Definition}
+\begin{Theorem}[name=Properties of closure]
+    If $E$ is a metric space and $X \subset E$, then
+    \begin{enumerate}
+	\item $\overline{X}$ is closed.
+	\item $X = \overline{X}$ iff $X$ is closed.
+	\item If $X \subset Y$ then $X' \subset Y'$.
+	\item If for every closed set $F$ in metric space $E$, $X \subset F$ then $\overline{X}
+	    \subset F$. Thus, the closure of a set is the smallest closed set containing the set.
+    \end{enumerate}
+\end{Theorem}
+
+\begin{proof}
+    \begin{enumerate}
+	\item Let $p$ be a limit point of $\overline{X}$. Assume $p \not \in X$. 
+	    Let $r > 0$ be an arbitrary positive real number. There is a $q \neq p$ in $\overline{X}$
+	    such that $q$ is in the open ball $\mathcal{B}_r(p)$. If $q$ belongs to $X$ then we have
+	    shown that $p$ is a limit point of $X$ and so belongs to $X'$ and hence $\overline{X}$.
+	    If $q \not \in X$, then $q$ must be a limit point of $X$. Let $\delta = r - d(p,q)$.
+	    Then there is an open ball $\mathcal{B}_{\delta}(q)$ which intersects $X$ at points
+	    other than $q$. Since $\mathcal{B}_{\delta}(q) \subset \mathcal{B}_r(p) $, we see that
+	    $\mathcal{B}_r(p)$ contains points of $X$ other than $p$. Hence $p$ is a limit point of
+	    $X$ and so is contained in $\overline{X}$.
+	\item Since $\overline{X}$ is closed $X$ is closed. Now let $X$ be closed and hence $X$
+	    contains all its limit points and so $X' \subset X$ and so $\overline{X} = X\cup X' =
+	    X$.
+	\item Let $X \subset Y$. Let $p$ be a limit point of $X$ and hence for any $r > 0$ 
+	    there is a $q \neq p$ in $X$ $q$ is in the ball $\mathcal{B}_r(p)$. But $q \in X$
+	    implies $q \in Y$ and so $p$ is a limit point of $Y$ and hence belongs to $Y'$.
+	\item Let $F$ be an arbitrarily closed subset in $E$ and so $F \supset F'$. Since $X \subset
+	    F$ we have $X' \subset F'$. Thus $X \cup X' \subset X \cup F' \subset F \cup F'$ and so
+	    $\overline{X} \subset F \cup F'$ i.e $\overline{X} \subset F$. 
+    \end{enumerate}
+\end{proof}
+
+Next we will show that the set containing all the subsequential limits of a sequence is closed. Note
+that finite sets are closed and hence we can assume that the set of subsequential limits is infinite
+to prove this assertion.
+
+\begin{Theorem}
+    The subsequential limits of a sequence $(p_n)$ in a metric space $(E,d)$ is a closed subset of
+    $E$.
+\end{Theorem}
+\begin{proof}
+    Let $p$ be a limit point of the set of all subsequential limits of $(p_n)$. We will show that
+    $p$ belongs to the set i.e $p$ is a subsequential limit. Since $p$ is a limit point, for any $
+    \epsilon > 0$, there is a subsequential limit $q$ such that $q \neq p$ and $q \in
+    \mathcal{B}_{\epsilon / 2}(p)$. Since $q$ is a subsequential limit we can form a sequence of
+    $(p_{n_i})$, such that for all $i \in \mathbb{Z}^{+}$, $d(p_{n_i},q) < 1/i$. Choosing $i$ large
+    enough we can make $d(p_{n_i},q) < \epsilon/2$. Thus $d(p_{n_i},p) < d(p_{n_i},q) + d(q,p)$ and
+    so $d(p_{n_i},p) < \epsilon$. Hence $p$ is a subsequential limit.  
+\end{proof}
+
+
+Armed with these properties of a convergent sequence in a metric space, we can infer many other 
+when the metric space is the Euclidean metric space. Since $\mathbb{R}$ is an ordered field with
+the $L.U.B$ property many rational operation on convergent sequences follow. In the following 
+paragraphs we'll focus on convergent sequences in $\mathbb{R}$.
+\begin{Theorem}[name=Convergent sequences in $\mathbb{R}$]
+    In $E^1$, if $a_n \rightarrow a$ and $b_n \rightarrow b$, then the following are true :
+    \begin{enumerate}
+	\item $a_n + b_n \rightarrow a+b$ 
+	\item $a_n - b_n \rightarrow a-b $
+	\item $a_n * b_n \rightarrow a*b $
+	\item if $b \neq 0 $ and $\forall n \in \mathbb{Z}_+ b_n \neq 0$ then $\frac{a_n}{b_n} \rightarrow
+	    \frac{a}{b}$
+    \end{enumerate}
+\end{Theorem}
+
+\begin{proof}
+    \begin{enumerate}
+	\item Let $\epsilon > 0 \in \mathbb{R}$ be arbitrary. Since $a_n \rightarrow a$, 
+	there is a $N_1 \in \mathbb{Z}_+$ such that whenever $n\geq N$, $d(a_n,a) < \epsilon/2$.
+	Similarly there is $N_2$ for $\left(b_n\right)$. Let $N = \text{ max}(N_1,N_2)$. Note,
+	$d(a_n + b_n, a+b) = \lvert a_n + b_n - (a+b) \rvert$. But the right hand side can be
+	written as $\lvert (a_n - a) + (b_n - b)\rvert$ which from the triangle inequality gives us
+	\begin{displaymath}
+	    \begin{aligned}
+		d(a_n + b_n, a + b) = & \lvert (a_n - a) + (b_n - b) \\
+		\leq & \lvert a_n - a \rvert + \lvert b_n - b \rvert \\
+		& = d(a_n,a) + d(b_n,b) \\
+		& < \epsilon/2 + \epsilon/2 
+	    \end{aligned}
+	\end{displaymath}
+	Hence $d(a_n + b_n, a+b) < \epsilon$. Thus $a_n + b_n \rightarrow a+b$.
+	\item Similar to above. An alternate proof is using $3$ and noting that the constant
+	    sequence $a_n = -1$ converges to $-1$, we get $-b_n \rightarrow -b$. Hence, 
+	using $1$ we get $2$.
+	\item Since convergent sequences are bounded, consider the \emph{closed} ball of radius
+	    $M_1$ about $0$ containing the range of $\left(a_n\right)$ and closed ball of radius 
+	    $M_2$ containing the range of $\left(b_n\right)$. Since a closed ball is also a closed
+	    set and we have shown that the limit of a convergent sequence that is contained in a
+	    closed ball is itself in a closed ball we can conclude that :
+	    $\forall n \in \mathbb{Z}_+ \lvert a_n \rvert < M_1$ and $a < M_1$. Similarly for $b_n$
+	    and $b$. Taking $M = max(M_1,M_2)$ we have $\forall n \ \lvert a_n \rvert < M $ and
+	    $\lvert b_n \rvert < b$. Moreover, $a,b < M$. Now, let $\epsilon > 0 \in \mathbb{R}$ be
+	    arbitrary. There is a $N = max(N_1,N_2)$ such that whenever $n \geq N$, $d(a_n,a) <
+	    \frac{\epsilon}{2*M}$ and $d(b_n,b) < \frac{\epsilon}{2*M}$. Hence,
+	    \begin{displaymath}
+		\begin{aligned}
+		    d(an*b_n, a*b) & =  \lvert a_n*b_n - a*b +\text{\fbox{$a*b_n$}} -
+		    \text{\fbox{$a*b_n$}} \ \rvert \\
+		    & =  \lvert (a_n - a)*b_n + (b_n - b)*a \rvert \\
+		    & \leq \lvert b_n \rvert * \lvert a_n - a \rvert + \lvert a \rvert * \lvert b_n
+		    - b \rvert \\
+		    & < M*\frac{\epsilon}{2*M} +   M*\frac{\epsilon}{2*M} \\
+		    & \ \ = \epsilon
+		\end{aligned}
+	    \end{displaymath}	
+	\item We'll prove for a special case when $a_n = 1$. Note that $d(\frac{1}{b_n},\frac{1}{b})
+	    = \lvert \frac{1}{b_n} - \frac{1}{b} \rvert$. Hence, we want $b_n$ to be bounded away 
+	    from $0$. If we take $n$ large so that $\lvert b_n - b \rvert < b/2$, then $b_n > \lvert
+	    b/2 \rvert$. Given an $\epsilon > 0 \in \mathbb{R}_+$, choose $N \in \mathbb{Z}_+$ such
+	    that $\lvert b_n - b \rvert < \text{ min}\left.\lbrace \frac{\lvert b \rvert}{2},
+		b^2*\epsilon/2 \rbrace\right.$. Then $n \geq N$ we get $d(\frac{1}{b_n},\frac{1}{b})
+	    < \epsilon$
+    \end{enumerate}
+\end{proof}
+An important corollary of the above Theorem is :
+\begin{Corollary}
+    In $E^1$ if $a_n \rightarrow a$ and $b_n \rightarrow b$ and if $\forall n \in \mathbb{Z}_+$,
+$a_n \leq b_n$ the $a \leq b$. 
+\end{Corollary}
+\begin{proof}
+    From the Theorem above we know that $b_n - a_n \rightarrow b - a$. Now, each $b_n - a_n \geq 0$
+and they belong in $[0,\infty)$. But $[0,\infty)$ is a closed set since its the complement of
+$(-\infty,0)$. Hence the limit $b-a \in [0,\infty)$. Thus $b-a \geq 0$ which means $a \leq b$.
+\end{proof}
+Next, we'll look into an important class of sequencese in $E^1$ called \emph{monotone} sequences.
+\begin{Definition}
+    A sequence $\left(a_n\right)$ in $\mathbb{R}$ is an increasing sequence if $a_1 \leq a_2 \leq
+    a_3 \leq \dots$.
+\end{Definition}
+\begin{Definition}
+    A sequence $\left(a_n\right)$ in $\mathbb{R}$ is an decreasing sequence if $a_1 \geq a_2 \geq
+    a_3 \geq \dots$.
+\end{Definition}
+\begin{Definition}
+    A sequence  in $\mathbb{R}$ is a monotone sequence if it is either increasing or decreasing.
+\end{Definition}
+The next Theorem guarantees the convergence of monotone sequences in $\mathbb{R}$ 
+if they are bounded. This, as we shall see, is possible because $\mathbb{R}$ has the $L.U.B$ 
+property. 
+\begin{Theorem}[name=Bounded monotone sequences]
+    Every bounded monotonic sequence converges.
+\end{Theorem}
+\begin{proof}
+    Let $\left(a_n\right)$ be a bounded monotone sequence in $\mathbb{R}$. Without loss of generality, 
+    lets assume that $\left(a_n\right)$ is increasing. To show the convergence of
+    $\left(a_n\right)$, we need to find $a \in \mathbb{R}$ such that $\forall \epsilon > 0 \in
+    \mathbb{R}$ there is a $N \in \mathbb{Z}_+$ such that whenever $n \geq N$, $a_n \in
+    \mathcal{B}_{\epsilon}(a)$. Since $\left(a_n\right)$ is bounded, its range $A = \left.\lbrace a_n
+	: n \in \mathbb{Z}_+ \rbrace\right.$ is bounded. But $A \subset \mathbb{R}$ and hence its
+  supremum, lets call it a, exist. For any $\epsilon > 0$, $a_n < a + \epsilon$. Also, since $a -
+  \epsilon$ is not the supremum of $A$, there is a $N \in \mathbb{Z}_+$ such that $a - \epsilon <
+  a_N$. Now, whenever $n \geq N$, since $\left(a_n\right)$ is increasing we have, $a - \epsilon <
+  a_N \leq a_n < a + \epsilon$. Thus $a_n \in \mathcal{B}_{\epsilon}(a)$.  
+\end{proof}
+An example of where the above Theorem is used is illustrated in the following example. Before we
+use that it will be useful to note that for any $\left(b_n\right)$ in $E^1$, $\lvert b_n \rvert
+\rightarrow 0$ $\Leftrightarrow$ $b_n \rightarrow 0$. It is important that the limit is $0$ for this
+observation to be correct. With this, lets look at the following example.
+\begin{itemize}
+    \item Suppose $a \in \mathbb{R}$ such that $\lvert a \rvert < 1$. Then $a^n \rightarrow 0$.
+    \begin{proof}
+	Since $a^n \rightarrow 0$ is the same as $\lvert a^n \rvert \rightarrow 0$, we can assume
+that $a > 0$ (because $\lvert a^n \rvert = \lvert a \rvert ^n$. Then $a_{n+1} - a_n = a_n(1 - a)$.
+Hence, $\left(a_n\right)$ is a decreasing sequence. Since, the range is bounded by $(0,1)$, using
+the Theorem above $\left(a_n\right)$ converges. Let $a_n \rightarrow x$. Then $a*a^{n-1} \rightarrow
+a*x$. Since $a^n = a*a^{n-1}$, this means that $a*x = x$ or $(a-1)*x = 0$. Since, 
+$\lvert a \rvert < 1$, $x = 0$.
+    \end{proof}
+\end{itemize}
+
+In $E^1$, it is useful to look at upper and lower limits that are very useful in dealing with
+infinite series. For any sequence any finite terms have no bearing on the convergence. As such if
+$(p_n)$ is a sequence in $E^1$ it is important to look at the terms $n > N$ where we can vary $N$. 
+Let $u_N = inf\lbrace p_n : n \geq N\rbrace$ and $v_N = sup \lbrace p_n : n \geq N \rbrace$. Then as
+$N$ increases we have $u_1 \leq u_2 \ldots$ and $v_1 \geq v_2 \ldots$ and so we have monotonic
+sequences. 
+
+\begin{Definition}
+    Let $(p_n)$ be a sequence in $E^1$. The limit superior i.e
+    \begin{equation*}
+	p^{*} = \lim \, sup \, p_N =
+	\lim_{N\to\infty}sup\lbrace p_n : n\geq N \rbrace.
+    \end{equation*}
+\end{Definition}
+
+\begin{Definition}
+    Let $(p_n)$ be a sequence in $E^1$. The limit inferior i.e
+    \begin{equation*}
+	p_{*} = \lim \, inf \, p_N =
+	\lim_{N\to\infty}inf\lbrace p_n : n\geq N \rbrace.
+    \end{equation*}
+\end{Definition}
+Note that for any $\epsilon$ there is a $N$ such that $p^{*} - \epsilon < sup\lbrace p_n : n \geq
+N\rbrace < p^{*} + \epsilon$. Thus for any $x > p^{*}$, we have $p_n < x$ for infinitely many
+$n$. Analogous observation can be made for $p_{*}$. The following Theorem states some useful facts
+about limit superior and limit inferior.
+\begin{Theorem}
+    Let $(p_n)$ be a sequence in $E^1$. Then
+    \begin{enumerate}
+	\item If $\lim \, p_n = p $ is defined then $p^{*} = p = p_{*}$.
+	\item If $p^{*} = p_{*} = p$ then $\lim_{n \to \infty} \, p_n = p$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    \begin{enumerate}
+	\item When $p^{*} = \infty$ or $p_{*} = - \infty$ it is easy to check. Let $p$ be a real
+	    number. We know that for all $N$, $u_N \leq p_N \leq v_N$ and so $p_{*} \leq p \leq
+	    p^{*}$. We need to show the other inequality. For any $\epsilon > 0$, we know that there
+	    is a $N$ such that  $p - \epsilon < p_n  < p + \epsilon$. Thus 
+	    $v_N = sup\lbrace p_n : n \geq N\rbrace \leq p + \epsilon$. For any $M \geq N$, $v_M
+	    \leq v_N$ and so for all $M \geq N$, we have $v_M \leq p + \epsilon$. Hence in the
+	    limit, $p^{*} \leq p + \epsilon$. Since $\epsilon > 0$ is arbitrary we get $p^{*} \leq
+	    p$. A similar argument holds for $p_{*}$.  
+	\item Again disregarding the case when either limit is $\pm \infty$, WLOG let $p^{*} =
+	    p_{*}$ be a real number. Then for any $\epsilon > 0$ there is a $N_1$ such that $p^{*} -
+	    \epsilon < v_N < p^{*} + \epsilon$ and an $N_2$ such that $p_{*} - \epsilon < u_N <
+	    p_{*} + \epsilon$. Taking $N \geq max(N_1,N_2)$, we have
+	    \begin{equation*}
+		p -\epsilon < p_N < p + \epsilon
+	    \end{equation*}
+	    Thus, $p_n \to p$.
+    \end{enumerate}
+\end{proof}
+
+A different characterization of the limit superior and limit inferior is given below,
+\begin{Theorem}
+    Let $(p_n)$ be a sequence in $E^1$. Let $S$ be the set of all subsequential limits of the
+    sequence $(p_n)$. Then $p_{*} = inf\, S$ and $p^{*} = sup \, S$.
+\end{Theorem}
+\begin{proof}
+    If $S$ is bounded then note that $p_{*}$ and $p^{*}$ belong to the set $S$ since $S$ is closed 
+    and so it must contain its superemum and infimum. Let $t \in S$ be arbitrary. Then there is a 
+    subsequence $p_{n_i}$ such that $p_{n_i} \to t$. From the above Theorem we know that,
+    \begin{equation*}
+	\lim_{N \to \infty} inf \, p_{n_N} = t = \lim_{N \to \infty} sup \, p_{n_N}
+    \end{equation*}
+    However, the set $\lbrace p_n : n > N \rbrace$ contains the the set $\lbrace p_{n_i} : n_i > N
+    \rbrace$ and so we get the inequality,
+    \begin{equation*}
+	p_{*} = \lim_{n \to \infty} inf \, p_{n} \leq \lim_{N \to \infty} inf \, p_{n_N} = t = \lim_{N \to
+	    \infty} sup \, p_{n_N} \leq \lim_{n \to \infty} sup \, p_{n} = p^{*}
+    \end{equation*}
+    Thus $p^{*}$ is an upper bound for the set $S$ and so $sup \, S \leq p^{*} $ 
+    and similarly $inf \, S \geq p_{*}$. Since $p_{*}$ and $p^{*}$ belong to $S$ we get the desired
+    equality.
+\end{proof}
+
+The definition of convergence of a sequence requires the apriori knowledge of the limit. This can be
+cumbersome since the limit of a general sequence is not known beforehand. With this motivation in
+mind we'll define \emph{Cauchy} sequences.
+
+\begin{Definition}
+    A sequence $\left(p_n\right)$ in any metric space $(E,d)$ is a cauchy sequence if $\forall
+    \epsilon > 0 \in \mathbb{R}$, there is a $N \in \mathbb{Z}_+$ st whenever $m,n \geq N$,
+    $d(p_m,p_n) < \epsilon$.
+\end{Definition}
+The next Theorem shows that if a sequence is convergent it is also cauchy.
+\begin{Theorem}[name=Convergent sequences are cauchy]
+    Every convergent sequence is a cauchy sequence.
+\end{Theorem}
+\begin{proof}
+    Suppose $p_n \rightarrow p$. Then given any $\epsilon > 0$ there is a $N \in \mathbb{Z}_+$ such
+that whenver $n \geq N$, $d(p_n,p) < \epsilon/2$. Hence, $m \geq N \implies d(p_m,p) < \epsilon/2$. 
+Now, $d(p_m,p_n) \leq d(p_m,p) + d(p,p_n)$. Thus, $d(p_m,p) < \epsilon$.
+\end{proof}
+Note that the reverse implication is not always true. Consider the following example
+\begin{itemize}
+    \item In $E^1$, $\left(1/n\right)$ converges. Clearly the sequence is cauchy. However, in
+	$\mathbb{R}_+ \subset E^1$, the sequence doesn't converge even though it is still cauchy.
+\end{itemize}
+There are some spaces in which these notions are equivalent. Such spaces are called \emph{complete}
+spaces.
+\begin{Definition}
+    A metric space $(E,d)$ is complete iff every cauchy sequence in it converges. 
+\end{Definition}
+As we saw from the earlier example not all metric spaces are complete. Fortunately, many metric
+spaces are complete. Before we show that $E^n$ is a complete metric space, we should see what are
+the properties of a cauchy sequence.
+\begin{Proposition}[name=Properties of a cauchy sequence]
+
+    \begin{enumerate}
+	\item Every subsequence of a cauchy sequence is cauchy.
+	\item Every cauchy sequence is bounded.
+	\item A cauchy sequence with a convergent subsequence must converge.
+    \end{enumerate}
+\end{Proposition}
+
+\begin{proof}
+    \begin{enumerate}
+	\item since any $n_i \geq i$, for $n,m \geq N$ we have $n_n,n_m \geq N$. Thus
+	    $d(p_{n_m},p_{n_n}) < \epsilon$.
+	\item Let $\epsilon = 1$. $\left(p_n\right)$ is cauchy and hence there is a $N \in
+	    \mathbb{Z}_+$ such that whenever $m,n \geq N$, $d(p_m,p_n) < 1$. Let $R = \text{
+		max}(d(p_1,p_N),\dots,d(p_{N-1},p_N)) + 1$. Then $\forall n \in \mathbb{Z}_+$,
+	    $p_n \in \mathcal{B}_{R}(p_N)$.
+	\item Since $\left(p_n\right)$ is cauchy, given an $\epsilon > 0$ there is a $N_1$ such
+	    that whenever, $m,n \geq N_1$, $d(p_n,p_m) < \epsilon/2$. Also let
+	    $\left(p_{n_i}\right)$ be a subsequence such that $p_{n_i} \rightarrow p$. Then there is 
+	a $N_2$ such that whenever for some $i \in \mathbb{Z}_+$, $n_i \geq N_2$, $d(p_{n_i},p) <
+	\epsilon/2$. Take, $N = \text{ max}(N_1,N_2)$ and pick an $m > N$ such that $p_m$ is in the
+	subsequence. Then $d(p_m,p) < \epsilon/2$. Using the triangle inequality we get $d(p_n,p) < 
+	\epsilon$ whenver $n \geq N$.
+    \end{enumerate}
+\end{proof}
+Next, we'll prove a very important Theorem that says that $E^1$ is complete.
+\begin{Theorem}[name=Completeness of $E^1$]
+    $E^1$ is complete.
+\end{Theorem}
+\begin{proof}
+    Let $\left(a_n\right)$ be a cauchy sequence in $E^1$. Let $S = \left.\lbrace x \in \mathbb{R} :
+	x \leq a_n \text{ for infinitely many } n \rbrace\right.$. Then, $S$ is a subset of the 
+   range of $\left(a_n\right)$ which is bounded. Thus its supremum exists, lets call it $a$. Given
+   any $\epsilon > 0$ there is a $N \in \mathbb{Z}_+$ such that whenever $m,n \geq N$, $d(a_m,a_n) <
+   \epsilon$. Since, $sup S = a$, $a + \epsilon/2 \not \in S$, but $a - \epsilon/2 \in S$. Hence,
+   $a - \epsilon/2 \leq a_n$ for infinitely many $n$. Choose $m \geq N$ such that $a_m \in
+   (a-\epsilon/2 , a)$.  Hence, $\forall n \geq N$, $d(a_n,a) \leq d(a_n,a_m) + d(a_m,a)$. Thus,
+   $d(a_n,a) < \epsilon$.
+\end{proof}
+The choice of $S$ is illustrated in the following figure. Our first guess of $a$ is denoted by 
+$+_1$. Note that there are only finitely many points in the sequence that are greater than this
+choice. There will be a point
+during which we will \emph{cross} from finitely many points to inifinitely many points. Our set $S$
+is then all the points to the left of that \emph{crossing} point. A supremum
+is guaranteed since we are in $\mathbb{R}$. Also note that sup $S$ is the limit inferior of the
+sequence. The sequence of $u_N$ form a monotonic increasing sequences and should converge to the
+superemum. The supremum is guaranteed since the sequence is cauchy and so the range is bounded.
+\newline
+\newline
+
+
+
+\begin{Corollary}
+    $E^n$ is complete.
+\end{Corollary}
+\begin{proof}
+    Let $\mathbf{p_i} = \left(x_{1i},x_{2i},\dots,x_{ni}\right)$ such that $\left(\mathbf{p_i}\right)$ 
+    is cauchy. Hence, given an $\epsilon > 0 \in \mathbb{R}$, there is a $N \in \mathbb{Z}_+$ such 
+    that whenver $i,j \geq N$, $d(\mathbf{p_i},\mathbf{p_j}) < \epsilon$. Now
+    $d(\mathbf{p_i},\mathbf{p_j}) = $
+    \begin{displaymath}
+	\begin{aligned}
+	    = & \sqrt{\left(\sum_{k = 1}^n (x_{ki} - x_{kj})^2 \right)}  \\
+            \geq & \sqrt{\left(x_{ki} - x_{kj}\right)} \ \forall k = 1 \dots n \\
+	     & = \lvert x_{ki} - x_{kj} \rvert \forall k = 1 \dots n
+	\end{aligned}
+    \end{displaymath}
+    Hence, $\lvert x_{1i} - x_{1j} \rvert < \epsilon$. Thus $\left(x_{1i}\right)$ is cauchy.
+    Similary $\left(x_{2i}\right)$ and so on. Since each $\left(x_{ki}\right) \in \mathbb{R}$, and
+    $E^1$ is complete $x_{1i} \rightarrow x_1$ and so on. Let $\mathbf{p} = \left(x_1,x_2,\dots,
+    x_k\right)$. Then since each $x_{ki}$ converges let $N = max(N_1,N_2,\dots,N_n)$ such that given
+an $\epsilon > 0$, $d(x_{ki},x_k) < \epsilon/\sqrt(k)$ whenver $i \geq N$. Hence $\mathbf{p_i}
+\rightarrow \mathbf{p}$.
+\end{proof}
+A good question to ask will be are all subspaces of complete metric spaces complete? The answer is
+no since we saw that $\mathbb{R}_+$ was not complete. It was seen that $\left(1/n\right)$ did not 
+converge since $0 \not \in \mathbb{R}_+$. What if we add all the \emph{boundary points} to the 
+subspaces of complete metric space?
+
+\begin{Proposition}[name=Closed subspace of complete spaces]
+    Every closed subspace of a complete metric space is complete.
+\end{Proposition}
+
+\begin{proof}
+    Let $\mathcal{C}$ be a closed subset of a complete metric space $E$. Given any cauchy sequence
+    $\left(p_n\right) \in \mathcal{C}$, since $E$ is complete there is a $p \in E$ such that $p_n
+\rightarrow p$. But since $\mathcal{C}$ is closed and $\left(p_n\right) \in \mathcal{C}$, since
+$\left(p_n\right)$ converges, $p$ must belong to $\mathcal{C}$.
+\end{proof}
+
+
+Thus we see that finding complete metric spaces aren't cumbersome. Any closed subset of $E^n$ will
+just do. However, we have seen that closed and bounded sets in $E^n$ possess some additional 
+properties that just closed sets (for example closed rays in $E^1$) lack. For example, 
+extreme value Theorem hold in closed and bounded sets of $E^1$ and fails in open sets and closed
+rays. In exploring these nice properties we'll define an important concept called
+\emph{compactness}.
+\section{Compactness}
+\begin{Definition}
+    Given $S \subset E$, a collection $\left.\lbrace \mathcal{U}_i : i \in I \rbrace\right.$ of
+    subsets of $E$ is called a cover of $S$ if $S \subset \bigcup_{i \in I} \mathcal{U}_i$. If each
+    $\mathcal{U}_i$ is an open set in $E$ then we have an open cover of $S$.
+\end{Definition}
+\begin{Definition}
+    A subset $K \subset E$ is compact if for every open cover of $K$ there is a finite subset $I_0
+    \subset I$ such that the collection $\left.\lbrace \mathcal{U}_i : i \in I_0 \rbrace\right.$
+    covers $K$.
+\end{Definition}
+Let us look at some examples :
+\begin{itemize}
+    \item Every finite set is compact.
+	\begin{proof}
+	    Given any open cover $\left.\lbrace \mathcal{U}_i : i \in I \rbrace\right.$ of a finite
+	    set $K = \left.\lbrace p_j : j \in I_0\rbrace\right.$, each $p_j$ belongs to atleast one
+	    $\mathcal{U}_i$. Hence, picking those gives us a finite subcovering.
+	\end{proof}
+    \item $E^1$ is not compact .
+	\begin{proof}
+	    To show that a set is not compact we need to find an open conver such that no finite
+	    sub-collection of the open cover is a cover for the set. Let $\mathcal{U}_i =
+	    \left(-\infty, i\right)$ where $i \in \mathbb{Z}_+$.  Then $\bigcup_{i \in \mathbb{Z}_+}\mathcal{U}_i = \mathbb{R}$.
+	     Therefore $\left.\lbrace \mathcal{U}_i : i \in \mathbb{Z}_+ \rbrace\right.$ is an open
+	    cover.However, no finite cover exists. To see this let $I_0$ be a finite subcollection 
+	    of $\mathbb{Z}_+$ such that $\left.\lbrace \mathcal{U}_i : i \in I_0 \rbrace\right.$. 
+	    Since $I_0 \subset \mathbb{Z}_+$, it maximum exist, lets call it $N$. Then $
+	    \bigcup_{i \in I_0}\mathcal{U}_i = \left(-\infty,N\right)$. Hence, any $x \geq N$ is not
+	    covered in this collection.
+	\end{proof}
+    \item $K = \left.\lbrace 1/n : n \in \mathbb{Z}_+\rbrace\right. \bigcup \left.\lbrace 0
+	    \rbrace\right. \subset E^1$ is compact.  
+	\begin{proof}
+	    Given any open cover $\left.\lbrace \mathcal{U}_i : i \in I \rbrace\right.$ of K, there
+	    is an $i \in I$ such that $0 \in \mathcal{U}_i$. Since $1/n \rightarrow 0$,
+	$\mathcal{U}_i$ contains all but finitely many $1/n$. Hence, we have only finitely many
+	points to cover.
+	\end{proof}
+
+    \item $S = \left.\lbrace 1/n : n \in \mathbb{Z}_+\rbrace\right. \subset E^1$ is not compact.
+	\begin{proof}
+	    For any $i \in \mathbb{Z}_+$, let $\mathcal{U}_i = \left(1/i+1 , 1/i-1\right)$. For any
+	    $i$, $\mathcal{U}_i \bigcap S = S$, hence $\left.\lbrace \mathcal{U}_i : i \in
+		\mathbb{Z}_+ \rbrace\right.$ is an open conver of $S$, but no finite subcover exist.
+	\end{proof}
+
+\end{itemize}
+\begin{Definition}
+    A metric space $(E,d)$ is compact if it is a compact subset of itself.
+\end{Definition}
+Before, we show that compactness is an inherent property we need to show that open\emph{ness} of a
+set is not inherent to the set. To see this note that a set $E \subset X$ is open (w.r.t $X$) if
+for any point $p \in E$ there is an $r > 0$ such that $\mathcal{B}_r(p) \subset E$. Now, if we have
+a subspace $Y \subset X$ such that $E \subset Y$, then $E$ is open w.r.t $Y$ whenever $
+\mathcal{B}_r(p) \bigcap Y \subset E$. It is easy to show that that $ E \subset Y \subset X$ is open
+relative to Y iff $E = Y \bigcap \mathcal{U}$ for $\mathcal{U}$ open in $X$. Thus the open interval
+$E = (a,b)$ is open w.r.t $E^1$ but not w.r.t $E^2$.
+
+
+\begin{Theorem}[name=relative open sets]
+    Suppose $Y \subset X$. A subset $E \subset Y$ is open relative to $Y$ iff $E  = Y \cap
+    \mathcal{U}$ for some $\mathcal{U}$ open in $X$.
+\end{Theorem}
+\begin{proof}
+    Suppose $E \subset Y$ be such that $E$ is open relative to $Y$. Let $p \in E$ be an arbitrary
+    point in $E$. Then there is an $r(p) > 0$ such that $\mathcal{B}_{r(p)}(p) \cap Y \subset E$.
+    Let $\mathcal{U} = \bigcup_{p \in E} \mathcal{B}_{r(p)}(p)$. Then $\mathcal{U}$ is open in $X$.
+    For any $p \in E$, $p \in \mathcal{U} \cap Y$ and vice versa. Thus $E = Y \cap \mathcal{U}$.
+
+    Let $E = Y \cap \mathcal{U}$ for some $\mathcal{U}$ open in $X$. Let $p \in Y$ be an arbitrary 
+    element of $\mathcal{U}$ i.e $p \in Y$ and $p \in \mathcal{U}$. 
+    Since $\mathcal{U}$ is open there is an $r(p) >
+    0$ such that $\mathcal{B}_{r(p)}(p) \subset \mathcal{U}$. Hence 
+    $\mathcal{B}_{r(p)}(p) \cap Y \subset E$.
+\end{proof}
+
+\begin{Theorem}[name=Compactness is inherent]
+    A subset $K \subset Y \subset X$ is compact relative to $Y$ iff it is compact relative to $X$. 
+\end{Theorem}
+\begin{Corollary}
+    A subset $K \subset E$ is compact iff it is compact as a metric space.
+\end{Corollary}
+Hence we can talk about compactness of a set without ambiguity. 
+Before we look into some of the
+interseting proporties of compact sets, let us define a few other important concepts in metric space
+Now, lets look at some properties of compact sets (or compact metric spaces).
+\begin{Proposition}[name=Properties of compact sets]
+    Let $(E,d)$ be any metric space. Then,
+    \begin{enumerate}
+	\item If $E$ is compact then every closed subset of $E$ is compact.
+	\item Every compact subset of $E$ is bounded.
+	\item (Finite Intersection property.) If $E$ is compact and $\left.\lbrace 
+		\mathcal{C}_{\alpha} : 
+		\alpha \in I \rbrace\right.$ be a collection of non-empty closed sets in $E$ such
+	    that any finite instersection of the collection is non-empty then \[ \bigcap_{\alpha \in
+		    I}\mathcal{C}_{\alpha} \neq \emptyset.\] 
+	\item If $E$ is compact then every infinite subset of $E$ has a cluster point in $E$.
+	    \begin{itemize}
+		\item
+		    A \textbf{corollary} of this gives us \emph{sequential} compactness ie if $E$ is
+		    compact then every sequence has a convergent subsequence.
+	    \end{itemize}
+	\item Every compact subset of $E$ is closed.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    \begin{enumerate}
+	\item Given $E$ compact, let $\mathcal{C} \subset E$ such that $\mathcal{C}$ is closed in
+	    $E$. Let $\left.\lbrace \mathcal{U}_i : i \in I \rbrace\right.$ be an open cover of
+	    $\mathcal{C}$. Since $\mathcal{C}$ is closed $E - \mathcal{C}$ is open. Moreover, 
+	    $\left.\lbrace \mathcal{U}_i : i \in I \rbrace\right. \bigcup E - \mathcal{C} $ is an
+	    open cover of $E$. Since $E$ is compact, let $I_0 \subset I$ be a finite set then
+	   $\left.\lbrace \mathcal{U}_i : i \in I_0 \rbrace\right. \bigcup E - \mathcal{C} $ also 
+	   covers $E$ and hence $\mathcal{C}$. But, $E - \mathcal{C}$ doesn't cover $\mathcal{C}$. 
+	   Thus, \[\mathcal{C} \subset \bigcup_{i \in I_0}\mathcal{U}_i . \] Therefore, 
+	   $\mathcal{C}$ is compact.  
+       \item Fix any $p \in E$. Let, $\mathcal{U}_n = \mathcal{B}_n(p)$ such that $n \in
+	   \mathbb{Z}_+$. Hence, $\left.\lbrace \mathcal{U}_n : n \in \mathbb{Z}_+ \rbrace\right.$
+	   is an open cover of $E$.  Let $K \subset E$ such that
+	   $K$ is compact. Then, $\left.\lbrace \mathcal{U}_n : n \in \mathbb{Z}_+ \rbrace\right.$
+	   also covers $K$ and hence there is a $I_0 \subset \mathbb{Z}_+$ with $I_0$ finite, such
+	   that \[ K \subset \bigcup_{i \in I_0}\mathcal{B}_i(p) .\] Since, $I_0$ is a finite subset
+	   of poisitive integers, a maximum exists. Let $N = \text{ max}(I_0)$. Then, 
+	   $\bigcup_{i \in I_0}\mathcal{B}_i(p) = \mathcal{B}_N(p)$. Therefore, $K \subset 
+	   \mathcal{B}_N(p)$ and hence $K$ is bounded. 
+       \item Suppose,  \[ \bigcap_{\alpha \in I}\mathcal{C}_{\alpha} = \emptyset .\] Then 
+	   $\bigcup_{\alpha \in I}\left(E - \mathcal{C}_{\alpha}\right) = E - \bigcap_{\alpha \in I}
+	   \mathcal{C}_{\alpha} = E$. Thus $\left.\lbrace E - \mathcal{C}_{\alpha} : \alpha \in I
+	       \rbrace\right.$ is an open cover for $E$. Since, $E$ is compact, let $I_0 \subset I$
+	   be a finite set such that 
+	   \begin{displaymath}
+	       \begin{aligned}
+		   & E \subset \bigcup_{\alpha \in I_0}E - \mathcal{C}_{\alpha} \\
+		   & \Leftrightarrow E \subset E - \bigcap_{\alpha \in I_0} \mathcal{C}_{\alpha}. 
+	       \end{aligned}
+	   \end{displaymath} 
+	   But, this means $\bigcap_{\alpha \in I_0} \mathcal{C}_{\alpha} = \emptyset$ which
+	   contradicts the hypothesis that intersection of any finite subcollection is non-empty.
+       \item $E$ is compact, let $S \subset E$ such that $S$ is infinite but it doesn't have any
+	   cluster point in $E$ i.e no point of $E$ is a cluster point of $S$. Hence, $\forall p \in
+	   E$, there is an $\epsilon(p) > 0$ such that $\mathcal{B}_{\epsilon(p)}\left(p\right)
+	   \bigcap S$ contains only finite points of $S$. Since any $p \in E$ also belongs to 
+	   $\mathcal{B}_{\epsilon(p)}\left(p\right)$, it is easy to see that \[ E \subset \bigcup_{p
+		   \in E} \mathcal{B}_{\epsilon(p)}\left(p\right) .\] Since open balls are open sets,
+	       the set $\left.\lbrace \mathcal{B}_{\epsilon(p)}\left(p\right) : p \in E
+		   \rbrace\right.$ is an open cover of $E$. But since $E$ is compact, $E$ is also
+	       covered by a finite subcover (dropping parenthesis around $\epsilon$) 
+	       \begin{displaymath}
+		   \begin{aligned}
+		       & S \subset E \subset \bigcup_{i = 1}^n
+		       \mathcal{B}_{\epsilon }\left(p_i\right) \\
+		       & \implies S = \bigcup_{i = 1}^n \left( \mathcal{B}_{\epsilon}
+			   \left(p_i \right) \bigcap S \right)
+		   \end{aligned}
+	       \end{displaymath} 
+	        But each
+	       $\left( \mathcal{B}_{\epsilon }\left(p_i \right) \bigcap S \right)$ is finite
+	       and hence the finite union is a finite set. Thus $S$ is finite hence giving us a
+	       contradiction.
+	       \begin{itemize}
+		   \item Lets proof sequential compactness. 
+		       \begin{proof}
+			   $E$ is compact and let $\left(p_n\right)$ be any sequence in $E$. If the
+			   range of $\left(p_n\right)$ i.e the set $\left.\lbrace p_n : n \in
+			       \mathbb{Z}_+ \rbrace\right.$ is finite then we pick any $p_k$ in the
+			   set and we get a constant subsequence that converges to $p_k$. If the
+			   range is infinite, then from the above proof it must have a cluster
+			   point, let us say $p \in E$. Hence, we can construct a sequence as
+			   follows. Since any ball about $p$ must intersect the set $\left.\lbrace 
+			       p_n : n \in \mathbb{Z}_+ \rbrace\right.$ let $n_1 \in \mathbb{Z}_+$ such
+			   that $p_{n_1} \in \mathcal{B}_1(p)$. Since the range is infinite we can
+			   get a $n_2 > n_1$ such that $p_{n_2} \in \mathcal{B}_{1/2}(p)$. Given any
+			   $\epsilon > 0$ there is a $N \in \mathbb{Z}_+$ such that $1/N <
+			   \epsilon$. Thus for any $n_i \geq N$ we get $d(p_{n_i},p) < 1/n_i <
+			   \epsilon$. Hence $p_{n_i} \rightarrow p$.
+		       \end{proof}
+	       \end{itemize}
+	   \item Let $K \subset E$ such that $K$ is compact. Let $\left(p_n\right)$ be a sequence in
+	       K such that $p_n \rightarrow p$ where $p \in E$. Since the sequence converges to $p$
+	   every subsequence must also converge to $p$. But we know that $K$ is sequentially compact
+	   and so atleast one subsequence must converge to a point in $K$. From uniqueness of limits
+	   this point has to be $p$. Thus $p \in K$. Hence, $K$ is closed.
+   \end{enumerate}
+\end{proof}
+Two important corollaries of the above proposition can be obeserved.
+\begin{Corollary}
+    If $E$ is a compact metric space, then
+    \begin{enumerate}
+	\item (Nested set property) Let $\left.\lbrace\mathcal{C}_i : i \in \mathbb{Z}_+
+		\rbrace\right.$ be a collection of
+	    non-empty closed sets in $E$ such that $\mathcal{C}_1 \supset \mathcal{C}_2 \dots$
+	    then \[\bigcap_{i = 1}^{\infty} \mathcal{C}_i \neq \emptyset .\]
+	    \begin{proof}
+		Follows from the finite intersection property of the above proposition.
+	    \end{proof}
+	\item $E$ is complete.
+	    \begin{proof}
+		Let $\left(p_n\right)$ be a cauchy sequence in E. There is a subsequence that
+		converges to a point in $E$. But we showed that a cauchy sequence with a convergent
+		subsequence is itself convergent. Hence $E$ is complete.
+	    \end{proof}
+    \end{enumerate}
+\end{Corollary}
+Hence, we have seen that compact sets possess additional properties that complete sets don't. We
+have shown that compact sets are closed and bounded. It turns out that the reverse implication is
+also true for $E^n$. To show that, we'll define what is means to be a \emph{totally} bounded set in
+a metric space.
+
+\begin{Definition}
+    A set $S \in E$ is totally bounded if for any $\epsilon > 0$, $S$ can be covered by finitely
+    many \emph{closed} $\epsilon -$ balls.
+\end{Definition}
+To show that any bounded subset of $E^n$ is also totally bounded we'll first need an important lemma
+that $E^n$ is covered by a countable collection of closed $\epsilon -$ balls. Note that if $\epsilon
+> 0$ is given then $\bigcup_{\mathbf{p} \in E^n}\overline{\mathcal{B}_{\epsilon}}(\mathbf{p})$ is
+also a cover of $E^n$ although it is an uncountable collection. The next lemma shows that $E^n$ can
+be covered by a countable collection of closed balls.
+\begin{Lemma}[name=Covering $E^n$ by a countable collection of closed balls]
+    For any $\epsilon > 0 \in \mathbb{R}$, $E^n$ is contained in a countable collection of closed
+    balls.
+\end{Lemma}
+\begin{proof}
+    We know that for any $x \in \mathbb{R}$ and for any $N \in \mathbb{Z}_+$ there is a $k \in
+    \mathbb{Z}$ such that \[ \frac{k}{N} \leq x < \frac{k+1}{N} .\] Thus, given any $\mathbf{x} =
+    \left(x_1,x_2,\dots,x_n\right) \in E^n$, we can find $a_i \in \mathbb{Z}$ such that $\forall i =
+    1 \dots n$, \[ \frac{a_i}{N} \leq x_i < \frac{a_i+1}{N} .\] Let $\mathbf{a} =
+    \left(a_1/N,a_2/N,\dots,a_n/N\right)$. Then, $d(\mathbf{x},\mathbf{a}) = \lvert\lvert \mathbf{x} -
+    \mathbf{a} \rvert\rvert$ which is given by 
+    \[\sqrt{\left(x_1 - a_1/N\right)^2 + \dots + \left(x_n - a_n/N\right)^2} .\] Since each $x_i -
+    a_i/N < 1/N$, $d(\mathbf{x},\mathbf{a}) < \frac{\sqrt{n}}{N}$. Since $N$ is also arbitrary, for a
+    given $\epsilon$ we can choose $N$ such that $1/N < \epsilon/ \sqrt{n}$. Then $
+    d(\mathbf{x},\mathbf{a}) < \epsilon$. Thus $\mathbf{x} \in \overline{B}_{\epsilon}(\mathbf{a})$. 
+    By varying $\mathbf{a} \in \mathbb{Z}^n$ we can cover any $\mathbf{x} \in E^n$. Thus we get a
+    countable collection (since  $\mathbb{Z}^n$ is countable)  of closed balls that covers $E^n$.
+\end{proof}
+\begin{Lemma}[name=Bounded sets in $E^n$ are totally bounded]
+    Every bounded subset of $E^n$ is totally bounded.
+\end{Lemma}
+\begin{proof}
+    Let $S \subset E^n$ such that $S$ is bounded. Using the proof above we need to show that 
+    only finite choices of $\mathbf{a}$ exists such that $S \subset \bigcup_{i = 1}^M
+    \overline{\mathcal{B}_{\epsilon}}(\mathbf{a}_i)$. Since $S$ is bounded, there is a $R > 0$ such
+    that $S \subset \mathcal{B}_{R}(\mathbf{0})$. This means for any $\mathbf{x} =
+    \left(x_1,x_2,\dots,x_n\right) \in S$, $d(\mathbf{x},\mathbf{0}) < R$. Hence, \[\sqrt{x_1^2 +
+	    x_2^2 + \dots + x_n^2} < R .\] Therefore for all $i = 1 \dots n$, $\lvert x_i \rvert <
+    R$. But for this $i$ there is a $a_i \in \mathbb{Z}$ such that $\lvert a_i/N - x_i \rvert <
+    1/N$. Thus $\lvert a_i \rvert < N*R + 1$ for all $i = 1 \dots n$. Thus there are only finite 
+    choices for these $a_i$ and hence only finite such $\mathbf{a}$ are possible. 
+      
+\end{proof}
+
+Now we can show that for sets in $E^n$ closed and boundedness togather implies compactness. Note
+that this is in general not true. The following examples illustrate this counterpoint.
+\begin{itemize}
+    \item
+	$E$ be the discrete metric space. Then any $S \subset E$ is always closed and bounded. But
+	$S$ is compact only when it is finite.
+    \item We need both closed and boundedness in $E^n$ to have compactness. For example $(a,b)$ is
+	bounded but not closed and $[a,\infty)$ is closed but not bounded. Both of these are not
+	compact. 	
+\end{itemize}
+
+\begin{Theorem}[name=Hiene Borel]
+    A subset $S \subset E^n$ is compact iff it is closed and bounded.
+\end{Theorem}
+\begin{proof}
+    $\Rightarrow$ proved as a property of compact sets in general metric space. 
+
+    $\Leftarrow$
+	We'll prove by contradiction. Suppose $S \subset E^n$ is closed and bounded but not compact.
+	Hence there is an open cover $\left.\lbrace \mathcal{U}_i : i \in I \rbrace\right.$ such
+	that no finite subcover exists. Since $S$ is bounded in $E^n$, it is also totally bounded.
+	Thus for $\epsilon = 1/2$,
+	\begin{displaymath}
+	    \begin{aligned}
+		& S \subset \bigcup_{j = 1}^M \overline{\mathcal{B}_{1/2}}(\mathbf{a}_j) \\
+		& \implies S = \bigcup_{j = 1}^M \overline{\mathcal{B}_{1/2}}(\mathbf{a}_j) 
+		\bigcap S \\
+		& \implies S = \bigcup_{j = 1}^M \left(\overline{\mathcal{B}_{1/2}}(\mathbf{a}_j) 
+		    \bigcap S\right)
+	    \end{aligned}
+	\end{displaymath}
+	for $\mathbf{a}_j \in \mathbb{Z}^n$. Since $S$ is closed each $\left(\overline{\mathcal{B}_{1/2}}
+	    (\mathbf{a}_j) \bigcap S\right)$ is closed. Aslo $S$ is not covered by any finite
+	sub-collection of $\mathcal{U}_i$ hence atleast one such $\left(\overline{\mathcal{B}_{1/2}}
+	    (\mathbf{a}_j) \bigcap S\right)$, lets call it $S_1$ is not covered by any finite
+	sub-collection of $\mathcal{U}_i$. For any $\mathbf{p},\mathbf{q} \in \overline{\mathcal{B}_{1/2}}
+	(\mathbf{a}_j)$, $d(\mathbf{p},\mathbf{q}) < d(\mathbf{p},\mathbf{a}_j) +
+	d(\mathbf{a}_j, \mathbf{q})$. Hence $d(\mathbf{p},\mathbf{q}) < 1$. Thus we can obeserve
+	the following about $S_1$ :
+	\begin{enumerate}
+	    \item $S_1 \subset S$ is a closed and bounded subset of $E^n$.
+	    \item $S_1$ is covered by $\left.\lbrace\mathcal{U}_i\rbrace\right.$ but not by any of 
+		its finite sub-collection.
+	    \item For any $\mathbf{p},\mathbf{q} \in S_1$ we have $d(\mathbf{p},\mathbf{q}) < 1$.
+	\end{enumerate}
+
+	Thus we see from 1-2 $S_1$ has the same properties as $S$. Thus we can do the similar thing
+	to $S_1$ and get for $\epsilon = 1/4$ an $S_2$ such that :
+
+	\begin{enumerate}
+	    \item $S_2 \subset S_1 \subset E^n$ is a closed and bounded subset of $E^n$.
+	    \item $S_2$ is covered by $\left.\lbrace\mathcal{U}_i\rbrace\right.$ but not by any of 
+		its finite sub-collection.
+	    \item For any $\mathbf{p},\mathbf{q} \in S_2$ we have $d(\mathbf{p},\mathbf{q}) < 1/2$.
+	\end{enumerate}
+
+	After repeated application of the same procedures we get :
+
+	\begin{enumerate}
+	    \item $S \supset S_1 \supset S_2 \dots $ closed and bounded subsets of $E^n$.
+	    \item Each $S_N$ is covered by $\left.\lbrace\mathcal{U}_i\rbrace\right.$ but not by 
+		any of its finite sub-collection.
+	    \item For any $\mathbf{p},\mathbf{q} \in S_N$ we have $d(\mathbf{p},\mathbf{q}) < 1/N$.
+	\end{enumerate}
+	No $S_N$ is emplty since \# 2 will be vacuously false, hence let $\mathbf{p}_N \in S_N$ for
+	$N = 1 \dots $. The sequence $\left(\mathbf{p}_N\right)$ is then cauchy since for any $\alpha,\beta
+	> N$ , $\mathbf{p}_{\alpha},\mathbf{p}_{\beta} \in S_N$ (because $S_N \supset S_{\alpha}$ 
+	and similarly $S_N \supset S_{\beta}$). Thus $d(\mathbf{p}_{\alpha},\mathbf{p}_{\beta}) <
+	1/N$ which can be made arbitrarily small. $E^n$ is complete hence $\mathbf{p}_N \rightarrow
+        \mathbf{p}$. But $\left(\mathbf{p}_N\right) \in S$ and $S$ closed therfore $\mathbf{p} \in S$.
+	This contradicts \# 2 that a finite subcover of S from $\left.\lbrace\mathcal{U}_i\rbrace\right.$
+	cannot exists. To see this since $\mathbf{p} \in S$, it must be in some $\mathcal{U}_0$ in
+	the collection. But since $\mathcal{U}_0$ is open there is an $\epsilon > 0$ such that
+	$\mathcal{B}_{\epsilon}(\mathbf{p}) \subset \mathcal{U}_0$. We can find an $N$ such that
+	$1/N < \epsilon$ which would mean $\mathcal{B}_{1/N}(\mathbf{p}) \subset \mathcal{U}_0$. But
+	any $\mathbf{p}_N \in \mathcal{B}_{1/N}(\mathbf{p})$, $p_N \in S_N$. Thus
+	$S_N$ is covered by $\mathcal{U}_0$, which is a finite sub-collection of $\left.
+	    \lbrace\mathcal{U}_i\rbrace\right.$ 
+
+\end{proof}
+\section{Connectedness}
+We saw how $E = E^1 - \lbrace 0 \rbrace $ was a union of two non-empty sets that were both closed
+and open. The space seemed to be split or unconnected. It turn out that connectedness is an
+important property. While the extrem value Theorem served as a motivation for introducing
+compactness, the intermediate value Theorem relies on the connectedness of the metric space. 
+
+\begin{Definition}
+    A metric space $(E,d)$ is connected if the only subsets of $E$ that are both open and closed
+    are $\emptyset$ and $E$. A subset $S \subset E$ is connected if it is connected as a metric
+    space.
+\end{Definition}
+
+\begin{Theorem}[name=Connectedness of a metric space]
+    $E$ is not connected (separated) iff $E = A \cup B$ such that $A,B$ are disjoint,open and
+    non-empty.\end{Theorem}
+\begin{proof}
+     
+
+    $\Rightarrow$ $E$ is not connected, thus there is a $A \subset E$ which is not $\emptyset$ and 
+    $E$ but is both open an closed. Let $B = E - A$. Since $A \neq \emptyset$, $B \neq E$. Since $A
+    \neq E$, $B \neq \emptyset$. Moreover since $A$ close $B$ is open and $A \cup B = E$.
+    $\Leftarrow$ Similar argument
+\end{proof}
+The notion of connectedness in $\mathbb{R}$ is fairly simple. Before we show that $\mathbb{R}$ is
+connected we need to know when a real number is \emph{between} 2 real numbers. If $a,b,c \in 
+\mathbb{R}$, we say that $c$ is between $a,b$ if $a < c < b$ or $b < c < a$.
+\begin{Proposition}[name=Connectedness of open segments in $\mathbb{R}$]
+    Any subset of $\mathbb{R}$ which contains two distinct points $a,b$ but doesn't contain all the
+    points between $a,b$ is not connected.
+\end{Proposition}
+\begin{proof}
+    First let us note that for any $A \subset S \subset E$ , we stated earlier that $A$ is open
+    relative to $S$ iff $A = S \cap \mathcal{U}$ for some $\mathcal{U}$ open in $E$. Now $S$
+    contains two distinct points $a,b$ but not all the points in between them. WLOG, let $a < b$.
+    Hence, there is a $c \in \mathbb{R}$, $a < c < b$ such that $c \not \in S$. Clearly $S \subset \mathbb{R} -
+    \lbrace c \rbrace$. Thus $S = S \cap \left( \mathbb{R} - \lbrace c \rbrace \right)$. Since
+    $\mathbb{R} - \lbrace c \rbrace = \left(-\infty,c\right) \cup \left(c,\infty\right)$, we can
+    write \[ S = \left(S \cap \left(-\infty,c\right) \right) \cup \left(S \cap
+	    \left(c,\infty\right)\right).\]
+    Let $A = S \cap \left(-\infty,c\right)$. Since $\left(-\infty,c\right)$ open in $E^1$ 
+    ($\mathbb{R}$), $A$ is open relative to $S$. Similarly $B = S \cap \left(c,\infty\right)$ is
+    open relative to $S$. Since $S$ is non-empty $A,B$ are non-empty. Moreover $A,B$ are disjoint
+    and $S = A \cup B$. Thus $S$ is not connected.
+\end{proof}
+The next proposition shows how to obtain connected set from a collection of connected sets.
+\begin{Proposition}[name=Collection of connected sets]
+    Suppose $\left.\lbrace S_i : i \in I \rbrace\right.$ be a collection of connected subsets of $E$
+    such that there is a $i_0 \in I$, such that $\forall i \in I$, $S_i \cap S_{i_0} \neq
+    \emptyset$. Then $\bigcup_{i \in I}S_{i}$ is connected.
+\end{Proposition}
+\begin{proof}
+    It is always easy to show a set is not disconnected by assuming it is. Hence, we'll do a proof
+    by contradiction. Suppose $\bigcup_{i \in I}S_{i}$ is disconnected. Then $\bigcup_{i \in
+	I}S_{i} = A \bigcup B$ where $A,B$ are disjoint,non-empty open sets. Hence, $\forall i \in
+    I$ we have that $S_i \subset A \bigcup B$. Thus $S_i = \left(S_i \cap A\right) \bigcup \left(S_i
+	\cap B\right)$. Since, each $S_i$ is separated and we assumed $A,B$ are disjoint either
+    $\left(S_i \cap A\right) = \emptyset$ or $\left(S_i \cap B\right) = \emptyset$. WLOG, assume
+    $\left(S_{i_0} \cap B\right) = \emptyset$. Thus $S_{i_0} \subset A$. But since $\forall i \in
+    I$, $S_i \cap S_{i_0} \neq \emptyset$, $S_i \subset A$ and thus $S_i \cap B = \emptyset$.
+    Hence, $\bigcup_{i \in I}S_{i} \subset A$. This means that $A \bigcup B \subset A$. Since $A,B$
+    are disjoint $B = \emptyset$. This is a contradiction. 
+
+\end{proof}

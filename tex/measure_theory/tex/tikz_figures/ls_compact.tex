@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage{standalone}
+\usepackage{tikz}
+\usetikzlibrary{hobby}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+    \begin{scope}[closed hobby]
+	\draw[ultra thick,dotted,blue] plot coordinates {( 0,2.5 )(2.5,0)(0,-2.5)( 0.0,-1.75)(-0.75,0)(0,1.75)} ;
+	\draw[thick,dotted] (0,0) circle (2cm);
+	\draw[ultra thick, red] (0,-2) arc (-90:-270:2cm);
+	\node at (2.35,2.5) {\Large$G$};
+	\node at (0,0) {\Large$E$};
+    \end{scope}
+    \begin{scope}[xshift=6cm,closed hobby]
+	\node at (0.0,2.5) {\Large$K=\bar{E}-G$};
+	\clip (0,-2) rectangle (-4,2);
+	\draw[ultra thick,blue] plot coordinates {( 0,2.5 )(2.5,0)(0,-2.5)( 0.0,-1.75)(-0.75,0)(0,1.75)} ;
+	\draw[thick,dotted] (0,0) circle (2cm);
+	\draw[ultra thick, red] (0,-2) arc (-90:-270:2cm);
+    \end{scope} 
+    \begin{scope}
+	\node at (3,-6) {\Large$\bar{E}-E$};
+	\clip (0,-8) rectangle (2,-4);
+	\draw[thick,green] (0,-6) circle (2cm);
+    \end{scope}
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\begin{document}
+
+%Without Transparency:
+\begin{tikzpicture}[scale=9]
+    \begin{scope}
+	\draw[ultra thick] (0,0) -- (1.0,0);
+	\node at (-0.25,0) {$R_1$};
+	\foreach \x in {0,0.5,1.0}
+	\draw[ultra thick] (\x,0.75pt) -- (\x,-0.75pt);
+	\node at (0.25,0.15) {$0$};
+	\node at (0.75,0.15) {$1$};
+	\draw[ultra thick,red] (0,0) --  (0.5,0);
+	\draw[ultra thick,blue] (0.5,0) --  (1.0,0);
+    \end{scope}
+    \begin{scope}[yshift=-0.50cm]
+	\draw[ultra thick] (0,0) -- (1.0,0);
+	\node at (-0.25,0) {$R_2$};
+	\foreach \x in {0,0.25,0.5,0.75,1.0}
+	\draw[ultra thick] (\x,0.75pt) -- (\x,-0.75pt);
+	\node at (0.12,0.15) {$00$};
+	\node at (0.37,0.15) {$01$};
+	\node at (0.62,0.15) {$10$};
+	\node at (0.87,0.15) {$11$};
+	\draw[ultra thick,red] (0,0) --  (0.25,0);
+	\draw[ultra thick,blue] (0.25,0) --  (0.5,0);
+	\draw[ultra thick,red] (0.5,0) --  (0.75,0);
+	\draw[ultra thick,blue] (0.75,0) --  (1.0,0);
+    \end{scope}
+    \begin{scope}[yshift=-1.00cm]
+	\draw[ultra thick] (0,0) -- (1.0,0);
+	\node at (-0.25,0) {$R_3$};
+	\foreach \x in {0,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1.0}
+	\draw[ultra thick] (\x,0.75pt) -- (\x,-0.75pt);
+	\node at (0.0625,0.15) {$000$};
+	\node at (0.19,0.15) {$001$};
+	\node at (0.31,0.15) {$010$};
+	\node at (0.44,0.15) {$011$};
+	\node at (0.57,0.15) {$100$};
+	\node at (0.70,0.15) {$101$};
+	\node at (0.83,0.15) {$110$};
+	\node at (0.96,0.15) {$111$};
+	\draw[ultra thick,red] (0,0) --  (0.125,0);
+	\draw[ultra thick,blue] (0.125,0) --  (0.25,0);
+	\draw[ultra thick,red] (0.25,0) --  (0.375,0);
+	\draw[ultra thick,blue] (0.375,0) --  (0.5,0);
+	\draw[ultra thick,red] (0.5,0) --  (0.625,0);
+	\draw[ultra thick,blue] (0.625,0) --  (0.75,0);
+	\draw[ultra thick,red] (0.75,0) --  (0.875,0);
+	\draw[ultra thick,blue] (0.875,0) --  (1.0,0);
+    \end{scope}
+\end{tikzpicture}
+
+\end{document}

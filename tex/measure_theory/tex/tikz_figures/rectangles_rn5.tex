@@ -1,0 +1,19 @@
+\documentclass{article}
+\usepackage{mathrsfs} % for scripts
+\usepackage{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{hobby}
+\begin{document}
+\begin{tikzpicture}[scale=2]
+    \begin{scope}
+	\draw[ultra thick, blue] (0,0) rectangle (3,2); % R1
+	\draw[ultra thick, dotted] (-0.707,-0.5) rectangle (3.707,2.5); % R1
+	\draw[ultra thick, blue] (-1.414,-1) rectangle (4.414,3); % R2
+	\node at (1.5,1) {\Large$R$};
+	\node at (3.25,1) {\Large$S^{\circ}$};
+%	\draw[ultra thick, red] (0,0) -- (0,-1);
+%	\draw[ultra thick, red] (0,0) -- (-1.414,0);
+    \end{scope}
+\end{tikzpicture}
+\end{document}
