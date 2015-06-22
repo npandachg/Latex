@@ -672,3 +672,60 @@ A useful geometric notion can be given to any set in a metric space.
     cauchy in $X$. Since $X$ is complete, there is a $x\in X$ such that $\atob{x_n}{x}$. But since $Y$ is
     closed $x$ is in $Y$ and hence $\metricS{Y}{d}$ is complete.
 \end{proof}
+
+\begin{Definition}[name= Bounded set]
+    A subset $A$ in a metric space $\metricS{X}{d}$ is bounded if $\diam{A} < \infty$.
+\end{Definition}
+\begin{Proposition}
+    We observe the following for bounded sets.
+    \begin{enumerate}
+	\item
+	    A subset $A$ of $\metricS{X}{d}$ is bounded if and only if for any $x \in X$, there is an $r > 0$
+	    such that $A \subset \ball{r}{x}$.
+	\item
+	    The union of a finite number of bounded sets is bounded.
+	\item
+	    A cauchy sequence in $\metricS{X}{d}$ is a bounded set.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    Let $A$ be bounded. Thus $\diam{A} < \infty$ i.e.~there is an $M \in \Zplus$ such that 
+	    $\diam{A} < M$. Thus, $d(p,q) < M$ for any $p,q \in A$. Let $x$ be any point in $X$. Fix a point
+	    $p_0 \in A$ and let $r > d(x,p_0) + M$. Then, for any $p \in A$,
+	    \begin{align*}
+		d(x,q) &\leq d(x,p_0) + d(p_0,q)\\
+		& < r.
+	    \end{align*}
+	    Assume for any $x$, there is an $r$ such that $A \subset \ball{r}{x}$. Let $p_0$ be an element of
+	    $A$ (assume $A$ is not empyt). Then there is an $r > 0$ such that $A \subset \ball{r}{x}$. Thus,
+	    for any $p,q \in A$, $d(p,q) < 2r$. Hence, $\diam{A} \leq 2r < \infty$.
+	\item
+	    Let $\set{A_i}{1\leq i \leq n}$ be a finite collection of bounded sets. Thus there are $r_i$
+	    such that $A_i \subset \ball{r_i}{x}$ for each $1 \leq i \leq n$ for any $x \in X$. Let $r >
+	    \finiteSum{r_i}{i}{n}$. Then for each $i$, $A_i \subset \ball{r}{x}$ and hence,
+	    $\finiteUnion{A_i}{i}{n} \subset \ball{r}{x}$.
+	\item
+	    Let $ \seq{x}{n}$ be a cauchy sequence and let $A = \set{x_n}{n\in\Zplus}$. Fix $\epsilon = 1$.
+	    Then, there is an $N$ such that $d(x_n,x_m) < 1$ for all $n,m \geq N$. Let 
+	    $B_N = \set{x_n}{n\geq N}$. Thus, $\diam{B_N} \leq 1$ and hence $B_N$ is bounded. 
+	    Let $A_N = A - B_N$. Then, $A_N$ is a finite set and is bounded (diameter of a finite set is
+	    always the maximum distance between its points.) Hence $A = A_N \cup B_N$ is bounded.
+    \end{enumerate}
+\end{proof}
+\section{Continuity}
+We will extended the notion of continuous functions to a mapping between two metric spaces.
+\begin{Definition}[name=Continuous function]
+    If $\metricS{X}{d}$ and $\metricS{Y}{\rho}$ are two metric spaces, a function $\map{f}{X}{Y}$ is
+    continuous at a point $a \in X$ if for every $\epsilon > 0$ there is a $\delta > 0$ such that when 
+    $d(x,a) < \delta$, then $\rho(f(x),f(a)) < \epsilon$. We say that $f$ is continuous on $X$ if $f$ is
+    continuous at every point $a \in X$.
+\end{Definition}
+We can turn the definition of continuity relating to sequences in the following way:
+\begin{Proposition}
+    If $\metricS{X}{d}$ and $\metricS{Y}{\rho}$ are metric spaces and $\map{f}{X}{Z}$ is a function, then
+    $f$ is continuous if and only if whenever $\seq{x}{n}$ is a sequence in $X$ such that $x_n\to x$ then,
+    $f(x_n)\to f(a)$.
+\end{Proposition}

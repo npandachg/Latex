@@ -229,7 +229,7 @@ also may or may not belong to F. For example let us take $ F = \mathbb{Q} $.
 \end{itemize}
 Next, we'll look at the L.U.B property. 
 \begin{Definition}
-    An ordered field $F$ has the L.U.B property if every subset $ S \subset F$ that is bounded
+    An ordered field $F$ has the L.U.B property if every non-empty subset $ S \subset F$ that is bounded
     from above (i.e has an upper bound) has the least upper bound.  
 \end{Definition}
 
@@ -254,7 +254,7 @@ ordered field having the L.U.B property.
 
 \begin{Corollary}
     $\R$ has the G.L.B property, i.e.~for any nonempty subset $S$ of $\R$ that is bounded from below, the
-    greatest lower bound of $S$.	
+    greatest lower bound of $S$ exists in $\R$.	
 \end{Corollary}
 
 \begin{proof}
@@ -347,9 +347,178 @@ $b^n \leq a$.
     If $a$ is a non-negative real number and $n$ is any positive integer, then there exists a number $b \geq
     0$ such that $b^n = a$.
 \end{Theorem}
+\begin{proof}
+    First note that the set $A = \set{x \geq 0 \in \R}{x^n \leq a}$ is not empty since $0$ is in the set.
+    Moreover, the set is bounded by $a+1$ because ${(a+1)}^n \geq 1 + na > a$. Hence supremum of the set exists
+    in $\R$. Let $b$ be the supremum of this set. 
+    Assume $b^n < a$. We will show that a $\delta > 0$ exists such that ${(b + \delta)}^n < a$ and hence $b + 
+    \delta$ must be an element of $A$. But since $b + \delta > b$ and $b$ is the supremum of $A$ we get a
+    contradiction.
+    How do we choose a suitable $\delta$. As we did for the case above, let $\delta = \frac{1}{m}$
+    We know that,
+    \begin{align*}
+	{(b + \frac{1}{m})}^n &= \series{\binom{n}{k}b^{k}{\frac{1}{m}}^{(n-k)}}{k}{0}{n},\\
+	&= b^n + \series{\binom{n}{k}b^{k}{\frac{1}{m}}^{(n-k)}}{k}{0}{n-1}.\\
+    \end{align*}
+    The sum $\series{\binom{n}{k}b^{k}{\frac{1}{m}}^{(n-k)}}{k}{0}{n-1}$ is a real number which can be made
+    smaller than $\frac{(a - b^n)}{n}$ by a suitble choice of $m$. That is for each $k$ we select an $m_k$
+    such that $\binom{n}{k}b^k {\frac{1}{m}}^{(n-k)} < \frac{(a - b^n)}{n}$ and take $\frac{1}{m} =
+    \min\set{m_k}{1\leq k \leq n}$.
+    Thus,
+    ${(b + \frac{1}{m})}^n < b^n + (a - b^n) = a$. Hence, we get the contradiction. Similarly, we can show
+    that $b^n \not > a$.
+\end{proof}
+We can extend this to arbitrary real numbers for the case when $n$ is an odd positive integer.
+\begin{Corollary}
+    If $a$ is a real number and $n$ is an odd positive integer, then there exists a real number $b$ such that 
+    $b^n = a$.
+\end{Corollary}
+\begin{proof}
+    Use the theorem on $\abs{a}$ to get a $c \geq 0$ such that $c^n = a$. If $a \geq 0$, then $b = c$ else 
+    $b = -c$.
+\end{proof}
+\begin{Definition}[name=root]
+    Let $x$ be a non-negative real number, and let $n$ be a positive integer. We define $x^{\frac{1}{n}}$ to
+    the be the non-negative real number $y$ such that $y^n = x$ and we say that the $n^{th}$ root of $x$ is
+    $y$. If $x$ is an arbitrary real number and $n$ is an odd positive integer, we define $x^{\frac{1}{n}}$ to
+    be the real number $y$ called the $n^{th}$ root of $x$, such that $y^n = x$.
+\end{Definition}
+If $x$ is a real number and $n$ is a positive integer, we define
+$x^{-\frac{1}{n}} = \frac{1}{x^{\frac{1}{n}}}$ whenever $x^{\frac{1}{n}}$ is defined and not $0$.
+In this way for any $p \in \Q$, where $p = \frac{m}{n}$ in its lowest term we define,
+\[x^{p} = {(x^{\frac{1}{n}})}^{m},\]
+whenever $x^{\frac{1}{n}}$ is defined. Easy to check, that is definition obeys all the usual laws of
+exponents. When $p \in \R$ but $p \not\in Q$, we do not yet have a notion of exponentiation. We will define it
+when we have understood limits.
 
 
 Now that we have filled all the holes in $\mathbb{Q}$, an appropriate question to ask would be
 \emph{how many holes did we fill}. Are there more holes than the $\mathbb{Q}$? We'll explore this
-when we define what is means to count infinite sets.
+when we define what is means to count infinite sets. To close this section we will describe the Complex
+numbers.
+\begin{Definition}[name=Complex numbers]
+    A complex number is an ordered pair $(a,b)$ of Real numbers. The set of Complex numbers is denoted by
+    $\C$.
+\end{Definition}
+Let $z_1,z_2$ be complex numbers $(a,b)$ and $(c,d)$ respectively. We define the binary operation $+$
+as:
+\[z_1 + z_2 := (a+c,b+d).\]
+The zero complex number $0_{\C} : (0,0)$. We usually omit $\C$ while denoting the zero complex number.
+We define the binary operation $*$ as:
+\[z_1 * z_2 = (ac - bd, ad + bc).\]
+We define the $(1,0)$ as the one of Complex number.
+\begin{Proposition}
+    $\left(\C,+,(0,0),*,(1,0)\right)$ is a field.
+\end{Proposition}
+There is a natural injection from $\R$ into $\C$ which maps $x \in \R$ to $(x,0) \in \C$. Infact, such an
+injection is also a homomorphism since $x + y$ maps to $(x+y,0) = (x,0) + (y,0)$ and similary $x*y$ maps to
+$(x*y,0) = (x,0)*(y,0)$. Thus we denote the complex number  $(x,0)$ as $x$, i.e we say $(x,0) = x$.
+\begin{Definition}
+    The complex number $(0,1)$ is denoted by $i$.
+\end{Definition}
+\begin{Theorem}
+    $i^2 = -1$.
+\end{Theorem}
+\begin{proof}
+    $i^2 = (0,1)*(0,1) = (-1,0) = -1$.
+\end{proof}
+From now on, we will omit the $*$ to denote multiplication and just write $z_1z_2$ to denote $z_1 * z_2$ for
+any complex number $z_1,z_2$.
+\begin{Theorem}
+    Complex numbers cannot be ordered. 
+\end{Theorem}
+\begin{proof}
+    Assume the Complex number are ordered. Then for any non-zero complex number $a$, $a^2$ must be a
+    \emph{positive} complex number, where if $z_1,z_2$ are positive then $z_1z_2$ and $z_1 + z_2$ are positive
+    and for any $z\in \C$, either $z = (0,0)$, or $z \in \C$ or $-z \in \C$. Since real numbers are embedded
+    in $\C$, it is easy to see the $(-1,0)$ is not positive. However, $(-1,0) = i^2$ and hence it must be
+    positve. Thus, we get a contradiction.
+\end{proof}
 
+\begin{Theorem}
+    Any complex number $(a,b)$ is equal to $a + ib$.
+\end{Theorem}
+\begin{proof}
+    $a + ib = (a,0) + (0,1)(b,0) = (a,0) + (0,b) = (a,b)$.
+\end{proof}
+The above theorem enables us to write a complex number $z = (a,b)$ as $a + ib$.
+\begin{Definition}
+    If $a,b$ are real numbers and $z = a + ib$, then the complex number $\bar{z} := a - ib$ is called the
+    conjugate of $z$. The numbers $a,b$ are called the real and imaginary parts of $z$ respectively and we
+    denote them by $a = \Re(z)$ and $b = \Im(z)$.
+\end{Definition}
+\begin{Theorem}
+    If $z,w$ are complex numbers, then
+    \begin{enumerate}
+	\item
+	    $\overline{z + w} = \overline{z} + \overline{w}$.
+	\item
+	    $\overline{zw} = \overline{z}\overline{w}$.
+	\item
+	    $z + \overline{z} = 2\Re{(z)}$, $z - \overline{z} = 2\Im{(z)}$. 
+	\item
+	    $z\overline{z}$ is real and positive (except when $z = 0$).
+    \end{enumerate}
+\end{Theorem}
+\begin{Definition}
+    If $z$ is a complex number, then its absolute value, $\abs{z}$ is the non-negative square root of
+    $z\overline{z}$; that is $\abs{z} = {(z\overline{z})}^{\frac{1}{2}}$.
+\end{Definition}
+Note that, $z = a + ib$, then ${\abs{z}}^{2} = (a + ib)(a- ib) = a^2 + b^2$. The absolute value function has similar
+properties for the case when $z$ is real.
+\begin{Theorem}
+    Let $z,w$ be complex numbers. Then 
+    \begin{enumerate}
+	\item
+	    $\abs{z} > 0$, unless $z = 0$, in which case $\abs{z} = 0$.
+	\item
+	    $\abs{\overline{z}} = \abs{z}$.
+	\item
+	    $\abs{zw} = \abs{z}\abs{w}$.
+	\item
+	    $\abs{\Re(z)} \leq \abs{z}$.
+	\item
+	    $\abs{z + w} \leq \abs{z} + \abs{w}$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    We prove only $(5)$. Note that $\overline{z\overline{w}} = \overline{z}w$.
+    \begin{align*}
+	{\abs{z + w}}^{2} &= (z + w)\overline{(z + w)} \\
+	&= (z + w)(\overline{z} + \overline{w}) \\
+	&= z\overline{z} + w\overline{w} + w\overline{z} + z\overline{w}\\
+	&= {\abs{z}}^{2} + {\abs{w}}^{2} + \overline{z\overline{w}} + z\overline{w}  \\
+	&= {\abs{z}}^{2} + {\abs{w}}^{2} + 2\Re(z\overline{w})\\
+	&\leq {\abs{z}}^{2} + {\abs{w}}^{2} + 2\abs{z\overline{w}}\\
+	&\quad = {\abs{z}}^{2} + {\abs{w}}^{2} + 2\abs{z}\abs{\overline{w}}\\
+	&\quad = {\abs{z}}^{2} + {\abs{w}}^{2} + 2\abs{z}\abs{w}\\
+	&\quad = {(\abs{z} + \abs{w})}^{2}.
+    \end{align*}
+\end{proof}
+\begin{Definition}
+    If $\listV{z}{n}$ are complex numbers, we write:
+    \[z_1 + z_2 + \cdots + z_n = \finiteSum{z}{j}{n}.\]
+\end{Definition}
+The next theorem is extremely important and is known as the Schwarz inequality.
+\begin{Theorem}
+    If $\listV{z}{n}$ and $\listV{w}{n}$ are complex numbers, then,
+    \[{\abs{\finiteSum{z_j\overline{w_j}}{j}{n}}}^{2} \leq
+	\finiteSum{{\abs{z_j}}^{2}}{j}{n}\finiteSum{{\abs{w_j}}^{2}}{j}{n}.\]
+\end{Theorem}
+\begin{proof}
+    Let $A = \finiteSum{{\abs{z_j}}^{2}}{j}{n}$, $B = \finiteSum{{\abs{w_j}}^{2}}{j}{n}$ and 
+    $C = \finiteSum{z_j\overline{w_j}}{j}{n}$. Assume $B \neq 0$. Note that $\overline{B} = B$ and
+    $\overline{A} = A$.
+    Then,
+    \begin{align*}
+	\finiteSum{{\abs{Bz_j - Cw_j}}^{2}}{j}{n} &= \finiteSum{(Bz_j - Cw_j)(B\overline{z_j} -
+	    \overline{C}\overline{w_j})}{j}{n}\\
+	&= B^2\finiteSum{{\abs{z_j}}^{2}}{j}{n} - B\overline{C}\finiteSum{z_j\overline{w_j}}{j}{n} - 
+	    BC\finiteSum{\overline{z_j}w_j}{j}{n} + {\abs{C}}^2 \finiteSum{{\abs{w_j}}^{2}}{j}{n}\\
+	&= B^2 - B{\abs{C}}^{2}\\
+	&= B(AB - {\abs{C}}^{2}).
+    \end{align*}
+    Since the LHS is greater than or equal to $0$, we must have $B(AB - {\abs{C}}^{2}) \geq 0$. Since we
+    assume $B \neq 0$, we must have $AB \geq {\abs{C}}^{2}$ which proves the theorem.
+    Note that, if $B = 0$, then the result is trivial.
+\end{proof}

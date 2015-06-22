@@ -1193,7 +1193,7 @@ Thus,
     &= \cMap{\mcalB_{\vW}}\left(T(\vv_{j})\right) \\
     &= \coord{T(\vv_{j})}{\mcalB_{\vW}}
 \end{align*}
-Thus, $T(\vv_{j}) = \series{a_{ij}\vv_{i}}{i}{1}{n}$.
+Thus, $T(\vv_{j}) = \series{a_{ij}\vw_{i}}{i}{1}{n}$.
 
 Let $\vu$ be a vector in $\vV$ such that $\vu = \lComb{\alpha}{\vv}{n}$. 
 What is $T(\vu)$ in terms of its matrix 
@@ -1314,5 +1314,104 @@ consequences in the following paragraphs.
     Let $\vV,\vW$ be vector spaces and let $\map{T}{\vV}{\vW}$ be an invertible linear transformation. Then
     $T^{-1}$ is also a linear transformation.
 \end{Theorem}
+\begin{proof}
+    First we will show that for any $\vw_1,\vw_2 \in \vW$, 
+    \[T^{-1}(\vw_1 + \vw_2) = T^{-1}(\vw_1) + T^{-1}(\vw_2).\]
+    Let $\vu_1 \in \vV $ be equal to $T^{-1}(\vw_1 + \vw_2)$ and let $\vu_2 \in \vV$ be equal to 
+    $T^{-1}(\vw_1) + T^{-1}(\vw_2)$. Then,
+    \[T(\vu_1) = \fog{T}{T^{-1}}(\vw_1 + \vw_2) = \vw_1 + \vw_2.\]
+    And,
+    \[T(\vu_2) = T(T^{-1}(\vw_1) + T^{-1}(\vw_2)) = T(T^{-1}(\vw_1)) + T(T^{-1}(\vw_2)) = \vw_1 + \vw_2.\]
+    Since, $T$ is injective $\vu_1 = \vu_2$. Hence, 
+    \[T^{-1}(\vw_1 + \vw_2) = T^{-1}(\vw_1) + T^{-1}(\vw_2).\]
+    Similary, we can show scalar multiplication.
+\end{proof}
+Similarly, we can define invertible matrices.
+\begin{Definition}
+    The $n\times n$ identity matrix, denoted by $I_n$, is defined by \[I_n = {[\delta_{ij}]}_{n\times n},\]
+    where $\delta_{ij} = 1$ if $i = j$ and $0$ otherwise.
+\end{Definition}
+\begin{Remark}
+    It is easy to see that if $\vV$ is a vector space of dimension $n$ and if $\mcalB_{\vV}$ is an ordered
+    basis for $\vV$, then $\matVW{I}{\mcalB_{\vV}}{\mcalB_{\vV}} = I_n$.
+\end{Remark}
+\begin{Definition}
+    Let $A \in \matmn{m}{n}$. Then $A$ is invertible if there is a matrix $B \in \matmn{m}{n}$ such that
+    \[AB = BA = I_n.\]
+    We say that $B = A^{-1}$ and $A = B^{-1}$.
+\end{Definition}
+\begin{Proposition}
+    Let $\map{T}{\vV}{\vW}$ be a linear transformation, where $\vV,\vW$ are finite dimensional vector spaces.
+    If $T$ is invertible, then $\dim(\vV) = \dim(\vW)$.
+\end{Proposition}
+\begin{proof}
+    By the rank-nullity theorem, $\dim(\vV) = \dim(\ker{T}) + \dim(\Ima{T})$. Since, $T$ is injective,
+    $\dim(\ker{T}) = 0$ and since $T$ is surjective, $\dim{\Ima{T}} = \dim{\vW}$. Thus,
+    $\dim(\vV) = \dim(\vW)$.
+\end{proof}
+\begin{Theorem}
+    Let $\vV,\vW$ be finite dimensional vector spaces with ordered basis $\mcalB_{\vV},\mcalB_{\vW}$
+    respectively. Let $\map{T}{\vV}{\vW}$ be a linear transformation. Then $T$ is invertible if and only if
+    $\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$ is invertible.
+\end{Theorem}
+\begin{proof}
+    Suppose $T$ is invertible. Then $\dim{\vV} = \dim{\vW} = n$ say. Let,
+    $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$ and $\mcalB_{\vW} = \left(\listV{\vw}{n}\right)$ be ordered
+    bases for $\vV,\vW$ respectively. 
+    Let $\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$ be the matrix of $T$ and let 
+    $\matVW{T^{-1}}{\mcalB_{\vw}}{\mcalB_{\vv}}$ be the matrix of $T^{-1}$. Then,
+    \[I_n = \matVW{I_{\vV}}{\mcalB_{\vV}}{\mcalB_{\vV}} = 
+	\matVW{\fog{T}{T}}{\mcalB_{\vV}}{\mcalB_{\vV}} =
+	\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}\matVW{T^{-1}}{\mcalB_{\vW}}{\mcalB_{\vV}}.\]
+    Thus, $\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$ is ivertible.
+
+    Suppose $A = \matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$ is invertible. Thus there is a matrix $B$ such that
+    $BA = I_n = AB$. The goal is to show that $T$ is
+    invertible i.e.~there is a $\map{U}{\vW}{\vV}$ such that $\fog{U}{T} = I_{\vV}$ and $\fog{T}{U} =
+    I_{\vW}$. The idea is to use $B$ to construct $U$.
+    Let $\check{U} = L_{B}$ i.e.~$\check{U}(\vx) = B\vx$ for any $\vx = \colvec{4}{x_1}{x_2}{\vdots}{x_n}$ in
+    $\Fn$. Then we can construct $U$ as follows:
+    \[U = \cMapInv{\mcalB_{\vV}}\circ\check{U}\circ\cMap{\mcalB_{\vW}}.\]
+    Then for any $\vv_j \in \mcalB_{\vV}$,
+    \begin{align*}
+	\fog{U}{T} &= \left(\cMapInv{\mcalB_{\vV}}\circ\check{U}\circ\cMap{\mcalB_{\vW}}\right)(T(\vv_j))\\ 
+	&= \cMapInv{\mcalB_{\vV}}\left(\check{U}\circ\cMap{\mcalB_{\vW}}\circ T(\vv_j)\right)\\
+	& =  \cMapInv{\mcalB_{\vV}}\left(\check{U}(A[:,j])\right)\\
+	& = \cMapInv{\mcalB_{\vV}}\left(BA[:,j]\right)\\
+	& = \cMapInv{\mcalB_{\vV}}(\ve_{j})\\
+	& = \vv_{j}.
+    \end{align*}
+    Thus, $\fog{U}{T} = I_{\vV}$. 
+    Here, we used the fact that $\cMap{\mcalB_{\vW}}\circ T(\vv_j) = A[:,j]$ and that $BA = I_n$.
+    Similarly, we can show $\fog{T}{U} = I_{\vW}$.
+\end{proof}
+We saw that $\homv{\vV}{\vW}$ and $\matmn{m}{n}$ are isomorphic vector spaces where $\dim{\vV} = n$ and
+$\dim{\vW} = m$. What is the dimension of $\homv{\vV}{\vW}$? Note, that it is easy to see that the dimension
+of $\matmn{m}{n}$ is $mn$. This is because we can find a basis $\set{A_{ij}}{1\leq i \leq m,1\leq j \leq n}$ 
+of size $mn$ where $A_{ij}$ has all zeros except for the $ij$ entry which is $1$. We saw that any invertible
+linear transformation must be a map from vector spaces of equal dimensions and hence $\dim{\homv{\vV}{\vW}}$
+must be $mn$. We make this precise.
+\begin{Proposition}
+    Let $\vV,\vW$ be finite-dimensional vector spaces over a field $\F$. Then $\vV$ is isomorphic to $\vW$ if
+    and only if $\dim{\vV} = \dim{\vW}$.
+\end{Proposition}
+\begin{proof}
+    If $\vV,\vW$ are isomorphic, then there is an invertible linear transformation $\map{T}{\vV}{\vW}$. Thus,
+    $\dim{\vV} = \dim{\vW}$.
+    If $\dim{\vV} = \dim{\vW}$, then $\vV$ and $\vW$ have the same number of basis vectors. Let,
+    $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$ and 
+    $\mcalB_{\vW} = \left(\listV{\vw}{n}\right)$ be ordered bases for $\vV$ and $\vW$ respectively. Then there
+    is a unique linear transformation $T$ such that $T(\vv_{j}) = \vw_{j}$. But this means that
+    $\Ima{T} = span{T(\mcalB_{\vV})} = span{\vW} = \vW$ and so $T$ is onto. But since $\dim{\vV} = \dim{\vW}$, it
+    means that $T$ is also injective. Hence $T$ is invertible.
+\end{proof}
+
+We have seen that linear transformations can be viewed as matrices when we specify an ordered bases. However,
+we can have different ordered bases which will give rise to different matrices for the \textbf{same} linear
+transformation. This concept leads to the definition of similar matrices. We will look into similar matrices
+when we describe eigenvalues. For now, we will define a transition matrix or a change of co-ordinate basis
+which arise when we want to see how the co-ordinates of a vector change when we change the basis.
+
+%%%% Commutative diagram
 \endinput
 
