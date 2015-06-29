@@ -729,3 +729,58 @@ We can turn the definition of continuity relating to sequences in the following 
     $f$ is continuous if and only if whenever $\seq{x}{n}$ is a sequence in $X$ such that $x_n\to x$ then,
     $f(x_n)\to f(a)$.
 \end{Proposition}
+\begin{proof}
+    Suppose $f$ is continuous. Fix an $\epsilon > 0$. Then, there is a $\delta > 0$ such that IF $d(x,a) <
+    \delta$, then $\rho(f(x),f(a)) < \epsilon$. For this $\delta$, there is an $N$ such that $d(x_n,a) <
+    \delta$ for all $n \geq N$. Hence, $\rho(f(x_n),f(a)) < \epsilon$. This means that $\atob{f(x_n)}{f(a)}$.
+
+    Assume $f$ is not continuous. Then there is an $\epsilon > 0$ such that for any $\delta > 0$,
+    $d(x,a) < \delta$ but $\rho(f(x),f(a)) \geq \epsilon$.
+    Pick $\delta = 1$. There is a $x_1 \in X$ such that $d(x_1,a) < 1$ and $\rho(f(x_1),f(a)) \geq \epsilon$.
+    Continuing this way, for every $\delta_n = \frac{1}{n}$, there is an $x_n \in X$ such that $d(x_n,a) <
+    \frac{1}{n}$ but $\rho(f(x_n),f(a)) \geq \epsilon$. Hence, $\atob{x_n}{x}$ but $f(x_n)\not\to f(a)$.
+\end{proof}
+We now want to look at functions that are continuous on the entire metric space. In that case, we can look at
+an equivalent notion of continuity. Note that when $d(x,a) < \delta$ then $\rho(f(x),f(a)) < \epsilon$ 
+means that $\ball{\delta}{a}$ is getting mapped inside the $\ball{\epsilon}{f(a)}$. Thus, we can restate the
+definition of continuity as follows,
+\begin{Proposition}
+     If $\metricS{X}{d}$ and $\metricS{Y}{\rho}$ are two metric spaces, a function $\map{f}{X}{Y}$ is 
+     continuous at a point $a \in X$ if for every $\epsilon > 0$ there is a $\delta > 0$ such that 
+     $\dirIm{f}{\ball{\delta}{a}} \subset \ball{\epsilon}{f(a)}$. We say that $f$ is continuous on $X$ if $f$ is
+    continuous at every point $a \in X$.
+\end{Proposition}
+\begin{Theorem}
+    Let $\metricS{X}{d}$ and $\metricS{Y}{\rho}$ be two metric spaces and consider $\map{f}{X}{Y}$. Then, the
+    following are equivalent.
+    \begin{enumerate}
+	\item
+	    $f$ is continuous function on $X$.
+	\item
+	    If $G$ is an open subset of $Y$, then $\invIm{f}{G}$ is an open subset of $X$.
+	\item
+	    If $F$ is a closed subset of $Y$, then $\invIm{f}{F}$ is a closed subset of $X$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    We will show that $(1) \iff (2)$. First supposet that $f$ is continuous on $X$ and let $G$ be an open
+    subset of $Y$. We need to show that for any $p \in \invIm{f}{G}$ 
+    there is an $r > 0$ such that $\ball{r}{p} \subset \invIm{f}{G}$. Let $p$ be any point in $\invIm{f}{G}$.
+    Thus, $f(p)$ is a point in $G$. Since $G$ is open, there is an $\epsilon > 0$ such that 
+    $\ball{\epsilon}{f(p)}\subset G$. Since $f$ is continuous at $p$, there is a $\delta$ such that
+    $\dirIm{f}{\ball{r}{p}} \subset \ball{\epsilon}{f(p)}\subset G$. This means that,
+    \[\invIm{f}{\dirIm{f}{\ball{r}{p}}} \subset \invIm{f}{G}.\]
+    Hence,
+    \[\ball{r}{p} \subset \invIm{f}{\dirIm{f}{\ball{r}{p}}} \subset \invIm{f}{G}. \]
+
+    Now, assume that If $G$ is an open subset of $Y$ then $\invIm{f}{G}$ is open in $X$. Fix a $p \in X$ and
+    $\epsilon > 0$. Then $f(p) \in Y$. Consider the ball $\ball{\epsilon}{f(p)}$ which is an open set in $Y$.
+    Thus, $\invIm{f}{\ball{\epsilon}{f(p)}}$ is open in $X$. But since $f(p) \in \ball{\epsilon}{f(p)}$, $p$
+    is in $\invIm{f}{\ball{\epsilon}{f(p)}}$ which is open in $X$. Thus there is $\delta > 0$, such that
+    $\ball{\delta}{p} \subset \invIm{f}{\ball{\epsilon}{f(p)}}$. Hence,
+    \[\dirIm{f}{\ball{\delta}{p}} \subset \dirIm{f}{\invIm{f}{\ball{\epsilon}{f(p)}}} \subset 
+	\ball{\epsilon}{f(p)}.\]
+    Hence, $f$ is continuous.
+
+\end{proof}
+
