@@ -740,6 +740,19 @@ We can turn the definition of continuity relating to sequences in the following 
     Continuing this way, for every $\delta_n = \frac{1}{n}$, there is an $x_n \in X$ such that $d(x_n,a) <
     \frac{1}{n}$ but $\rho(f(x_n),f(a)) \geq \epsilon$. Hence, $\atob{x_n}{x}$ but $f(x_n)\not\to f(a)$.
 \end{proof}
+The Proposition above can be used to prove the following proposition which tells us that continous functions
+work well with algebraic operations.
+\begin{Proposition}
+    If $\metricS{X}{d}$ is a metric space and $f,g$ are continuous functions from $X$ into $\R$, then
+    \begin{enumerate}
+	\item
+	    $(f\pm g) $ is continuous. Here $(f\pm g)(x)$ is defined to be $f(x)\pm g(x)$ for any $x\in X$.
+	\item
+	    $(fg)$ is continuous. Here $(fg)(x)$ is defined to be $f(x)g(x)$ for any $x \in X$.
+	\item
+	    If $f(x)$ is not $0$ for all $x \in X$, then $\frac{1}{f}$ is a continuous function.
+    \end{enumerate}
+\end{Proposition}
 We now want to look at functions that are continuous on the entire metric space. In that case, we can look at
 an equivalent notion of continuity. Note that when $d(x,a) < \delta$ then $\rho(f(x),f(a)) < \epsilon$ 
 means that $\ball{\delta}{a}$ is getting mapped inside the $\ball{\epsilon}{f(a)}$. Thus, we can restate the
@@ -781,6 +794,61 @@ definition of continuity as follows,
     \[\dirIm{f}{\ball{\delta}{p}} \subset \dirIm{f}{\invIm{f}{\ball{\epsilon}{f(p)}}} \subset 
 	\ball{\epsilon}{f(p)}.\]
     Hence, $f$ is continuous.
-
 \end{proof}
+
+The composition of continuous function is also continuous.
+\begin{Proposition}
+    If $\map{f}{X}{Z}$ and $\map{g}{Z}{W}$ are continuous functions, then $\map{\fog{g}{f}}{X}{W}$ is also
+    continuous.
+\end{Proposition}
+\begin{proof}
+    This follows from the fact that $\invIm{(\fog{g}{f})}{G} = \invIm{f}{\left(\invIm{g}{G}\right)}$ for any
+    $G \subset W$.
+\end{proof}
+\begin{Example}
+    Let $\metricS{X}{d}$ is any metric space and let $x_0 \in X$. Let us define $\map{f}{X}{\R}$ by
+    $f(x) = d(x,x_0)$. Then $f$ is continuous on $X$. This is because $\distR{f(x)}{f(y)} =
+    \distR{d(x,x_0)}{d(y,x_0)} \leq d(x,y)$.
+\end{Example}
+\begin{Proposition}
+    If $\metricS{X}{d}$ is a metric space an $A \subset X$, then
+    \[\distR{\dist(x,A)}{\dist(y,A)} \leq d(x,y),\]
+    for all $x,y \in X$. Thus, for any non-empty subset $A \subset X$, the function $\map{f}{X}{\R}$ defined
+    by $f(x) = \dist(x,A)$ is continuous.
+\end{Proposition}
+\begin{proof}
+    Let $p$ be any element of $A$ (since $A$ is non-empty). Then,
+    \begin{align*}
+	\dist(x,A) & \leq d(x,p)\\
+	& \leq d(x,y) + d(y,p).
+    \end{align*}
+    Thus, $d(y,p) \geq \dist(x,A) - d(x,y)$ for any $p \in A$. Hence $\dist(y,A) \geq \dist(x,A) - d(x,y)$
+    i.e.~$\dist(x,A) - \dist(y,A) \leq d(x,y)$. Starting the same argurment with $y$ instead of $x$ we get the
+    result.
+\end{proof}
+Using the above Proposition, we can prove a famous result due to Urysohn.
+\begin{Theorem}
+    If $A,B$ are two disjoint closed subsets of $X$, then there is a continuous function $\map{f}{X}{\R}$
+    having the following properties:
+    \begin{enumerate}
+	\item
+	    $0 \leq f(x) \leq 1$ for all $x \in X$.
+	\item
+	    $f(x) = 0$ for all $x \in A$.
+	\item
+	    $f(x) = 1$ for all $x \in B$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    Define $\map{f}{X}{\R}$ by,
+    \[f(x) = \frac{\dist(x,A)}{\dist(x,A) + \dist(x,B)}.\]
+    Since $A,B$ are disjoint \emph{closed} sets, we cannot have $\frac{0}{0}$ and so the function is well
+    defined. It is crucial that $A,B$ be closed sets. If not, say $A = (0,1)$ and $B = (1,2)$, then $A,B$ are
+    disjoint. But if $x = 1$ is taken, then both $\dist(x,A) = \dist(x,B) = 0$.
+
+    Moreover, since $\dist(x,A),\dist(x,B)$ are continuous functions of $x$, $f$ defined above is continuous. 
+    When $x \in A$, $\dist(x,B) \neq 0$ but $\dist(x,A) = 0$. When $x \in B$, $\dist(x,B) = 0$, but 
+    $\dist(x,A) \neq 0$. Thus, all properties are satisfied.
+\end{proof}
+
 
