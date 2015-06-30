@@ -58,6 +58,8 @@ Thumbs.db
 *.mtc1
 *.nlo
 *.out
+*.loe
+*.pdf
 *.synctex.gz
 
 
