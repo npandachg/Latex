@@ -850,5 +850,38 @@ Using the above Proposition, we can prove a famous result due to Urysohn.
     When $x \in A$, $\dist(x,B) \neq 0$ but $\dist(x,A) = 0$. When $x \in B$, $\dist(x,B) = 0$, but 
     $\dist(x,A) \neq 0$. Thus, all properties are satisfied.
 \end{proof}
+\begin{Corollary}
+    If $F$ is a closed subset of $X$ and $G$ is an open set containing $F$, then there is a continuous
+    function $\map{f}{X}{\R}$ such that $0 \leq f(x) \leq 1$ for all $x$ in $X$, $f(x) = 1$ when $x \in F$ and
+    $f(x) = 0$ when $x \not \in G$.
+\end{Corollary}
+\begin{proof}
+    Using the Theorem above with $A = \comp{G}$ and $B = F$, we get the result.
+\end{proof}
+\begin{Definition}[name= Homeomorphism]
+    If $\metricS{X}{d}$ and $\metricS{Y}{\rho}$ are metric spaces, then a map $\map{f}{X}{Y}$ is called a 
+    homeomorphism if $f$ is bijective and both $f,f^{-1}$ are continuous. Two metric spaces are said to be
+    homeomorphic if there is a homeomorphism from on onto the other.
+\end{Definition}
+\begin{Remark}
+    Note that a bijection $\map{f}{X}{Y}$ is a homeomorphism precisely when a sequence $\seq{x}{n}$ in $X$
+    converges to $x \in X$ if and only if $\atob{f(x_n)}{f(x)}$. A homeomorphism identifies the two spaces.
+    That is, via a homeomorphic map $f$, they have the same convergent sequences, open sets, closed sets and
+    continuous functions. It is easy to see that homeomorphisms define equivalent relations.
+\end{Remark}
+Another close concept is the notion of isometry.
+\begin{Definition}[name=Isometry]
+    Two metric spaces $\metricS{X}{d}$ and $\metricS{Y}{\rho}$ are isometric if there is a bijective map 
+    $\map{f}{X}{Y}$ satisfying,
+    \[\rho(f(a),f(b)) = d(a,b),\]
+    for every $a,b \in X$. Such a map $f$ is called any isometric map.
+\end{Definition}
+\begin{Remark}
+    Note that if $f$ is an isometric map, then $f$ is injective. Let $f(a) = f(b)$, then
+    $0 = \rho(f(a),f(b)) = d(a,b)$ means that $a = b$.
+    If two metric spaces are isometric, then they are also homeomorphic. This is easy to see because an
+    isometric map is continuous and  $\seq{x}{n}$ in $X$
+    converges to $x \in X$ if and only if $\atob{f(x_n)}{f(x)}$.
+\end{Remark}
 
 
