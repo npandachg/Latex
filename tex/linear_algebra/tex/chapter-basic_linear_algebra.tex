@@ -1413,5 +1413,118 @@ when we describe eigenvalues. For now, we will define a transition matrix or a c
 which arise when we want to see how the co-ordinates of a vector change when we change the basis.
 
 %%%% Commutative diagram
+\begin{Definition}[name=Change of Basis]
+    Let $\vV$ be a vector space over the field $\F$ and let $\dim{\vV} = n$. Let $\mcalB_{\vV}$ and
+    $\mcalC_{\vV}$ be two ordered bases for $\vV$. We denote the change of basis map by 
+    $T_{\mcalB_{\vV}\to \mcalC_{\vV}}$,
+    given by $T_{\mcalB_{\vV}\to \mcalC_{\vV}} = \fog{\cMap{\mcalC_{\vV}}}{\cMapInv{\mcalB_{\vV}}}$. 
+    The change of basis
+    matrix or the transition matrix $M_{\mcalB_{\vV}\to \mcalC_{\vV}}$ is given by 
+    $M_{\mcalB_{\vV}\to \mcalC_{\vV}} := M_{T_{\mcalB_{\vV}\to \mcalC_{\vV}}}$.
+\end{Definition}
+\begin{Remark}
+    Let $\mcalB_{\vV} = (\listV{\vv}{n})$. Then, \[M_{\mcalB_{\vV}\to \mcalC_{\vV}}[:,j] =
+    \fog{\cMap{\mcalC_{\vV}}}{\cMapInv{\mcalB_{\vV}}}(\ve_{j}) = \coord{\vv_{j}}{\mcalC_{\vV}}.\] 
+    The change of basis matrix enables us to write the co-ordinates of a vector in one basis w.r.t another basis.
+    Thus if $\vv$ is a vector in $\vV$, then 
+    \[\coord{\vv}{\mcalC_{\vV}} = M_{\mcalB_{\vV}\to \mcalC_{\vV}}\coord{\vv}{\mcalB_{\vV}}.\]
+\end{Remark}
+\section{Dual spaces}
+\begin{Definition}[name=Dual vector space]
+    Let $\vV$ be a vector space over $\F$. We denote by $\dual{\vV}$, the dual vector space of $\vV$ which is
+    the set of all linear transformations that map $\vV$ into $\F$, i.e.~$\dual{\vV} = \homv{\vV}{\F}$. We
+    denote the elements of $\dual{\vV}$ by $f,g,h$ etc.~, thus $f \in \dual{\vV}$ if $\map{f}{\vV}{\F}$ is a
+    linear transformation. When $\F = \R$, the elements of $\dual{\vV}$ are called linear functionals.
+\end{Definition}
+\begin{Example}
+    Let $\vV$ be a vector space over $\F$ and let $\mcalB_{\vV}$ be an ordered basis for $\vV$. Let
+    $\map{f_i}{\vV}{\F}$ be given by $f_i(\vv) = {\left(\coord{\vv}{\mcalB_{\vV}}\right)}_{i}$ be the 
+    $i^{th}$ co-ordinate of $\vv$ w.r.t $\mcalB_{\vV}$. Then $f_i \in \dual{\vV}$ is is called the $i^{th}$
+    co-ordinate function w.r.t $\mcalB_{\vV}$.
+\end{Example}
+\begin{Remark}
+    If $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$, then it is easy to see that
+    \[f_i(\vv_{j}) = \delta_{ij}.\]
+\end{Remark}
+\begin{Remark}
+    Note that $\dim{\dual{\vV}} = \dim{\vV}\dim{\F} = \dim{\vV}$ if $\vV$ is finite dimensional. 
+    This suggests that $\vV$ and $\dual{\vV}$ are isomorphic to each other.
+\end{Remark}
+\begin{Theorem}
+    Suppose that $\vV$ is a finite dimensional vector space with the ordered basis $\mcalB =
+    \left(\listV{\vv}{n}\right)$. Let $f_i$ be the $i^{th}$ co-ordinate function w.r.t $\mcalB_{\vV}$. Let,
+    $\mcalB^{\ast} = \left(\listV{f}{n}\right)$ be an ordered list of co-ordinate functions. Then,
+    $\mcalB^{\ast}$ is an ordered basis for $\dual{\vV}$ and for any $f\in \dual{\vV}$,
+    \[f = \finiteSum{f(\vv_{i})f_i}{i}{n}.\]
+\end{Theorem}
+\begin{proof}
+    Let $f \in \dual{\vV}$. We need to show that $\mcalB^{\ast}$ spans $\dual{\vV}$
+    that is $f = \lComb{\beta}{f}{n}$, where $\beta_{i} = f(\vv_i)$ and $\mcalB^{\ast}$ is linearly
+    independent. Note that if we show that $\mcalB^{\ast}$ is a linearly independent list, then it must also
+    span $\dual{\vV}$ since $\dim{\vV} = n$.
+    Let $\lComb{\alpha}{f}{n} = \zerv{\dual{\vV}}$. Then evaluating both sides on $\vv_{i}$, we get
+    $\alpha_i{\vv_i} = 0$ for all $1 \leq i \leq n$. Thus each $\alpha_{i}$ is zero. Hence, $\mcalB^{\ast}$ is
+    linearly independent and also spans $\dual{\vV}$. Thus,
+    $f = \lComb{\beta}{f}{n}$. Again, evaluating both sides on $\vv_{i}$ we get $\beta_{i} = f(\vv_{i})$.
+\end{proof}
+\begin{Remark}
+    We have the useful duality formula. For any $\vu \in \vV$ and any $f \in \dual{\vV}$
+    \begin{align*}
+	& \vu = \finiteSum{f_i(\vu)\vv_{i}}{i}{n},\\
+	& f = \finiteSum{f(\vv_{i})f_i}{i}{n},
+    \end{align*}
+    where $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$ and $\mcalB_{\dual{\vV}} = \left(\listV{f}{n}\right)$
+    are ordered bases for $\vV$ and $\dual{\vV}$ respectively.
+\end{Remark}
+\begin{Definition}[name=Transpose map]
+Given any linear transformation $\map{T}{\vV}{\vW}$, there is an induced linear transformation
+$\map{T^{t}}{\dual{\vW}}{\dual{\vV}}$ given by,
+\[T^{t}(g) := \fog{g}{T},\]
+for any $g \in \dual{\vW}$.
+\end{Definition}
+
+%%%%%%%%%%% commutative map 
+The property of this induced map is that its matrix is \emph{transpose}
+of the matrix of $T$. We define what a transpose matrix means.
+\begin{Definition}
+    If $A = {\left[a_{ij}\right]}_{m \times n}$ is a $m\times n$ matrix, then the transpose of 
+    $A$, denote by $A^{t}$, is a matrix of size $n \times m$ given by,
+    \[A^{t} = {\left[b_{ij}\right]}_{n \times n},\]
+    where, $b_{ij} = a_{ji}$.
+\end{Definition}
+Thus, a transposed matrix interchanges the row and columns in the original matrix.
+\begin{Theorem}
+    Let $\vV,\vW$ be vector spaces over $\F$ with ordered basis $\mcalB_{\vV},\mcalB_{\vW}$ respectively.
+    For any linear transformation $\map{T}{\vV}{\vW}$, the mapping $T^{t}$ has the property
+    \[\matVW{T^{t}}{\mcalB_{\dual{\vV}}}{\mcalB_{\dual{\vW}}} = 
+		{\left(\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}\right)}^{t}.\]
+\end{Theorem}
+\begin{proof}
+    Let $\mcalB_{\vV} = \left(\listV{\vv}{n}\right)$ and $\mcalB_{\vW} = \left(\listV{\vw}{m}\right)$ be the
+    ordered basis for $\vV,\vW$ respectively.
+    Let $\mcalB_{\dual{\vV}} = \left(\listV{f}{n}\right)$ and 
+    $\mcalB_{\dual{\vW}} = \left(\listV{g}{m}\right)$ be the corresponding dual basis vectors.
+    Finally, let $\left(\listV{\ve^{n}}{n}\right)$ and $\left(\listV{\ve^{m}}{m}\right)$
+    be the standard basis vectors for $\Fn$ and $\F^m$ respectively.
+    Let $\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}} = A = {\left[a_{ij}\right]}_{m \times n}$ and let
+    $\matVW{T^{t}}{\mcalB_{\dual{\vV}}}{\mcalB_{\dual{\vW}}} = B$.
+    Then,
+    \begin{align*}
+	B[:,j] &= 
+	\left(\fog{\fog{\cMap{\mcalB_{\dual{\vV}}}}{T^{t}}}{\cMapInv{\mcalB_{\dual{\vW}}}}\right)(\ve^{n}_{j}), \\
+	&= \left(\fog{\cMap{\mcalB_{\dual{\vV}}}}{T^{t}}\right)(g_j),\\
+	&= \cMap{\dual{\mcalB_{\vV}}}\left(\fog{g_j}{T}\right).\\
+    \end{align*}
+    Since $\fog{g_j}{T} \in \dual{\vV}$, we can use the duality formula to write,
+    \[\fog{g_j}{T} = \finiteSum{\fog{g_j}{T}\left(\vv_i\right)f_i}{i}{n}.\]
+    Thus,
+    \[b_{ij} = B[i,j] = \fog{g_j}{T}(\vv_i).\]
+    Now,
+    \[T(\vv_i) = \finiteSum{a_{ki}\vw_{k}}{k}{m}.\]
+    Thus,
+    \[g_j\left(T(\vv_i)\right) = a_{ji}.\]
+    Hence, $B = A^{t}$.
+
+\end{proof}
 \endinput
 

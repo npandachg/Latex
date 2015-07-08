@@ -1,0 +1,35 @@
+\begin{thenomenclature} 
+
+ \nomgroup{A}
+
+  \item [{$\ann{\vsp{U}}$}]\begingroup Annhilator of $\vsp{U}$\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\C$}]\begingroup Complex Numbers\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\dim\vsp{V}$}]\begingroup Dimension of $\vsp{V}$\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\dual{V}$}]\begingroup Dual Vector space of $\vsp{V}$\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\F$}]\begingroup Field\nomeqref {0.0}\nompageref{1}
+  \item [{$\homv{V}{W}$}]\begingroup Set of all linear transformations from $\vsp{V}$ to $\vsp{W}$\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\Ima T$}]\begingroup Image of the linear transformation $T$\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\ker T$}]\begingroup Kernal of the linear transformation $T$\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\matmn{m}{n}$}]\begingroup Set of all matrices of size $m \times n$ whose elements belong to $\F$\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\orth{\vsp{U}}$}]\begingroup Orthogonal complement of $\vsp{U}$\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\R$}]\begingroup Reals\nomeqref {0.0}\nompageref{1}
+  \item [{$\vect{v}$}]\begingroup Element of a vector space\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\vspF{V}{F}$}]\begingroup Vector Space over field\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\vsp{V}$}]\begingroup Vector Space\nomeqref {0.0}
+		\nompageref{1}
+  \item [{$\Z$}]\begingroup Integers\nomeqref {0.0}\nompageref{1}
+  \item [{$\zerv{\vsp{V}}$}]\begingroup zero vector of a vector space $\vsp{V}$\nomeqref {0.0}
+		\nompageref{1}
+
+\end{thenomenclature}
