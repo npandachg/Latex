@@ -861,7 +861,7 @@ Using the above Proposition, we can prove a famous result due to Urysohn.
 \begin{Definition}[name= Homeomorphism]
     If $\metricS{X}{d}$ and $\metricS{Y}{\rho}$ are metric spaces, then a map $\map{f}{X}{Y}$ is called a 
     homeomorphism if $f$ is bijective and both $f,f^{-1}$ are continuous. Two metric spaces are said to be
-    homeomorphic if there is a homeomorphism from on onto the other.
+    homeomorphic if there is a homeomorphism from one onto the other.
 \end{Definition}
 \begin{Remark}
     Note that a bijection $\map{f}{X}{Y}$ is a homeomorphism precisely when a sequence $\seq{x}{n}$ in $X$
@@ -883,5 +883,90 @@ Another close concept is the notion of isometry.
     isometric map is continuous and  $\seq{x}{n}$ in $X$
     converges to $x \in X$ if and only if $\atob{f(x_n)}{f(x)}$.
 \end{Remark}
+\begin{Definition}[name= Equivalent metrics]
+    If $X$ is a set, then the two metrics $d$ and $\rho$ are said to be equivalent if they define the same
+    convergent sequences. Equivalently, $d,\rho$ are equivalent if the identity map
+    $\map{i}{\metricS{X}{d}}{\metricS{Y}{\rho}}$ is a homeomorphism.
+\end{Definition}
+The following Proposition gives a useful way to get an equivalent metric.
+\begin{Proposition}
+    For any metric space $\metricS{X}{d}$,
+    \[\rho(x,y) := \frac{d(x,y)}{1 + d(x,y)},\]
+    defines an equivalent metric.
+\end{Proposition}
+\begin{proof}
+    The proof is highly illustrative of an important technique. Note that positive reflexivity and
+    symmetricity is easily verifiable.
+    First let us investigate the function $f(t) = \frac{t}{1+t}$ for all $t > -1 \in \R $.
+    Clearly, $f(t) < 1$ for all $t > -1$ and so $f$ is bounded. Also 
+    $f'(t) = \frac{1}{1+t} - \frac{t}{{(1+t)}^2} = \frac{1}{{(1+t)}^2} > 0$. Hence $f$ is increasing.
+    $f''(t) = -2{(1 + t)}^{-3} < 0$ and hence $f'$ is decreasing.
+    For any $s,t > 0$, let $g(t) = f(s) + f(t) - f(s + t)$. Then, $g'(t) = f'(t) - f'(s+t)$ and hence $g'(t)
+    > 0$ since $f'$ is decreasing. Thus $g$ is an increasing function and thus for any $t > 0$,
+    $g(t) > g(0) = 0$. Hence $f(s+t) \leq f(s) + f(t)$ for all $t \geq 0$.
 
+    Thus,
+    \begin{align*}
+	\rho(x,z) &= \frac{d(x,z)}{1 + d(x,z)}\\
+	& \leq \frac{d(x,y)+d(y,z)}{1 + d(x,y)+d(y,z)}\\
+	&= f\left[d(x,y) + d(y,z)\right]\\
+	&\leq f(d(x,y)) + f(d(y,z))\\
+	& = \frac{d(x,y)}{1 + d(x,y)} + \frac{d(y,z)}{1 + d(y,z)}.
+    \end{align*}
+    For any sequence $\seq{x}{n}$, such that $\atob{x_n}{x}$ w.r.t $d$, we have $d(x_n,x)\to 0$ and so,
+    $\rho(x_n,x)\to 0$. Also, $d(x,y) = \frac{1}{1 - \rho(x,y)}$, which is defined since $\rho(x,y) < 1$, and
+    hence if $\atob{x_n}{x}$ w.r.t $\rho$, we have $\atob{x_n}{x}$ w.r.t $d$ too.
+    
+\end{proof}
+\begin{Remark}
+    Two equivalent metrics don't necessarily have the same Cauchy sequences.
+\end{Remark}
+We need a stronger notion of continuity that preserves Cauchy sequences.
+\begin{Definition}[name=uniform continuity]
+    A function $\map{f}{\metricS{X}{d}}{\metricS{Y}{\rho}}$ between two metric spaces is uniformly continuous
+    if for any $\epsilon > 0$ there is a $\delta > 0$ such that for all $x,y$ in $X$, if $d(x,y) < \delta$
+    then, $\rho(f(x),f(y)) < \epsilon$.
+\end{Definition}
+\begin{Remark}
+    The crucial point in the above definition is that the choice of $\delta$ only depends on $\epsilon$ and
+    not on any $x \in X$. Ofcourse, uniform continuity makes sense only for a set. There is no such thing as
+    pointwise uniformly continuous.
+\end{Remark}
+\begin{Theorem}
+    The following concerns uniformly continuous function $\map{f}{\metricS{X}{d}}{\metricS{Y}{\rho}}$ between
+    two metric spaces.
+    \begin{enumerate}
+	\item
+	    If $\seq{x}{n}$ is a Cauchy sequence in $X$, the $(f(x_n))$ is a Cauchy sequence in $Y$.
+	\item
+	    If $A \subset X$ and $\metricS{Y}{\rho}$ is complete, then $f$ can be extend to a uniformly
+	    continuous function $\map{f}{\cl{A}}{Y}$.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    Fix any $\epsilon > 0$. We know that there is a $\delta > 0$ such that for any $x,y \in X$,
+	    $\rho(f(x),f(y)) < \epsilon$ whenver $d(x,y) < \delta$. Since, $\seq{x}{n}$ is cauchy, there is an
+	    $N$ such that for all $m,n \geq N$, $d(x_m,x_n) < \delta$. Hence, $\rho(f(x_m),f(x_n)) < \epsilon$
+	    for all $m,n \geq N$. Thus, $(f(x_n))$ is Cauchy. 
+	\item
+	    First we need to define $f$ for all $x \in \setDiff{\cl{A}}{A}$. If $A = \cl{A}$, we are done.
+	    Hence, we can assume $A \neq \cl{A}$. Let $x \in \cl{A}$ such that $x \not \in A$. There exists a
+	    sequence $\seq{a}{n} \in A$ such that $a_n \to x$. $f$ map the
+	    sequence $\seq{a}{n}$ to a sequence $(f(a_n)) \in Y$. Every convergent sequence is Cauchy and
+	    hence $\seq{a}{n}$ is Cauchy and by the result above (since $f$ is uniformly continuous), 
+	    $(f(a_n))$ is Cauchy. Since, $Y$ is
+	    complete, $(f(a_n)) \to y$, for some $y \in Y$. Let us define $f(x) = y$. Is $f$, well defined
+	    i.e.~if $\seq{a}{n}$, $\seq{b}{n}$ are sequences in $X$ such that $a_n\to x$ and $b_n\to x$, is it
+	    the case that $f(x) = y$ i.e.~if $f(b_n)\to z$, we need to show $z = y$. Let $c_n = a_n$ if $n$ is
+	    even an $c_n = b_n$ if $n$ is odd. Thus $f(c_n)$ has one convergent subsequence that converges to
+	    $y$ and another that converges to $z$. By uniqueness of limits, these must be equal.
+
+	    We need to show that $f$ is uniformly continuous on $\cl{A}$.
+
+
+    \end{enumerate}
+\end{proof}
 
