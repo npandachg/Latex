@@ -1526,5 +1526,57 @@ Thus, a transposed matrix interchanges the row and columns in the original matri
     Hence, $B = A^{t}$.
 
 \end{proof}
+An extremely important theorem is the following:
+\begin{Theorem}\label{thm:tandttr}
+    Let $\vV,\vW$ be finite dimensional vector spaces of $\dim{n}$ and $\dim{m}$ respectively and let 
+    $\map{T}{\vV}{\vW}$ be a linear transformation and let $\map{T^{t}}{\dual{\vW}}{\dual{\vV}}$ be the
+    corresponding transpose map (linear transformation) of $T$. Then,
+    \begin{enumerate}
+	\item $T$ is injective if and only if $T^{t}$ is surjective.
+	\item $T$ is surjective if and only if $T^{t}$ is injective.
+    \end{enumerate}
+\end{Theorem}
+We will need a few more concepts and Lemmas to prove the theorem above.
+\begin{Definition}[name=Annihilator]
+    Let $\vV$ be a vector space of $\dim{n}$ and let $\dual{\vV}$ be the dual vector space of $\vV$.
+    Let $\vU \subset \vV$ be a subspace of $\vV$ of dimension $\dim{r} \leq n$. The Annihilator of $\vU$,
+    denoted by $\ann{U}$ is the set,
+    \[\ann{\vU} = \set{f\in\dual{\vV}}{f(\vu) = 0\hspace{0.05in}\text{for any $\vu \in \vU$}}.\]
+\end{Definition}
+\begin{Lemma}
+    $\ann{\vU}$ is a subspace of $\dual{\vV}$.
+\end{Lemma}
+\begin{proof}
+    Clearly $\zerv{\dual{\vV}}$ is in $\ann{\vU}$. Let $f,g$ be elements of $\dual{\vV}$. Then,
+    $f,g$ are elements of $\dual{\vV}$ and so $(f+g)\in \dual{\vV}$. Now for any $\vu \in \vU$,
+    $(f+g)(\vu) = f(\vu) + g(\vu) = 0$. Thus, $(f+g) \in \ann{U}$. Similarly, we can show that $\ann{\vU}$ is
+    closed under scalar multiplication.
+\end{proof}
+\begin{Lemma}
+    $\dim{\vU} + \dim{\ann{\vU}} = \dim{\vV}$.
+\end{Lemma}
+\begin{proof}
+    Let $\mcalB_{\vU} = (\listV{\vu}{r})$ be an ordered basis for $\vU$. We can extend this to create an
+    ordered basis for $\vV$, given by,
+    \[\mcalB_{\vV} = (\vu_{1},\vu_{2},\dots,\vu_{r},\vv_{1},\vv_{2},\dots,\vv_{k}),\]
+    where $r + k = n$. Consider the corresponding dual basis for $\dual{\vV}$ given by,
+    \[\mcalB_{\dual{\vV}} = (f_{1},f_{2},\dots,f_{r},g_{1},g_{2},\dots,g_{k}).\]
+    \textbf{Claim}: $(\listV{g}{k})$ is an ordered basis for $\ann{\vU}$.
+    Clearly, $(\listV{g}{k})$ is linearly independent being a subset of a basis.
+    Let $h \in \ann{\vU}$. Then since $h \in \dual{\vV}$, we can write,
+    \[h = \finiteSum{h(\vu_{i})f_{i}}{i}{r} + \finiteSum{h(\vv_{j})g_{j}}{j}{k}.\]
+    Since, $h \in \ann{\vU}$, $\finiteSum{h(\vu_{i})f_{i}}{i}{r} = 0$ and thus,
+     $(\listV{g}{k})$ spans $\ann{\vU}$.
+\end{proof}
+\begin{Lemma}
+    Let $\map{T}{\vV}{\vW}$ be a linear transformation and let $\map{T^{t}}{\dual{\vW}}{\dual{\vV}}$ be the
+    corresponding transpose map (linear transformation) of $T$. Then,
+    \begin{enumerate}
+	\item
+	    $\Ima{T^{t}} = \ann{(\ker{T})}$.
+	\item
+	    $\ker{T^{t}} = \ann{(\Ima{T})}$.
+    \end{enumerate}
+\end{Lemma}
 \endinput
 
