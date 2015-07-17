@@ -689,12 +689,12 @@ As in the case of groups, any linear transformation induces two important subspa
 \begin{Definition}[name=Kernel]
     Let $\vV,\vW$ be vector spaces over the field $\F$ and let $\map{T}{\vV}{\vW}$ be a linear transformation. 
     We define the Kernel or \textbf{null space} as the subset $\ker{T}$ of $\vV$ as the inverse image
-    $\invIm{T}{\zerv{\vW}}$.
+    $\invIm{T}{\zerv{\vW}}$ that is $\ker{T} = \invIm{T}{\zerv{\vW}}$.
 \end{Definition}
 \begin{Definition}[name=Image]
     Let $\vV,\vW$ be vector spaces over the field $\F$ and let $\map{T}{\vV}{\vW}$ be a linear transformation.
     We define the image or \textbf{range} as the subset $\Ima{T}$ of $\vW$ as the direct image
-    $\dirIm{T}{\vV}$.
+    $\dirIm{T}{\vV}$, that is $\Ima{T} = \dirIm{T}{\vV}$.
 \end{Definition}
 The following proposition is analogous to the case of groups.
 \begin{Proposition}
@@ -1223,6 +1223,17 @@ basis for $\Fn$. Now let us generalize the definition of a linear transformation
     \[L_{A}(\vx) := A\coord{\vx}{\mcalB_{\vv}},\]
     for any $\vx$ in $\Fn$ and any ordered basis $\mcalB_{\vv}$ of $\Fn$.
 \end{Definition}
+\begin{Example}
+    For any linear transformation $\map{T}{\vV}{\vW}$, if $A = \matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$, then
+    $L_{A} = \check{T}$. This is easy to see. Let $\va = \colvec{3}{a_1}{\vdots}{a_n}$.
+    \begin{align*}
+	L_{A}(\va) &= A\colvec{3}{a_1}{\vdots}{a_n}\\
+	&= \finiteSum{a_{j}A[:j]}{j}{n}\\
+	&= \finiteSum{a_{j}\check{T}(\ve_j)}{j}{n}\\
+	&= \check{T}(\finiteSum{a_j\ve_{j}}{j}{n})\\
+	&= \check{T}(\va).
+    \end{align*}
+\end{Example}
 The next theorem states the equivalency of the vector space of matrices and linear transformation in finite
 dimensional vector spaces. The proof is similar to the particular case of mappings between $\Fn$ and $\Fm$.
 \begin{Theorem}
@@ -1405,6 +1416,35 @@ must be $mn$. We make this precise.
     $\Ima{T} = span{T(\mcalB_{\vV})} = span{\vW} = \vW$ and so $T$ is onto. But since $\dim{\vV} = \dim{\vW}$, it
     means that $T$ is also injective. Hence $T$ is invertible.
 \end{proof}
+We can make an important observation about isomorphic linear transformation.
+\begin{Proposition}
+    Let $\map{T}{\vV}{\vW}$ be an isomorphism. Then for any subspace $\vU$ of $\vV$,
+    $\dim{T(\vU)} = \dim{\vU}$.
+\end{Proposition}
+\begin{proof}
+    Let $\mcalB_{\vU} = \left(\listV{\vu}{r}\right)$ be a basis for $\vU$. Then,
+    $T(\vU) = span{\left(\listT{\vu}{r}{T}\right)}$. Thus, $\dim{T(\vU)} \leq r$. 
+    Let $\lCombT{\alpha}{\vu}{r}{T} = \zerv{\vW}$. This means that,
+    $T\left(\lComb{\alpha}{\vu}{r}\right) = \zerv{\vW}$. Since, $T$ is injective,
+    $\lComb{\alpha}{\vu}{r} = \zerv{\vV}$ and since we have basis vectors, each $\alpha_{i} = 0$.
+    Thus $\dim{T(\vU)} = \dim{\vU}$.
+\end{proof}
+\begin{Proposition}
+    Let $\map{T}{\vV}{\vW}$ be a linear transformation between two finite dimensional vector spaces. Then,
+    rank $T$ is equal to rank $\check{T}$.
+\end{Proposition}
+\begin{proof}
+    We know that $\fog{\cMap{\mcalB_{\vW}}}{T} = \fog{\check{T}}{\cMap{\mcalB_{\vV}}}$.
+    From the left side,
+    \[(\fog{\cMap{\mcalB_{\vW}}}{T})(\vV) = \cMap{\mcalB_{\vW}}(\Ima{T}).\]
+    Hence, from the proposition above, since co-ordinate maps are isomorphic,
+    $\dim(\fog{\cMap{\mcalB_{\vW}}}{T})(\vV) = \dim{\Ima{T}}$.
+    From the right side, 
+    \[(\fog{\check{T}}{\cMap{\mcalB_{\vV}}})(\vV) = \check{T}(\cMap{\mcalB_{\vV}}(\vV))
+	= \check{T}(\Fn) = \Ima{\check{T}}.\]
+    Thus, rank $T$ is equal to rank $\check{T}$.
+\end{proof}
+
 
 We have seen that linear transformations can be viewed as matrices when we specify an ordered bases. However,
 we can have different ordered bases which will give rise to different matrices for the \textbf{same} linear
@@ -1578,5 +1618,57 @@ We will need a few more concepts and Lemmas to prove the theorem above.
 	    $\ker{T^{t}} = \ann{(\Ima{T})}$.
     \end{enumerate}
 \end{Lemma}
+\begin{proof}
+    Showing that something is in the annihilator is easier. Hence, first we will show 
+    \begin{enumerate}
+	\item
+	    $\Ima{T^{t}} \subset \ann{(\ker{T})}$ and,
+	\item
+	    $\ker{T^{t}} \subset \ann{(\Ima{T})}$.
+    \end{enumerate}
+    For the first statement, let $f\in \dual{\vV}$ be such that there is a $g\in \dual{\vW}$ such that 
+    $T^{t}(g) = f$. Thus, $\fog{g}{T} = f$. Let $\vv$ be an element of $\ker{T}$. Then,
+    \[f(\vv) = g(T(\vv)) = g(\zerv{\vW}) = 0.\]
+    Hence, $f$ is in $\ann{(\ker{T})}$.
+
+    Let $g \in \dual{\vW}$ be such that $T^{t}(g) = \zerv{\dual{\vV}}$. Thus, $\fog{g}{T} =
+    \zerv{\dual{\vV}}$. Fix a vector $\vw$ in $\Ima{T}$. Hence, there is a vector $\vv \in \vV$ such that
+    $T(\vv) = \vw$. Thus, \[g(\vw) = (\fog{g}{T})(\vv) = \zerv{\dual{\vV}}(\vv) = 0.\]
+    Hence, $g$ is in $\ann{(\Ima{T})}$.
+
+    We have shown,
+    \begin{align*}
+	& \dim{\Ima{T^{t}}} \leq \dim\ann{(\ker{T})}\\
+	& \dim{\ker{T^{t}}} \leq \dim\ann{(\Ima{T})}
+    \end{align*}
+    Adding and using the Lemma above along with the rank nullity theorem, we get
+    \begin{align*}
+	\dim{\dual{\vW}} &\leq \dim\ann{(\ker{T})} + \dim\ann{(\Ima{T})} \\
+	&\quad = (\dim{\vV} - \dim{\ker{T}}) + (\dim{\vW} - \dim{\Ima{T}})\\
+	&\quad = \dim{\vV} + \dim{\vW} - (\dim{\ker{T}} + \dim{\Ima{T}})\\
+	&\quad = \dim{\vW}.
+    \end{align*}
+    Thus, we get $\dim{\dual{\vW}} \leq \dim{\vW}$. But we know that $\dim{\vW} = \dim{\dual{\vW}}$. Hence, it
+    must be the case that $\dim{\Ima{T^{t}}} = \dim\ann{(\ker{T})}$ and
+    $\dim{\ker{T^{t}}} = \dim\ann{(\Ima{T})}$. Thus, we get the desired result.
+
+\end{proof}
+Now we are ready to prove~\ref{thm:tandttr}.
+\begin{proof}
+    \begin{align*}
+	\text{$T$ is injective.} &\iff \dim{\ker{T}} = 0\\
+	&\iff \dim\ann{(\ker{T})} = \dim{\vV} = \dim{\dual{\vV}}\\
+	&\iff \dim\Ima{T^{t}} = \dim{\dual{\vV}}\\
+	&\iff \text{$T^{t}$ is surjective.}
+    \end{align*}
+
+        \begin{align*}
+	\text{$T$ is surjective.} &\iff \dim{\Ima{T}} = \dim{\vW}\\
+	&\iff \dim\ann{(\Ima{T})} = 0\\
+	&\iff \dim\ker{T^{t}} = 0\\
+	&\iff \text{$T^{t}$ is injective.}
+    \end{align*}
+
+\end{proof}
 \endinput
 
