@@ -69,7 +69,49 @@ and column of $C$.
 \end{Example}
 
 %%%%%%%%% merge from previous
+The following theorem concerns elementary matrices. 
+\begin{Theorem}
+    Let $E$ be an elementary matrix. 
+    \begin{enumerate}
+	\item
+	    $E$ is invertible and is an elementary matrix of the same type as $E$.
+	\item
+	    If $A$ is a matrix of size $m\times n$, then an elementary row operation on $A$
+	    corresponds to left multiplication of $A$ by an elementary matrix of size $m \times m$,
+	    and an elementary column operation on $A$ corresponds to right multiplication of $A$ by
+	    an elementary matrix of size $n \times n$.
+    \end{enumerate}
+\end{Theorem}
+\begin{Definition}
+    If $A$ is a matrix of size $m\times n$, we define the rank of $A$, denoted by rank $A$, as the
+    rank of the corresponding linear transformation $\map{L_{A}}{\Fn}{\F^m}$.
+\end{Definition}
+\begin{Remark}
+    From the definition, it immediately follows that an $n\times n$ matrix is invertible if and only
+    if its rank is equal to $n$.
 
+\end{Remark}
+\begin{Proposition}
+    Let $\map{T}{\vV}{\vW}$ be a linear transformation between finite dimensional vector spaces and
+    let $\mcalB_{\vV}$ and $\mcalB_{\vW}$ be ordered bases for $\vV$ and $\vW$ respectively. Then,
+    rank $T$ = rank $\matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$.
+\end{Proposition}
+\begin{proof}
+    This follows from the fact that if $A = \matVW{T}{\mcalB_{\vV}}{\mcalB_{\vW}}$, then,
+    $L_A = \check{T}$ and rank $T$ is equal to rank $\check{T}$.
+\end{proof}
+\begin{Proposition}
+    Let $A$ be an $m\times n$ matrix. If $P,Q$ are invertible $m\times m$ and $n\times n$ matrices,
+    respectively, then
+    \begin{enumerate}
+	\item
+	    rank $(AQ)$ $ = $ rank $A$.
+	\item 
+	    rank $(PA)$ $ = $ rank $A$.
+	\item
+	    rank $(PAQ)$ $ = $ rank $A$.
+    \end{enumerate}
+\end{Proposition}
 %%%%%%%% done merge
 \begin{Corollary}
     Elementary row and column operations are rank preserving.
