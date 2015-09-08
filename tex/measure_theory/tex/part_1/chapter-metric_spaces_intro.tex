@@ -952,7 +952,7 @@ We need a stronger notion of continuity that preserves Cauchy sequences.
 	    $N$ such that for all $m,n \geq N$, $d(x_m,x_n) < \delta$. Hence, $\rho(f(x_m),f(x_n)) < \epsilon$
 	    for all $m,n \geq N$. Thus, $(f(x_n))$ is Cauchy. 
 	\item
-	    First we need to define $f$ for all $x \in \setDiff{\cl{A}}{A}$. If $A = \cl{A}$, we are done.
+	    First we need to extend $f$ for all $x \in \setDiff{\cl{A}}{A}$. If $A = \cl{A}$, we are done.
 	    Hence, we can assume $A \neq \cl{A}$. Let $x \in \cl{A}$ such that $x \not \in A$. There exists a
 	    sequence $\seq{a}{n} \in A$ such that $a_n \to x$. $f$ map the
 	    sequence $\seq{a}{n}$ to a sequence $(f(a_n)) \in Y$. Every convergent sequence is Cauchy and
@@ -964,9 +964,29 @@ We need a stronger notion of continuity that preserves Cauchy sequences.
 	    even an $c_n = b_n$ if $n$ is odd. Thus $f(c_n)$ has one convergent subsequence that converges to
 	    $y$ and another that converges to $z$. By uniqueness of limits, these must be equal.
 
-	    We need to show that $f$ is uniformly continuous on $\cl{A}$.
-
-
+	    We need to show that the extension of $f$ is uniformly continuous on $\cl{A}$. To recap, 
+	    our extension of $f$ is
+	    given by $\map{g}{X}{Y}$ such that $\restrict{g}{A} = f$ and for any $x \in \cl{A}$ such that $x
+	    \not \in A$, we define $g(x) := \lim\limits_{n\to\infty}f(a_n)$ for any sequence $\seq{a}{n}$
+	    that converges to $x$. Let $x,y$ be element of $\cl{A}$ that are not in $A$. Fix an $\epsilon >
+	    0$. Then, we know that there is a sequence $a_n \to x$ and $b_n \to y$. Moreover, since $f$ is
+	    uniformly continuous in $A$, there is a $\delta > 0$ such that $\rho(f(a_n),f(b_n)) < \epsilon$,
+	    whenever $d(a_n,b_n) < \delta$. Let ${\delta}' = \frac{\delta}{3}$. 
+	    \begin{equation*}
+		\rho(g(x),g(y)) \leq \rho(g(x),f(a_n)) + \rho(f(a_n),f(b_n)) + \rho(f(b_n), g(y)).
+	    \end{equation*}
+	    Since, $a_n \to x$ there is a $N_1$ such that whenever $n \geq N_1$, $d(a_n,x) <
+	    \frac{\delta}{3}$. By definition, when $n \geq N_1$ we can make 
+	    $\rho(f(a_n),g(x)) < \frac{\epsilon}{3}$. Similarly when $n \geq N_2$, we can make
+	    $\rho(f(b_n),g(y)) < \frac{\epsilon}{3}$. For $n \geq \max(N_1,N_2)$, 
+	    \begin{equation*}
+		d(a_n,b_n) \leq d(a_n,x) + d(x,y) + d(y,b_n),
+	    \end{equation*}
+	    $d(a_n,b_n) < \delta$, whenever $d(x,y) < \delta'$. Since $f$ is uniformly continuous, 
+	    $\rho(f(a_n),f(b_n)) < \frac{\epsilon}{3}$ and hence $\rho(g(x),g(y)) < \epsilon$. 
+	    Thus, we get the result.
     \end{enumerate}
+
+    \section{Compactness}
 \end{proof}
 
