@@ -50,7 +50,10 @@ statements that equate an arbitrary union to disjoint union.
 	    \end{enumerate}
 	\item If $\atobUp{A_n}{A}$ then $\atobDown{\indxComp{A}{n}}{\comp{A}}$. If
 	    $\atobDown{A_n}{A}$ then $\atobUp{\indxComp{A}{n}}{\comp{A}}$.
-	    
+	\item We can construct a sequence $\seq{B}{n}$ such that $\atobUp{B_n}{A}$ where $A =
+	    \countUnion{A_n}{n}$ as follows. $B_1 = A_1$, $B_2 = A_1 \cup A_2$ and so on, where $B_n =
+	    \finiteUnion{A_k}{k}{n}$. This is an important trick to generate an increasing sequence of sets
+	    whose countable unions are the same.
     \end{enumerate}
 \end{Remark}
 
@@ -134,7 +137,7 @@ intersection.
     \end{enumerate}
 \end{Example}
 \begin{Theorem}[name=Equivalent Characterization of $\sigmaAlgebra$]\label{thm:eq_ch_sigmaA}
-    A collection of sets $\algebra{A}$ is a $\sigmaAlgebra$ on $X$ iff it is closed under
+    An algebra of sets $\algebra{A}$ is a $\sigmaAlgebra$ on $X$ iff it is closed under
     complements and for any sequence of pairwise disjoint sets contained in the collection 
     their union is also contained in the collection. 
 \end{Theorem}
@@ -143,7 +146,8 @@ intersection.
 
     $\Leftarrow$ Consider a sequence of sets $\seq{E}{n} \in \algebra{A}$. Using~\ref{rmk:disjU},
 	we can construct a sequence of pairwise disjoint sets $\seq{F}{n}$, such that $\countU{A} =
-	\countDisjU{F} \in \algebra{A}$. 
+	\countDisjU{F} \in \algebra{A}$. We need to $\algebra{A}$ to be an algebra so that $F_n = A_n\cap
+	\indxComp{A}{1}\cap\dots\cap\indxComp{A}{n-1}$ is in $\algebra{A}$. 
 \end{proof}
 \begin{Definition}[name=Generated $\sigmaAlgebra$]
     Let $X$ be any non-empty set and let $\family{E} \subset \powSet{X}$. The $\sigmaAlgebra$
@@ -263,15 +267,22 @@ We can generate new $\sigmaAlgebra$ from existing $\sigmaAlgebra$ using inverse 
 	    thus $\sigmaGen{\invIm{f}{\family{E}}} \subset
 	    \invIm{f}{\sigmaGen{\family{E}}}$.
 
-	    The other direction is tricky. We will use~\ref{rmk:prin_good_sets}. What we want to show
-	    is that for any $A \in \sigmaGen{\family{E}}$ we should have,
-	    \begin{equation*}
-		\invIm{f}{A} \in \sigmaGen{\invIm{f}{\family{E}}}.
-	    \end{equation*}
+	    The other direction is tricky i.e.
+	    \[\invIm{f}{\sigmaGen{\family{E}}} \subset \sigmaGen{\invIm{f}{\family{E}}}.\] 
+	    We will use~\ref{rmk:prin_good_sets}; that is, we will construct a sub-collection of 
+	    $\invIm{f}{\sigmaGen{\family{E}}}$ which is a subset of $\sigmaGen{\invIm{f}{\family{E}}}$. What
+	    is a sub-collection of $\invIm{f}{\sigmaGen{\family{E}}}$ that satisfies this property? 
+	    It is precisely a collection of some sets $A$ in
+	    $\sigmaGen{\family{E}}$ for which $\invIm{f}{A}$ is in $\sigmaGen{\invIm{f}{\family{E}}}$.
 	    Thus consider the collection of good sets $\family{F}$, such that
 	    \begin{equation*}
 		\family{F} = \set{A \in \sigmaGen{\family{E}}}{\invIm{f}{A} \in 
 		    \sigmaGen{\invIm{f}{\family{E}}}}
+	    \end{equation*}
+	    What we want to show
+	    is that for any $A \in \sigmaGen{\family{E}}$ we should have,
+	    \begin{equation*}
+		\invIm{f}{A} \in \sigmaGen{\invIm{f}{\family{E}}}.
 	    \end{equation*}
 	    Clearly $\family{F}$ is not empty because $\family{E} \subset \family{F}$. This
 	    is easily observed because $\invIm{f}{\family{E}} \subset
@@ -282,7 +293,8 @@ We can generate new $\sigmaAlgebra$ from existing $\sigmaAlgebra$ using inverse 
 	    this means that $\comp{E} \in \family{F}$ since $\invIm{f}{\comp{E}} =
 	    \comp{(\invIm{f}{E})} \in \sigmaGen{\invIm{f}{\family{E}}}$. Similary for 
 	    countable unions. Thus $\family{F}$ is a $\sigmaAlgebra$ containing $\family{E}$ 
-	    and so $\sigmaGen{\family{E}} \subset \family{F}$.
+	    and so $\sigmaGen{\family{E}} \subset \family{F}$. By construction,
+	    $\family{F}\subset\sigmaGen{\famE}$ and so $\sigmaGen{\famE} = \famF$ and hence we are done.
     \end{enumerate}
 \end{proof}
 Of particular interest is the situation involving a metric space, for example $\Rn$. In this case,
@@ -478,6 +490,182 @@ rectangles.
     from~\ref{thm:gen_borel_rn}.
 \end{Remark}
 
+We close this section by looking at a few more important family of sets.
+\begin{Definition}[name=Monotone Class]
+    Let $X$ be a non-empty set. A monotone class $\famE$ is a non-empty collection of subsets of $X$ which is
+    closed under monotone sequence of sets, i.e.
+    \begin{enumerate}
+	\item If $\seq{A}{n}$ is a sequence of subsets of $X$ in $\famE$ such that $A_i \subset A_{i+1}$ for
+	    each $i$, then $\countUnion{A_n}{n} \in \famE$.
+	\item If $\seq{A}{n}$ is a sequence of subsets of $X$ in $\famE$ such that $A_i \supset A_{i+1}$ for
+	    each $i$, then $\countIntersection{A_n}{n} \in \famE$.
+    \end{enumerate}
+\end{Definition}
+\begin{Proposition}
+    An algebra $\famA$ is a sigma algebra if and only if it is a monotone class.
+\end{Proposition}
+\begin{proof}
+    Let $\famA$ be a sigma algebra. Then since it is closed under countable unions, $\famA$ is also a
+    monotone class. 
+
+    Let $\famA$ be a monotone class and consider a sequence $\seq{A}{n}$. From remark~\ref{rmk:disjU}, we can
+    construct an increasing sequence $\seq{B}{n}$ such that $\countUnion{B_n}{n} = \countUnion{A_n}{n}$. Since
+    $\famA$ is a monotone class, we get $\countUnion{A_n}{n} \in \famA$. Hence $\famA$ is a sigma-algebra.
+\end{proof}
+
+Given a non-empty collection of sets $\famE$, the minimal sigma algebra containing $\famE$, is definied to be
+the sigma algebra generated by $\famE$. Similarly, we can talk about the minimal monotone class containing
+$\famE$ as the intersection of all monotone classes containing $\famE$. We denote this by $\mcalM(\famE)$. The
+next theorem is one of a type called monotone class theorems and its technique is quite illustrative of a
+useful proof technique in measure theory using remark~\ref{rmk:prin_good_sets}.
+\begin{Theorem}
+    Let $\famE$ be an algebra. Then, $\mcalM(\famE) = \sigmaGen{\famE}$.
+\end{Theorem}
+\begin{proof}
+    We need to show $\sigmaGen{\famE} \subset \mcalM(\famE)$ and $\mcalM(\famE) \subset \sigmaGen{\famE}$.
+
+    Since $\famE$ is a field, $\sigmaGen{\famE}$ is a monotone class containing $\famE$, we get from minimality,
+    $\mcalM(\famE) \subset \sigmaGen{\famE}$.
+
+    For the other direction, if we show that $\mcalM(\famE)$ is a sigma algebra containg $\famE$, we are done,
+    but this amounts to showing that $\mcalM(\famE)$ is an algebra.
+    Thus, we need to show: $\mcalM(\famE)$ is an algebra, that is for any $A \in \mcalM(\famE)$, $\comp{A}\in
+    \mcalM(\famE)$ and for any $A,B \in \mcalM(\famE)$, $A\cup B \in \mcalM(\famE)$. We will use the good sets
+    principle.
+    Let us define the following property that we want $\mcalM(\famE)$ to satisfy.
+    \[P_1(A) := \comp{A}\in \mcalM(\famE) \text{and} \hspace{0.05in} \forEv{B\in\mcalM(\famE)}A\cup B \in
+	\mcalM(\famE).\]
+    Let,
+    \[\famF_{1} = \set{A\in\mcalM(\famE)}{P_1(A)}.\]
+    By definition, $\famF_{1}$ is an algebra and $\famF_{1}\subset\mcalM{(\famE)}$. Thus, we need to show that
+    $\famF_{1} \supset \mcalM{(\famE)}$, which is equivalent to showing that 
+    \begin{enumerate}
+	\item
+	    $\famF_{1} \supset \famE$ and,
+	\item
+	    $\famF_{1}$ is a monotone class.
+    \end{enumerate}
+    To show $(2)$, let $\seq{A}{n}$ be an increasing sequence of sets in $\famF_{1}$ and so
+    $\countUnion{A_n}{n} \in \mcalM(\famE)$. Let $B$ be any set in $\mcalM(\famE)$, then $A_i \cup B$ is in
+    $\famF_{1}$. Hence, $(A_i\cup B)$ is an increasing sequence in $\mcalM(\famE)$ and so 
+    \[ \left(\countUnion{A_i}{i}\right) \cup B = \countUnion{(A_i\cup B)}{i} \in \mcalM(\famE).\]
+    Thus, $\countUnion{A_n}{n}\in \famF_{1}$. Also $\indxComp{A}{1} \supset \indxComp{A}{2} \dots$, and so,
+    \[\comp{(\countUnion{A_n}{n})} = \countIntersection{\indxComp{A}{n}}{n} \in \mcalM(\famE).\]
+    Thus, $(2)$ is satisfied.
+
+    Showing $(1)$ is tricky and hence we will show,
+    \[\famF_1 \supset \famF_2 \supset \famE,\]
+    for a suitable $\famF_2$ such that $\famF_2$ is monotone. 
+    This would mean that $\famF_1 \supset \famF_2 \supset \mcalM(\famE)$.
+    To construct $\famF_2$, we will define a new property:
+    \[P_2(A) := \comp{A}\in\mcalM(\famE) \text{and} \hspace{0.05in} 
+	\forEv{B\in\famE}A\cup B \in\mcalM(\famE).\]
+
+    Let,
+    \[\famF_{2} = \set{A\in\mcalM(\famE)}{P_2(A)}.\]
+    Since, $\famE$ is an algebra, $\famE \subset \famF_{2} \subset \famF_{1}$. Moreover, by similar reasoning
+    $\famF_{2}$ is a monotone class and so we get the result.
+\end{proof}
+
+\begin{Definition}[name=$\pi$ class]
+    Let $X$ be a non-empty set and let $\famE$ be a collection of subsets of $X$ such that:
+    \begin{enumerate}
+	\item For any $A,B \in \famE$, $A\cap B \in \famE$,
+    \end{enumerate}
+    then $\famE$ is called a $\pi-$ class.
+\end{Definition}
+\begin{Definition}[name=$\lambda$ class]
+    Let $X$ be a non-empty set. The collection of subsets of $X$, $\famE$ is called a $\lambda-$ class 
+    (system) if,
+    \begin{enumerate}
+	\item
+	    $X$ is in $\famE$.
+	\item
+	    $A \in \famE$ imples $\comp{A}\in \famE$.
+	\item
+	    If $(A_n)$ is a sequence of pairwise disjoint sets in $\famE$, then $\countUnion{A_n}{n}$ is in
+	    $\famE$. 
+    \end{enumerate}
+\end{Definition}
+It is easy to see that a $\lambda-$ class that is also a $\pi-$ class is a sigma algebra.
+See~\ref{thm:eq_ch_sigmaA}. 
+An equivalent definition of the $\lambda-$ class due to Dynkin is given as:
+\begin{Definition}[name= $D$ class]
+    Let $X$ be a non-empty set. The collection of subsets of $X$, $\famD$ is called a $D-$ class
+    if,
+    \begin{enumerate}
+	\item
+	    $X$ is in $\famE$.
+	\item
+	    $A,B \in \famE$ and $A \supset B$ imples ${A-B}\in \famE$.
+	\item
+	    If $(A_n)$ is a sequence of pairwise disjoint sets in $\famE$, then $\countUnion{A_n}{n}$ is in
+	    $\famE$. 
+    \end{enumerate}
+
+\end{Definition}
+It is easy to see that a $D-$ class is equivalent to a $\lambda-$ class. Suppose $\famA$ is a $D$ class and
+consider $A \in \famA$. We know that $X$ is in $\famA$ and since $X \supset A$, $\comp{A} = X-A$ is in
+$\famA$. Thus a $D-$ class is a $\lambda-$ class. Suppose $\famA$ is a $\lambda$ class, and consider $A,B \in
+\famA$ such that $A \supset B$. Then, $A-B = A\cap\comp{B} = \comp{\comp{A}\cup B}$. Since $A \supset B$,
+$\comp{A}$ and $B$ are disjoint and so $\comp{A}\cup B$ is in $\famA$ and hence its complement is in $\famA$.
+
+If $\famE \subset \powSet{X}$ is non-empty, then the smallest $\lambda-$ class generated by $\famE$ is the
+intersection of all the $\lambda-$ classes containing $\famE$ and is denoted by $\mcalD(\famE)$, where
+$\mcalD$ stands for Dynkin.
+\begin{Lemma}
+    Let $X$ be a non-empty set and let $\famE \subset \powSet{X}$ be a non-empty collection of subsets of $X$.
+    Then $\mcalD(\famE) \subset \sigmaGen{\famE}$.
+\end{Lemma}
+\begin{proof}
+    $\sigmaGen{\famE}$ is a $\lambda-$ class containing $\famE$ and so by minimality contains $\mcalD(\famE)$.
+\end{proof}
+\begin{Theorem}
+    Let $X$ be a non-empty set and let $\famE \subset \powSet{X}$ be a non-empty collection of subsets of $X$.
+    If $\famE$ is a $\pi-$ class, then $\mcalD(\famE) = \sigmaGen{\famE}$.
+\end{Theorem}
+\begin{proof}
+    We need to show $\mcalD(\famE) \subset \sigmaGen{\famE}$ and $\sigmaGen{\famE}\subset \mcalD(\famE)$.
+    Since, a sigma-algebra is a $\lambda-$ class we immediately get $\sigmaGen{\famE} \supset \mcalD(\famE)$.
+    For the other direction we will use~\ref{rmk:prin_good_sets} along with the ideas in the proof used for
+    the monotone class.
+
+    We need to show $\mcalD(\famE)$ is a sigma algebra containing $\famE$ and this amounts to showing that
+    $\mcalD(\famE)$ is a $\pi-$ class. Thus, consider the sub-collection:
+    \[\famF = \set{A \in \mcalD(\famE)}{\forEv{B\in\mcalD} A\cap B \in \mcalD(\famE)}.\]
+    By construction $\famF \subset \mcalD(\famE)$ and is a $\pi-$ class. If we show that 
+    $\famF \supset \famE$ and $\famE$ is a $\lambda-$ class we are done. 
+
+    It is clear that $X$ is in $\famF$. Let $A$ be in $\famF$, and let $B$ be any set in $\mcalD(\famE)$. 
+    Then,
+    \[\comp{A}\cap B = \comp{(A\cup \comp{B})}.\]
+    Since, $A \in \famF$, $A \in \mcalD(\famE)$ and since $B \in \mcalD(\famE), \comp{B}\in\mcalD(\famE)$. Thus,
+    $\comp{(A\cup \comp{B})}\in\mcalD(\famE)$. Hence for any $B \in \mcalD(\famE)$, $\comp{A}\cap B \in \famF$
+    whenever $A \in \famF$. Let $\seq{A}{n}$ be a sequence of sets in $\famE$ that are pairwise disjoint
+    and let $B$ be any set in
+    $\mcalD(\famE)$. Then, 
+    \[(\countUnion{A_n}{n})\cap B = \countUnion{(A_n\cap B)}{n}.\]
+    Since $\famF \subset \mcalD(\famE)$, $A_n\cap B \in \mcalD{\famE}$ for each $n$ and so the countable union
+    is in $\mcalD(\famE)$.
+
+    To show that $\famF \supset \famE$, we will construct a family $\famF_{2}$ such that $\famF \supset
+    \famF_{2}\supset \famE$ and $\famF_{2}$ is a $\lambda-$ class.
+    Let \[\famF_{2} = \set{A \in \mcalD(\famE)}{\forEv{B\in\famE} A\cap B \in \mcalD(\famE)}.\]
+    Since $\famE$ is a $\pi-$ class $\famE \subset \famF_{2}$. If we show $\famF_{2}$ is a $\lambda-$ class,
+    it would mean that $\famF_2 \supset \mcalD(\famE)$. But since by construction, $\famF_2 \subset \famF$ we
+    get $\famF \supset \mcalD(\famE) \supset \famE$. Proving that $\famF_2$ is a $\lambda-$ class follows the
+    same reasonings as we showed for $\famF$.
+
+\end{proof}
+\begin{Theorem}[name=$\pi-\lambda$ Theorem]
+    If $\famE$ is a $\pi-$ class and $\famL$ is a $\lambda-$ class, then $\famE \subset \famL$ implies,
+    $\sigmaGen{\famE}\subset \famL$.
+\end{Theorem}
+\begin{proof}
+    Consider the minimal $\lambda-$ class containing $\famE$, $\mcalD(\famE)$. By definition, 
+    $\mcalD(\famE)\subset \famL$. We showed that $\sigmaGen{\famE} = \mcalD(\famE)$ and thus, 
+    $\sigmaGen{\famE} \subset\famL$.
+\end{proof}
 \section{Measures}
 We now consider how to measure the size of the sets in a given $\sigmaAlgebra$ on a set $X$.
 \begin{Definition}[name=Measure]
@@ -569,7 +757,8 @@ intersection of a sequence of sets belong to the algebra.
 	    $\algebra{M}$, the result follows from $(1)$ because $\mu$ is a non-negative set
 	    function). Now if $\measure{F} < \infty$, then $\measure{E} < \infty$ and so we can
 	    subtract the $\measure{E}$ to obtain $\measure{F} - \measure{E} =
-	    \measure{F\cap\comp{E}} = \measure{\setDiff{F}{E}}$.
+	    \measure{F\cap\comp{E}} = \measure{\setDiff{F}{E}}$. Note that, we actually just need the
+	    finiteness of $\measure{E}$.
 	\item 
 	    From~\ref{rmk:disjU}, we can construct disjoint sets out of regular sets as follows,
 	    let $F_1 = E_1$ and $F_k = E_k - \finiteU{E}{k-1}$ for $k \geq 2$. 
@@ -612,6 +801,38 @@ intersection of a sequence of sets belong to the algebra.
 	  Thus equating the two we get our result.
  
     \end{enumerate}
+\end{proof}
+The next theorem says that in a sigma-finite measurable space, there cannot be a countable collection of
+disjoint sets with positive measure. The proof of the theorem is highly illustrative of a common technique
+that pops up in measure theory. 
+
+\begin{Theorem}
+    Let $\measureS{X}{\famM}{\mu}$ be a sigma-finite measure space. Then, $\famM$ cannot contain an
+    uncountable, disjoint collection of sets of positive measure.
+\end{Theorem}
+\begin{proof}
+    Let $\famE = \set{E_{\alpha}}{\alpha \in A}$ be the collection of subsets of $X$ such that for each
+    $\alpha \in A$, $\measure{E_{\alpha}} > 0$. We need to show that $\famE$ is a countable. Since, we have a
+    sigma finite space, there is a sequence of sets $\seq{X}{n}$ such that $\atobUp{X_n}{X}$ and 
+    $\measure{X_n} < \infty$ for each $n$. For any $E \in \famE$,
+    \[E \subset X = \countUnion{X_n}{n},\]
+    thus, $E = \countUnion{(E\cap X_n)}{n}$.
+    For any $\epsilon > 0$, consider the collection,
+    \[\famE_{n,\epsilon} = \set{E \in \famE}{\measure{(E\cap X_n)} > \epsilon}.\]
+    If $E$ is any set in $\famE$, then there must be an $n,\epsilon$ such that $E \in \famE_{n,\epsilon}$.
+    Using the archimedes principle then there must be a $k \in \Zplus$ such that $\frac{1}{k}< \epsilon$.
+    Hence, let us consider the collection,
+    \[\famE_{n,k} = \set{E \in \famE}{\measure{(E\cap X_n)} > \frac{1}{k}}.\]
+    Clearly for each $n,k$, $\famE_{n,k} \subset \famE$. Also, by reasoning above, for any $E \in \famE$ there
+    must be a $k,n \in \Zplus$, such that $E \in \famE_{n,k}$. Hence,
+    \[\famE = \bigcup\limits_{n,k = 1}^{\infty}\famE_{n,k}.\]
+    Hence, if we show that each $\famE_{n,k}$ is countable, then we are done.
+    Consider a sequence of finite sets $E_1, E_2, \dots, E_m$ in one such $\famE_{n,k}$. Since, these sets are
+    disjoint,
+    \[\frac{m}{k} \leq \finiteSum{\measure{E_i\cap X_n}}{i}{m} = \measure{\finiteUnion{(E_i\cap X_n)}{i}{n}}
+	\leq \measure{X_n}.\]
+    Thus, $m \leq k\measure{X_n}$. Hence we only have a finite choice for the index $m$. Thus, $\famE_{n,k}$
+    is finite.
 \end{proof}
 
 \begin{figure}
@@ -1171,6 +1392,7 @@ combines these observations and is called the Carath{\'e}odory Extension theorem
 \begin{Example}
     Show the usefulness of~\ref{prop:out_meas_iduced_pre_measure}.
 \end{Example}
+
 \section{Borel Measure on the real line}
 We have now the machinary to measure all the Borel sets in $\R$. These are the sets that we care
 about. However we only have a notion of measure for simple sets like intervals,
@@ -1852,6 +2074,57 @@ $\epsilon > 0$,
 	    $E$ differs from a $G_{\delta}$ and a $F_{\sigma}$ set by a set of measure zero.
     \end{enumerate}
 \end{Theorem}
+
+\subsection{Uniqueness of measures and properties of Lebesgue measures}
+We will use the $\pi-\lambda$ theorem to discuss the uniqueness of measures and use that to show some
+important properties of Lebesgue measure.
+\begin{Theorem}
+    Assume that $\metricS{X}{\famM}$ is a measurable space and that $\famM = \sigmaGen{\famE}$, where $\famE$
+    is a $\pi-$ class. Suppose that $\mu_{1},\mu_{2}$ are two measures on $\sigmaGen{\famE}$ such that they
+    are sigma-finite on $\famE$. If $\mu_{1},\mu_{2}$ agree on $\famE$, then they agree on $\sigmaGen{\famE}$.
+\end{Theorem}
+\begin{proof}
+    Since measures are sigma-finite on $\famE$, there is a sequence of subsets $\seq{X}{n}$ such that
+    $\atobUp{X_n}{X}$ and $\mu_{1}(X_n) = \mu_{2}(X_n) < \infty$ for each $n$. For any $A \in
+    \sigmaGen{\famE}$, we observe that,
+    \[A \subset X = \countUnion{X_n}{n},\]
+    and hence $A= \countUnion{(A\cap X_n)}{n}$. Thus, to show that $\mu_{1}(A) = \mu_{2}(A)$ for any $A \in
+    \sigmaGen{\famE}$, we need to show that $\mu_{1}(A\cap X_n) = \mu_{2}(A\cap X_n)$ for each $n$; because if
+    that holds, we get
+    \[\mu_{1}(A) = \mu_{1}(\countUnion{(A\cap X_n)}{n}) = \lim\limits_{n\to\infty} \mu_1(A\cap X_n) =
+	\lim\limits_{n\to\infty} \mu_2(A\cap X_n) = \mu_2(A),\]
+    since $\atobUp{(A\cap X_n)}{(A\cap X)}$. 
+    Thus, let $\famF_{j}$ be defined as the class of all those sets $A$ in $\sigmaGen{\famE}$ such that:
+    \[\famF_{j} = \set{A\in\sigmaGen{\famE}}{\mu_1(A\cap X_n) = \mu_2(A\cap X_n)}.\]
+    Since $\famE$ is a $\pi-$ class we see that for each $j$, $\famE \subset \famF_{j}$. By construction,
+    $\famF_{j} \subset \sigmaGen{\famE}$. If we show that $\famF_{j}$ is a $\lambda-$ class, we are done;
+    since then $\famF_{j} \supset \sigmaGen{\famE}$ by the $\pi-\lambda$ theorem and hence we will get
+    $\famF_{j} = \sigmaGen{\famE}$ for each $j$.
+
+    It is easy to show that $\famF_{j}$ is a $\lambda-$ class.
+    \begin{enumerate}
+	\item Clearly $X \in \famF_{j}$.
+	\item Let $A \in \famF_{j}$. Note that
+	    \[\mu_1(X_j) = \mu_1(X_j \cap A) + \mu_1(X_j \cap \comp{A})\]
+	    Since $(X_j\cap A) \subset X_j$, $\mu_1(X_j\cap A)$ is finite.
+	    Now,
+	    \begin{align*}
+		\mu_1(\comp{A}\cap X_j) &= \mu_1(X_j) - \mu_1(X_j \cap A) \\
+		& = \mu_2(X_j) - \mu_2(X_j \cap A) \\
+		& = \mu_2(\comp{A}\cap X_j).
+	    \end{align*}
+	\item Let $(A_n)$ be a sequence of pairwise disjoint sets in $\famF_{j}$
+	    \begin{align*}
+		\mu_1(X_j \cap \left(\countUnion{A_n}{n}\right)) &= \mu_1(\countUnion{(X_j\cap A_n)}{n}) \\
+		& = \infiniteSum{\mu_1(X_j\cap A_n)}{n} \\
+		& = \infiniteSum{\mu_2(X_j\cap A_n)}{n} \\
+		& = \mu_2(\countUnion{(X_j\cap A_n)}{n}) \\
+		& = \mu_2(X_j \cap \left(\countUnion{A_n}{n}\right)).
+	    \end{align*}
+	    Hence, $\countUnion{A_n}{n}$ is in $\famF_j$.
+    \end{enumerate}
+    Thus, $\famF_j$ is a $\lambda-$ class for each $j$. Hence, we get the result.
+\end{proof}
 %\section{\texorpdfstring{$\ast$}{} Probability Space}
 \section{{$\ast$} Probability Space}
 We now specialize the general measure theory to provide a description of probability.
