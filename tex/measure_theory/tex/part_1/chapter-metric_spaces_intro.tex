@@ -986,7 +986,59 @@ We need a stronger notion of continuity that preserves Cauchy sequences.
 	    $\rho(f(a_n),f(b_n)) < \frac{\epsilon}{3}$ and hence $\rho(g(x),g(y)) < \epsilon$. 
 	    Thus, we get the result.
     \end{enumerate}
-
-    \section{Compactness}
 \end{proof}
+
+\section{Compactness}
+\begin{Definition}
+    Let $X$ be a metric space. A family $\famG := \set{G_{\alpha}\subset X}{\alpha \in A}$ is said to
+    \emph{cover} a set $S$ if $S$ is contained in the union of all the $G_{{\alpha}'s}$. A family $\famU$ is
+    called a subcover if $\famU \subset \famG$ and $\famU$ also covers $S$.  A cover is called an
+    open cover if it consists of open sets in $X$. 
+\end{Definition}
+\begin{Definition}
+    A set $K$ in a metric space $S$ is compact if every open cover of $K$ contains a finite subcover.
+\end{Definition}
+\begin{Proposition}
+    Let $X$ be a metric space and let $K \subset X$ be compact. Then,
+    \begin{enumerate}
+	\item $K$ is closed and bounded.
+	\item For any closed subset $F \subset K$, $F$ is compact.
+	\item Every infinite subset of $K$ has a limit point in $K$.
+	\item If $Y$ is any metric space, then for any continuous function $\map{f}{K}{Y}$, $f(Y)$ is compact.
+    \end{enumerate}
+\end{Proposition}
+\begin{proof}
+    We prove in order. 
+    \begin{enumerate}
+	\item First we will show that $K$ is bounded. Let $x$ be any point in $X$. Then 
+	    \[K \subset X \subset \countUnion{\ball{n}{x}}{n}.\] Since, $K$ is compact, there are integers
+	    $i_1,i_2,\dots,i_N$ such that \[K \subset \finiteUnion{\ball{i_k}{x}}{k}{N}.\]
+	    Let $R = \max\set{i_k}{1\leq k \leq N}$. Then, $K \subset \ball{R}{x}$; and hence, $K$ is bounded.
+
+	    To show $K$ is closed we will show that its complement is open. Let $x \not \in K$. For any $p \in
+	    K$, let us define $r_p = \frac{d(p,x)}{2}$. Let $G_p = \ball{r_p}{p}$. Then, 
+	    $\famG = \set{G_p}{p\in K}$ is an open cover for $K$ and so, there is finite subcover,
+	    \[K \subset \finiteUnion{\ball{r_{p_{i}}}{p_i}}{i}{n}.\]
+	    Let $r = \min\set{r_{p_i}}{1\leq i \leq n}$. Then, $r > 0$ and $\ball{r}{x}$ doesn't intersect
+	    $K$. Hence, $\comp{K}$ is open.
+
+	\item See Rudin
+	\item See Rudin
+	\item See Rudin
+    \end{enumerate}
+
+    
+\end{proof}
+
+An important corollary of $(3)$ is that every sequence in $K$ has a convergent subsequence. This property is
+called sequential compactness. Thus, we have shown that compactness implies sequential compactness. 
+\begin{Definition}
+    A subset $K$ in a metric space is sequentially compact if for any sequence in $K$, there is a convergent
+    subsequence in $K$.
+\end{Definition}
+\begin{Definition}
+    We say that a subset $K$ in a metric space is totally bounded if for any radius $r$ there are finite
+    points $x_1,x_2,\dots,x_n$ in $K$ such that
+    \[K \subset \finiteUnion{\ball{r}{x_i}}{i}{n}.\]
+\end{Definition}
 
