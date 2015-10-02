@@ -1,0 +1,135 @@
+\chapter{Random Variables}
+Let $\probS$ be a probability space and let $\metricS{\mbbY}{\algebra{N}}$ be a measure space. A
+$\measMap{\family{F}}{\algebra{N}}$ function $X$ is called a $\mbbY$ valued random variable.
+In particular for $\mbbY = \R$ or $\mbbY = \Rn$ we have the following definition,
+\begin{Definition}[name=Random variable]
+    A random variable (r.v) $X$ is a real valued 
+    $\measMap{\algebra{F}}{\borelS{\R}}$ measurable function that maps from $\probS$ into
+    $\metricS{\R}{\borelS{\R}}$. A random vector $X$ is a vector valued $\measMap{\family{F}}{\borelS{\Rn}}$
+    function that maps from $\probS$ into $\metricS{\Rn}{\borelS{\Rn}}$.
+\end{Definition}
+As always, we wish to discard the importance of behavior of sets of measure zero.
+\begin{Definition}[name=Almost surely]
+    Suppose $X,Y$ are two random variables on the same probability space. Then $X = Y$ a.s.~or $X = Y$ almost
+    surely, means that,
+    $\probMeasure{\set{\omega\in\Omega}{X(\omega) \neq Y(\omega)} }= 0$.
+\end{Definition}
+Note, almost surely is precisely what is meant by almost everywhere that was defined for a general measure
+space.
+\begin{Example}
+    Consider the space $\mcalB$ of Bernoulli sequence and the corresponding measure space $\Omega = \hInt{0}{1}$
+    with the Lebesgue measure $\mu$. Any Rademacher function $R_n$ which maps from
+    $\measureS{\hInt{0}{1}}{\family{L}}{\mu}$ into $\metricS{\R}{\borelS{\R}}$ 
+    is a random variable because for any $E\in\borelS{\R}$, 
+    $\invImIndx{R}{n}{E} = \set{\omega\in\hInt{0}{1}}{R_n(\omega)\in E}$ is a finite union of
+    intervals. Similarly $W_N$ is a random variable.
+\end{Example}
+\begin{Example}
+    Consider the space $\mcalB$ of Bernoulli sequence and let $X$ be a function from
+    $\setDiff{\mcalB}{\mcalB_{\text{neg}}}$ in to $\hInt{0}{1}$ defined by,
+    \[X(b_1,b_2,b_3,\dots) = 0.\omega_1\omega_2\dots,\]
+    where $\omega_i = 1$ if $b_i$ is a head $H$, $\omega_i = 0$ if $b_i$ is a tails $T$. Then $X$ is a random
+    variable. Thus a random variable \emph{transforms} a probabilistic process to a measure space.
+\end{Example}
+\begin{Proposition}
+    Let $X$ be a r.v.~from a probability space $\probS$ to a measure space $\metricS{\mbbY}{\algebra{N}}$.
+    Let $\indMeas{\probMeas}{X}$ be the induced measure in $\metricS{\mbbY}{\algebra{N}}$. Then, 
+    $\measureS{\mbbY}{\algebra{N}}{\indMeas{\probMeas}{X}}$ is a probability space.  
+\end{Proposition}
+\begin{proof}
+    By~\ref{prop:induced_meas}, we know that $\measureS{\mbbY}{\algebra{N}}{\indMeas{\probMeas}{X}}$ is a
+    measure space. Hence, we only need to check if $\indMeasure{\probMeas}{X}{\mbbY} = 1$. Indeed
+    $\invIm{X}{\mbbY} = \Omega$ and $\probMeasure{\Omega} =1$, and thus we see that
+    $\measureS{\mbbY}{\algebra{N}}{\indMeas{\probMeas}{X}}$ is a probability space.
+\end{proof}
+\begin{Definition}[name=Distribution]
+    The probability measure $\indMeas{\probMeas}{X}$ on $\metricS{\mbbY}{\algebra{N}}$ is called the
+    distribution of the r.v.~X and is said to be induced by $X$. 
+\end{Definition}
+\begin{Theorem}\label{thm:rv_equal_ae_distribution}
+    Suppose $X,Y$ are two r.v.~mapping a (complete) probability space $\probS$ to a measurable space
+    $\metricS{\mbbY}{\famN}$, 
+    such that $X=Y$ a.s.~Then $X,Y$ have the same distribution.
+\end{Theorem}
+\begin{proof}
+    Let $N = \set{\omega\in\Omega}{X(\omega) \neq Y(\omega)}$. Then, by our assumption, $\probMeasure{N} = 0$.
+    Let $B \in \famN$ be arbitrary. Then \[\invIm{X}{B} = (\invIm{X}{B}\cap N) \disjU
+    (\invIm{X}{B}\cap\comp{N}).\]
+    Thus,
+    \begin{align*}
+	\indMeasure{\probMeas}{X}{B} &= \probMeasure{\invIm{X}{B}} \\  
+	& = \probMeasure{\invIm{X}{B}\cap N} + \probMeasure{\invIm{X}{B}\cap\comp{N}} \\
+	& \leq 0 + \probMeasure{\invIm{Y}{B}}\\
+	&\quad = \indMeasure{\probMeas}{Y}{B}
+    \end{align*}
+    Similarly, $\indMeasure{\probMeas}{Y}{B} \leq \indMeasure{\probMeas}{X}{B}$.
+\end{proof}
+Even when we don't have a complete probability space, we can easily complete it by~\ref{thm:comp_of_meas}.
+Thus we can easily forget if the probability space is complete or not. Note that the converse is not true.
+Given a r.v.~induces probability measure on its co-domain, we can define new r.v on the range. We have the
+following relationship,
+\begin{Proposition}
+    Let $X$ be $\mbbY$ valued r.v.~from a probability space $\probS$ to a 
+    measurable space $\metricS{\mbbY}{\famN}$. Let $Y$ be a $\measMap{\famN}{\famO}$ 
+    function from $\metricS{\mbbY}{\famN}$ in to $\metricS{\mbbW}{\famO}$. Let $\indMeas{\probMeas}{X}$ be the
+    distribution on $\metricS{\mbbY}{\famN}$. Then $Y$ is a $\mbbW$ valued r.v.~on
+    $\measureS{\mbbY}{\famN}{\indMeas{\mbbP}{X}}$ with the same distribution as the $\mbbW$ valued
+    r.v.~$\fog{Y}{X}$ on $\probS$.
+\end{Proposition}
+\begin{proof}
+    It follows the same ideas as in~\ref{prop:composition_meas_func}.
+\end{proof}
+Since a r.v.~is a measurable function, all the
+properties in~\ref{prop:prop0_mfunc_composition_cont}-\ref{prop:prop4_mfunc_ae_limit} apply to a r.v.
+We now specialize to the case of random variables mapping into $\metricS{\R}{\borelS{\R}}$. Let us (re) define
+a distribution function for the case of a probability space.
+\begin{Definition}[name=Distribution function]
+    A real valued function $F$ defined on $\R$ is a distribution function if it is monotone increasing, right
+    continuous, and 
+    \[\limit{F(x)}{x}{-\infty} = 0,\quad \limit{F(x)}{x}{\infty} = 1.\]
+\end{Definition}
+Given a probability measure $\probMeas$ on $\R$, we can always define a distribution function
+$\map{F}{\R}{\interval{0}{1}}$ as $F(x) = \probMeasure{\hInt{-\infty}{x}}$ and vice versa
+by~\ref{thm:borel_measure_R}. Thus if we have a probability space $\probS$ and a r.v.~on it, we get an induced
+probability measure (distribution) $\indMeas{\probMeas}{X}$ on $\metricS{\R}{\borelS{\R}}$,
+which then corresponds to a distribution function $\map{F_X}{\R}{\interval{0}{1}}$ and is 
+given by $F_X(x) = \indMeasure{\probMeas}{X}{\interval{-\infty}{x}}$.
+Thus,
+\[X \leadsto F_X.\]
+Is the converse true, i.e.
+\[F \leadsto X_F?\]
+The following theorem answers this question.
+\begin{Theorem}\label{thm:distribution_func_to_rv}
+    If a function $\map{F}{\R}{\interval{0}{1}}$ is a distribution function, then there exists a
+    r.v.~$\map{X}{\interval{0}{1}}{\R}$ defined
+    on the probability space $\measureS{\interval{0}{1}}{\famL_{\interval{0}{1}}}{\mu}$ such that $F = F_X$,
+    where $\famL_{\interval{0}{1}}$ is the family of Lebesgue measurable sets on $\interval{0}{1}$ and $\mu$
+    is the corresponding Lebesgue measure.
+\end{Theorem}
+\begin{proof}
+    Let us define $\map{X}{\interval{0}{1}}{\R}$ by,
+    \[X(\omega) = \inf\set{x\in\R}{F(x)\geq \omega},\quad 0\leq\omega\leq 1.\]
+    First, we will show that $X$ is a $\measMap{\famL_{\interval{0}{1}}}{\borelS{\R}}$ function and hence a 
+    r.v. Fix an $a \in \R$ and consider the set $\fCompA{X}{\leq}{a}$. Since $F$ is increasing this set is
+    just an interval $\interval{0}{c}$ where $c$ is the $\sup\set{\omega}{X(\omega)\leq a}$. Hence $X$ is a r.v.
+
+    To show that $F = F_X$ we need to show that for any $y\in \R$,
+    \begin{align*}
+	F(y) = F_X(y) &= \indMeasure{\mu}{X}{\hInt{-\infty}{y}},\\
+	& = \measure{\invIm{X}{\hInt{-\infty}{y}}},\\
+	& = \measure{\set{\omega\in\Omega}{X(\omega)\leq y}}.
+    \end{align*}
+    Let $A = \set{\omega}{X(\omega)\leq y}$. Then $A = \interval{0}{c}$ where 
+    $c = \sup\set{\omega}{X(\omega)\leq y}$. Hence $\measure{A} = c$. Thus we need
+    to show that $F(y) = c = \sup\set{\omega}{X(\omega)\leq y}$.
+    First note that if $\omega = F(y)$ then $X(\omega) = y$ because $F$ is increasing. Thus $F(y) \in A$. If
+    we show that $F(y)$ is an upper bound for $A$, then we are done. If $\omega \in A$, then $X(\omega) \leq
+    y$. Thus $F(X(\omega)) \leq F(y)$. Since $F$ is right continuous at $X(\omega)$, for any $\epsilon$ there
+    is a $\delta$ such that $F(X(\omega) + \delta) - F(X(\omega)) < \epsilon$. Now $X(\omega)$ is the infimum
+    of all those $x \in \R$ such that $F(x) \geq \omega$. Hence by definition of infimum, 
+    there is an $x_0 \in\R$ such that $x_0 <
+    X(\omega) + \delta$ and $F(x_0) \geq \omega$. Thus, because $F$ is increasing,
+    \[F(X(\omega)+\delta) \geq F(x_0) \geq \omega.\]
+    Hence $\omega < \epsilon + F(X(\omega))$. Since $\epsilon$ was arbitrary we get $\omega \leq
+    F(X(\omega))$. Hence $F(y)$ is an upper bound for $A$.
+\end{proof}

@@ -1,6 +1,5 @@
 \chapter{Integration theory}
 \section{Class of Riemann integrable functions}
-\section{Extending Riemann integration}
 \section{Abstract integration in measure space}
 We have seen that Riemann integration doesn't behave nicely when interchanging limit order. To remedy this, we
 will define the (Lebesgue) integral in a general measure space. In order to achieve this nice property we will
@@ -588,9 +587,127 @@ convergence of the integral of the functions given pointwise convergence of the 
     \[\lInt{f}{\mu}{E} \geq \limsup\limits_{n}\lInt{f_n}{\mu}{E}.\]
     Hence, we get the result.
 \end{proof}
-
-
 \section{Relation with Riemann Integral}
-%\section{\texorpdfstring{$\ast$}{}Expectation of random variables}
-\section{{$\ast$} Expectation of random variables}
+\section{Product spaces and Fubini's theorem}
+Let $\measureS{X}{\famM}{\mu}$ and $\measureS{Y}{\famN}{\nu}$ be two measure spaces. We have already seen that
+the product sigma algebra is defined by,
+\[\famM\otimes\famN = \sigmaGen{\set{A\times B}{A\in\famM,B\in\famN}}.\]
+\begin{Definition}
+    Let $\famE = \set{A\times B}{A\in\famM,B\in\famN}$. Then $\famE$ is called the collection of measurable
+    rectangles. By definition, $\famM\otimes\famN = \sigmaGen{\famE}$.
+\end{Definition}
+Our goal in this section would be introduce a measure $\Pi$ on the sigma algebra $\famM\otimes\famN$, 
+such that,
+\[\Pi(A\times B) = \mu(A)\nu(B).\]
+Note that the sigma algebra contains sets $E$ which cannot be written as a product of sets $A\times B$ for
+some $A \in \famM$ and $B \in \famN$.
+Let us introduce some terminology and notation. 
+\begin{Definition}[name=sections]
+    Suppose that $X,Y$ are sets and that $E \subset X\times Y$.
+    Then for each $x \in X$ and each $y \in Y$ the sections $E_x$ and $E^{y}$ are the subsets defined as,
+    \[E_x = \set{y\in Y}{(x,y)\in E},\]
+    \[E^{y} = \set{x\in X}{(x,y)\in E}.\]
+    If $f$ is a function defined on $X\times Y$, the sections $f_x,f^{y}$ are the functions on $Y$ and $X$
+    respectively given by, $f_x(y) = f(x,y)$ and $f^{y}(x) = f(x,y)$.
+\end{Definition}
+\begin{Lemma}
+    Let $\metricS{X}{\famM}$ and $\metricS{Y}{\famN}$ be measure spaces.
+    \begin{enumerate}
+	\item
+	    If $E \subset X\times Y$ belongs to the product sigma algebra $\famM\otimes\famN$, then, 
+	    $E_x$ belongs to $\famN$ and $E^{y}$ belongs to $\famM$.
+	\item
+	    If $f$ is an extended real valued $\famM\otimes\famN$-measurable function defined on $X\times Y$,
+	    then each section $f_x$ is $\famN$-measurable and each section $f^{y}$ is $\famN$-measurable.
+    \end{enumerate}
+\end{Lemma}
+\begin{proof}
+    We prove in order.
+    \begin{enumerate}
+	\item
+	    Fix an $x \in X$.
+	    Let \[\famF = \set{E\in\famM\otimes\famN}{E_x \in \famN}.\]
+	    Note that $\famF \subset \famM\otimes\famN$. If we show that $\famF \supset \famE$ and $\famF$ is
+	    a sigma algebra, we are done.
+	    If $E \in \famE$, then $E = A \times B$ for some $A,B$ in $\famM$ and $\famN$ respectively. It is
+	    easy to see that $E_x$ is either $B$ or $\emptyset$; and in both cases $E_x \in \famN$. Thus,
+	    $\famE \subset \famF$. To show that $\famE$ is a sigma algebra, we need to show that it is closed
+	    under complements and countable unions. Note that,
+	    $\comp{(E_x)} = {(\comp{E})}_{x}$. Thus, if $E \in \famF$, then since $E \in \famM\otimes\famN$
+	    which is a sigma-algebra, $\comp{E} \in \famM\otimes\famN$. Moreover, since $E_x \in \famN$ by
+	    our hypothesis, $\comp{(E_x)}$ is in $\famN$ since $\famN$ is a sigma-algebra. Similarly for
+	    countable unions. Since this is true for any $x \in X$, we get the result. The same arguments can
+	    be used to show that $E^{y}$ belongs to $\famM$.
+	\item
+	    This can be proved by observing $\invIm{f_x}{D} = {(\invIm{f}{D})}_{x}$ i.e.~fix an $x \in X$ and
+	    observe that,
+	    \begin{equation*}
+		\begin{aligned}
+		    {(\invIm{f}{D})}_{x} &= \set{(x,y)}{f(x,y)\in D}, \\
+		    &= \set{y}{f(x,y)\in D},\\
+		    &= \set{y}{f_x(y) \in D},\\
+		    &= \invIm{f_x}{D}.
+		\end{aligned}
+	    \end{equation*}
+	    For any $D \in \borelS{\R}$, $\invIm{f}{D} \in \famM\otimes\famN$ and by the previous result,
+	    ${(\invIm{f}{D})}_{x} \in \famN$. Thus, $\invIm{f_x}{D} \in \famN$ and so is $\famN$-measurable.
+    \end{enumerate}
+\end{proof}
+\begin{Proposition}
+    Let $\measureS{X}{\famM}{\mu}$, $\measureS{X}{\famN}{\nu}$ be $\sigma$-finite measure spaces. If $E$
+    belongs to the product sigma-algebra $\famM\otimes\famN$, then the function that maps $x$ to $\nu(E_x)$
+    is $\famM$-measurable and the function that maps $y$ to $\mu(E^{y})$ is $\famB$-measurable.
+\end{Proposition}
+\begin{proof}
+    We will prove the Proposition in steps for the case of finite measure.
+    \begin{enumerate}
+	\item 
+	    We show that the family of measurable rectangles $\famE$ is a $\pi$-class.
+	    If $E_1 = A_1\times B_1$ and $E_2 = A_2 \times B_2$, then 
+	    \[E_1\cap E_2 = (A_1\times B_1)\cap (A_2\times B_2) = (A_1\cap A_2)\times (B_1\cap B_2).\]
+	    Thus, $E_1\cap E_2 \in \famE$.
+	\item 
+	    We show that a sub-collection $\famF$ of $\famM\otimes\famN$ satisfying the hypothesis in the
+	    Proposition is a $\lambda$-class.
+	    Let $\map{h}{X}{\R}$ be given by $h(x) = \nu(E_x)$. By the above Lemma, such a function is
+	    well-defined. Similarly, let $\map{l}{Y}{\R}$ be given by $l(y) = \mu(E^{y})$.
+	    Define,
+	    \[\famF = 
+	\set{E\in\famM\otimes\famN}{x\mapsto\nu(E_x),y\mapsto\mu(E_y)\hspace{0.05in}\text{are measurable}}.\]
+	    Let $E = X \times Y$. Then, $E_x = Y$ and $E^{y} = X$. Consider $h(x) = \nu(E_x)$. 
+	    Then, $\invIm{h}{\hInt{a}{\infty}}$ is
+	    either $\emptyset$ or $X$; in both the cases $\invIm{h}{\hInt{a}{\infty}} \in \famM$. Thus, $h$ is
+	    $\famM$-measurable for $E = X \times Y$ and by similar reasonings $l$ is $\famN$-measurable.
+	    Let $E \in \famF$. Let $h(x) := \nu(\comp{(E_x)})$. Let $g(x) = \nu(Y)$ and $h'(x) = \nu(E_x)$.
+	    Then, by our hypothesis $h'(x)$ is measurable. 
+	    For any $x \in X$, $\nu(\comp{(E_x)}) = \nu(Y) - \nu(E_x)$ and hence $h$ is 
+	    a sum of two measurable functions and is thus measurable. Thus, $\comp{E}\in \famF$. 
+	    If $\seq{E}{n}$ is a sequence of pairwise disjoint sets in $\famF$, then for any $x$
+	    \[\nu(\countUnion{{(E_n)}_x}{n}) = \limit{\finiteSum{\nu({(E_i)}_x)}{i}{n}}{n}{\infty}.\]
+	    Thus, $\countUnion{E_n}{n} \in \famF$, because the limit of measurable functions is also
+	    measurable, i.e.~, let $h'_n = \finiteSum{h_i}{i}{n}$, where $h_i(x) = \nu({(E_i)}_x)$. Then, each
+	    $h_i$ is measurable by our hypothesis, and so $h'_n$ is measurable for each $n$ and hence $h$ is
+	    measurable (being the limit of measurable functions.)
+	    Hence, $\famF$ is a $\lambda$-class.
+	\item
+	    We appeal to $\pi-\lambda$ Theorem to conclude that $\famF = \famM\otimes\famN$.
+	    By our construction, $\famF \subset \famM\otimes\famN$. Also we showed that $\famF \supset \famE$
+	    and $\famF$ is a $\lambda$-class. Since, $\famE$ is a $\pi$-class, by the $\pi-\lambda$ Theorem,
+	    $\famF \supset \sigmaGen{\famE} = \famM\otimes\famN$. Hence, $\famF = \famM\otimes\famN$.
+
+	    We can extend this for the case when $\mu,\nu$ are sigma finite. In other words, we only need to
+	    show Step $(2)$ when $\mu,\nu$ are sigma-finite. But this is easily seen by applying to the case
+	    of $\nu(E_x\cap Y_n)$, where $\atobUp{Y_n}{Y}$ and $\nu(Y_n) < \infty$ and analogously for $\mu$.
+    \end{enumerate}
+\end{proof}
+
+\begin{Theorem}
+    Let $\measureS{X}{\famM}{\mu}$, $\measureS{Y}{\famF}{\nu}$ be $\sigma$-finite measure spaces. Then, there
+    is a unique measure $\Pi$ on the sigma-algebra $\famM\otimes\famN$, such that,
+    \[\Pi(A\times B) = \mu(A)\nu(B),\]
+    for every $A \in \famM$ and $B \in \famN$. Furthermore, for any arbitrary set $E \in \famM\otimes\famN$,
+    \[\Pi(E) = \lInt{\nu(E_x)}{\mu}{X} = \lInt{\mu(E^{y})}{\nu}{Y}.\]
+    The measure $\Pi$ is the called the product measure and is sometimes denoted by $(\mu\times \nu)$.
+
+\end{Theorem}
 
