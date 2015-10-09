@@ -631,7 +631,7 @@ Let us introduce some terminology and notation.
 	    a sigma algebra, we are done.
 	    If $E \in \famE$, then $E = A \times B$ for some $A,B$ in $\famM$ and $\famN$ respectively. It is
 	    easy to see that $E_x$ is either $B$ or $\emptyset$; and in both cases $E_x \in \famN$. Thus,
-	    $\famE \subset \famF$. To show that $\famE$ is a sigma algebra, we need to show that it is closed
+	    $\famE \subset \famF$. To show that $\famF$ is a sigma algebra, we need to show that it is closed
 	    under complements and countable unions. Note that,
 	    $\comp{(E_x)} = {(\comp{E})}_{x}$. Thus, if $E \in \famF$, then since $E \in \famM\otimes\famN$
 	    which is a sigma-algebra, $\comp{E} \in \famM\otimes\famN$. Moreover, since $E_x \in \famN$ by
@@ -639,12 +639,13 @@ Let us introduce some terminology and notation.
 	    countable unions. Since this is true for any $x \in X$, we get the result. The same arguments can
 	    be used to show that $E^{y}$ belongs to $\famM$.
 	\item
-	    This can be proved by observing $\invIm{f_x}{D} = {(\invIm{f}{D})}_{x}$ i.e.~fix an $x \in X$ and
+	    Note that,
+	    \[{(\invIm{f}{D})} = \set{(x,y)}{f(x,y)\in D}.\]
+	    We show that $\invIm{f_x}{D} = {(\invIm{f}{D})}_{x}$ i.e.~fix an $x \in X$ and
 	    observe that,
 	    \begin{equation*}
 		\begin{aligned}
-		    {(\invIm{f}{D})}_{x} &= \set{(x,y)}{f(x,y)\in D}, \\
-		    &= \set{y}{f(x,y)\in D},\\
+		    {(\invIm{f}{D})}_{x} &= \set{y}{f(x,y)\in D},\\
 		    &= \set{y}{f_x(y) \in D},\\
 		    &= \invIm{f_x}{D}.
 		\end{aligned}
@@ -708,6 +709,44 @@ Let us introduce some terminology and notation.
     for every $A \in \famM$ and $B \in \famN$. Furthermore, for any arbitrary set $E \in \famM\otimes\famN$,
     \[\Pi(E) = \lInt{\nu(E_x)}{\mu}{X} = \lInt{\mu(E^{y})}{\nu}{Y}.\]
     The measure $\Pi$ is the called the product measure and is sometimes denoted by $(\mu\times \nu)$.
-
 \end{Theorem}
-
+\begin{proof}
+    For any $E \in \famM\otimes\famN$, define, 
+    \begin{align*}
+	\Pi_{1}(E) &:= \lInt{\nu(E_x)}{\mu}{X},\\ 
+	\Pi_{2}(E) &:= \lInt{\mu(E_y)}{\nu}{Y}
+    \end{align*}
+    By the previous Theorem, $x\mapsto\nu(E_x)$ is a $\famM$-measurable function and so $\Pi_{1}$ is
+    well-defined. Similarly $\Pi_2$ is well-defined.
+    We show that $\Pi_{1},\Pi_{2}$ are measures.
+    Clearly $\Pi_{1}(\emptyset) = 0$. Let $\seq{E}{n}$ be a sequence of measurable sets in
+    $\famM\otimes\famN$. Then, ${(E_x)}_n$ is a sequence of measurable sets in $\famN$. Let $E =
+    \countUnion{E_n}{n}$.
+    \begin{align*}
+	\Pi_{1}(E) &= \lInt{\nu(\countUnion{{(E_x)}_n}{n})}{\mu}{X}\\ 
+	&= \lInt{\series{\nu({(E_x)}_n)}{n}{1}{\infty}}{\mu}{X}\\
+	&= \series{\lInt{\nu({(E_x)}_n)}{\mu}{X}}{n}{1}{\infty}\\
+	&= \series{\Pi_{1}(E_n)}{n}{1}{\infty}.
+    \end{align*}
+    Similarly, $\Pi_{2}$ is measure on $\famM\otimes\famN$.
+    For any $E \in \famE$, where $\famE$ is the family of measurable rectangles, we can write $E = A \times B$
+    for some $A \in \famM$ and $B \in \famN$. Then,
+    \[\lInt{\nu(B)\charFunc{A}}{\mu}{X} = \nu(B)\mu(A) = \lInt{\mu(A)\charFunc{B}}{\nu}{Y}.\]
+    Hence,
+    $\Pi_1 = \Pi_2 = \Pi$ on $\famE$ which is a $\pi$-class. Thus by~\ref{thm:uniq_measures_pilam}, these two
+    measure agree on $\sigmaGen{\famE} = \famM\otimes\famN$.
+\end{proof}
+WE can extend this to any finite collection of measurable spaces.
+The following two theorems enable one to evaluate integrals with respect to product measures by evaluating
+iterated integrals.
+\begin{Proposition}[name=Tonelli's Theorem]\label{prop:tonelli_thm}
+    Let $\measureS{X}{\famM}{\mu}$,$\measureS{Y}{\famN}{\nu}$ be $\sigma$-finite measure spaces, and let
+    $\map{f}{X\times Y}{\interval{0}{\infty}}$ be $\famM\otimes\famN$-measurable. Then,
+    \begin{enumerate}
+	\item
+	    the functions $x\mapsto\lInt{f_x}{\nu}{Y}$ and $y\mapsto\lInt{f^{y}}{\mu}{X}$ are $\famM,\famN$
+	    measurable respectively and
+	\item
+	    $f$ satisfies
+    \end{enumerate}
+\end{Proposition}
