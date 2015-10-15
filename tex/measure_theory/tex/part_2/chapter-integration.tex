@@ -654,7 +654,7 @@ Let us introduce some terminology and notation.
 	    ${(\invIm{f}{D})}_{x} \in \famN$. Thus, $\invIm{f_x}{D} \in \famN$ and so is $\famN$-measurable.
     \end{enumerate}
 \end{proof}
-\begin{Proposition}
+\begin{Proposition}\label{prop:Lemma_prod_meas}
     Let $\measureS{X}{\famM}{\mu}$, $\measureS{X}{\famN}{\nu}$ be $\sigma$-finite measure spaces. If $E$
     belongs to the product sigma-algebra $\famM\otimes\famN$, then the function that maps $x$ to $\nu(E_x)$
     is $\famM$-measurable and the function that maps $y$ to $\mu(E^{y})$ is $\famB$-measurable.
@@ -702,7 +702,7 @@ Let us introduce some terminology and notation.
     \end{enumerate}
 \end{proof}
 
-\begin{Theorem}
+\begin{Theorem}\label{thm:prod_meas}
     Let $\measureS{X}{\famM}{\mu}$, $\measureS{Y}{\famF}{\nu}$ be $\sigma$-finite measure spaces. Then, there
     is a unique measure $\Pi$ on the sigma-algebra $\famM\otimes\famN$, such that,
     \[\Pi(A\times B) = \mu(A)\nu(B),\]
@@ -748,5 +748,70 @@ iterated integrals.
 	    measurable respectively and
 	\item
 	    $f$ satisfies
+	    \[\lInt{f}{\Pi}{X\times Y} = \lInt{\left(\lInt{f_x}{\nu}{Y}\right)}{\mu}{X}
+	      = \lInt{\left(\lInt{f^{y}}{\mu}{X}\right)}{\nu}{Y}.\]
     \end{enumerate}
+    \begin{proof}
+	For both $(1)$ and $(2)$, we will show the result holds for characteristic functions and simple
+	functions. And then by MCT, the result holds for $f$. For $(1)$, when $f$ is a characteristic
+	function, we get the result from Proposition~\ref{prop:Lemma_prod_meas}. The result then follows for
+	simple functions by linearity and for general $f$ by MCT~.
+
+	For $(2)$, when $f$ is a characteristic function, we get the result from~\ref{thm:prod_meas}. The
+	result then follows for simple functions by linearity and for general $f$ by MCT~.
+    \end{proof}
 \end{Proposition}
+Note that Tonelli's theorem is valid for any extended non-negative function that is $\famM\otimes\famN$
+measurable and not necessarily $\Pi$ integrable. When $f$ is allowed to be negative the result is no longer
+valid and we need an extra assumption that $f$ be $\Pi$ integrable. This is Fubini's theorem.
+
+\begin{Theorem}[name=Fubini's Theorem]\label{thm:fubini_thm}
+    Let $\measureS{X}{\famM}{\mu}$,$\measureS{Y}{\famN}{\nu}$ be $\sigma$-finite measure spaces, and let
+    $\map{f}{X\times Y}{\interval{-\infty}{\infty}}$ be $\famM\otimes\famN$-measurable. Then,
+    \begin{enumerate}
+	\item
+	    For $(\mu)$-a.e.~$x\in X$, the section $f_x$ is $\nu$-integrable and for $(\nu)$-a.e.~$y\in Y$,
+	    the section $f^{y}$ is $\mu$-integrable,
+	\item
+	    the functions $I_f,J_f$ defined by,
+	    \begin{equation*}
+		I_f(x) = 
+		\begin{cases}
+		    \lInt{f_x}{\nu}{Y} & \text{if $f_x$ is $\nu$-integrable}, \\
+		    0 & \text{otherwise},
+		\end{cases}
+	    \end{equation*}
+	    and,
+	    \begin{equation*}
+		J_f(y) = 
+		\begin{cases}
+		    \lInt{f^{y}}{\mu}{X} & \text{if $f^{y}$ is $\mu$-integrable}, \\
+		    0 & \text{otherwise},
+		\end{cases}
+	    \end{equation*}
+	    are $\mu$-integrable and $\nu$-integrable respectively.
+	\item
+	    the relation,
+	    \[\lInt{f}{\Pi}{X\times Y} = \lInt{I_f}{\mu}{X} = \lInt{J_f}{\nu}{Y},\]
+	    holds.
+    \end{enumerate}
+\end{Theorem}
+\begin{proof}
+    By Tonelli's theorem,
+    \[\lInt{\abs{f}}{\Pi}{X\times Y} = \lInt{\left(\lInt{\abs{f_x}}{\nu}{Y}\right)}{\mu}{X}
+	= \lInt{\left(\lInt{\abs{f^{y}}}{\mu}{X}\right)}{\nu}{Y}.\]
+    Since, the LHS is finite by hypothesis, each of the \emph{inner} integral is finite.
+    Again by Tonell's theorem, 
+    $x\mapsto\lInt{\fPlus{f}_x}{Y}{\nu}$ and $x\mapsto\lInt{\fMinus{f}_x}{Y}{\nu}$ are $\famM$ measurable and
+    by the first statement above are $\mu$-integrable. This means that they are finite for a.e.~$x \in X$.
+    Thus, $f_x$ is $\nu$ integrable for a.e.~$x\in X$, which means that $I_f$ is $\mu$-integrable.
+    By linearity
+    \begin{align*}
+	\lInt{f}{\Pi}{X\times Y} &= \lInt{\fPlus{f}}{\Pi}{X \times Y} - \lInt{\fMinus{f}}{\Pi}{X \times Y} \\
+	& = \lInt{\left(\lInt{{(\fPlus{f})}_{x}}{\nu}{Y}\right)}{\mu}{X} 
+	- \lInt{\left(\lInt{{(\fMinus{f})}_{x}}{\nu}{Y}\right)}{\mu}{X} \\
+	& = \lInt{I_f}{\mu}{X}.
+    \end{align*}
+    The same argument applies to $J_f$.
+
+\end{proof}
