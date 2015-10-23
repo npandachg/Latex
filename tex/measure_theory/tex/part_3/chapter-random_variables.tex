@@ -1,4 +1,5 @@
 \chapter{Random Variables and Expectation}
+\section{Random variables and their distributions}
 Let $\probS$ be a probability space and let $\metricS{\mbbY}{\algebra{N}}$ be a measure space. A
 $\measMap{\family{F}}{\algebra{N}}$ function $X$ is called a $\mbbY$ valued random variable.
 In particular for $\mbbY = \R$ or $\mbbY = \Rn$ we have the following definition,
@@ -64,8 +65,29 @@ space.
     \end{align*}
     Similarly, $\indMeasure{\probMeas}{Y}{B} \leq \indMeasure{\probMeas}{X}{B}$.
 \end{proof}
+
 Even when we don't have a complete probability space, we can easily complete it by~\ref{thm:comp_of_meas}.
-Thus we can easily forget if the probability space is complete or not. Note that the converse is not true.
+Hence we can easily forget if the probability space is complete or not. We have seen that there are 
+two notions of equality for a random variable. 
+\begin{Definition}
+    Two r.v.~s $X,Y$ are equal in distribution if for all $B \in \famN$, 
+    \[\probMeas{\lbrace X\in B \rbrace} = \probMeas{\lbrace Y\in B\rbrace}.\]
+\end{Definition}
+Note that the set ${\lbrace X\in B \rbrace}$ is shorthand for the set $\set{\omega\in\Omega}{X(\omega)\in B}$.
+\begin{Definition}
+Two r.v.~s $X,Y$ are equal a.s.~if 
+\[\probMeasure{\set{\omega}{X(\omega)=Y(\omega)}} = 1.\]
+\end{Definition}
+By~\ref{thm:rv_equal_ae_distribution}, we know that if two random variables are equal almost surely, then they
+are equal in distribution.
+However the converse is not true as the following example illustrates.
+\begin{Example}
+    Toss a fair coin and set $X$ to be $1$ if the outcome is heads and $0$ otherwise, and let $Y$ be $0$ if
+    the outcome is heads and $1$ otherwise. Then, $\probMeas{X=1} = \probMeas{X=0} = \frac{1}{2}$. Similarly,
+    $\probMeas{Y=1} = \probMeas{Y=0} = \frac{1}{2}$. So that $X$ and $Y$ are equal in distribution but are not
+    equal almost surely.
+\end{Example}
+
 Given a r.v.~induces probability measure on its co-domain, we can define new r.v on the range. We have the
 following relationship,
 \begin{Proposition}
@@ -81,7 +103,44 @@ following relationship,
 \end{proof}
 Since a r.v.~is a measurable function, all the
 properties in~\ref{prop:prop0_mfunc_composition_cont}-\ref{prop:prop4_mfunc_ae_limit} apply to a r.v.
-We now specialize to the case of random variables mapping into $\metricS{\R}{\borelS{\R}}$. Let us (re) define
+We now specialize to the case of random variables mapping into $\metricS{\R}{\borelS{\R}}$. From now on, 
+each r.v.~is a measurable mapping in to the reals (or extended reals). Thus we fix the following notations
+that will be used throughout. 
+
+\[\text{Probability space:} \probS,\]
+\[\text{Random variable $X$:}\famF-\text{measurable mapping}.\]
+
+Clearly for every Borel set $B \in \borelS{\R}$, $\invIm{X}{B} \in \famF$. What is the smallest sigma-algebra
+on $\Omega$ on which $X$ is measurable? If we just collect the iverse image of $X$ in $\famF$, the collection
+is the pre-image sigma algebra~\ref{thm:pre_img_sigma} and by definition $X$ is measurable on that sigma
+algebra. 
+
+\begin{Definition}
+    If $X$ is a random variable on $\probS$, then $\sigma{X}$ is the smallest 
+    sigma-algebra on $\Omega$ for which $X$
+    is $\sigma{X}$-measurable.
+\end{Definition}
+By the remarks preceeding the definition, it is not hard to see that
+\begin{Proposition}
+    $\sigma{X}$ contains sets of the form $\invIm{X}{B}$ for some $B \in \borelS{\R}$. 
+\end{Proposition}
+Thus, $\sigma{X} = \invIm{X}{\borelS{\R}}$.
+\begin{Remark}
+Given a collection of random variables on $\probS$, $\famC=\set{X_{\alpha}}{\alpha \in A, X_{\alpha} r.v}$,
+what is the smallest sigma algebra that makes each $X_{\alpha}$ measurable on it. From our discussions on
+product sigma algebra it is not hard to see that
+\[\sigmaGen{\bigcup\limits_{\alpha \in A}\sigma(X_\alpha)},\]
+is the smallest sigma-algebra on which each $X_{\alpha}$ is measurable. This, along with the fact that,
+$\borelS{\Rn} = \fProdSigma{\borelS{\R}}{1}{n}$, gives us the following result
+\end{Remark}
+\begin{Proposition}
+    Let $\vect{X} = (X_1,X_2,\dots,X_n)$ be a random vector on $\probS$. Then,
+    \[\sigma{\vect{X}} = \sigmaGen{\finiteUnion{\sigma(X_i)}{i}{n}}.\]
+\end{Proposition}
+
+
+
+Let us define
 a distribution function for the case of a probability space.
 \begin{Definition}[name=Distribution function]
     A real valued function $F$ defined on $\R$ is a distribution function if it is monotone increasing, right
@@ -94,11 +153,32 @@ by~\ref{thm:borel_measure_R}. Thus if we have a probability space $\probS$ and a
 probability measure (distribution) $\indMeas{\probMeas}{X}$ on $\metricS{\R}{\borelS{\R}}$,
 which then corresponds to a distribution function $\map{F_X}{\R}{\interval{0}{1}}$ and is 
 given by $F_X(x) = \indMeasure{\probMeas}{X}{\interval{-\infty}{x}}$.
+Let us make these ideas precise
+\begin{Definition}
+    Let $X$ be a r.v.~on $\probS$. The distribution function (d.f.~) of $X$, denoted by $F_X$, is given by
+    \[F(x) = \probMeas(X\leq x),\] for each $x \in \R$.
+\end{Definition}
+\begin{Theorem}
+    Let $X$ be a r.v.~and let $F_X$ be its d.f. Then, 
+    \begin{enumerate}
+	\item
+	    $F_X$ is non-decreasing, right continuous, real valued function with left hand limits given by,
+	    \[F_X(x-) = \lim\limits_{\atobUp{x_n}{x}}F(x_n).\]
+	\item
+	    \[\limit{F(x)}{x}{-\infty} = 0,\quad \limit{F(x)}{x}{\infty} = 1.\]
+	\item
+	    $F_X$ has at most a countable number of discontinuities.
+    \end{enumerate}
+\end{Theorem}
+
+
 Thus,
 \[X \leadsto F_X.\]
 Is the converse true, i.e.
 \[F \leadsto X_F?\]
-The following theorem answers this question.
+That is, given a distribution function on $\R$, is there a r.v.~$X$ on some probability space such that $F_X =
+F$?
+The following theorem due to Skohord answers this question.
 \begin{Theorem}\label{thm:distribution_func_to_rv}
     If a function $\map{F}{\R}{\interval{0}{1}}$ is a distribution function, then there exists a
     r.v.~$\map{X}{\interval{0}{1}}{\R}$ defined
@@ -133,3 +213,4 @@ The following theorem answers this question.
     Hence $\omega < \epsilon + F(X(\omega))$. Since $\epsilon$ was arbitrary we get $\omega \leq
     F(X(\omega))$. Hence $F(y)$ is an upper bound for $A$.
 \end{proof}
+\section{Expectations and moments}
