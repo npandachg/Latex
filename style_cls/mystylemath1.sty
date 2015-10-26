@@ -272,8 +272,8 @@ rulewidth=2pt,bgcolor={rgb}{1,1,1}},numberwithin=section]{Definition}
 %set of vectors through linear transformation #3 
 \newcommand{\listT}[3]{#3({#1}_1),#3({#1}_2), \ldots, #3({#1}_{#2})} % 
 \newcommand{\sumV}[2]{{#1}_1+{#1}_2+ \cdots +{#1}_{#2}} % sum of vector or vector spaces
-\newcommand{\sumVecs}[3]{({#1}_1+{#2}_1) + ({#1}_2+{#2}_2) + \ldots + ({#1}_{#3}+{#2}_{#3})} 
-\newcommand{\diffVecs}[3]{({#1}_1-{#2}_1) + ({#1}_2-{#2}_2) + \ldots + ({#1}_{#3}-{#2}_{#3})} 
+\newcommand{\sumVecs}[3]{({#1}_1+{#2}_1) + ({#1}_2+{#2}_2) + \cdots + ({#1}_{#3}+{#2}_{#3})} 
+\newcommand{\diffVecs}[3]{({#1}_1-{#2}_1) + ({#1}_2-{#2}_2) + \cdots + ({#1}_{#3}-{#2}_{#3})} 
 \newcommand{\lComb}[3]{{#1}_{1}{#2}_{1} + \cdots + {#1}_{#3}{#2}_{#3}}
 \newcommand{\lCombT}[4]{{#1}_{1}#4({#2}_{1}) + \cdots + {#1}_{#3}#4({#2}_{#3})}
 % matrices and linear transformation
@@ -426,7 +426,7 @@ rulewidth=2pt,bgcolor={rgb}{1,1,1}},numberwithin=section]{Definition}
 % Probability
 \newcommand{\probX}[1]{\probMeasure{#1}}
 \newcommand{\cprobX}[2]{\cProbMeasure{#1}{#2}}
-\newcommand{\eX}[1]{\mbb{E}\left(#1\right)}
+\newcommand{\eX}[1]{\mbbE\left(#1\right)}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

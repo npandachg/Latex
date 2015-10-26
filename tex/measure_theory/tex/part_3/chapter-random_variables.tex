@@ -122,38 +122,43 @@ algebra.
 \end{Definition}
 By the remarks preceeding the definition, it is not hard to see that
 \begin{Proposition}
-    $\sigma{X}$ contains sets of the form $\invIm{X}{B}$ for some $B \in \borelS{\R}$. 
+    $\sigma{X}$ consists exactly the sets of the form $\invIm{X}{B}$ for some $B \in \borelS{\R}$. 
 \end{Proposition}
-Thus, $\sigma{X} = \invIm{X}{\borelS{\R}}$.
+\begin{proof}
+    Since $\sigma{X}$ is the sigma-algebra for which $X$ is $\sigma{X}$-measurable, it must consists of all the
+    sets of the form $\invIm{X}{B}$ for some borel set $B$. But the collection of all such sets is a sigma
+    algebra (pre-image sigma-algebra) and $\sigma{X}$ being the smallest such set, it cannot contain any other
+    type of sets. Thus, $\sigma{X} = \invIm{X}{\borelS{\R}}$.
+\end{proof}
 \begin{Remark}
 Given a collection of random variables on $\probS$, $\famC=\set{X_{\alpha}}{\alpha \in A, X_{\alpha} r.v}$,
 what is the smallest sigma algebra that makes each $X_{\alpha}$ measurable on it. From our discussions on
 product sigma algebra it is not hard to see that
-\[\sigmaGen{\bigcup\limits_{\alpha \in A}\sigma(X_\alpha)},\]
+\[\sigmaGen{\bigcup\limits_{\alpha \in A}\sigma{X_\alpha}},\]
 is the smallest sigma-algebra on which each $X_{\alpha}$ is measurable. This, along with the fact that,
-$\borelS{\Rn} = \fProdSigma{\borelS{\R}}{1}{n}$, gives us the following result
+$\borelS{\Rn} = \fProdSigma{\borelS{\R}}{1}{n}$, gives us the first part of the following result
 \end{Remark}
-\begin{Proposition}
+\begin{Theorem}
     Let $\vect{X} = (X_1,X_2,\dots,X_n)$ be a random vector on $\probS$. Then,
-    \[\sigma{\vect{X}} = \sigmaGen{\finiteUnion{\sigma(X_i)}{i}{n}}.\]
-\end{Proposition}
+    \begin{enumerate}
+	\item
+	    \[\sigma{\vect{X}} = \sigmaGen{\finiteUnion{\sigma{X_i}}{i}{n}}.\]
+	\item
+	    In order that a r.v.~$Y$ be $\sigma{\vect{X}}$-measurable, it is necessary and sufficient that
+	    there exists a measurable map $\map{f}{\Rn}{\R}$ such that
+	    \[Y = \fog{f}{X}. \]
+    \end{enumerate}
+\end{Theorem}
 
 
-
-Let us define
-a distribution function for the case of a probability space.
-\begin{Definition}[name=Distribution function]
-    A real valued function $F$ defined on $\R$ is a distribution function if it is monotone increasing, right
+\subsection{Distribution Functions}
+\begin{Definition}[name= (Probability) Distribution function]
+    A real valued function $F$ defined on $\R$ is a (probability) distribution function if it is 
+    monotone increasing, right
     continuous, and 
     \[\limit{F(x)}{x}{-\infty} = 0,\quad \limit{F(x)}{x}{\infty} = 1.\]
 \end{Definition}
-Given a probability measure $\probMeas$ on $\R$, we can always define a distribution function
-$\map{F}{\R}{\interval{0}{1}}$ as $F(x) = \probMeasure{\hInt{-\infty}{x}}$ and vice versa
-by~\ref{thm:borel_measure_R}. Thus if we have a probability space $\probS$ and a r.v.~on it, we get an induced
-probability measure (distribution) $\indMeas{\probMeas}{X}$ on $\metricS{\R}{\borelS{\R}}$,
-which then corresponds to a distribution function $\map{F_X}{\R}{\interval{0}{1}}$ and is 
-given by $F_X(x) = \indMeasure{\probMeas}{X}{\interval{-\infty}{x}}$.
-Let us make these ideas precise
+
 \begin{Definition}
     Let $X$ be a r.v.~on $\probS$. The distribution function (d.f.~) of $X$, denoted by $F_X$, is given by
     \[F(x) = \probMeas(X\leq x),\] for each $x \in \R$.
@@ -170,15 +175,20 @@ Let us make these ideas precise
 	    $F_X$ has at most a countable number of discontinuities.
     \end{enumerate}
 \end{Theorem}
-
-
+See the appendix for the proof of this theorem and other facts about distribution functions. 
+Given a probability measure $\probMeas$ on $\R$, we can always define a distribution function
+$\map{F}{\R}{\interval{0}{1}}$ as $F(x) = \probMeasure{\hInt{-\infty}{x}}$ and vice versa
+by~\ref{thm:borel_measure_R}. Thus if we have a probability space $\probS$ and a r.v.~on it, we get an induced
+probability measure (distribution) $\indMeas{\probMeas}{X}$ on $\metricS{\R}{\borelS{\R}}$,
+which then corresponds to a distribution function $\map{F_X}{\R}{\interval{0}{1}}$ and is 
+given by $F_X(x) = \indMeasure{\probMeas}{X}{\interval{-\infty}{x}}$.
 Thus,
 \[X \leadsto F_X.\]
 Is the converse true, i.e.
 \[F \leadsto X_F?\]
 That is, given a distribution function on $\R$, is there a r.v.~$X$ on some probability space such that $F_X =
 F$?
-The following theorem due to Skohord answers this question.
+The following theorem due to Skorohod answers this question.
 \begin{Theorem}\label{thm:distribution_func_to_rv}
     If a function $\map{F}{\R}{\interval{0}{1}}$ is a distribution function, then there exists a
     r.v.~$\map{X}{\interval{0}{1}}{\R}$ defined
@@ -213,4 +223,160 @@ The following theorem due to Skohord answers this question.
     Hence $\omega < \epsilon + F(X(\omega))$. Since $\epsilon$ was arbitrary we get $\omega \leq
     F(X(\omega))$. Hence $F(y)$ is an upper bound for $A$.
 \end{proof}
+For an random vector $\vect{X} = (X_1,X_2,\dots,X_n)$, we can define its d.f.~as in~\ref{thm:borel_meas_rn}.
+\begin{Definition}[name=Joint Distribution]
+    Let $\vect{X}$ be a random vector $X = (X_1,X_2,\dots,X_n)$, where each $X_i$ is a r.v. We define the
+    d.f.~of $\vect{X}$ as,
+    \[F_{\vect{X}}(\vect{x}) = 
+	\probMeasure{\set{\omega\in\Omega}{X_i(\omega) < x_i,\hspace{0.05in}1\leq i \leq n}},\]
+    where $\vect{x} = (x_1,x_2,\dots,x_n)$. $F_{\vect{X}}$ is called the joint distribution of
+    $X_1,X_2,\dots,X_n$.
+\end{Definition}
+Note that the distribution $\probMeas_{\vect{X}}(B)$ is defined as $\probMeasure{X \in B}$ for any $B \in
+\borelS{\Rn}$. Since $\Rn$ is generated by generalized half-rectangles $\hInt{\vect{a}}{\vect{b}}$, we can
+write
+\[F_X(\vect{x}) = \probMeas_{\vect{X}}{\hInt{-\infty}{\vect{x}}},\]
+where $\hInt{-\infty}{\vect{x}} = \set{\vect{a}\in\Rn}{a_i \leq x_i}$. In $\R^2$, this corresponds to the
+region (open rectangle) \emph{southwest} of the point $\vect{x} = (x_1,x_2)$.
+\subsection{Independence of random variables}
+We will primarily be concerned with the concept of independence in the concept of random variables. For the
+sake of clarity we will only focus on r.v.~s (i.e maps to real numbers) and random vectors.
+\begin{Definition}
+    Random variables $X_1,X_2,\dots,X_n$ are independent if the family,
+    \[\setX{\sigma{X_1},\sigma{X_2},\dots,\sigma{X_n}},\]
+    are independent classes i.e for any events $A_i\in \sigma{X_i}$ the family of events
+    \[\set{A_i}{1\leq i \leq n},\]
+    are independent, which means for any indices $1\leq i_1 < i_2 \dots < i_k \leq n$,
+    \[\probMeasure{A_{i_1}\cap A_{i_2}\dots \cap A_{i_k}} =
+	\probMeasure{A_{i_1}}\probMeasure{A_{i_2}}\dots\probMeasure{A_{i_k}}.\] 
+\end{Definition}
+\begin{Remark}
+    Since $\sigma{X_i}$ consists exactly sets of the type $\setX{X_i \in B_i}$ for some Borel set $B_i$,
+    $X_1,X_2,\dots,X_n$ are independent iff and only if
+    \[\probMeasure{X_1\in B_1,X_2\in B_2\dots, X_n\in B_n} =
+	\probMeas_{X_1}(B_1)\dots\probMeas_{X_n}(B_n),\]
+    for any Borel sets $B_i$, $1\leq i \leq n$.
+    We can write this as,
+    \[\probMeasure{\finiteIntersection{\invIm{X_i}{B_i}}{i}{n}} = \finiteProduct{\probMeas_{X_i}(B_i)}{i}{n}.\]
+    This observation gives us a useful result,
+\end{Remark}
+\begin{Proposition}
+    Let $X_1,X_2,\dots,X_n$ be r.v.~s and let $\vect{X} = (X_1,X_2,\dots,X_n)$ be the random vector. 
+    Then, $X_1,X_2,\dots,X_n$ are independent if and only if,
+    \[\probMeas_{\vect{X}} = \probMeas_{X_1}\times\probMeas_{X_2}\times\cdots\times\probMeas{X_n},\]
+    that is; if the distribution of $\vect{X}$ is the product measure of the distribution of each $X_i$.
+\end{Proposition}
+\begin{proof}
+    Let $X_1,X_2,\dots,X_n$ be independent. Consider a measurable rectangle in $\borelS{\Rn}$,
+    \[A = B_1 \times B_2 \times \cdots \times B_n.\]
+    By the defintion of product measure,
+    \[\left(\probMeas_{X_1}\times\probMeas_{X_2}\times\cdots\times\probMeas{X_n}\right)(A) 
+	= \finiteProduct{\probMeas_{X_i}(B_i)}{i}{n}.\]
+    Now,
+    \[\probMeas_X(A) = \probX{\invIm{X}{A}} = \probX{\finiteIntersection{\invImIndx{X}{i}{B_i}}{i}{n}}. \]
+    Since, $X_1,X_2,\dots,X_n$ are independent,
+    \[\probX{\finiteIntersection{\invImIndx{\vect{X}}{i}{B_i}}{i}{n}} = 
+	\finiteProduct{\probX{\invImIndx{X}{i}{B_i}}}{i}{n} 
+	= \finiteProduct{\probMeas_{X_i}(B_i)}{i}{n}
+	= \left(\probMeas_{X_1}\times\probMeas_{X_2}\times\cdots\times\probMeas{X_n}\right)(A).\]
+    Thus, $\probMeas_{\vect{X}}$ and $\probMeas_{X_1}\times\probMeas_{X_2}\times\cdots\times\probMeas{X_n}$
+    agree on the class of measurable rectangles, which is a $\pi$-class and so they agree on the sigma-algebra
+    $\borelS{\Rn}$.
+
+    Conversely, assume 
+    \[\probMeas_{\vect{X}} = \probMeas_{X_1}\times\probMeas_{X_2}\times\cdots\times\probMeas{X_n},\]
+    Then,
+    \[\probX{\finiteIntersection{\invImIndx{X}{i}{B_i}}{i}{n}} =
+	\probX{\invIm{\vect{X}}{B_1\times B_2\times\cdots B_n}} =
+	(\fog{\probMeas}{\vect{X}^{-1}})(B_1\times B_2 \times \cdots \times B_n) \]
+    By assumption,
+    \[(\fog{\probMeas}{\vect{X}^{-1}})(B_1\times B_2 \times \cdots \times B_n) 
+	= \left(\probMeas_{X_1}\times\probMeas_{X_2}\times\cdots\times\probMeas{X_n}\right)(B_1\times B_2
+	\times \cdots \times B_n) \] 
+    But the last term is just
+    \[\finiteProduct{\probMeas_{X_i}(B_i)}{i}{n},\]
+    by the definition of product measure.
+    Hence, we get independence by observing that $\probMeas_{X_i}(B_i) = \probX{\invImIndx{X}{i}{B_i}}$.
+\end{proof}
+We can extend the definition of independence of finite r.v.~s to the case of an arbitrary collection of
+r.v.~s.
+\begin{Definition}
+    We say that a collection of r.v.~s $\set{X_{\lambda}}{\lambda \in \Lambda}$ are independent if the
+    collection of classes $\set{\sigma{X_{\lambda}}}{\lambda \in \Lambda}$ are independent.
+\end{Definition}
+
 \section{Expectations and moments}
+Let $\probS$ be a probability space and let $X$ be an r.v.~on $\probS$.
+\begin{Definition}[name=Expectation]
+    The expectation of $X$, denoted by $\eX{X}$, is the integral,
+    \[\eX{X} = \lInt{X}{\probMeas}{\Omega},\]
+    whenever it exists. We say that the expectation is finite, if $X$ is integrable.
+\end{Definition}
+\begin{Remark}
+    If the expectation of $X$ exists, then for any set $E \in \famF$,
+    \[\eX{X\indiFunc{E}} = \lInt{X}{\probMeas}{E}.\]
+    We use the notation $\indiFunc{E}$ to denote the characteristic function of the set $E$. The
+    characteristic function in probability has a different meaning and so we will be using the notation
+    $\indiFunc{E}$ to denote the usual characteristic function of the set. As noted before, we call
+    $\indiFunc{E}$, the \emph{indicator} function of the set $E$.
+\end{Remark}
+All the properties for the integral in a measure space carry over for the expectation of a random variable. We
+list them here for completeness.
+\begin{Observation}
+    We list the properties of expectation. Let $X,Y$ be r.v.~s, let $a,b$ be real numbers and let $E$ be a set
+    in $\famF$.
+    \begin{properties}[series=expect]
+    \item
+	(absolute integrability) \[\eX{X\indiFunc{E}} < \infty \iff \eX{\abs{X}\indiFunc{E}} < \infty\]
+    \item
+	(Linearity) \[\eX{(aX + bY)\indiFunc{E}} = a\eX{X\indiFunc{E}} + b \eX{Y\indiFunc{E}}.\]
+    \item
+	(Additivity over sets) If $E_n$'s are disjoint and let $E = \countUnion{E_n}{n}$
+	\[\eX{X\indiFunc{E}} = \sum\limits_{n}\eX{X\indiFunc{E_n}}.\]
+    \item
+	(Positivity) If $X$ is non-negative over $E$, then,
+	\[\eX{X\indiFunc{E}} \ge 0.\]
+    \item
+	(Monotonicity) Let $X_1,X_2$ be r.v.~s such that $X_1 \leq X \leq X_2$ a.s.~on $E$, then,
+	\[\eX{X_1\indiFunc{E}} \leq \eX{X\indiFunc{E}} \leq \eX{X_2\indiFunc{E}}.\]
+    \item
+	(Mean Value) If $a \leq X \leq b$ a.s.~on $E$, then
+	\[a\probX{E} \leq \eX{X\indiFunc{E}} \leq b\probX{E}.\]
+    \item
+	(Modulus inequality)
+	\[\abs{\eX{X\indiFunc{E}}} \leq \eX{\abs{X}\indiFunc{E}}.\]
+    \end{properties}
+\end{Observation}
+Similarly, for a sequence of r.v.~s we can use the results from the limit theorems to observe,
+\begin{Observation}
+    Let $\seq{X}{n}$ be a sequence of r.v.~s on $\probS$.
+    \begin{properties}[resume*=expect]
+    \item
+	(MCT) If $X_n \ge 0$ for each $n$ and $\atobUp{X_n}{X}$ a.s.~on $E$, then
+	\[\lim\limits_{n\to\infty}\eX{X_n\indiFunc{E}} = \eX{X\indiFunc{E}} =
+	    \eX{\lim\limits_{n\to\infty}X_n\indiFunc{E}}.\]
+    \item
+	(Fatou's Lemma) If $X_n \ge 0$ for each $n$ a.s.~on $E$, then,
+	\[\eX{\liminf\limits_{n\to\infty} X_n\indiFunc{E}} \leq \lim\limits_{n\to\infty}\eX{X_n\indiFunc{E}}.\]
+    \item
+	(Integration term by term) If,
+	\[\series{\eX{\abs{X_n}\indiFunc{E}}}{n}{1}{\infty} < \infty,\]
+	then,
+	$\series{\abs{X_n}}{n}{1}{\infty}$ converges a.s.~on $E$ and,
+	\[\eX{\series{X_n}{n}{1}{\infty}\indiFunc{E}} = \series{\eX{X_n\indiFunc{E}}}{n}{1}{\infty}.\]
+    \item
+	(DCT) If $X_n\to X$ a.s.~on $E$ and for each $n$, $\abs{X_n} \leq Y$, where $Y$ is an integrable
+	r.v.~on $\probS$, then
+	\[\lim\limits_{n\to\infty}\eX{X_n\indiFunc{E}} = \eX{X\indiFunc{E}} =
+	    \eX{\lim\limits_{n\to\infty}X_n\indiFunc{E}}.\]
+	In particular the result holds if $Y = M$, where $M > 0$ is a constant.
+    \end{properties}
+\end{Observation}
+The next theorem gives boundes on the expectation of a r.v.~in terms of \emph{tail} probabilities.
+\begin{Theorem}
+    Let $X$ be a r.v.~on $\probS$. Then,
+    \[\series{\probX{\abs{X}\geq n}}{n}{1}{\infty} \leq \eX{\abs{X}} \leq 
+	1 + \series{\probX{\abs{X}\geq n}}{n}{1}{\infty}, \]
+    so that $\eX{\abs{X}} < \infty$ if and only if the series above converges.
+\end{Theorem}
+

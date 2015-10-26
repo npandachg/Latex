@@ -1,5 +1,7 @@
-\chapter{Probability space}
+\chapter{Probability}
+
 We specialize the general measure theory to provide a description of a probability space.
+\section{Probability Space}
 
 \begin{Definition}[name=Probability space]
     A probability space  is a measure space $\measureS{X}{\algebra{M}}{\mu}$ with $\measure{X} = 1$. The
@@ -635,6 +637,7 @@ We will need the following result.
     of $n$ consecutive heads starting at the $n^{th}$ toss, infinitely often, is $0$.
 \end{Example}
 Next we define conditional probability and independence of events in a probability space.
+\section{Independence}
 \begin{Definition}[name=Conditional probability measure]
     Suppose $A,B$ are events in a probability space $\probS$ with $\probMeas(B) > 0$. The
     conditional probability (measure) of $A$ given $B$ is 
@@ -648,7 +651,7 @@ Next we define conditional probability and independence of events in a probabili
     following theorem.
 \end{Remark}
 \begin{Theorem}[name=Conditioned probability space]
-    Let $\probS$ be a probability space. For an given $B \in \algebra{F}$, 
+    Let $\probS$ be a probability space. For an given $B \in \algebra{F}$ with $\probMeasure{B} > 0$, 
     $\measureS{B}{\algebra{F}_{B}}{\probMeasure{.|B}}$ is also a probability space.
 \end{Theorem}
 \begin{proof}
@@ -727,12 +730,10 @@ definition is symmetric.
     \end{align*}
 \end{proof}
 We extend this idea for a collection of events.
-\begin{Definition}[name=Independence of a collection of events and sigma algebras]
+\begin{Definition}[name=Independence of a collection of events]
     A collection of events $\lbrace A_i \rbrace$ are independent if for each $n\in\Zplus$ and each selection
     of integers, $1\leq i_1 < i_2 < \cdots < i_k\leq n$,
     \[\probMeasure{A_{i_1}\cap\ldots\cap A_{i_k}} = \finiteProduct{\probMeasure{A_{i_j}}}{j}{k}.\]
-    We say a collection of $\sigmaAlgebra$s $\lbrace \algebra{F}_i\rbrace$ are independent if each collection
-    of events chosen individually from the $\sigmaAlgebra$s are independent.
 \end{Definition}
 \begin{Example}
     Three events $A,B,C$ in the probability space $\probS$ are independent if
@@ -752,9 +753,48 @@ We extend this idea for a collection of events.
     Easy to check that the corresponding events $\Omega_{H_i} = \set{\omega\in\Omega}{R_i(\omega) = 1}$ 
     are independent.
 \end{Example}
-\begin{Proposition}
+A yet more general notion concerns a family of independent classes in the probability space $\probS$.
+\begin{Definition}
+If $\famA_{\lambda}$ is a class of events
+for each $\lambda$ in some index set $\Lambda$, the family $\set{\famA_{\lambda}}{\lambda \in \Lambda}$ is
+said to be a family of independent classes of events if for every choice of one member $A_{\lambda}$ from each
+class $\famA_{\lambda}$, the class of events $\set{A_{\lambda}}{\lambda \in \Lambda}$ is independent.
+\end{Definition}
+\begin{Theorem}
+    Let $\set{\famA_{\lambda}}{\lambda\in\Lambda}$ be independent classes of events such that each
+    $\famA_{\lambda}$ is closed under finite intersections. Let $\famB_{\lambda} =
+    \sigmaGen{\famA_{\lambda}}$. Then $\set{\famB_{\lambda}}{\lambda \in \Lambda}$ are also independent
+    classes.
+\end{Theorem}
+\begin{proof}
+    Let $\famA_{\lambda}^{\ast} = \famA_{\lambda} \cup \setX{\Omega}$. Then
+    $\set{\famA_{\lambda}^{\ast}}{\lambda \in \Lambda}$ is also independent and clearly $B_{\lambda}$ is also
+    $\sigmaGen{\famA_{\lambda}^{\ast}}$. Thus, we can replace $\famA_{\lambda}$ by $\famA_{\lambda}^{\ast}$.
+    To show that $\set{\famB_{\lambda}}{\lambda \in \Lambda}$ is
+    independent, we need to show that for any integer $n$, each selection of distinct integers $1\leq i_1 <
+    i_2 < \dots < i_n\leq n$, the family 
+    $\setX{\famB_{\lambda_{i_1}},\famB_{\lambda_{i_2}},\dots,\famB_{\lambda_{i_n}}}$ are independent
+    classes. We will show that,
+    \[\setX{\famB_{\lambda_{i_1}},\famA_{\lambda_{i_2}},\ldots,\famA_{\lambda_{i_n}}}\]
+    is independent. Then the results will follow inductively. We will use the good sets principle.
+    For any $E \in \famF$, let us define the \emph{property}
+    \[\mcalP(E) := \probMeasure{E\cap A_2\cap A_3\dots\cap A_n} = 
+	\probMeasure{E}\finiteProduct{\probMeasure{A_{i+1}}}{i}{n-1},\]
+    for every $A_i \in \famA_{\lambda_i}$ for $2\leq i \leq n$.
+    Let $\famG = \set{E\in\famF}{\mcalP(E)\text{holds}}$. 
+    Easy to see that $\famG$ is a $\lambda$ class and it contains $\famA_{\lambda_{i_1}}$ which is a $\pi$
+    class and so $\famG = \sigmaGen{\famA_{\lambda_{i_1}}} = \famB_{\lambda_{i_1}}$.
+
+\end{proof}
+\begin{Corollary}
     If $\lbrace A_i\rbrace$ are independent then so are $\lbrace \indxComp{A}{i} \rbrace$.
-\end{Proposition}
+\end{Corollary}
+\begin{proof}
+    Consider the family of classes $\set{\setX{A_i}}{i\in I}$. Then by hypothesis, this is an independent
+    class. By the theorem above, the family of classes $\set{\famB_i}{i\in I}$, where
+    $\famB_i = \sigmaGen{\setX{A_i}}  = \setX{A_i,\indxComp{A}{i},\Omega,\emptyset}$ is independent. In
+    particular the class of events $\lbrace \indxComp{A}{i} \rbrace$ are independent.
+\end{proof}
 \begin{Theorem}[name=Second Borel-Cantelli Lemma]\label{thm:borel_cantelli_2}
     Let $\probS$ be a probability space and $\lbrace A_i \rbrace$ be a collection of independent events. Let
     $A =\lbrace A_n \,\text{i.o}\rbrace$. 
