@@ -495,6 +495,33 @@ make precise this notion in the following theorem.
 	    Thus, we get the result.
     \end{enumerate}
 \end{proof}
+We close this section by a simple change of variables formula.
+Let $\measureS{X}{\famM}{\mu}$, $\metricS{Y}{\famN}$ be a measure spaces and let $\map{T}{X}{Y}$ be a
+$\measMap{\famM}{\famN}$. Recall that $\mu_{T} = \fog{\mu}{T^{-1}}$ is the induced measure on
+$\metricS{Y}{\famN}$. Let $\map{f}{Y}{\R}$ be a $\famN$-measurable map. Then, we get the following change of
+variables forumla
+\begin{Theorem}[name=Change of variables]\label{thm:change_var}
+    If $f$ is non-negative, then
+    \[\lInt{\fog{f}{T}}{\mu}{X} = \lInt{f}{\mu_{T}}{Y}.\]
+    A function (not necessarily non-negative) is integrable with respect to $\mu_{T}$, if and only if
+    $\fog{f}{T}$ is integrable w.r.t $\mu$, in which case
+    \[\lInt{\fog{f}{T}}{\mu}{\invIm{T}{B}} = \lInt{f}{\mu_{T}}{B},\]
+    holds for any $B\in\famN$. If $f$ is non-negative then the above always holds.
+\end{Theorem}
+\begin{proof}
+First, let $f = \charFunc{B}$ for some $B \in \famN$. Then $(\fog{f}{T})(x) = f(T(x))$ which is $0$ if
+$T(x)\not\in B$ and $1$ when $T(x)\in B$. Thus, $\fog{f}{T} = \charFunc{\invIm{T}{B}}$. Hence,
+\[\lInt{\fog{f}{T}}{\mu}{X} = \measure{\invIm{T}{B}},\]
+while
+\[ \lInt{f}{\mu_{T}}{Y} = \mu_{T}(B) = \measure{\invIm{T}{B}}.\]
+Hence, the two integrals are equal. We get the result for arbitrary $f$, by first obtaining it from the
+linearity of simple functions and then by the monotone convergence theorem.
+If $f$ is not non-negative, then $\abs{f}$ is non-negative and thus by using the formula above, we get that
+$f$ is integrable with respect to $\mu_{T}$, if and only if $\fog{f}{T}$ is integrable w.r.t $\mu$. 
+If $f$ is integrable with respect to $\mu_{T}$, then we write $f = \fPlus{f} - \fMinus{f}$ and get the result
+for each using the change of variables formula. An application of the formula for $f\charFunc{B}$ gives us the
+other result.
+\end{proof}
 \section{Limit theorems}
 One of the basic questions in analysis is when can we interchange limit operations? Note that integration is a
 limit operation (the supremum of simple functions is the limit of the simple functions that approximate a
